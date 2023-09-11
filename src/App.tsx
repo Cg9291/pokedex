@@ -1,12 +1,24 @@
-import './App.css';
-import Main from './components/Main.tsx';
+import "./App.css";
+import styled from "styled-components";
+import PrototypeContainer from "./components/PrototypeContainer.tsx";
+import Homepage from "./components/Homepage.tsx";
 
-function App() {
-  return (
-    <div className="App">
-    <Main/>
-    </div>
-  );
+/*
+TODO
+
+*add type to index
+*/
+
+const Container = styled(PrototypeContainer)`
+	background-color: red;
+`;
+
+function App(): JSX.Element {
+	return (
+		<Container>
+			<Homepage />
+		</Container>
+	);
 }
 
 export default App;
