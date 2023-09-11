@@ -1,23 +1,26 @@
 import styled from "styled-components";
-import PrototypeContainer from "./PrototypeContainer";
+import ContainerPrototype from "../../Prototypes/ContainerPrototype";
+import getPokemonData from "../../../api_calls/getPokemonData";
 
-const Container = styled(PrototypeContainer)`
+const Container = styled(ContainerPrototype)`
 	height: 15rem;
 	flex-direction: column;
 	justify-content: center;
 	background-color: darkred;
-	padding: 0.5rem 1rem;
+	padding: 0.5rem 0.5rem;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
 `;
 
 const HeaderText = styled.h2`
 	height: fit-content;
-	margin-top: 7rem;
+	margin-top: 6.3rem;
 	color: white;
 	text-align: start;
 `;
 
 const Input = styled.input`
-	width: 75%;
+	width: 100%;
 	height: 3rem;
 	border-radius: 99px;
 	margin-top: auto;
