@@ -1,18 +1,29 @@
 import axios from "axios";
 
-export default function getPokemonData(id: Number): Promise {
-	let pokemonImageUrl = "";
-	axios
+export default async function getPokemonData(id: Number): return axios
 		.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
 		.then(res => {
-			let parsedData = res.data;
-			//console.log(res.data);
-			pokemonImageUrl = parsedData.sprites.front_default;
-			//console.log(pokemonImageUrl);
+			const parsedData = res.data;
+			const pokemonImageUrl = parsedData.sprites.front_default;
+			return pokemonImageUrl;
 		})
 		.catch(err => {
 			console.log("Failure", err);
 		})
-		.finally(() => console.log("Done") /* console.log("Call is complete") */); //just here for learning purpose
-	return pokemonImageUrl;
+		.finally(() => console.log("Done"))
+
+//just here for learning purpose
+
+/*Promise {
+	try {
+		const response = await axios.get(
+			`https://pokeapi.co/api/v2/pokemon/${id}/`,
+		);
+		const data = await response.json();
+		const responseData: String = response.data.sprites.front_default;
+		console.log(responseData);
+		//return responseData;
+	} catch (err) {
+		console.log("Failure", err);
+	} */
 }

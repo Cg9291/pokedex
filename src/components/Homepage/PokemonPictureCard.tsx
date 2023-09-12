@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../Prototypes/ContainerPrototype";
 
@@ -13,12 +14,20 @@ const Container = styled.div`
 const Wrapper = styled(ContainerPrototype)``;
 
 export default function PokemonPictureCard(): JSX.Element {
-	let img = console.log(getPokemonData(2));
+	let img /* = getPokemonData(2); */
+	/* useLayoutEffect(() => {
+		getPokemonData(2).then(res => {
+			img = res;
+			//console.log(img)
+		});
+	}); */
+
+	console.log(img);
 	return (
 		<Container>
 			<Wrapper>
 				<img
-					href={getPokemonData(2)}
+					href={img}
 					alt="a pokemon image"
 				></img>
 				{img}
