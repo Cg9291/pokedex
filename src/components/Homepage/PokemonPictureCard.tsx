@@ -1,36 +1,53 @@
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../Prototypes/ContainerPrototype";
 
 import getPokemonData from "../../api_calls/getPokemonData";
 
 const Container = styled.div`
-	height: 25vh;
-	width: 25vw;
-	padding: 1px;
+	width: 50%;
+	height: 20vh;
+	margin:0.5rem 0.5rem;
+	padding: 0.5rem;
 	border-radius: 25px;
+	background-color: darkblue;
 `;
 
-const Wrapper = styled(ContainerPrototype)``;
+const Wrapper = styled(ContainerPrototype)`
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+	grid-template-areas:
+		"name name name"
+		". . ."
+		". . image"
+		"types1 . image"
+		"types2 . image";
+	border-radius: 25px;
+	//background-color: yellow;
+`;
+const PokemonImg = styled.img`
+	grid-area: image;
+`;
 
-export default function PokemonPictureCard(): JSX.Element {
-	let img /* = getPokemonData(2); */
-	/* useLayoutEffect(() => {
-		getPokemonData(2).then(res => {
-			img = res;
-			//console.log(img)
-		});
-	}); */
+interface pokemonCardsProps {
+	pokemonNumber: Number;
+}
 
-	console.log(img);
+export default function PokemonPictureCard(
+	props: pokemonCardsProps,
+): JSX.Element {
+	const [imgUrl, setImgUrl] = useState("");
+	getPokemonData(props.pokemonNumber, setImgUrl);
+
+	// console.log(imgUrl);
 	return (
 		<Container>
 			<Wrapper>
-				<img
-					href={img}
+				<PokemonImg
+					src={imgUrl}
 					alt="a pokemon image"
-				></img>
-				{img}
+				/>
 			</Wrapper>
 		</Container>
 	);

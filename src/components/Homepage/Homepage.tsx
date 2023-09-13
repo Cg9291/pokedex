@@ -7,11 +7,27 @@ const Container = styled(ContainerPrototype)`
 	flex-direction: column;
 `;
 
+const Row = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
 export default function Homepage(): JSX.Element {
 	return (
 		<Container>
 			<Header />
-			<PokemonPictureCard />
+			<Row>
+				<PokemonPictureCard pokemonNumber={1} />
+				<PokemonPictureCard pokemonNumber={4} />
+			</Row>
+			<Row>
+				<PokemonPictureCard pokemonNumber={7} />
+				<PokemonPictureCard pokemonNumber={15} />
+			</Row>
+			<Row>
+				<PokemonPictureCard pokemonNumber={25} />
+				<PokemonPictureCard pokemonNumber={26} />
+			</Row>
 		</Container>
 	);
 }
