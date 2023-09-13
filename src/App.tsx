@@ -8,6 +8,7 @@ import getPokemonData from "./api_calls/getPokemonData.tsx";
 TODO
 
 *add type to index
+*figure out keys for mapped elements
 */
 
 const Container = styled(ContainerPrototype)`

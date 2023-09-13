@@ -5,9 +5,8 @@ import ContainerPrototype from "../Prototypes/ContainerPrototype";
 import getPokemonData from "../../api_calls/getPokemonData";
 
 const Container = styled.div`
-	width: 50%;
+	width: 45%;
 	height: 20vh;
-	margin:0.5rem 0.5rem;
 	padding: 0.5rem;
 	border-radius: 25px;
 	background-color: darkblue;
@@ -31,16 +30,25 @@ const PokemonImg = styled.img`
 `;
 
 interface pokemonCardsProps {
-	pokemonNumber: Number;
+	pokemonNumber: number;
 }
 
 export default function PokemonPictureCard(
 	props: pokemonCardsProps,
 ): JSX.Element {
-	const [imgUrl, setImgUrl] = useState("");
-	getPokemonData(props.pokemonNumber, setImgUrl);
+	const [pokemonInfo, setPokemonInfo] = useState<{}>({});
+	const [imgUrl, setImgUrl] = useState<string>("");
+	//getPokemonData(props.pokemonNumber, setPokemonInfo);
+	useEffect(() => {
+		getPokemonData(props.pokemonNumber, setPokemonInfo);
+	}, []);
 
-	// console.log(imgUrl);
+	useEffect(()=>{
+		setImgUrl(pokemonInfo.sprites.default_front)
+	},[pokemonInfo]);
+
+
+console.log(imgUrl)
 	return (
 		<Container>
 			<Wrapper>

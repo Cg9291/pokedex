@@ -14,7 +14,8 @@ const Container = styled(ContainerPrototype)`
 
 const HeaderText = styled.h2`
 	height: fit-content;
-	margin-top: 6.3rem;
+	margin-top: 5.2rem;
+	max-width: 85%;
 	color: white;
 	text-align: start;
 `;
@@ -30,7 +31,10 @@ const Input = styled.input`
 export default function Header(): JSX.Element {
 	return (
 		<Container>
-			<HeaderText>What pokemon would you like to find?</HeaderText>
+			<HeaderText>
+				What Pokemon
+				<br /> would you like to find?
+			</HeaderText>
 			<Input placeholder="Search anything related to a pokemon" />
 		</Container>
 	);
