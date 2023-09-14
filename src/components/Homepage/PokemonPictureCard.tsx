@@ -40,7 +40,7 @@ interface pokemonCardsProps {
 export default function PokemonPictureCard(
 	props: pokemonCardsProps,
 ): JSX.Element {
-	const [pokemonInfo, setPokemonInfo] = useState<{}>({});
+	const [pokemonInfo, setPokemonInfo] = useState<{ [key: string]: any }>({});
 
 	useLayoutEffect(() => {
 		getPokemonData(props.pokemonNumber, setPokemonInfo);
