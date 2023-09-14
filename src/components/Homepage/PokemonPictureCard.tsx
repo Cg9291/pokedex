@@ -25,6 +25,10 @@ const Wrapper = styled(ContainerPrototype)`
 	border-radius: 25px;
 	//background-color: yellow;
 `;
+
+const PokeName = styled.h3`
+	grid-area: name;
+`;
 const PokemonImg = styled.img`
 	grid-area: image;
 `;
@@ -37,25 +41,42 @@ export default function PokemonPictureCard(
 	props: pokemonCardsProps,
 ): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<{}>({});
-	const [imgUrl, setImgUrl] = useState<string>("");
-	//getPokemonData(props.pokemonNumber, setPokemonInfo);
-	useEffect(() => {
+
+	useLayoutEffect(() => {
 		getPokemonData(props.pokemonNumber, setPokemonInfo);
 	}, []);
 
-	useEffect(()=>{
-		setImgUrl(pokemonInfo.sprites.default_front)
-	},[pokemonInfo]);
+	const {
+		abilities,
+		base_experience,
+		forms,
+		game_indices,
+		height,
+		held_items,
+		id,
+		is_default,
+		location_area_encounters,
+		moves,
+		name,
+		order,
+		past_types,
+		species,
+		sprites,
+		stats,
+		types,
+		weight,
+	} = pokemonInfo;
 
-
-console.log(imgUrl)
 	return (
 		<Container>
 			<Wrapper>
-				<PokemonImg
-					src={imgUrl}
-					alt="a pokemon image"
-				/>
+				<PokeName>{name}</PokeName>
+				{sprites && (
+					<PokemonImg
+						src={sprites.front_default}
+						alt="a pokemon image"
+					/>
+				)}
 			</Wrapper>
 		</Container>
 	);
