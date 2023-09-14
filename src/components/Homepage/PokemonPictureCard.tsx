@@ -13,7 +13,10 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled(ContainerPrototype)`
-	display: grid;
+	display: flex;
+	flex-direction: column;
+
+	/* 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(5, 1fr);
 	grid-template-areas:
@@ -22,15 +25,29 @@ const Wrapper = styled(ContainerPrototype)`
 		". . image"
 		"types1 . image"
 		"types2 . image";
-	border-radius: 25px;
+	border-radius: 25px; */
 	//background-color: yellow;
 `;
 
 const PokeName = styled.h3`
+	height: 20%;
 	grid-area: name;
 `;
+
+const Wrapper2 = styled(ContainerPrototype)`
+	width: 100%;
+`;
+
+const PokemonTypesContainer = styled(ContainerPrototype)`
+	width: 50%;
+`;
+
+const PokemonImgWrapper = styled.div`
+	width: 50%;
+`;
 const PokemonImg = styled.img`
-	grid-area: image;
+	width: 200%;
+	aspect-ratio: 1/1;
 `;
 
 interface pokemonCardsProps {
@@ -71,12 +88,18 @@ export default function PokemonPictureCard(
 		<Container>
 			<Wrapper>
 				<PokeName>{name}</PokeName>
-				{sprites && (
-					<PokemonImg
-						src={sprites.front_default}
-						alt="a pokemon image"
-					/>
-				)}
+				<Wrapper2>
+					<PokemonTypesContainer />
+					<PokemonImgWrapper>
+						{sprites && (
+							<PokemonImg
+								src={sprites.front_default}
+								alt="a pokemon image"
+							/>
+						)}
+						
+					</PokemonImgWrapper>
+				</Wrapper2>
 			</Wrapper>
 		</Container>
 	);
