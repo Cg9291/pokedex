@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../Prototypes/ContainerPrototype.tsx";
-import Header from "./Header/Header.tsx";
-import PokemonPictureCard from "./PokemonPictureCard.tsx";
+import Header from "./header/Header.tsx";
+import PokemonPictureCard from "./pokemonPictureCards/PokemonPictureCard.tsx";
 import { useState } from "react";
 
 const Container = styled(ContainerPrototype)`

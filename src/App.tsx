@@ -2,7 +2,7 @@ import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/Prototypes/ContainerPrototype.tsx";
 import Homepage from "./components/Homepage/Homepage.tsx";
-import getPokemonData from "./api_calls/getPokemonData.tsx";
+import getPokemonData from "./functions/api_calls/getPokemonData.tsx";
 
 /*
 TODO

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../Prototypes/ContainerPrototype";
-import getPokemonData from "../../../api_calls/getPokemonData";
+import getPokemonData from "../../../functions/api_calls/getPokemonData";
 
 const Container = styled(ContainerPrototype)`
 	height: 15rem;

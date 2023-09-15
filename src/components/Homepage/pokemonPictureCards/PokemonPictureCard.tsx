@@ -1,8 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import styled from "styled-components";
-import ContainerPrototype from "../Prototypes/ContainerPrototype";
+import ContainerPrototype from "../../Prototypes/ContainerPrototype";
+import PokemonTypesElement from "./PokemonTypesElement";
 
-import getPokemonData from "../../api_calls/getPokemonData";
+import getPokemonData from "../../../functions/api_calls/getPokemonData";
+import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 
 const Container = styled.div`
 	width: 45%;
@@ -15,38 +17,35 @@ const Container = styled.div`
 const Wrapper = styled(ContainerPrototype)`
 	display: flex;
 	flex-direction: column;
-
-	/* 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-template-rows: repeat(5, 1fr);
-	grid-template-areas:
-		"name name name"
-		". . ."
-		". . image"
-		"types1 . image"
-		"types2 . image";
-	border-radius: 25px; */
 	//background-color: yellow;
+	border-radius: 25px;
 `;
 
 const PokeName = styled.h3`
 	height: 20%;
-	grid-area: name;
+	color: white;
 `;
 
-const Wrapper2 = styled(ContainerPrototype)`
+const SubContainer = styled(ContainerPrototype)`
 	width: 100%;
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
 	width: 50%;
+	flex-direction: column;
+	justify-content: end;
 `;
 
 const PokemonImgWrapper = styled.div`
 	width: 50%;
 `;
-const PokemonImg = styled.img`
-	width: 200%;
+
+const SvgImg = styled.svg`
+	width: 100%;
+	height: 100%;
+`;
+const PokemonImg = styled.image`
+	width: 200;
 	aspect-ratio: 1/1;
 `;
 
@@ -84,22 +83,30 @@ export default function PokemonPictureCard(
 		weight,
 	} = pokemonInfo;
 
+	const renderPokemonTypes = (): JSX.Element =>
+		types.map(x => <PokemonTypesElement typeName={x.type.name} />);
+
 	return (
 		<Container>
 			<Wrapper>
-				<PokeName>{name}</PokeName>
-				<Wrapper2>
-					<PokemonTypesContainer />
+				<PokeName>{name && capitalizeWords(name)}</PokeName>
+				<SubContainer>
+					<PokemonTypesContainer>
+						{types && renderPokemonTypes()}
+					</PokemonTypesContainer>
 					<PokemonImgWrapper>
 						{sprites && (
-							<PokemonImg
-								src={sprites.front_default}
-								alt="a pokemon image"
-							/>
+							<SvgImg viewBox="50 50 200 200">
+								<PokemonImg
+									href={sprites.front_default}
+									alt="a pokemon image"
+									width="325"
+									height="325"
+								/>
+							</SvgImg>
 						)}
-						
 					</PokemonImgWrapper>
-				</Wrapper2>
+				</SubContainer>
 			</Wrapper>
 		</Container>
 	);

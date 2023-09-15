@@ -21,7 +21,7 @@ export default function getPokemonData(
 		species: { name: string; url: string };
 		sprites: { [key: string]: any };
 		stats: {}[];
-		types: {}[];
+		types: {[key:string]:{}}[];
 		weight: number;
 	}
 
@@ -30,7 +30,7 @@ export default function getPokemonData(
 		.then(res => {
 			const parsedData: PokemonInfo = res.data;
 			stateSetter(prevObj => ({ ...prevObj, ...parsedData }));
-			//console.log(parsedData);
+			console.log(parsedData);
 		})
 		.catch(err => {
 			console.log("Failure", err);
