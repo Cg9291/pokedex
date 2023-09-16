@@ -1,30 +1,25 @@
 import axios from "axios";
+import { PokemonInfo } from "../../components/types";
+//interface needs to be outside function,sometimes exported..meant to be reused
 
-export default function getPokemonData(
+export default async function getPokemonData(id: number): Promise<PokemonInfo> {
+	try {
+		const response: {} = await axios.get(
+			`https://pokeapi.co/api/v2/pokemon/${id}`,
+		);
+		//console.log(response);
+		const pokemonData: PokemonInfo = response.data;
+		console.log("Done", pokemonData);
+		return pokemonData;
+	} catch (err) {
+		console.log("Failure", err);
+	}
+}
+
+/* export default function getPokemonData(
 	id: number,
 	stateSetter: React.Dispatch<React.SetStateAction<{}>>,
-): Promise<void> {
-	interface PokemonInfo {
-		abilities: {}[];
-		base_experience: number;
-		forms: {}[];
-		game_indices: {}[];
-		height: number;
-		held_items: {}[];
-		id: number;
-		is_default: boolean;
-		location_area_encounters: string;
-		moves: {}[];
-		name: string;
-		order: number;
-		past_types: [];
-		species: { name: string; url: string };
-		sprites: { [key: string]: any };
-		stats: {}[];
-		types: {[key:string]:{}}[];
-		weight: number;
-	}
-
+): Promise<PokemonInfo> {
 	return axios
 		.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
 		.then(res => {
@@ -36,4 +31,4 @@ export default function getPokemonData(
 			console.log("Failure", err);
 		})
 		.finally(() => console.log("Done")); //just here for learning purpose
-}
+} */

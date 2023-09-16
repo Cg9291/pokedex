@@ -1,14 +1,15 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../Prototypes/ContainerPrototype";
 import PokemonTypesElement from "./PokemonTypesElement";
 
 import getPokemonData from "../../../functions/api_calls/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { PokemonInfo } from "../../types";
 
-const Container = styled.div`
+const Container = styled.a`
 	width: 45%;
-	height: 20vh;
+	height: 19vh;
 	padding: 0.5rem;
 	border-radius: 25px;
 	background-color: darkblue;
@@ -58,9 +59,19 @@ export default function PokemonPictureCard(
 ): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<{ [key: string]: any }>({});
 
-	useLayoutEffect(() => {
+	async function getData(pokeNumber: number): void {
+		const data: PokemonInfo = await getPokemonData(pokeNumber);
+		//console.log("here", data);
+		setPokemonInfo(data);
+	}
+
+	/* useLayoutEffect(() => {
 		getPokemonData(props.pokemonNumber, setPokemonInfo);
-	}, []);
+	}, []); */
+
+	useEffect(() => {
+		getData(props.pokemonNumber);
+	}, [props.pokemonNumber]); //this dependency was not necessary,but clears out a warning message so it will be kept
 
 	const {
 		abilities,
@@ -84,10 +95,12 @@ export default function PokemonPictureCard(
 	} = pokemonInfo;
 
 	const renderPokemonTypes = (): JSX.Element =>
-		types.map(x => <PokemonTypesElement typeName={x.type.name} />);
+		types.map(x => (
+			<PokemonTypesElement typeName={capitalizeWords(x.type.name)} />
+		));
 
 	return (
-		<Container>
+		<Container onClick={()=>alert("Clicked")}>
 			<Wrapper>
 				<PokeName>{name && capitalizeWords(name)}</PokeName>
 				<SubContainer>

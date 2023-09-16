@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../Prototypes/ContainerPrototype";
-import getPokemonData from "../../../functions/api_calls/getPokemonData";
 
 const Container = styled(ContainerPrototype)`
-	height: 15rem;
+	max-height: 13rem;
 	flex-direction: column;
 	justify-content: center;
 	background-color: darkred;
@@ -14,7 +13,7 @@ const Container = styled(ContainerPrototype)`
 
 const HeaderText = styled.h2`
 	height: fit-content;
-	margin-top: 5.2rem;
+	margin-top: 4.7rem;
 	max-width: 85%;
 	color: white;
 	text-align: start;

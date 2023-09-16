@@ -2,7 +2,6 @@ import styled from "styled-components";
 import ContainerPrototype from "../Prototypes/ContainerPrototype.tsx";
 import Header from "./header/Header.tsx";
 import PokemonPictureCard from "./pokemonPictureCards/PokemonPictureCard.tsx";
-import { useState } from "react";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -15,15 +14,23 @@ const MainContainer = styled.div`
 	flex-wrap: wrap;
 	width: 100%;
 	height: 100%;
-	padding: 0 1%;
+	padding: 1vh 1vw;
 `;
 
 export default function Homepage(): JSX.Element {
-	const [pokemonLookupNumber, setPokemonLookupNumber] = useState<number[]>([
-		1, 4, 7, 15, 25, 26,
-	]);
+	const pokemonLookupNumber = (): number[] => {
+		const numberArray: number[] = [];
+		const randomNum = (): void => {
+			for (let i = 0; i < 6; i++) {
+				numberArray.push(Math.floor(Math.random() * (255 - 1) + 1));
+			}
+		};
+		randomNum();
+		return numberArray;
+	};
+
 	const mapPictureCards = (): JSX.Element[] =>
-		pokemonLookupNumber.map(i => <PokemonPictureCard pokemonNumber={i} />);
+		pokemonLookupNumber().map(i => <PokemonPictureCard pokemonNumber={i} />);
 
 	return (
 		<Container>
