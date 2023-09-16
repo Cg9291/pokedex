@@ -6,19 +6,19 @@ import PokemonTypesElement from "./PokemonTypesElement";
 import getPokemonData from "../../../functions/api_calls/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 import { PokemonInfo } from "../../types";
+import typesColors from "../../../objects/typesColors";
 
-const Container = styled.a`
+const Container = styled.a<{ $mainType: "string" }>`
 	width: 45%;
 	height: 19vh;
 	padding: 0.5rem;
 	border-radius: 25px;
-	background-color: darkblue;
+	background-color: ${props => typesColors[props.$mainType]};
 `;
 
 const Wrapper = styled(ContainerPrototype)`
 	display: flex;
 	flex-direction: column;
-	//background-color: yellow;
 	border-radius: 25px;
 `;
 
@@ -95,12 +95,17 @@ export default function PokemonPictureCard(
 	} = pokemonInfo;
 
 	const renderPokemonTypes = (): JSX.Element =>
-		types.map(x => (
-			<PokemonTypesElement typeName={capitalizeWords(x.type.name)} />
-		));
+		types
+			.toReversed()
+			.map(x => (
+				<PokemonTypesElement typeName={capitalizeWords(x.type.name)} />
+			));
 
 	return (
-		<Container onClick={()=>alert("Clicked")}>
+		<Container
+			$mainType={types && types[0].type.name}
+			onClick={() => alert("Clicked")}
+		>
 			<Wrapper>
 				<PokeName>{name && capitalizeWords(name)}</PokeName>
 				<SubContainer>
