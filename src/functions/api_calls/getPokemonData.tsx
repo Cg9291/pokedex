@@ -4,15 +4,16 @@ import { PokemonInfo } from "../../components/types";
 
 export default async function getPokemonData(id: number): Promise<PokemonInfo> {
 	try {
-		const response: {} = await axios.get(
+		const response = await axios.get(
 			`https://pokeapi.co/api/v2/pokemon/${id}`,
 		);
 		//console.log(response);
 		const pokemonData: PokemonInfo = response.data;
-		console.log("Done", pokemonData);
+		console.log("function getPokemonData:success", pokemonData);
 		return pokemonData;
 	} catch (err) {
-		console.log("Failure", err);
+		throw err;
+		console.log("function getPokemonData:success", err);
 	}
 }
 

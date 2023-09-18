@@ -20,5 +20,5 @@ export interface PokemonInfo {
 }
 
 export interface PokemonNumber {
-	pokemonNumber: number;
+	id: number;
 }

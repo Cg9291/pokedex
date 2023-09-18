@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "./prototypes/ContainerPrototype";
-import { PokemonNumber } from "./types";
+import { PokemonInfo, PokemonNumber } from "./types";
 import getPokemonData from "../functions/api_calls/getPokemonData";
 import capitalizeWords from "../functions/utilities/capitalizeWords";
 import { useParams } from "react-router-dom";
@@ -34,14 +34,14 @@ export default function PokemonProfile(props: PokemonNumber): JSX.Element {
 
 	const paramId = useParams().id; //review involved logic of this hook
 
-	async function getData(pokeNumber: number): void {
+	async function getData(pokeNumber: number): Promise<any> {
 		const data: PokemonInfo = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
 	}
 
 	useEffect(() => {
-		getData(paramId);
-		console.log(paramId);
+		getData(props.id);
+		console.log(props.id);
 	}, [paramId]);
 
 	const {
@@ -74,7 +74,7 @@ export default function PokemonProfile(props: PokemonNumber): JSX.Element {
 					<SvgImg>
 						<PokemonImg
 							href={sprites.front_default}
-							alt="a pokemon image"
+							// alt="a pokemon image"
 							width="325"
 							height="325"
 						/>

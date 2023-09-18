@@ -19,8 +19,8 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
-	const id = useParams();
-	console.log(id);
+	/* const id2 = Number(useParams().id2);
+	console.log(id2); */
 	return (
 		<Container>
 			<Routes>
@@ -32,10 +32,10 @@ function App(): JSX.Element {
 					path="/about"
 					element={<About />}
 				/>
-				<Route
+			{/* 	<Route
 					path="/pokemons/:id"
-					element={<PokemonProfile />}
-				/>
+					element={<PokemonProfile id={id2} />}
+				/> */}
 				<Route
 					path="*"
 					element={<NoMatch />}

@@ -26,11 +26,12 @@ export default function Homepage(): JSX.Element {
 			}
 		};
 		randomNum();
+		//console.log(numberArray)
 		return numberArray;
 	};
 
 	const mapPictureCards = (): JSX.Element[] =>
-		pokemonLookupNumber().map(i => <PokemonPictureCard pokemonNumber={i} />);
+		pokemonLookupNumber().map(i => <PokemonPictureCard id={i} />);
 
 	return (
 		<Container>
