@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ContainerPrototype from "../Prototypes/ContainerPrototype.tsx";
-import Header from "./header/Header.tsx";
-import PokemonPictureCard from "./pokemonPictureCards/PokemonPictureCard.tsx";
+import ContainerPrototype from "../components/prototypes/ContainerPrototype.tsx";
+import Header from "../components/Homepage/header/Header.tsx";
+import PokemonPictureCard from "../components/Homepage/pokemonPictureCards/PokemonPictureCard.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;

@@ -18,3 +18,7 @@ export interface PokemonInfo {
 	types: { [key: string]: {} }[];
 	weight: number;
 }
+
+export interface PokemonNumber {
+	pokemonNumber: number;
+}

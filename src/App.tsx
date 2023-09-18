@@ -1,8 +1,11 @@
+import { Routes, Route, useParams } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
-import ContainerPrototype from "./components/Prototypes/ContainerPrototype.tsx";
-import Homepage from "./components/Homepage/Homepage.tsx";
-
+import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
+import Homepage from "./pages/Homepage.tsx";
+import About from "./pages/About.tsx";
+import NoMatch from "./pages/NoMatch.tsx";
+import PokemonProfile from "./components/PokemonProfile.tsx";
 
 /*
 TODO
@@ -16,9 +19,28 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
+	const id = useParams();
+	console.log(id);
 	return (
 		<Container>
-			<Homepage />
+			<Routes>
+				<Route
+					path="/"
+					element={<Homepage />}
+				/>
+				<Route
+					path="/about"
+					element={<About />}
+				/>
+				<Route
+					path="/pokemons/:id"
+					element={<PokemonProfile />}
+				/>
+				<Route
+					path="*"
+					element={<NoMatch />}
+				/>
+			</Routes>
 		</Container>
 	);
 }

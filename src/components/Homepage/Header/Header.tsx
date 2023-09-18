@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ContainerPrototype from "../../Prototypes/ContainerPrototype";
+import ContainerPrototype from "../../prototypes/ContainerPrototype";
 
 const Container = styled(ContainerPrototype)`
 	max-height: 13rem;

@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ContainerPrototype from "../../Prototypes/ContainerPrototype";
+import { PokemonObjectContext } from "../../../contexts/pokemonObjectContext";
+import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import PokemonTypesElement from "./PokemonTypesElement";
 
 import getPokemonData from "../../../functions/api_calls/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-import { PokemonInfo } from "../../types";
+import { PokemonInfo, PokemonNumber } from "../../types";
 import typesColors from "../../../objects/typesColors";
 
-const Container = styled.a<{ $mainType: "string" }>`
+const Container = styled(Link)<{ $mainType: "string" }>`
 	width: 45%;
 	height: 19vh;
 	padding: 0.5rem;
 	border-radius: 25px;
+	text-decoration: none;
 	background-color: ${props => typesColors[props.$mainType]};
 `;
 
@@ -50,13 +53,8 @@ const PokemonImg = styled.image`
 	aspect-ratio: 1/1;
 `;
 
-interface pokemonCardsProps {
-	pokemonNumber: number;
-}
-
-export default function PokemonPictureCard(
-	props: pokemonCardsProps,
-): JSX.Element {
+export default function PokemonPictureCard(props: PokemonNumber): JSX.Element {
+	//const ApiPokemonObject = useContext(PokemonObjectContext);
 	const [pokemonInfo, setPokemonInfo] = useState<{ [key: string]: any }>({});
 
 	async function getData(pokeNumber: number): void {
@@ -103,8 +101,9 @@ export default function PokemonPictureCard(
 
 	return (
 		<Container
+			to={`/pokemons/${id}`}
 			$mainType={types && types[0].type.name}
-			onClick={() => alert("Clicked")}
+			/* onClick={() => alert("Clicked")} */
 		>
 			<Wrapper>
 				<PokeName>{name && capitalizeWords(name)}</PokeName>
@@ -129,3 +128,5 @@ export default function PokemonPictureCard(
 		</Container>
 	);
 }
+
+export {};
