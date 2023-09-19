@@ -6,17 +6,19 @@ import PokemonTypesElement from "./PokemonTypesElement";
 
 import getPokemonData from "../../../functions/api_calls/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-import { PokemonInfo, PokemonNumber } from "../../types";
-import typesColors from "../../../objects/typesColors";
-import { type } from "@testing-library/user-event/dist/type";
+import { PokemonInfoInt, PokemonNumberInt } from "../../types";
+import typesColors, { TypesColorsInt } from "../../../objects/typesColors";
 
-const Container = styled(Link)/* <{ $mainType: string }> */`
+const Container = styled(Link)<{ $mainType: string }>`
 	width: 45%;
 	height: 19vh;
 	padding: 0.5rem;
 	border-radius: 25px;
 	text-decoration: none;
-
+	background-color: ${props =>
+		typesColors[
+			props.$mainType as keyof TypesColorsInt
+		]}; //review this answer for better concept understanding
 `;
 
 const Wrapper = styled(ContainerPrototype)`
@@ -53,15 +55,15 @@ const PokemonImg = styled.image`
 	aspect-ratio: 1/1;
 `;
 
-export default function PokemonPictureCard(props: PokemonNumber): JSX.Element {
+export default function PokemonPictureCard(
+	props: PokemonNumberInt,
+): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInfo | { [key: string]: any }
+		PokemonInfoInt | { [key: string]: any }
 	>({});
 
-	const [typeColor, setTypeColor] = useState<string>("yellow");
-
-	async function getData(pokeNumber: number): Promise<PokemonInfo | {}> {
-		const data: PokemonInfo = await getPokemonData(pokeNumber);
+	async function getData(pokeNumber: number): Promise<PokemonInfoInt | {}> {
+		const data: PokemonInfoInt = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
 		console.log("function getData:success", data);
 		return pokemonInfo;
@@ -73,7 +75,7 @@ export default function PokemonPictureCard(props: PokemonNumber): JSX.Element {
 
 	useEffect(() => {
 		getData(props.id);
-	}, [props.id]); //this dependency was not necessary,but clears out a warning message so it will be kept
+	}, []);
 
 	const {
 		abilities,
@@ -96,25 +98,20 @@ export default function PokemonPictureCard(props: PokemonNumber): JSX.Element {
 		weight,
 	} = pokemonInfo;
 
-	const renderPokemonTypes = (): JSX.Element =>
+	const renderPokemonTypes = (): JSX.Element[] =>
 		types
 			.toReversed()
-			.map((x: any) => (
-				<PokemonTypesElement typeName={capitalizeWords(x.type.name)} />
-			));
-
-	 const renderTypeColor = (): void => {
-		const check=()=>types?`here they are ${types[0]}`:"notypesyet"
-		console.log(check);
-	};
-
-	renderTypeColor();
-
+			.map(
+				(x: /*replace this with an  interface-> */ {
+					slot: number;
+					type: { name: string; url: string };
+				}) => <PokemonTypesElement typeName={capitalizeWords(x.type.name)} />,
+			);
 
 	return (
 		<Container
 			to={`/pokemons/${id}`}
-			//$mainType={types && renderTypeColor()}
+			$mainType={types && types[0].type.name}
 			/* onClick={() => alert("Clicked")} */
 		>
 			<Wrapper>

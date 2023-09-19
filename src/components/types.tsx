@@ -1,4 +1,4 @@
-export interface PokemonInfo {
+export interface PokemonInfoInt {
 	abilities: {}[];
 	base_experience: number;
 	forms: {}[];
@@ -19,6 +19,6 @@ export interface PokemonInfo {
 	weight: number;
 }
 
-export interface PokemonNumber {
-	id: number;
+export interface PokemonNumberInt {
+	id: number ;
 }

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "./prototypes/ContainerPrototype";
-import { PokemonInfo, PokemonNumber } from "./types";
+import { PokemonInfoInt } from "./types";
 import getPokemonData from "../functions/api_calls/getPokemonData";
 import capitalizeWords from "../functions/utilities/capitalizeWords";
 import { useParams } from "react-router-dom";
+import typesColors, { TypesColorsInt } from "../objects/typesColors";
 
-const Container = styled(ContainerPrototype)`
+const Container = styled(ContainerPrototype)<{ $mainType: string }>`
 	flex-direction: column;
 	justify-content: center;
-	background-color: red;
+	background-color: ${props =>
+		typesColors[props.$mainType as keyof TypesColorsInt]};
 `;
 const ImageContainer = styled(ContainerPrototype)`
 	max-height: 40%;
@@ -29,20 +31,22 @@ const ProfileContainer = styled(ContainerPrototype)`
 	max-height: 60%;
 `;
 
-export default function PokemonProfile(props: PokemonNumber): JSX.Element {
-	const [pokemonInfo, setPokemonInfo] = useState<{ [key: string]: any }>({});
+export default function PokemonProfile(): JSX.Element {
+	const [pokemonInfo, setPokemonInfo] = useState<
+		PokemonInfoInt | { [key: string]: any }
+	>({});
 
-	const paramId = useParams().id; //review involved logic of this hook
+	const paramId: number = Number(useParams().id); //review involved logic of this hook
 
-	async function getData(pokeNumber: number): Promise<any> {
-		const data: PokemonInfo = await getPokemonData(pokeNumber);
+	async function getData(pokeNumber: number): Promise<PokemonInfoInt | {}> {
+		const data: PokemonInfoInt = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
+		return pokemonInfo;
 	}
 
 	useEffect(() => {
-		getData(props.id);
-		console.log(props.id);
-	}, [paramId]);
+		getData(paramId);
+	}, []);
 
 	const {
 		abilities,
@@ -66,7 +70,7 @@ export default function PokemonProfile(props: PokemonNumber): JSX.Element {
 	} = pokemonInfo;
 
 	return (
-		<Container>
+		<Container $mainType={types && types[0].type.name}>
 			<ImageContainer>
 				<PokeNumber>{id && id}</PokeNumber>
 				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
