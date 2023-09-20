@@ -3,7 +3,7 @@ import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
 import Homepage from "./pages/Homepage.tsx";
-import About from "./pages/About.tsx";
+import About from "./components/About.tsx";
 import NoMatch from "./pages/NoMatch.tsx";
 import PokemonProfile from "./components/PokemonProfile.tsx";
 
@@ -19,8 +19,6 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
-	//let id2:number |{}=useParams();
-	//console.log("id:",id2);
 	return (
 		<Container>
 			<Routes>
@@ -34,7 +32,7 @@ function App(): JSX.Element {
 				/>
 				<Route
 					path="/pokemons/:id"
-					element={<PokemonProfile  />}
+					element={<PokemonProfile />}
 				/>
 				<Route
 					path="*"

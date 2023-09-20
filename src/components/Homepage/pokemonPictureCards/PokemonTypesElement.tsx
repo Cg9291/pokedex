@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype";
 
 const Container = styled.div`
 	width: max-content;

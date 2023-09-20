@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import ContainerPrototype from "./prototypes/ContainerPrototype";
-import { PokemonInfoInt } from "./types";
-import getPokemonData from "../functions/api_calls/getPokemonData";
-import capitalizeWords from "../functions/utilities/capitalizeWords";
+import ContainerPrototype from "./prototypes/ContainerPrototype.tsx";
+import { PokemonInfoInt } from "./types.tsx";
+import getPokemonData from "../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
-import typesColors, { TypesColorsInt } from "../objects/typesColors";
+import typesColors, { TypesColorsInt } from "../objects/typesColors.tsx";
 
-const Container = styled(ContainerPrototype)<{ $mainType: string }>`
+const Container = styled(ContainerPrototype)<{ mainType: string }>`
 	flex-direction: column;
 	justify-content: center;
 	background-color: ${props =>
-		typesColors[props.$mainType as keyof TypesColorsInt]};
+		typesColors[props.mainType as keyof TypesColorsInt]};
 `;
 const ImageContainer = styled(ContainerPrototype)`
 	max-height: 40%;
@@ -70,7 +70,7 @@ export default function PokemonProfile(): JSX.Element {
 	} = pokemonInfo;
 
 	return (
-		<Container $mainType={types && types[0].type.name}>
+		<Container mainType={types && types[0].type.name}>
 			<ImageContainer>
 				<PokeNumber>{id && id}</PokeNumber>
 				<PokemonName>{name && capitalizeWords(name)}</PokemonName>

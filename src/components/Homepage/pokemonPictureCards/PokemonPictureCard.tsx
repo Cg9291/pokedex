@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import PokemonTypesElement from "./PokemonTypesElement";
+import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import PokemonTypesElement from "./PokemonTypesElement.tsx";
 
-import getPokemonData from "../../../functions/api_calls/getPokemonData";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-import { PokemonInfoInt, PokemonNumberInt } from "../../types";
-import typesColors, { TypesColorsInt } from "../../../objects/typesColors";
+import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
+import { PokemonInfoInt, PokemonNumberInt } from "../../types.tsx";
+import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
 	width: 45%;
@@ -32,9 +32,7 @@ const PokeName = styled.h3`
 	color: white;
 `;
 
-const SubContainer = styled(ContainerPrototype)`
-	width: 100%;
-`;
+const SubContainer = styled(ContainerPrototype)``;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
 	width: 50%;

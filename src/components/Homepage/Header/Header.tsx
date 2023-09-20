@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype";
+import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 
 const Container = styled(ContainerPrototype)`
 	max-height: 13rem;
