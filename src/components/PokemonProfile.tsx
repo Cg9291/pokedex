@@ -14,17 +14,24 @@ const Container = styled(ContainerPrototype)<{ mainType: string }>`
 		typesColors[props.mainType as keyof TypesColorsInt]};
 `;
 const ImageContainer = styled(ContainerPrototype)`
+	flex-direction: column;
+	align-items: center;
+	justify-content:space-around;
 	max-height: 40%;
+	border:solid white;
 `;
 const PokeNumber = styled.span``;
 const PokemonName = styled.span``;
 const SvgImg = styled.svg`
 	width: 100%;
-	height: 100%;
+	height: 50%;
+	//border:solid red;
 `;
 const PokemonImg = styled.image`
-	width: 200;
-	aspect-ratio: 1/1;
+	width: 100%;
+	height:100%;
+	border:solid black;
+	//aspect-ratio: 1/1;
 `;
 
 const ProfileContainer = styled(ContainerPrototype)`
@@ -79,8 +86,8 @@ export default function PokemonProfile(): JSX.Element {
 						<PokemonImg
 							href={sprites.front_default}
 							// alt="a pokemon image"
-							width="325"
-							height="325"
+							/* width="325"
+							height="325" */
 						/>
 					</SvgImg>
 				)}
