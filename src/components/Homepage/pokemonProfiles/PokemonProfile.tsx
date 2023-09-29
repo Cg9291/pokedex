@@ -1,24 +1,33 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import ContainerPrototype from "./prototypes/ContainerPrototype.tsx";
-import { PokemonInfoInt } from "./types.tsx";
-import getPokemonData from "../functions/api_calls/getPokemonData.tsx";
-import capitalizeWords from "../functions/utilities/capitalizeWords.tsx";
+import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
+import { PokemonInfoInt } from "../../types.tsx";
+import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
-import typesColors, { TypesColorsInt } from "../objects/typesColors.tsx";
+import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
 
-const Container = styled(ContainerPrototype)<{ mainType: string }>`
+let spriteUrl: string;
+
+const Container = styled(ContainerPrototype)`
+	display: unset;
+`;
+
+const SubContainer = styled(ContainerPrototype)<{ mainType: string }>`
 	flex-direction: column;
 	justify-content: center;
 	background-color: ${props =>
 		typesColors[props.mainType as keyof TypesColorsInt]};
+	z-index: 0;
+	position: relative;
 `;
 const ImageContainer = styled(ContainerPrototype)`
 	flex-direction: column;
 	align-items: center;
-	justify-content:space-around;
+	justify-content: space-around;
 	max-height: 40%;
-	border:solid white;
+	//border: solid white;
 `;
 const PokeNumber = styled.span``;
 const PokemonName = styled.span``;
@@ -27,10 +36,13 @@ const SvgImg = styled.svg`
 	height: 50%;
 	//border:solid red;
 `;
-const PokemonImg = styled.image`
+const PokemonImg = styled.image.attrs(props => ({
+	href: spriteUrl,
+	alt: "a pokemon image",
+}))`
 	width: 100%;
-	height:100%;
-	border:solid black;
+	height: 100%;
+	border: solid black;
 	//aspect-ratio: 1/1;
 `;
 
@@ -76,23 +88,25 @@ export default function PokemonProfile(): JSX.Element {
 		weight,
 	} = pokemonInfo;
 
+	if (sprites) {
+		spriteUrl = sprites.front_default;
+	}
+
 	return (
-		<Container mainType={types && types[0].type.name}>
-			<ImageContainer>
-				<PokeNumber>{id && id}</PokeNumber>
-				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
-				{sprites && (
-					<SvgImg>
-						<PokemonImg
-							href={sprites.front_default}
-							// alt="a pokemon image"
-							/* width="325"
-							height="325" */
-						/>
-					</SvgImg>
-				)}
-			</ImageContainer>
-			<ProfileContainer></ProfileContainer>
+		<Container>
+			<SubContainer mainType={types && types[0].type.name}>
+				<ImageContainer>
+					<PokeNumber>{id && id}</PokeNumber>
+					<PokemonName>{name && capitalizeWords(name)}</PokemonName>
+					{sprites && (
+						<SvgImg>
+							<PokemonImg />
+						</SvgImg>
+					)}
+				</ImageContainer>
+				<ProfileContainer></ProfileContainer>
+			</SubContainer>
+			<PokemonProfileInfo />
 		</Container>
 	);
 }

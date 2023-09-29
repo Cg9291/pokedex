@@ -67,10 +67,6 @@ export default function PokemonPictureCard(
 		return pokemonInfo;
 	}
 
-	/* useLayoutEffect(() => {
-		getPokemonData(props.pokemonNumber, setPokemonInfo);
-	}, []); */
-
 	useEffect(() => {
 		getData(props.id);
 	}, []);
@@ -110,7 +106,6 @@ export default function PokemonPictureCard(
 		<Container
 			to={`/pokemons/${id}`}
 			$mainType={types && types[0].type.name}
-			/* onClick={() => alert("Clicked")} */
 		>
 			<Wrapper>
 				<PokeName>{name && capitalizeWords(name)}</PokeName>
