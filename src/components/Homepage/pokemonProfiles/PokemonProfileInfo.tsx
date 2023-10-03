@@ -1,13 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import NavElement from "./NavElement";
-
-const NavElementsNames: string[] = [
-	"About",
-	"Base Stats",
-	"Evolution",
-	"Moves",
-];
+import { PokemonProfilesNavElementsInt } from "../../interfaces";
 
 const Container = styled(ContainerPrototype)`
 	z-index: 1;
@@ -22,18 +17,33 @@ const Container = styled(ContainerPrototype)`
 const InfoNavBar = styled(ContainerPrototype)`
 	height: 10%;
 	padding: 0 1rem;
-	//background-color: red;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
 `;
 
-const mapArrayToComponent = (): JSX.Element[] =>
-	NavElementsNames.map(x => <NavElement value={x} />);
-
 export default function PokemonProfileInfo(): JSX.Element {
+	const [navElementsNames, setNavElementsNames] =
+		useState<PokemonProfilesNavElementsInt>({
+			About: { isFocused: true },
+			"Base Stats": { isFocused: false },
+			Evolution: { isFocused: false },
+			Moves: { isFocused: false },
+		});
+
+	const mapObjectToComponent = (): JSX.Element[] =>
+		Object.keys(navElementsNames).map(
+			(key: string): JSX.Element => (
+				<NavElement
+					value={key}
+					navElementsNames={navElementsNames}
+					setNavElementsNames={setNavElementsNames}
+				/>
+			),
+		);
+
 	return (
 		<Container>
-			<InfoNavBar>{mapArrayToComponent()}</InfoNavBar>
+			<InfoNavBar>{mapObjectToComponent()}</InfoNavBar>
 		</Container>
 	);
 }

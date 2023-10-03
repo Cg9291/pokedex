@@ -12,6 +12,7 @@ TODO
 
 *add type to index
 *figure out keys for mapped elements
+*review focusHandler() in NavElements file
 */
 
 const Container = styled(ContainerPrototype)`
