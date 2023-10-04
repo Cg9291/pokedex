@@ -32,7 +32,7 @@ function App(): JSX.Element {
 					element={<About />}
 				/>
 				<Route
-					path="/pokemons/:id"
+					path={["/pokemons/:id", "/pokemons/:name"]}
 					element={<PokemonProfile />}
 				/>
 				<Route

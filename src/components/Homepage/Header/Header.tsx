@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import Search from "./Search.tsx";
 
 const Container = styled(ContainerPrototype)`
 	max-height: 13rem;
@@ -19,14 +20,6 @@ const HeaderText = styled.h2`
 	text-align: start;
 `;
 
-const Input = styled.input`
-	width: 100%;
-	height: 3rem;
-	border-radius: 99px;
-	margin-top: auto;
-	padding-left: 1rem;
-`;
-
 export default function Header(): JSX.Element {
 	return (
 		<Container>
@@ -34,7 +27,7 @@ export default function Header(): JSX.Element {
 				What Pokemon
 				<br /> would you like to find?
 			</HeaderText>
-			<Input placeholder="Search anything related to a pokemon" />
+			<Search />
 		</Container>
 	);
 }
