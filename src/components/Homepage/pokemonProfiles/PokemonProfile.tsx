@@ -55,25 +55,26 @@ export default function PokemonProfile(): JSX.Element {
 		PokemonInfoInt | { [key: string]: any }
 	>({});
 
-	const paramId: number = Number(useParams().id); //review involved logic of this hook
+	const paramId: number = Number(useParams().id);
+	const paramName: string | undefined = useParams().name; //review involved logic of this hook
+	console.log(paramId, paramName);
 
 	async function getData(
-		pokeNumber?: number,
-		pokeName?: string,
+		pokeNumber?: number | string,
+		//pokeName?: string |undefined,
 	): Promise<PokemonInfoInt | {}> {
-		const data = (): PokemonInfoInt => {
-			if (pokeNumber) {
-				await getPokemonData(pokeNumber);
-			} else if (pokeName) {
-				await getPokemonData(pokeName);
-			}
-		};
-		setPokemonInfo(data());
+		let data: PokemonInfoInt;
+		data = await getPokemonData(pokeNumber);
+		setPokemonInfo(data);
+
+		console.log("info is ", pokemonInfo);
 		return pokemonInfo;
 	}
 
 	useEffect(() => {
-		getData(paramId);
+		if (typeof paramId===number){
+			getData(paramId);
+		}
 	}, []);
 
 	const {

@@ -3,7 +3,8 @@ import { PokemonInfoInt } from "../../components/interfaces.tsx";
 //interface needs to be outside function,sometimes exported..meant to be reused
 
 export default async function getPokemonData(
-	id: number,
+	id?: number|string,
+	name?:string,
 ): Promise<PokemonInfoInt> {
 	try {
 		const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);

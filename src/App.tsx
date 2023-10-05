@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useParams, useRoutes, Router } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage.tsx";
 import About from "./components/About.tsx";
 import NoMatch from "./pages/NoMatch.tsx";
 import PokemonProfile from "./components/Homepage/pokemonProfiles/PokemonProfile.tsx";
+import MapPathsToElement from "./components/MapPathsToElement.tsx";
 
 /*
 TODO
@@ -20,8 +21,12 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
-	return (
-		<Container>
+	return <MapPathsToElement />;
+}
+
+export default App;
+{
+	/* <Container>
 			<Routes>
 				<Route
 					path="/"
@@ -31,17 +36,12 @@ function App(): JSX.Element {
 					path="/about"
 					element={<About />}
 				/>
-				<Route
-					path={["/pokemons/:id", "/pokemons/:name"]}
-					element={<PokemonProfile />}
-				/>
+
+				<MapPathsToElement />
 				<Route
 					path="*"
 					element={<NoMatch />}
 				/>
 			</Routes>
-		</Container>
-	);
+		</Container> */
 }
-
-export default App;
