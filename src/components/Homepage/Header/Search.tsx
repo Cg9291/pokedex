@@ -1,18 +1,17 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
-import { useState } from "react";
-//import handleSubmit from "../../../functions/utilities/handleSubmit.tsx";
 
 const Container = styled(ContainerPrototype)``;
 
 const Form = styled.form.attrs({
-	method: "post",
+	method: "get",
 	//onSubmit: handleSubmit,
 })`
 	width: 100%;
 	display: flex;
 `;
+
 const Label = styled.label`
 	flex: 3 0 85%;
 `;
@@ -28,21 +27,21 @@ const Input = styled.input.attrs({
 	padding-left: 1rem;
 `;
 
-const Button = styled(Link).attrs({ type: "submit" })`
-	flex: 1 0 15%;
+const Button = styled.button.attrs({ type: "submit" })`
+	width: 100%;
+	height: 100%;
 	border-radius: 10px;
-	margin-left: 0.2rem;
 `;
 
 export default function Search(): JSX.Element {
-	const [name, setName] = useState<FormDataEntryValue>();
+	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
 		const transmittedData = Object.fromEntries(formData.entries()).myInput;
-		console.log(transmittedData, "name is", name);
-		setName(transmittedData);
+		const name = transmittedData.toString().toLowerCase();
+		navigate(`/pokemons/name/${name}`);
 	};
 
 	return (
@@ -51,12 +50,7 @@ export default function Search(): JSX.Element {
 				<Label>
 					<Input />
 				</Label>
-				<Button
-					as="button"
-					to={`/pokemons/${name}`}
-				>
-					Search
-				</Button>
+				<Button>Search</Button>
 			</Form>
 		</Container>
 	);

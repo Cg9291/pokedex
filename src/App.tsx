@@ -14,6 +14,8 @@ TODO
 *add type to index
 *figure out keys for mapped elements
 *review focusHandler() in NavElements file
+*add handler for when a searched pokemon doesnt exist
+*figure out best routing structure
 */
 
 const Container = styled(ContainerPrototype)`

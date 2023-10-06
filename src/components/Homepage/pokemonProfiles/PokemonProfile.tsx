@@ -22,15 +22,17 @@ const SubContainer = styled(ContainerPrototype)<{ mainType: string }>`
 	z-index: 0;
 	position: relative;
 `;
+
 const ImageContainer = styled(ContainerPrototype)`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-around;
 	max-height: 40%;
-	//border: solid white;
 `;
+
 const PokeNumber = styled.span``;
 const PokemonName = styled.span``;
+
 const SvgImg = styled.svg`
 	width: 100%;
 	height: 50%;
@@ -55,16 +57,12 @@ export default function PokemonProfile(): JSX.Element {
 		PokemonInfoInt | { [key: string]: any }
 	>({});
 
-	const paramId: number = Number(useParams().id);
-	const paramName: string | undefined = useParams().name; //review involved logic of this hook
-	console.log(paramId, paramName);
+	const { id: paramId, name: paramName } = useParams();
 
 	async function getData(
-		pokeNumber?: number | string,
-		//pokeName?: string |undefined,
+		pokeId: number | string,
 	): Promise<PokemonInfoInt | {}> {
-		let data: PokemonInfoInt;
-		data = await getPokemonData(pokeNumber);
+		const data = await getPokemonData(pokeId);
 		setPokemonInfo(data);
 
 		console.log("info is ", pokemonInfo);
@@ -72,8 +70,10 @@ export default function PokemonProfile(): JSX.Element {
 	}
 
 	useEffect(() => {
-		if (typeof paramId===number){
-			getData(paramId);
+		if (paramId) {
+			getData(Number(paramId));
+		} else if (paramName) {
+			getData(paramName);
 		}
 	}, []);
 

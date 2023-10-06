@@ -48,7 +48,7 @@ const SvgImg = styled.svg`
 	width: 100%;
 	height: 100%;
 `;
-const PokemonImg = styled.image`
+const PokemonImg = styled.image.attrs({})`
 	width: 200;
 	aspect-ratio: 1/1;
 `;
@@ -104,7 +104,7 @@ export default function PokemonPictureCard(
 
 	return (
 		<Container
-			to={`/pokemons/${id}`}
+			to={`/pokemons/id/${id}`}
 			$mainType={types && types[0].type.name}
 		>
 			<Wrapper>
