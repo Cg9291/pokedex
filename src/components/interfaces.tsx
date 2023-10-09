@@ -24,8 +24,8 @@ export interface PokemonNumberInt {
 }
 
 export interface PokemonProfilesNavElementsInt {
-	About: { isFocused: boolean };
-	"Base Stats": { isFocused: boolean };
-	Evolution: { isFocused: boolean };
-	Moves: { isFocused: boolean };
+	About: { isFocused: boolean; element: JSX.Element };
+	"Base Stats": { isFocused: boolean; element: JSX.Element };
+	Evolution: { isFocused: boolean; element: JSX.Element };
+	Moves: { isFocused: boolean; element: JSX.Element };
 }

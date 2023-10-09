@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import PokemonProfile from "./Homepage/pokemonProfiles/PokemonProfile.tsx";
+import PokemonProfile from "./PokemonProfiles/PokemonProfile.tsx";
 import Homepage from "../pages/Homepage.tsx";
 import About from "./About.tsx";
 import NoMatch from "../pages/NoMatch.tsx";

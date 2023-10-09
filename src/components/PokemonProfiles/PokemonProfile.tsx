@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
-import { PokemonInfoInt } from "../../interfaces.tsx";
-import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
+import { PokemonInfoInt } from "../interfaces.tsx";
+import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
-import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
+import typesColors, { TypesColorsInt } from "../../objects/typesColors.tsx";
 
 let spriteUrl: string;
 

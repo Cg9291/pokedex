@@ -5,7 +5,7 @@ import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
 import Homepage from "./pages/Homepage.tsx";
 import About from "./components/About.tsx";
 import NoMatch from "./pages/NoMatch.tsx";
-import PokemonProfile from "./components/Homepage/pokemonProfiles/PokemonProfile.tsx";
+import PokemonProfile from "./components/PokemonProfiles/PokemonProfile.tsx";
 import MapPathsToElement from "./components/MapPathsToElement.tsx";
 
 /*

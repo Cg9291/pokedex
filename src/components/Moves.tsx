@@ -1,8 +1,6 @@
 import ContainerPrototype from "./prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 
-
-
-export default function About(): JSX.Element {
-	return <>About page example</>;
+export default function Moves(): JSX.Element {
+	return <>Moves page placeholder</>;
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import LinkPrototype from "../../prototypes/LinkPrototype";
-import { PokemonProfilesNavElementsInt } from "../../interfaces";
+import ContainerPrototype from "../prototypes/ContainerPrototype";
+import LinkPrototype from "../prototypes/LinkPrototype";
+import { PokemonProfilesNavElementsInt } from "../interfaces";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -9,6 +9,7 @@ const Container = styled(ContainerPrototype)`
 	height: 100%;
 	justify-content: center;
 	align-items: center;
+	background-color: blue;
 `;
 
 const Link = styled(LinkPrototype)`
@@ -47,17 +48,22 @@ export default function NavElement(props: {
 		}));
 	};
 
-	return (
-		<Container onFocus={focusHandler}>
-			<Link>{props.value}</Link>
-			<SelectionUnderlineBar
-				$visibility={
-					navElementsNames[props.value as keyof PokemonProfilesNavElementsInt]
-						.isFocused === true
-						? "visible"
-						: "hidden"
-				}
-			/>
-		</Container>
-	);
+	if (
+		navElementsNames[props.value as keyof PokemonProfilesNavElementsInt]
+			.isFocused === true
+	) {
+		return (
+			<Container onFocus={focusHandler}>
+				<Link>{props.value}</Link>
+				<SelectionUnderlineBar $visibility={"visible"} />
+			</Container>
+		);
+	} else {
+		return (
+			<Container onFocus={focusHandler}>
+				<Link>{props.value}</Link>
+				<SelectionUnderlineBar $visibility={"hidden"} />
+			</Container>
+		);
+	}
 }
