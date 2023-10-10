@@ -36,3 +36,4 @@ export interface StatsInt {
 	effort: number;
 	stat: { name: string; url: string };
 }
+

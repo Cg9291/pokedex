@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
 import PokemonProfile from "./PokemonProfiles/PokemonProfile.tsx";
 import Homepage from "../pages/Homepage.tsx";
-import About from "./About.tsx";
+import About from "./PokemonProfiles/About.tsx";
 import NoMatch from "../pages/NoMatch.tsx";
 
 export default function MapPathsToElement(): React.ReactElement | null {

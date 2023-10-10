@@ -1,8 +1,8 @@
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
-import { StatsInt } from "../interfaces.tsx";
+import { StatsInt } from "../../interfaces&types/interfaces.tsx";
 import { useContext } from "react";
-import StatsContext from "../../functions/contexts/statscontext.tsx";
+import StatsContext from "../../contexts/statscontext.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 
 const Container = styled(ContainerPrototype)`
@@ -25,11 +25,14 @@ const StatBar = styled(ContainerPrototype)`
 	min-width: 45%;
 	height: 20%;
 	background-color: grey;
+	border-radius: 99px;
+	margin-top: 0.5rem;
 `;
 const StatBarOverlay = styled(ContainerPrototype)<{ value: number }>`
 	width: calc((${props => props.value} / 255) * 100%);
 	height: 100%;
 	background-color: red;
+	border-radius: 99px;
 `;
 
 export default function BaseStats(): JSX.Element {

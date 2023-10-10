@@ -6,7 +6,10 @@ import PokemonTypesElement from "./PokemonTypesElement.tsx";
 
 import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
-import { PokemonInfoInt, PokemonNumberInt } from "../../interfaces.tsx";
+import {
+	PokemonInfoInt,
+	PokemonNumberInt,
+} from "../../../interfaces&types/interfaces.tsx";
 import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`

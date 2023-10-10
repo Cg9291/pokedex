@@ -2,9 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import NavElement from "./NavElement.tsx";
-import { PokemonProfilesNavElementsInt } from "../interfaces.tsx";
+import { PokemonProfilesNavElementsInt } from "../../interfaces&types/interfaces.tsx";
 import BaseStats from "./BaseStats.tsx";
-import About from "../About.tsx";
+import About from "./About.tsx";
 import Moves from "../Moves.tsx";
 import Evolution from "../Evolution.tsx";
 
