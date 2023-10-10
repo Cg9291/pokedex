@@ -23,10 +23,15 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
-	return <MapPathsToElement />;
+	return (
+		<Container>
+			<MapPathsToElement />
+		</Container>
+	);
 }
 
 export default App;
+
 {
 	/* <Container>
 			<Routes>

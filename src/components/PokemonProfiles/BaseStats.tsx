@@ -1,33 +1,48 @@
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
-import LinkPrototype from "../prototypes/LinkPrototype.tsx";
 import styled from "styled-components";
+import { StatsInt } from "../interfaces.tsx";
+import { useContext } from "react";
+import StatsContext from "../../functions/contexts/statscontext.tsx";
+import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 
 const Container = styled(ContainerPrototype)`
-	background-color: green;
+	flex-direction: column;
 `;
 
 const Stat = styled.div`
 	width: 100%;
 	height: 10%;
 	display: flex;
+	justify-content: stretch;
 `;
-const StatName = styled(ContainerPrototype)``;
-const StatValue = styled(ContainerPrototype)``;
-const StatBar = styled(ContainerPrototype)``;
-const StatBarOverlay = styled(ContainerPrototype)``;
-
-const stats = ["HP", "Attack", "Defense", "Sp.Atk", "Sp.Def", "Speed", "Total"];
+const StatName = styled(ContainerPrototype)`
+	min-width: 45%;
+`;
+const StatValue = styled(ContainerPrototype)`
+	min-width: 1%;
+`;
+const StatBar = styled(ContainerPrototype)`
+	min-width: 45%;
+	height: 20%;
+	background-color: grey;
+`;
+const StatBarOverlay = styled(ContainerPrototype)<{ value: number }>`
+	width: calc((${props => props.value} / 255) * 100%);
+	height: 100%;
+	background-color: red;
+`;
 
 export default function BaseStats(): JSX.Element {
-	return (
-		<Container>
+	const myStatsContext = useContext(StatsContext);
+	const mapStats = (): JSX.Element[] =>
+		myStatsContext.map((x: StatsInt) => (
 			<Stat>
-				<StatName>testname</StatName>
-				<StatValue>testvalue</StatValue>
+				<StatName>{capitalizeWords(x.stat.name)}</StatName>
+				<StatValue>{x["base_stat"]}</StatValue>
 				<StatBar>
-					<StatBarOverlay></StatBarOverlay>
+					<StatBarOverlay value={x["base_stat"]}></StatBarOverlay>
 				</StatBar>
 			</Stat>
-		</Container>
-	);
+		));
+	return <Container>{mapStats()}</Container>;
 }

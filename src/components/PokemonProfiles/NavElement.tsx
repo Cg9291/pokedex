@@ -9,7 +9,6 @@ const Container = styled(ContainerPrototype)`
 	height: 100%;
 	justify-content: center;
 	align-items: center;
-	background-color: blue;
 `;
 
 const Link = styled(LinkPrototype)`
@@ -42,28 +41,30 @@ export default function NavElement(props: {
 				nextState[obj as keyof PokemonProfilesNavElementsInt].isFocused = false;
 			}
 		}
-
+		
 		setNavElementsNames((navElementsNames: PokemonProfilesNavElementsInt) => ({
 			...navElementsNames,
 		}));
 	};
 
-	if (
+	const isElementFocused: boolean =
 		navElementsNames[props.value as keyof PokemonProfilesNavElementsInt]
-			.isFocused === true
-	) {
-		return (
-			<Container onFocus={focusHandler}>
-				<Link>{props.value}</Link>
-				<SelectionUnderlineBar $visibility={"visible"} />
-			</Container>
-		);
-	} else {
+			.isFocused === true;
+
+	return (
+		<Container onFocus={focusHandler}>
+			<Link>{props.value}</Link>
+			<SelectionUnderlineBar
+				$visibility={isElementFocused ? "visible" : "hidden"}
+			/>
+		</Container>
+	);
+	/* 	} else {
 		return (
 			<Container onFocus={focusHandler}>
 				<Link>{props.value}</Link>
 				<SelectionUnderlineBar $visibility={"hidden"} />
 			</Container>
 		);
-	}
+	} */
 }

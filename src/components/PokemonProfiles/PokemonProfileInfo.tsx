@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import NavElement from "./NavElement.tsx";
 import { PokemonProfilesNavElementsInt } from "../interfaces.tsx";
-import NavBody from "./NavBody.tsx";
 import BaseStats from "./BaseStats.tsx";
 import About from "../About.tsx";
 import Moves from "../Moves.tsx";
@@ -18,7 +17,6 @@ const Container = styled(ContainerPrototype)`
 	position: absolute;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
-	background-color: yellow;
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
@@ -28,11 +26,19 @@ const InfoNavBar = styled(ContainerPrototype)`
 	border-top-right-radius: 25px;
 `;
 
+const InfoNavBody = styled(ContainerPrototype)`
+	height: 90%;
+	padding: 1rem;
+`;
+
 export default function PokemonProfileInfo(): JSX.Element {
 	const [navElementsNames, setNavElementsNames] =
 		useState<PokemonProfilesNavElementsInt>({
 			About: { isFocused: true, element: <About /> },
-			"Base Stats": { isFocused: false, element: <BaseStats /> },
+			"Base Stats": {
+				isFocused: false,
+				element: <BaseStats />,
+			},
 			Evolution: { isFocused: false, element: <Evolution /> },
 			Moves: { isFocused: false, element: <Moves /> },
 		});
@@ -45,12 +51,22 @@ export default function PokemonProfileInfo(): JSX.Element {
 					navElementsNames={navElementsNames}
 					setNavElementsNames={setNavElementsNames}
 				/>
-				/* 	<NavBody/> */
 			),
 		);
 
-	const displayNavBody = (): any => {
-		let finder = () => {
+	const displayNavBody = (): React.ReactNode => {
+		const focusedElement: string | undefined = Object.keys(
+			navElementsNames,
+		).find(
+			(key: string) =>
+				navElementsNames[key as keyof PokemonProfilesNavElementsInt].isFocused,
+		);
+
+		return navElementsNames[
+			focusedElement as keyof PokemonProfilesNavElementsInt
+		].element;
+
+		/* let finder = ():()=> JSX.Element => {
 			for (let key in navElementsNames) {
 				let x = key as keyof PokemonProfilesNavElementsInt; //this was necessary because accessing properties from key var caused a type error
 				if (navElementsNames[x].isFocused === true) {
@@ -58,14 +74,14 @@ export default function PokemonProfileInfo(): JSX.Element {
 				}
 			}
 		};
-		console.log(finder());
-		return finder();
+		console.log("stats array ", finder());
+		return finder(); */
 	};
 
 	return (
 		<Container>
 			<InfoNavBar>{mapObjectToComponent()}</InfoNavBar>
-			{displayNavBody()}
+			<InfoNavBody>{displayNavBody()}</InfoNavBody>
 		</Container>
 	);
 }

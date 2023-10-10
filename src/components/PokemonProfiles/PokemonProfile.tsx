@@ -7,14 +7,13 @@ import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
 import typesColors, { TypesColorsInt } from "../../objects/typesColors.tsx";
+import StatsContext from "../../functions/contexts/statscontext.tsx";
+import { Provider } from "react";
 
 let spriteUrl: string;
+let maintype: any;
 
-const Container = styled(ContainerPrototype)`
-	display: unset;
-`;
-
-const SubContainer = styled(ContainerPrototype)<{ mainType: string }>`
+const Container = styled(ContainerPrototype)<{ mainType: string }>`
 	flex-direction: column;
 	justify-content: center;
 	background-color: ${props =>
@@ -50,6 +49,7 @@ const PokemonImg = styled.image.attrs(props => ({
 
 const ProfileContainer = styled(ContainerPrototype)`
 	max-height: 60%;
+	background-color: green;
 `;
 
 export default function PokemonProfile(): JSX.Element {
@@ -64,7 +64,6 @@ export default function PokemonProfile(): JSX.Element {
 	): Promise<PokemonInfoInt | {}> {
 		const data = await getPokemonData(pokeId);
 		setPokemonInfo(data);
-
 		console.log("info is ", pokemonInfo);
 		return pokemonInfo;
 	}
@@ -102,21 +101,29 @@ export default function PokemonProfile(): JSX.Element {
 		spriteUrl = sprites.front_default;
 	}
 
+	if (types) {
+		//moved from inline to here for formatting purposes/bug
+		maintype = types[0].type.name;
+	}
+
 	return (
-		<Container>
-			<SubContainer mainType={types && types[0].type.name}>
-				<ImageContainer>
-					<PokeNumber>{id && id}</PokeNumber>
-					<PokemonName>{name && capitalizeWords(name)}</PokemonName>
-					{sprites && (
-						<SvgImg>
-							<PokemonImg />
-						</SvgImg>
-					)}
-				</ImageContainer>
-				<ProfileContainer></ProfileContainer>
-			</SubContainer>
-			<PokemonProfileInfo />
+		<Container mainType={maintype}>
+			<ImageContainer>
+				<PokeNumber>{id && id}</PokeNumber>
+				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
+				{sprites && (
+					<SvgImg>
+						<PokemonImg />
+					</SvgImg>
+				)}
+			</ImageContainer>
+			<ProfileContainer>
+				{" "}
+				<StatsContext.Provider value={stats}>
+					<PokemonProfileInfo />
+				</StatsContext.Provider>
+			</ProfileContainer>
 		</Container>
 	);
 }
+/*  */
