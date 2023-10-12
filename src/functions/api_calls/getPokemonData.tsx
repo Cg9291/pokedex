@@ -1,13 +1,13 @@
 import axios from "axios";
-import { PokemonInfoInt } from "../../interfaces&types/interfaces.tsx";
+import { PokemonInfoInterface } from "../../interfaces&types/interfaces.tsx";
 //interface needs to be outside function,sometimes exported..meant to be reused
 
 export default async function getPokemonData(
 	id: number | string,
-): Promise<PokemonInfoInt> {
+): Promise<PokemonInfoInterface> {
 	try {
 		const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-		const pokemonData: PokemonInfoInt = response.data;
+		const pokemonData: PokemonInfoInterface = response.data;
 		console.log("function getPokemonData:success", pokemonData);
 		return pokemonData;
 	} catch (err) {

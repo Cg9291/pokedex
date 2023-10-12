@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import LinkPrototype from "../prototypes/LinkPrototype";
-import { PokemonProfilesNavElementsInt } from "../../interfaces&types/interfaces";
+import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/interfaces";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -24,9 +24,9 @@ const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
 
 export default function NavElement(props: {
 	value: string;
-	navElementsNames: PokemonProfilesNavElementsInt;
+	navElementsNames: PokemonProfilesNavElementsInterface;
 	setNavElementsNames: React.Dispatch<
-		React.SetStateAction<PokemonProfilesNavElementsInt>
+		React.SetStateAction<PokemonProfilesNavElementsInterface>
 	>;
 }): JSX.Element {
 	const navElementsNames = props.navElementsNames;
@@ -36,19 +36,23 @@ export default function NavElement(props: {
 		let nextState = navElementsNames;
 		for (let obj in navElementsNames) {
 			if (obj === props.value) {
-				nextState[obj as keyof PokemonProfilesNavElementsInt].isFocused = true;
+				nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused =
+					true;
 			} else {
-				nextState[obj as keyof PokemonProfilesNavElementsInt].isFocused = false;
+				nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused =
+					false;
 			}
 		}
 
-		setNavElementsNames((navElementsNames: PokemonProfilesNavElementsInt) => ({
-			...navElementsNames,
-		}));
+		setNavElementsNames(
+			(navElementsNames: PokemonProfilesNavElementsInterface) => ({
+				...navElementsNames,
+			}),
+		);
 	};
 
 	const isElementFocused: boolean =
-		navElementsNames[props.value as keyof PokemonProfilesNavElementsInt]
+		navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface]
 			.isFocused === true;
 
 	return (

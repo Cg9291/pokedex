@@ -2,20 +2,19 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
-import { PokemonInfoInt } from "../../interfaces&types/interfaces.tsx";
+import { PokemonInfoInterface } from "../../interfaces&types/interfaces.tsx";
 import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
 import typesColors, { TypesColorsInt } from "../../objects/typesColors.tsx";
 import StatsContext from "../../contexts/statscontext.tsx";
-import { Provider } from "react";
 import { NumOrString } from "../../interfaces&types/types.tsx";
 import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
 import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesData.tsx";
 import VitalsContext from "../../contexts/vitalscontext.tsx";
 
 let spriteUrl: string;
-let maintype: any;
+let maintype: string;
 
 const Container = styled(ContainerPrototype)<{ mainType: string }>`
 	flex-direction: column;
@@ -39,7 +38,6 @@ const PokemonName = styled.span``;
 const SvgImg = styled.svg`
 	width: 100%;
 	height: 50%;
-	//border:solid red;
 `;
 const PokemonImg = styled.image.attrs(props => ({
 	href: spriteUrl,
@@ -48,7 +46,6 @@ const PokemonImg = styled.image.attrs(props => ({
 	width: 100%;
 	height: 100%;
 	border: solid black;
-	//aspect-ratio: 1/1;
 `;
 
 const ProfileContainer = styled(ContainerPrototype)`
@@ -58,7 +55,7 @@ const ProfileContainer = styled(ContainerPrototype)`
 
 export default function PokemonProfile(): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInfoInt | { [key: string]: any }
+		PokemonInfoInterface | { [key: string]: any }
 	>({});
 
 	const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<
@@ -67,7 +64,9 @@ export default function PokemonProfile(): JSX.Element {
 
 	const { id: paramId, name: paramName } = useParams();
 
-	async function getData(pokeId: NumOrString): Promise<PokemonInfoInt | {}> {
+	async function getData(
+		pokeId: NumOrString,
+	): Promise<PokemonInfoInterface | {}> {
 		const pokemonData = await getPokemonData(pokeId);
 		const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
 		setPokemonInfo(pokemonData);
@@ -132,6 +131,7 @@ export default function PokemonProfile(): JSX.Element {
 	} = pokemonSpeciesInfo;
 
 	console.log("species", flavor_text_entries);
+
 	if (sprites) {
 		spriteUrl = sprites.front_default;
 	}

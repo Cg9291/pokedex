@@ -1,11 +1,6 @@
-import { Routes, Route, useParams, useRoutes, Router } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
-import Homepage from "./pages/Homepage.tsx";
-import About from "./components/PokemonProfiles/About.tsx";
-import NoMatch from "./pages/NoMatch.tsx";
-import PokemonProfile from "./components/PokemonProfiles/PokemonProfile.tsx";
 import MapPathsToElement from "./components/MapPathsToElement.tsx";
 
 /*

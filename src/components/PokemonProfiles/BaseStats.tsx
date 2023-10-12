@@ -1,6 +1,6 @@
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
-import { StatsInt } from "../../interfaces&types/interfaces.tsx";
+import { StatsInterface } from "../../interfaces&types/interfaces.tsx";
 import { useContext } from "react";
 import StatsContext from "../../contexts/statscontext.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
@@ -38,7 +38,7 @@ const StatBarOverlay = styled(ContainerPrototype)<{ value: number }>`
 export default function BaseStats(): JSX.Element {
 	const myStatsContext = useContext(StatsContext);
 	const mapStats = (): JSX.Element[] =>
-		myStatsContext.map((x: StatsInt) => (
+		myStatsContext.map((x: StatsInterface) => (
 			<Stat>
 				<StatName>{capitalizeWords(x.stat.name)}</StatName>
 				<StatValue>{x["base_stat"]}</StatValue>

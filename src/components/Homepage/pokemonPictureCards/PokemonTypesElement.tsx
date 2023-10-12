@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { PokemonTypesPropsInterface } from "../../../interfaces&types/interfaces.tsx";
 
 const Container = styled.div`
 	width: max-content;
@@ -11,12 +12,8 @@ const Container = styled.div`
 	text-align: center;
 `;
 
-interface PokeTypesProps {
-	typeName: string;
-}
-
 export default function PokemonTypesElement(
-	props: PokeTypesProps,
+	props: PokemonTypesPropsInterface,
 ): JSX.Element {
 	return <Container>{props.typeName}</Container>;
 }

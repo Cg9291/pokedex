@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import NavElement from "./NavElement.tsx";
-import { PokemonProfilesNavElementsInt } from "../../interfaces&types/interfaces.tsx";
+import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/interfaces.tsx";
 import BaseStats from "./BaseStats.tsx";
 import About from "./About.tsx";
 import Moves from "../Moves.tsx";
@@ -33,7 +33,7 @@ const InfoNavBody = styled(ContainerPrototype)`
 
 export default function PokemonProfileInfo(): JSX.Element {
 	const [navElementsNames, setNavElementsNames] =
-		useState<PokemonProfilesNavElementsInt>({
+		useState<PokemonProfilesNavElementsInterface>({
 			About: { isFocused: true, element: <About /> },
 			"Base Stats": {
 				isFocused: false,
@@ -59,11 +59,12 @@ export default function PokemonProfileInfo(): JSX.Element {
 			navElementsNames,
 		).find(
 			(key: string) =>
-				navElementsNames[key as keyof PokemonProfilesNavElementsInt].isFocused,
+				navElementsNames[key as keyof PokemonProfilesNavElementsInterface]
+					.isFocused,
 		);
 
 		return navElementsNames[
-			focusedElement as keyof PokemonProfilesNavElementsInt
+			focusedElement as keyof PokemonProfilesNavElementsInterface
 		].element;
 
 		/* let finder = ():()=> JSX.Element => {

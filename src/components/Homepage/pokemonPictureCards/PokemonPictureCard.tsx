@@ -7,8 +7,8 @@ import PokemonTypesElement from "./PokemonTypesElement.tsx";
 import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 import {
-	PokemonInfoInt,
-	PokemonNumberInt,
+	PokemonInfoInterface,
+	PokemonNumberPropsInterface,
 } from "../../../interfaces&types/interfaces.tsx";
 import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
 
@@ -47,7 +47,7 @@ const PokemonImgWrapper = styled.div`
 	width: 50%;
 `;
 
-const SvgImg = styled.svg`
+const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
 	width: 100%;
 	height: 100%;
 `;
@@ -57,14 +57,16 @@ const PokemonImg = styled.image.attrs({})`
 `;
 
 export default function PokemonPictureCard(
-	props: PokemonNumberInt,
+	props: PokemonNumberPropsInterface,
 ): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInfoInt | { [key: string]: any }
+		PokemonInfoInterface | { [key: string]: any }
 	>({});
 
-	async function getData(pokeNumber: number): Promise<PokemonInfoInt | {}> {
-		const data: PokemonInfoInt = await getPokemonData(pokeNumber);
+	async function getData(
+		pokeNumber: number,
+	): Promise<PokemonInfoInterface | {}> {
+		const data: PokemonInfoInterface = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
 		console.log("function getData:success", data);
 		return pokemonInfo;
@@ -118,12 +120,12 @@ export default function PokemonPictureCard(
 					</PokemonTypesContainer>
 					<PokemonImgWrapper>
 						{sprites && (
-							<SvgImg viewBox="50 50 200 200">
+							<SvgImg>
 								<PokemonImg
 									href={sprites.front_default}
 									/* 	alt="a pokemon image" */
 									width="325"
-									height="325"
+									height="325" //move these to attrs
 								/>
 							</SvgImg>
 						)}

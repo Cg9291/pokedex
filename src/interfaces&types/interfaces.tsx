@@ -1,4 +1,4 @@
-export interface PokemonInfoInt {
+export interface PokemonInfoInterface {
 	abilities: {}[];
 	base_experience: number;
 	forms: {}[];
@@ -19,21 +19,23 @@ export interface PokemonInfoInt {
 	weight: number;
 }
 
-export interface PokemonNumberInt {
+export interface PokemonNumberPropsInterface {
 	id: number;
 }
 
-export interface PokemonProfilesNavElementsInt {
+export interface PokemonTypesPropsInterface {
+	typeName: string;
+}
+
+export interface PokemonProfilesNavElementsInterface {
 	About: { isFocused: boolean; element: JSX.Element };
-	"Base Stats": { isFocused: boolean; element:JSX.Element  };
+	"Base Stats": { isFocused: boolean; element: JSX.Element };
 	Evolution: { isFocused: boolean; element: JSX.Element };
 	Moves: { isFocused: boolean; element: JSX.Element };
 }
 
-
-export interface StatsInt {
+export interface StatsInterface {
 	base_stat: number;
 	effort: number;
 	stat: { name: string; url: string };
 }
-
