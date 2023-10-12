@@ -131,6 +131,7 @@ export default function PokemonProfile(): JSX.Element {
 		varieties,
 	} = pokemonSpeciesInfo;
 
+	console.log("species", flavor_text_entries);
 	if (sprites) {
 		spriteUrl = sprites.front_default;
 	}

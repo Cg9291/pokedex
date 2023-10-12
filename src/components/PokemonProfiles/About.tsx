@@ -10,11 +10,21 @@ const Description = styled.p``;
 
 export default function About(): JSX.Element {
 	const myVitalsContext = useContext(VitalsContext);
+	const displayEnglishDescription = (): string => {
+		const englishDescription = (): Flavor_text_entry =>
+			myVitalsContext.find(
+				(i: Flavor_text_entry): boolean => i.language.name === "en",
+			)!; //review
+
+		return englishDescription()[
+			"flavor_text" as keyof typeof englishDescription
+		]; //review
+	};
 	return (
-		<Container>
-			<Description>
-				{/* {myVitalsContext["flavor_text" as keyof Flavor_text_entry]} */}
-			</Description>
-		</Container>
+		myVitalsContext && (
+			<Container>
+				<Description>{displayEnglishDescription()}</Description>
+			</Container>
+		)
 	);
 }
