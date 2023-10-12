@@ -11,6 +11,7 @@ TODO
 *review focusHandler() in NavElements file
 *add handler for when a searched pokemon doesnt exist
 *figure out best routing structure
+*review globalstyles implementatoion to ensure it wasnt overwritten
 */
 
 const Container = styled(ContainerPrototype)`

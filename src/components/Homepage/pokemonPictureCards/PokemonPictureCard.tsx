@@ -6,11 +6,10 @@ import PokemonTypesElement from "./PokemonTypesElement.tsx";
 
 import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
-import {
-	PokemonInfoInterface,
-	PokemonNumberPropsInterface,
-} from "../../../interfaces&types/interfaces.tsx";
-import typesColors, { TypesColorsInt } from "../../../objects/typesColors.tsx";
+import { PokemonNumberPropsInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
+import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
+import typesColors from "../../../objects/typesColors.tsx";
+import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
 	width: 45%;
@@ -21,7 +20,7 @@ const Container = styled(Link)<{ $mainType: string }>`
 	background-color: ${props =>
 		typesColors[
 			props.$mainType as keyof TypesColorsInt
-		]}; //review this answer for better concept understanding
+		]}; //review this answer for better "keyof" concept understanding
 `;
 
 const Wrapper = styled(ContainerPrototype)`
@@ -60,13 +59,11 @@ export default function PokemonPictureCard(
 	props: PokemonNumberPropsInterface,
 ): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInfoInterface | { [key: string]: any }
+		PokemonInterface | { [key: string]: any }
 	>({});
 
-	async function getData(
-		pokeNumber: number,
-	): Promise<PokemonInfoInterface | {}> {
-		const data: PokemonInfoInterface = await getPokemonData(pokeNumber);
+	async function getData(pokeNumber: number): Promise<PokemonInterface | {}> {
+		const data: PokemonInterface = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
 		console.log("function getData:success", data);
 		return pokemonInfo;

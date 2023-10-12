@@ -1,2 +1,4 @@
 -When using $new Formdata() to capture the value passed/submitted by a form..remember that the returned object is an array.
 
+TS errors,meanings & solutions:
+    -

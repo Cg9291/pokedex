@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
-import { PokemonInfoInterface } from "../../interfaces&types/interfaces.tsx";
+import PokemonInterface from "../../interfaces&types/pokemonInterface.tsx";
 import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
-import typesColors, { TypesColorsInt } from "../../objects/typesColors.tsx";
+import typesColors from "../../objects/typesColors.tsx";
+import { TypesColorsInt } from "../../interfaces&types/misc_Interfaces.tsx";
 import StatsContext from "../../contexts/statscontext.tsx";
-import { NumOrString } from "../../interfaces&types/types.tsx";
+import { NumOrString } from "../../interfaces&types/misc_Types.tsx";
 import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
 import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesData.tsx";
 import VitalsContext from "../../contexts/vitalscontext.tsx";
@@ -55,7 +56,7 @@ const ProfileContainer = styled(ContainerPrototype)`
 
 export default function PokemonProfile(): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInfoInterface | { [key: string]: any }
+		PokemonInterface | { [key: string]: any }
 	>({});
 
 	const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<
@@ -66,7 +67,7 @@ export default function PokemonProfile(): JSX.Element {
 
 	async function getData(
 		pokeId: NumOrString,
-	): Promise<PokemonInfoInterface | {}> {
+	): Promise<[PokemonInterface, PokemonSpeciesInterface] | {}> {
 		const pokemonData = await getPokemonData(pokeId);
 		const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
 		setPokemonInfo(pokemonData);
@@ -129,8 +130,6 @@ export default function PokemonProfile(): JSX.Element {
 		genera,
 		varieties,
 	} = pokemonSpeciesInfo;
-
-	console.log("species", flavor_text_entries);
 
 	if (sprites) {
 		spriteUrl = sprites.front_default;

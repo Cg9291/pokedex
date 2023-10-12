@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import LinkPrototype from "../prototypes/LinkPrototype";
-import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/interfaces";
+import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -34,7 +34,7 @@ export default function NavElement(props: {
 
 	const focusHandler = (): void => {
 		let nextState = navElementsNames;
-		for (let obj in navElementsNames) {
+		for (let obj in nextState) {
 			if (obj === props.value) {
 				nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused =
 					true;
@@ -46,7 +46,7 @@ export default function NavElement(props: {
 
 		setNavElementsNames(
 			(navElementsNames: PokemonProfilesNavElementsInterface) => ({
-				...navElementsNames,
+				...navElementsNames, //this function works but shouldnt...review
 			}),
 		);
 	};

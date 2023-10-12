@@ -1,3 +1,32 @@
+export default interface PokemonSpeciesInterface {
+	id: number;
+	name: string;
+	order: number;
+	gender_rate: number;
+	capture_rate: number;
+	base_happiness: number;
+	is_baby: boolean;
+	is_legendary: boolean;
+	is_mythical: boolean;
+	hatch_counter: number;
+	has_gender_differences: boolean;
+	forms_switchable: boolean;
+	growth_rate: Growth_rate;
+	pokedex_numbers: Pokedex_number[];
+	egg_groups: Egg_group[];
+	color: Color;
+	shape: Shape;
+	evolves_from_species: Evolves_from_specy;
+	evolution_chain: Evolution_chain;
+	habitat?: any;
+	generation: Generation;
+	names: Name[];
+	flavor_text_entries: Flavor_text_entry[];
+	form_descriptions: Form_description[];
+	genera: Genera[];
+	varieties: Variety[];
+}
+
 export interface Growth_rate {
 	name: string;
 	url: string;
@@ -96,33 +125,4 @@ export interface Pokemon {
 export interface Variety {
 	is_default: boolean;
 	pokemon: Pokemon;
-}
-
-export default interface PokemonSpeciesInterface {
-	id: number;
-	name: string;
-	order: number;
-	gender_rate: number;
-	capture_rate: number;
-	base_happiness: number;
-	is_baby: boolean;
-	is_legendary: boolean;
-	is_mythical: boolean;
-	hatch_counter: number;
-	has_gender_differences: boolean;
-	forms_switchable: boolean;
-	growth_rate: Growth_rate;
-	pokedex_numbers: Pokedex_number[];
-	egg_groups: Egg_group[];
-	color: Color;
-	shape: Shape;
-	evolves_from_species: Evolves_from_specy;
-	evolution_chain: Evolution_chain;
-	habitat?: any;
-	generation: Generation;
-	names: Name[];
-	flavor_text_entries: Flavor_text_entry[];
-	form_descriptions: Form_description[];
-	genera: Genera[];
-	varieties: Variety[];
 }

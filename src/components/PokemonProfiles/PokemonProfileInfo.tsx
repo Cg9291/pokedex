@@ -2,9 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import NavElement from "./NavElement.tsx";
-import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/interfaces.tsx";
-import BaseStats from "./BaseStats.tsx";
-import About from "./About.tsx";
+import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces.tsx";
+import BaseStats from "./profileNavBodies/BaseStats.tsx";
+import About from "./profileNavBodies/About.tsx";
 import Moves from "../Moves.tsx";
 import Evolution from "../Evolution.tsx";
 
@@ -55,13 +55,11 @@ export default function PokemonProfileInfo(): JSX.Element {
 		);
 
 	const displayNavBody = (): React.ReactNode => {
-		const focusedElement: string | undefined = Object.keys(
-			navElementsNames,
-		).find(
+		const focusedElement: string = Object.keys(navElementsNames).find(
 			(key: string) =>
 				navElementsNames[key as keyof PokemonProfilesNavElementsInterface]
 					.isFocused,
-		);
+		)!;
 
 		return navElementsNames[
 			focusedElement as keyof PokemonProfilesNavElementsInterface
