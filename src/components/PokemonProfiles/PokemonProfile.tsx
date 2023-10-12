@@ -7,7 +7,10 @@ import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../interfaces&types/misc_Interfaces.tsx";
+import {
+	ObjectPlaceHolderInterface,
+	TypesColorsInt,
+} from "../../interfaces&types/misc_Interfaces.tsx";
 import StatsContext from "../../contexts/statscontext.tsx";
 import { NumOrString } from "../../interfaces&types/misc_Types.tsx";
 import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
@@ -56,11 +59,11 @@ const ProfileContainer = styled(ContainerPrototype)`
 
 export default function PokemonProfile(): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInterface | { [key: string]: any }
+		PokemonInterface | ObjectPlaceHolderInterface
 	>({});
 
 	const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<
-		PokemonSpeciesInterface | { [key: string]: any }
+		PokemonSpeciesInterface | ObjectPlaceHolderInterface
 	>({});
 
 	const { id: paramId, name: paramName } = useParams();
@@ -72,7 +75,7 @@ export default function PokemonProfile(): JSX.Element {
 		const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
 		setPokemonInfo(pokemonData);
 		setPokemonSpeciesInfo(pokemonSpeciesData);
-		console.log("info is ", pokemonInfo);
+		console.log("info is ", pokemonSpeciesData);
 		return [pokemonData, pokemonSpeciesData];
 	}
 
@@ -152,7 +155,9 @@ export default function PokemonProfile(): JSX.Element {
 				)}
 			</ImageContainer>
 			<ProfileContainer>
-				<VitalsContext.Provider value={flavor_text_entries}>
+				<VitalsContext.Provider
+					value={{  height, weight, color, abilities,flavor_text_entries, }}
+				>
 					<StatsContext.Provider value={stats}>
 						<PokemonProfileInfo />
 					</StatsContext.Provider>

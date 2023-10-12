@@ -1,3 +1,6 @@
+import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface.tsx";
+import { Ability } from "./pokemonInterface.tsx";
+
 export interface TypesColorsInt {
 	normal: string;
 	fire: string;
@@ -38,4 +41,16 @@ export interface StatsInterface {
 	base_stat: number;
 	effort: number;
 	stat: { name: string; url: string };
+}
+
+export interface ObjectPlaceHolderInterface {
+	[key: string]: any;
+}
+
+export interface VitalsInterface {
+	height: number;
+	weight: number;
+	color: Color;
+	ability: Ability[];
+	flavor_text_entries: Flavor_text_entry;
 }

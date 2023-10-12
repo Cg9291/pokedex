@@ -8,11 +8,28 @@ const Container = styled(ContainerPrototype)``;
 
 const Description = styled.p``;
 
+const VitalsContainer = styled(ContainerPrototype)`
+	height: 50%;
+`;
+
+const VitalsLabel = styled.div``;
+
+const VitalsValue = styled.div``;
+
 export default function About(): JSX.Element {
-	const myVitalsContext = useContext(VitalsContext);
+	const { flavor_text_entries } = useContext(VitalsContext);
+	const myVitalsContext = Object.entries(useContext(VitalsContext));
+
+	/* const displayVitals = (): JSX.Element =>
+		myVitalsContext.map((x: any): JSX.Element[] => (
+			<Vitals
+				label={x[0]}
+				value={x[1]}
+			/>
+		)); */
 	const displayEnglishDescription = (): string => {
 		const englishDescription = (): Flavor_text_entry =>
-			myVitalsContext.find(
+			flavor_text_entries.find(
 				(i: Flavor_text_entry): boolean => i.language.name === "en",
 			)!; //review why is it boolean and not Flavor_text_entry
 
@@ -20,10 +37,21 @@ export default function About(): JSX.Element {
 	};
 
 	return (
-		myVitalsContext && (
+		flavor_text_entries && (
 			<Container>
 				<Description>{displayEnglishDescription()}</Description>
+			{/* 	{displayVitals()} */}
 			</Container>
 		)
 	);
 }
+
+/* function Vitals(props: { label: string; value: any }): JSX.Element {
+	return (
+		<VitalsContainer>
+			<VitalsLabel>{props.label}</VitalsLabel>
+			<VitalsValue>{props.value}</VitalsValue>
+		</VitalsContainer>
+	);
+}
+ */
