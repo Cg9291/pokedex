@@ -4,6 +4,8 @@ import styled from "styled-components";
 import VitalsContext from "../../../contexts/vitalscontext.tsx";
 import { Flavor_text_entry } from "../../../interfaces&types/pokemonSpeciesInterface.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
+import { typesSW } from "../../../objects/typesSW.tsx";
+import TypesSWInterface from "../../../interfaces&types/pokemonTypesSWInterface.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -20,7 +22,7 @@ const VitalsSectionContainer = styled.div`
 	flex-wrap: wrap;
 	align-items: start;
 	justify-content: space-between;
-	height: 100%;
+	height: auto;
 	//background-color: red;
 	margin-top: 1rem;
 	align-content: start;
@@ -51,10 +53,33 @@ const VitalsValue = styled.div`
 	font-weight: bold;
 `;
 
+const SWSectionContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const SWContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+const SWElementsContainer = styled.div`
+	display: flex;
+	//justify-content: space-evenly;
+`;
+
+const SWElement = styled.div`
+	margin: 0 1rem 0 0;
+	padding: 0.2rem 1rem;
+	background-color: lightblue;
+	border-radius: 50px;
+`;
+
 export default function About(): JSX.Element {
 	const { flavor_text_entries } = useContext(VitalsContext);
-	let { height, weight, color, abilities } = useContext(VitalsContext);
+	let { height, weight, color, types, abilities } = useContext(VitalsContext);
 
+	types = types ? types[0].type.name : undefined;
 	height = height / 10 + "m";
 	weight = weight + "kg";
 	color = color ? color.name : undefined;
@@ -67,7 +92,7 @@ export default function About(): JSX.Element {
 		abilities,
 	});
 
-	console.log("and", updatedVitalsArray);
+	console.log(types);
 
 	const displayVitals = (): JSX.Element[] =>
 		updatedVitalsArray.map(
@@ -93,6 +118,9 @@ export default function About(): JSX.Element {
 			<Container>
 				<Description>{displayEnglishDescription()}</Description>
 				<VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
+				<SWSectionContainer>
+					<StrengthsAndWeaknesses type={types} />
+				</SWSectionContainer>
 			</Container>
 		)
 	);
@@ -105,4 +133,22 @@ function Vitals(props: { label: string; value: string }): JSX.Element {
 			<VitalsValue>{capitalizeWords(props.value)}</VitalsValue>
 		</VitalsContainer>
 	);
+}
+
+function StrengthsAndWeaknesses(props: { type: string }) {
+	const displayStrengths = (): JSX.Element[] =>
+		typesSW[props.type as keyof TypesSWInterface].strengths.map(x => (
+			<StrengthsAndWeaknessesElement sValue={x} />
+		));
+
+	return (
+		<SWContainer>
+			<h5>Strengths</h5>
+			<SWElementsContainer>{displayStrengths()}</SWElementsContainer>
+		</SWContainer>
+	);
+}
+
+function StrengthsAndWeaknessesElement(props: { sValue: string }): JSX.Element {
+	return <SWElement>{props.sValue}</SWElement>;
 }

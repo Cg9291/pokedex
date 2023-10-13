@@ -157,7 +157,14 @@ export default function PokemonProfile(): JSX.Element {
 			</ImageContainer>
 			<ProfileContainer>
 				<VitalsContext.Provider
-					value={{ height, weight, color, abilities, flavor_text_entries }}
+					value={{
+						height,
+						weight,
+						color,
+						abilities,
+						types,
+						flavor_text_entries,
+					}}
 				>
 					<StatsContext.Provider value={stats}>
 						<PokemonProfileInfo />
