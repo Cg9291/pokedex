@@ -60,7 +60,7 @@ export default function PokemonProfileInfo(): JSX.Element {
 				navElementsNames[key as keyof PokemonProfilesNavElementsInterface]
 					.isFocused,
 		)!;
-
+				// I did work wasdfgadsfsdfadsfa
 		return navElementsNames[
 			focusedElement as keyof PokemonProfilesNavElementsInterface
 		].element;
