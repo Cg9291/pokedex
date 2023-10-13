@@ -1,4 +1,11 @@
 -When using $new Formdata() to capture the value passed/submitted by a form..remember that the returned object is an array.
 
-TS errors,meanings & solutions:
+-When using a generic/type parameter with an arrow function, we must add a comma (i.e <Type,>),otherwise the compiler will think it is JSX..the comma makes the compiler realize that its not valid JSX and must therefore be a type parameter.
+
+
+**TS errors,meanings & solutions:
     -
+
+
+**CSS:
+-align-content is different from align-items,it should be used to align multi lines flexboxes (i.e when using flex-wrap)

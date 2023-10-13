@@ -20,11 +20,12 @@ import VitalsContext from "../../contexts/vitalscontext.tsx";
 let spriteUrl: string;
 let maintype: string;
 
-const Container = styled(ContainerPrototype)<{ mainType: string }>`
+const Container = styled(ContainerPrototype)<{ $mainType: string }>`
+	//mainType is written with a $ because otherwiswe compiler confuses it with a dom attribute because it has a capital letter
 	flex-direction: column;
 	justify-content: center;
 	background-color: ${props =>
-		typesColors[props.mainType as keyof TypesColorsInt]};
+		typesColors[props.$mainType as keyof TypesColorsInt]};
 	z-index: 0;
 	position: relative;
 `;
@@ -144,7 +145,7 @@ export default function PokemonProfile(): JSX.Element {
 	}
 
 	return (
-		<Container mainType={maintype}>
+		<Container $mainType={maintype}>
 			<ImageContainer>
 				<PokeNumber>{id && id}</PokeNumber>
 				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
@@ -156,7 +157,7 @@ export default function PokemonProfile(): JSX.Element {
 			</ImageContainer>
 			<ProfileContainer>
 				<VitalsContext.Provider
-					value={{  height, weight, color, abilities,flavor_text_entries, }}
+					value={{ height, weight, color, abilities, flavor_text_entries }}
 				>
 					<StatsContext.Provider value={stats}>
 						<PokemonProfileInfo />

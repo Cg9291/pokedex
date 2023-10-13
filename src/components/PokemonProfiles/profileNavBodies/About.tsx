@@ -3,30 +3,82 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 import VitalsContext from "../../../contexts/vitalscontext.tsx";
 import { Flavor_text_entry } from "../../../interfaces&types/pokemonSpeciesInterface.tsx";
+import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 
-const Container = styled(ContainerPrototype)``;
-
-const Description = styled.p``;
-
-const VitalsContainer = styled(ContainerPrototype)`
-	height: 50%;
+const Container = styled(ContainerPrototype)`
+	flex-direction: column;
+	//padding: 0 0 0 2rem;
 `;
 
-const VitalsLabel = styled.div``;
+const Description = styled.p`
+	padding: 0 2rem;
+	font-size: 0.8em;
+`;
 
-const VitalsValue = styled.div``;
+const VitalsSectionContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	align-items: start;
+	justify-content: space-between;
+	height: 100%;
+	//background-color: red;
+	margin-top: 1rem;
+	align-content: start;
+	font-size: 0.8em;
+	//padding:0 0 0 1rem;
+`;
+
+const VitalsContainer = styled(ContainerPrototype)`
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	margin: 0 0 2rem;
+	height: 10%;
+	flex: 0 0 33%;
+`;
+
+const VitalsLabel = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 0.5rem;
+`;
+
+const VitalsValue = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	font-weight: bold;
+`;
 
 export default function About(): JSX.Element {
 	const { flavor_text_entries } = useContext(VitalsContext);
-	const myVitalsContext = Object.entries(useContext(VitalsContext));
+	let { height, weight, color, abilities } = useContext(VitalsContext);
 
-	/* const displayVitals = (): JSX.Element =>
-		myVitalsContext.map((x: any): JSX.Element[] => (
-			<Vitals
-				label={x[0]}
-				value={x[1]}
-			/>
-		)); */
+	height = height / 10 + "m";
+	weight = weight + "kg";
+	color = color ? color.name : undefined;
+	abilities = abilities ? abilities[0].ability.name : undefined;
+
+	const updatedVitalsArray = Object.entries({
+		height,
+		weight,
+		color,
+		abilities,
+	});
+
+	console.log("and", updatedVitalsArray);
+
+	const displayVitals = (): JSX.Element[] =>
+		updatedVitalsArray.map(
+			(entry: [string, string]): JSX.Element => (
+				<Vitals
+					label={entry[0]}
+					value={entry[1]}
+				/>
+			),
+		);
+
 	const displayEnglishDescription = (): string => {
 		const englishDescription = (): Flavor_text_entry =>
 			flavor_text_entries.find(
@@ -40,18 +92,17 @@ export default function About(): JSX.Element {
 		flavor_text_entries && (
 			<Container>
 				<Description>{displayEnglishDescription()}</Description>
-			{/* 	{displayVitals()} */}
+				<VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
 			</Container>
 		)
 	);
 }
 
-/* function Vitals(props: { label: string; value: any }): JSX.Element {
+function Vitals(props: { label: string; value: string }): JSX.Element {
 	return (
 		<VitalsContainer>
-			<VitalsLabel>{props.label}</VitalsLabel>
-			<VitalsValue>{props.value}</VitalsValue>
+			<VitalsLabel>{capitalizeWords(props.label)}</VitalsLabel>
+			<VitalsValue>{capitalizeWords(props.value)}</VitalsValue>
 		</VitalsContainer>
 	);
 }
- */
