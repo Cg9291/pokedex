@@ -6,6 +6,7 @@ import MapPathsToElement from "./components/MapPathsToElement.tsx";
 /*
 TODO
 
+*maybe add icons About elements
 *add type to index
 *figure out keys for mapped elements
 *review focusHandler() in NavElements file

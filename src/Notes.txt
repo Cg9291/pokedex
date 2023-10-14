@@ -4,8 +4,10 @@
 
 
 **TS errors,meanings & solutions:
-    -
 
+    -Element implicitly has an 'any' type because expression of type 'myType' can't be used to index type 'myInterface'.
+     No index signature with a parameter of type 'myType' was found on type 'myInterface'.
+        ----->Solution is to typecast using (as keyof myInterface);
 
 **CSS:
 -align-content is different from align-items,it should be used to align multi lines flexboxes (i.e when using flex-wrap)

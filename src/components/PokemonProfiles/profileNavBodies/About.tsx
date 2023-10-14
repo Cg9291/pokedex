@@ -6,10 +6,13 @@ import { Flavor_text_entry } from "../../../interfaces&types/pokemonSpeciesInter
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 import { typesSW } from "../../../objects/typesSW.tsx";
 import TypesSWInterface from "../../../interfaces&types/pokemonTypesSWInterface.tsx";
+import typesColors from "../../../objects/typesColors.tsx";
+import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
-	//padding: 0 0 0 2rem;
+	justify-content:space-around;
+	padding: 2rem 0 0 0;
 `;
 
 const Description = styled.p`
@@ -21,11 +24,11 @@ const VitalsSectionContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-items: start;
-	justify-content: space-between;
+	//justify-content: space-between;
 	height: auto;
 	//background-color: red;
-	margin-top: 1rem;
-	align-content: start;
+	padding: 1rem 0 0 0;
+	align-content: flex-start;
 	font-size: 0.8em;
 	//padding:0 0 0 1rem;
 `;
@@ -56,22 +59,28 @@ const VitalsValue = styled.div`
 const SWSectionContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	height:auto;
 `;
 
 const SWContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	padding: 0 0 0 2rem;
 `;
 
 const SWElementsContainer = styled.div`
 	display: flex;
+	flex-wrap: wrap;
+	align-content: start;
+	padding: 0.5rem 0 0 0;
+	margin: 0 0 1rem 0;
 	//justify-content: space-evenly;
 `;
 
-const SWElement = styled.div`
-	margin: 0 1rem 0 0;
+const SWElement = styled.div<{ $bgColor: string }>`
+	margin: 0 1rem 0.5rem 0;
 	padding: 0.2rem 1rem;
-	background-color: lightblue;
+	background-color: ${props => props.$bgColor};
 	border-radius: 50px;
 `;
 
@@ -137,18 +146,40 @@ function Vitals(props: { label: string; value: string }): JSX.Element {
 
 function StrengthsAndWeaknesses(props: { type: string }) {
 	const displayStrengths = (): JSX.Element[] =>
-		typesSW[props.type as keyof TypesSWInterface].strengths.map(x => (
-			<StrengthsAndWeaknessesElement sValue={x} />
-		));
+		typesSW[props.type as keyof TypesSWInterface].strengths.map(x => {
+			const lowerCaseX = x.toLowerCase();
+			return (
+				<StrengthsAndWeaknessesElement
+					sValue={x}
+					sColor={typesColors[lowerCaseX as keyof TypesColorsInt]}
+				/>
+			);
+		});
+
+	const displayWeaknesses = (): JSX.Element[] =>
+		typesSW[props.type as keyof TypesSWInterface].weaknesses.map(x => {
+			const lowerCaseX = x.toLowerCase();
+			return (
+				<StrengthsAndWeaknessesElement
+					sValue={x}
+					sColor={typesColors[lowerCaseX as keyof TypesColorsInt]}
+				/>
+			);
+		});
 
 	return (
 		<SWContainer>
 			<h5>Strengths</h5>
 			<SWElementsContainer>{displayStrengths()}</SWElementsContainer>
+			<h5>Weaknesses</h5>
+			<SWElementsContainer>{displayWeaknesses()}</SWElementsContainer>
 		</SWContainer>
 	);
 }
 
-function StrengthsAndWeaknessesElement(props: { sValue: string }): JSX.Element {
-	return <SWElement>{props.sValue}</SWElement>;
+function StrengthsAndWeaknessesElement(props: {
+	sValue: string;
+	sColor: string;
+}): JSX.Element {
+	return <SWElement $bgColor={props.sColor}>{props.sValue}</SWElement>;
 }
