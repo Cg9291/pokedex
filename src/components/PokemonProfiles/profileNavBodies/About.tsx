@@ -30,7 +30,6 @@ const VitalsSectionContainer = styled.div`
 	padding: 1rem 0 0 0;
 	align-content: flex-start;
 	font-size: 0.8em;
-	//padding:0 0 0 1rem;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`

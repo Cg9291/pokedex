@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
+import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
+import { ObjectPlaceHolderInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(ContainerPrototype)``;
 
@@ -36,12 +39,24 @@ const Button = styled.button.attrs({ type: "submit" })`
 export default function Search(): JSX.Element {
 	const navigate = useNavigate();
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+	const handleSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	): Promise<PokemonInterface | ObjectPlaceHolderInterface> => {
 		e.preventDefault();
+		let data: PokemonInterface | ObjectPlaceHolderInterface = {};
 		const formData = new FormData(e.currentTarget);
 		const transmittedData = Object.fromEntries(formData.entries()).myInput;
 		const name = transmittedData.toString().toLowerCase();
-		navigate(`/pokemons/name/${name}`);
+
+		try {
+			data = await getPokemonData(name);
+			navigate(`/pokemons/name/${name}`);
+		} catch (err) {
+			console.log(err);
+			navigate(`*`);
+		}
+
+		return data;
 	};
 
 	return (

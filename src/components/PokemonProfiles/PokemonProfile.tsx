@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
 import PokemonInterface from "../../interfaces&types/pokemonInterface.tsx";
-import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
+import GetPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors.tsx";
@@ -71,13 +71,18 @@ export default function PokemonProfile(): JSX.Element {
 
 	async function getData(
 		pokeId: NumOrString,
-	): Promise<[PokemonInterface, PokemonSpeciesInterface] | {}> {
-		const pokemonData = await getPokemonData(pokeId);
-		const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
-		setPokemonInfo(pokemonData);
-		setPokemonSpeciesInfo(pokemonSpeciesData);
-		console.log("info is ", pokemonSpeciesData);
-		return [pokemonData, pokemonSpeciesData];
+	): Promise<
+		[PokemonInterface, PokemonSpeciesInterface] | ObjectPlaceHolderInterface
+	> {
+		try {
+			const pokemonData = await GetPokemonData(pokeId);
+			const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
+			setPokemonInfo(pokemonData);
+			setPokemonSpeciesInfo(pokemonSpeciesData);
+		} catch (err) {
+			console.log(err);
+		}
+		return [pokemonInfo, pokemonSpeciesInfo];
 	}
 
 	useEffect(() => {

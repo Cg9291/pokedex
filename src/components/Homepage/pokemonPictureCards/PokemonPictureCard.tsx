@@ -65,7 +65,7 @@ export default function PokemonPictureCard(
 	async function getData(pokeNumber: number): Promise<PokemonInterface | {}> {
 		const data: PokemonInterface = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
-		console.log("function getData:success", data);
+		//console.log("function getData:success", data);
 		return pokemonInfo;
 	}
 
