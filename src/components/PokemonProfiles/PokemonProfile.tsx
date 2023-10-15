@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileInfo from "./PokemonProfileInfo.tsx";
 import PokemonInterface from "../../interfaces&types/pokemonInterface.tsx";
-import GetPokemonData from "../../functions/api_calls/getPokemonData.tsx";
+import getPokemonData from "../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../functions/utilities/capitalizeWords.tsx";
 import { useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors.tsx";
@@ -11,11 +11,12 @@ import {
 	ObjectPlaceHolderInterface,
 	TypesColorsInt,
 } from "../../interfaces&types/misc_Interfaces.tsx";
-import StatsContext from "../../contexts/statscontext.tsx";
+import StatsContext from "../../contexts/statsContext.tsx";
 import { NumOrString } from "../../interfaces&types/misc_Types.tsx";
 import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
 import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesData.tsx";
-import VitalsContext from "../../contexts/vitalscontext.tsx";
+import VitalsContext from "../../contexts/vitalsContext.tsx";
+import EvolutionChainContext from "../../contexts/evolutionChainContext.tsx";
 
 let spriteUrl: string;
 let maintype: string;
@@ -75,7 +76,7 @@ export default function PokemonProfile(): JSX.Element {
 		[PokemonInterface, PokemonSpeciesInterface] | ObjectPlaceHolderInterface
 	> {
 		try {
-			const pokemonData = await GetPokemonData(pokeId);
+			const pokemonData = await getPokemonData(pokeId);
 			const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
 			setPokemonInfo(pokemonData);
 			setPokemonSpeciesInfo(pokemonSpeciesData);
@@ -93,52 +94,10 @@ export default function PokemonProfile(): JSX.Element {
 		}
 	}, []);
 
-	const {
-		abilities,
-		base_experience,
-		forms,
-		game_indices,
-		height,
-		held_items,
-		id,
-		is_default,
-		location_area_encounters,
-		moves,
-		name,
-		order,
-		past_types,
-		species,
-		sprites,
-		stats,
-		types,
-		weight,
-	} = pokemonInfo;
+	const { abilities, height, id, name, sprites, stats, types, weight } =
+		pokemonInfo;
 
-	const {
-		gender_rate,
-		capture_rate,
-		base_happiness,
-		is_baby,
-		is_legendary,
-		is_mythical,
-		hatch_counter,
-		has_gender_differences,
-		forms_switchable,
-		growth_rate,
-		pokedex_numbers,
-		egg_groups,
-		color,
-		shape,
-		evolves_from_species,
-		evolution_chain,
-		habitat,
-		generation,
-		names,
-		flavor_text_entries,
-		form_descriptions,
-		genera,
-		varieties,
-	} = pokemonSpeciesInfo;
+	const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
 
 	if (sprites) {
 		spriteUrl = sprites.front_default;
@@ -172,7 +131,9 @@ export default function PokemonProfile(): JSX.Element {
 					}}
 				>
 					<StatsContext.Provider value={stats}>
-						<PokemonProfileInfo />
+						<EvolutionChainContext.Provider value={evolution_chain}>
+							<PokemonProfileInfo />
+						</EvolutionChainContext.Provider>
 					</StatsContext.Provider>
 				</VitalsContext.Provider>
 			</ProfileContainer>

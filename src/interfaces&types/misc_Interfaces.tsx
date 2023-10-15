@@ -51,8 +51,11 @@ export interface VitalsInterface {
 	height: number;
 	weight: number;
 	color: Color;
-	types:Type [];
+	types: Type[];
 	abilities: Ability[];
 	flavor_text_entries: Flavor_text_entry;
 }
 
+export interface EvolutionInterface {
+	url: string;
+}

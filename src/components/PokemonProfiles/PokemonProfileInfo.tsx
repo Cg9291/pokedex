@@ -5,8 +5,8 @@ import NavElement from "./NavElement.tsx";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces.tsx";
 import BaseStats from "./profileNavBodies/BaseStats.tsx";
 import About from "./profileNavBodies/About.tsx";
-import Moves from "../Moves.tsx";
-import Evolution from "../Evolution.tsx";
+import Moves from "./profileNavBodies/Moves.tsx";
+import Evolution from "./profileNavBodies/Evolution.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -60,7 +60,6 @@ export default function PokemonProfileInfo(): JSX.Element {
 				navElementsNames[key as keyof PokemonProfilesNavElementsInterface]
 					.isFocused,
 		)!;
-				// I did work wasdfgadsfsdfadsfa
 		return navElementsNames[
 			focusedElement as keyof PokemonProfilesNavElementsInterface
 		].element;

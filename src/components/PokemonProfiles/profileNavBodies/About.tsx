@@ -1,17 +1,18 @@
 import { useContext } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
-import VitalsContext from "../../../contexts/vitalscontext.tsx";
+import VitalsContext from "../../../contexts/vitalsContext.tsx";
 import { Flavor_text_entry } from "../../../interfaces&types/pokemonSpeciesInterface.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 import { typesSW } from "../../../objects/typesSW.tsx";
 import TypesSWInterface from "../../../interfaces&types/pokemonTypesSWInterface.tsx";
 import typesColors from "../../../objects/typesColors.tsx";
 import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
+import TypePrototype from "../../prototypes/TypePrototype.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
-	justify-content:space-around;
+	justify-content: space-around;
 	padding: 2rem 0 0 0;
 `;
 
@@ -58,7 +59,7 @@ const VitalsValue = styled.div`
 const SWSectionContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	height:auto;
+	height: auto;
 `;
 
 const SWContainer = styled.div`
@@ -76,12 +77,7 @@ const SWElementsContainer = styled.div`
 	//justify-content: space-evenly;
 `;
 
-const SWElement = styled.div<{ $bgColor: string }>`
-	margin: 0 1rem 0.5rem 0;
-	padding: 0.2rem 1rem;
-	background-color: ${props => props.$bgColor};
-	border-radius: 50px;
-`;
+const SWElement = styled(TypePrototype)``;
 
 export default function About(): JSX.Element {
 	const { flavor_text_entries } = useContext(VitalsContext);
