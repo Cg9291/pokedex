@@ -17,6 +17,7 @@ import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterf
 import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesData.tsx";
 import VitalsContext from "../../contexts/vitalsContext.tsx";
 import EvolutionChainContext from "../../contexts/evolutionChainContext.tsx";
+import MovesContext from "../../contexts/movesContext.tsx";
 
 let spriteUrl: string;
 let maintype: string;
@@ -94,7 +95,7 @@ export default function PokemonProfile(): JSX.Element {
 		}
 	}, []);
 
-	const { abilities, height, id, name, sprites, stats, types, weight } =
+	const { abilities, height, id, moves, name, sprites, stats, types, weight } =
 		pokemonInfo;
 
 	const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
@@ -107,6 +108,8 @@ export default function PokemonProfile(): JSX.Element {
 		//moved from inline to here for formatting purposes/bug
 		maintype = types[0].type.name;
 	}
+
+	console.log(moves)
 
 	return (
 		<Container $mainType={maintype}>
@@ -132,7 +135,9 @@ export default function PokemonProfile(): JSX.Element {
 				>
 					<StatsContext.Provider value={stats}>
 						<EvolutionChainContext.Provider value={evolution_chain}>
-							<PokemonProfileInfo />
+							<MovesContext.Provider value={moves}>
+								<PokemonProfileInfo />
+							</MovesContext.Provider>
 						</EvolutionChainContext.Provider>
 					</StatsContext.Provider>
 				</VitalsContext.Provider>
