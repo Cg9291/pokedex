@@ -6,6 +6,7 @@ import MapPathsToElement from "./components/MapPathsToElement.tsx";
 /*
 TODO
 
+*replace usages of Object placeholders by using the type extension way (TS)
 *maybe add icons About elements
 *add type to index
 *figure out keys for mapped elements

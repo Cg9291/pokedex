@@ -109,7 +109,7 @@ export default function PokemonProfile(): JSX.Element {
 		maintype = types[0].type.name;
 	}
 
-	console.log(moves)
+	console.log(moves);
 
 	return (
 		<Container $mainType={maintype}>
