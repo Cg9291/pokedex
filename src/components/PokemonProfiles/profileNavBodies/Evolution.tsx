@@ -41,8 +41,17 @@ const PokemonImage = styled.image`
 	width: 100%;
 	height: 100%;
 `;
-const PokemonName = styled.span`
+
+const PokemonIdentifiers = styled.div`
+	display: flex;
 	margin: 1rem 0;
+`;
+const PokemonName = styled.span`
+	font-size: 0.9em;
+`;
+const PokemonNumber = styled.span`
+	margin-left: 0.3rem;
+	font-size: 0.7em;
 `;
 const PokemonType = styled(TypePrototype)`
 	margin: 0;
@@ -100,7 +109,7 @@ export default function Evolution(): JSX.Element {
 	};
 
 	const displayPokemons = (): JSX.Element[] =>
-		fetchEvolutions().map((x: string) => <PokemonEvolutionStage name={x} />);
+		fetchEvolutions().map((x: string) => (<PokemonEvolutionStage name={x} />));
 
 	return <Container>{displayPokemons()}</Container>;
 }
@@ -126,7 +135,16 @@ function PokemonEvolutionStage(props: { name: string }): JSX.Element {
 		getData(props.name);
 	});
 
-	const { sprites, types } = pokeEvolutionInfo;
+	const { id, sprites, types } = pokeEvolutionInfo;
+
+	const displayId = (idArg: number) => {
+		return idArg.toString().length === 3
+			? `#${idArg}`
+			: idArg.toString().length === 2
+			? `#0${idArg}`
+			: `#00${idArg}`;
+	};
+
 	const typeColor = types
 		? typesColors[types[0].type.name as keyof TypesColorsInt]
 		: "white";
@@ -134,9 +152,12 @@ function PokemonEvolutionStage(props: { name: string }): JSX.Element {
 	return (
 		<PokemonContainer>
 			<SvgImg $bgColor={typeColor}>
-				<PokemonImage href={sprites ? sprites.front_default : undefined} />
+				<PokemonImage href={sprites ? sprites.front_default : undefined} />→
 			</SvgImg>
-			<PokemonName>{capitalizeWords(props.name)}</PokemonName>
+			<PokemonIdentifiers>
+				<PokemonName>{capitalizeWords(props.name)}</PokemonName>
+				<PokemonNumber>{id && displayId(id)}</PokemonNumber>
+			</PokemonIdentifiers>
 			<PokemonType $bgColor={typeColor}>
 				{types ? capitalizeWords(types[0].type.name) : undefined}
 			</PokemonType>

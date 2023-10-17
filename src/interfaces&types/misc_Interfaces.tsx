@@ -20,6 +20,7 @@ export interface TypesColorsInt {
 	dark: string;
 	steel: string;
 	fairy: string;
+	none:string;
 }
 
 export interface PokemonNumberPropsInterface {

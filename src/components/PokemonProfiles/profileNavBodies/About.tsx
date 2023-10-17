@@ -176,5 +176,12 @@ function StrengthsAndWeaknessesElement(props: {
 	sValue: string;
 	sColor: string;
 }): JSX.Element {
-	return <SWElement $bgColor={props.sColor}>{props.sValue}</SWElement>;
+	return (
+		<SWElement
+			$bgColor={props.sColor}
+			$value={props.sValue}
+		>
+			{props.sValue}
+		</SWElement>
+	);
 }
