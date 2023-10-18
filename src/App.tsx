@@ -2,18 +2,19 @@ import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
 import MapPathsToElement from "./components/MapPathsToElement.tsx";
+import Navigation from "./components/Navigation/Navigation.tsx";
+import BackButton from "./components/Navigation/BackButton.tsx";
+import { useNavigate } from "react-router-dom";
 
 /*
 TODO
 
+*add scrolltracker for homepage(reintroduce margins between cards)
 *replace usages of Object placeholders by using the type extension way (TS)
-*maybe add icons About elements
-*add type to index
+*add label/form elements to backbuttons
+*maybe add icons in About elements
 *figure out keys for mapped elements
 *review focusHandler() in NavElements file
-*add handler for when a searched pokemon doesnt exist
-*figure out best routing structure
-*review globalstyles implementatoion to ensure it wasnt overwritten
 */
 
 const Container = styled(ContainerPrototype)`
@@ -21,32 +22,17 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
+	const navigate = useNavigate();
+	const goBack = () => navigate(-1);
+
 	return (
 		<Container>
+			<BackButton action={goBack} />
 			<MapPathsToElement />
+			<Navigation />
 		</Container>
 	);
 }
 
 export default App;
 
-{
-	/* <Container>
-			<Routes>
-				<Route
-					path="/"
-					element={<Homepage />}
-				/>
-				<Route
-					path="/about"
-					element={<About />}
-				/>
-
-				<MapPathsToElement />
-				<Route
-					path="*"
-					element={<NoMatch />}
-				/>
-			</Routes>
-		</Container> */
-}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
-import NavElement from "./NavElement.tsx";
+import PokemonProfileNavElement from "./PokemonProfileNavElement.tsx";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces.tsx";
 import BaseStats from "./profileNavBodies/BaseStats.tsx";
 import About from "./profileNavBodies/About.tsx";
@@ -46,7 +46,7 @@ export default function PokemonProfileInfo(): JSX.Element {
 	const mapObjectToComponent = (): JSX.Element[] =>
 		Object.keys(navElementsNames).map(
 			(key: string): JSX.Element => (
-				<NavElement
+				<PokemonProfileNavElement
 					value={key}
 					navElementsNames={navElementsNames}
 					setNavElementsNames={setNavElementsNames}

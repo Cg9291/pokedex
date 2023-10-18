@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import ContainerPrototype from "../../../prototypes/ContainerPrototype.tsx";
 import PokemonTypesElement from "./PokemonTypesElement.tsx";
 
-import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
-import { PokemonNumberPropsInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
-import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
-import typesColors from "../../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
+import getPokemonData from "../../../../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../../../../functions/utilities/capitalizeWords.tsx";
+import { PokemonNumberPropsInterface } from "../../../../interfaces&types/misc_Interfaces.tsx";
+import PokemonInterface from "../../../../interfaces&types/pokemonInterface.tsx";
+import typesColors from "../../../../objects/typesColors.tsx";
+import { TypesColorsInt } from "../../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
 	width: 45%;

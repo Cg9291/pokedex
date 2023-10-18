@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype.tsx";
 import Header from "../components/Homepage/header/Header.tsx";
-import PokemonPictureCard from "../components/Homepage/pokemonPictureCards/PokemonPictureCard.tsx";
+import PokemonPictureCard from "../components/Homepage/body/pokemonPictureCards/PokemonPictureCard.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -13,8 +13,10 @@ const MainContainer = styled.div`
 	align-items: center;
 	flex-wrap: wrap;
 	width: 100%;
-	height: 100%;
+	height: 400px;
 	padding: 1vh 1vw;
+	margin-top:13rem;
+	overflow-y:scroll;
 `;
 
 export default function Homepage(): JSX.Element {
