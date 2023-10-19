@@ -1,6 +1,6 @@
 import ContainerPrototype from "../components/prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 
-export default function NoMatch(): JSX.Element {
-	return <>404,this Pokemon does not exist!</>;
+export default function Favorites(): JSX.Element {
+	return <>This is a placeHolder for Favorites Pokemons</>;
 }

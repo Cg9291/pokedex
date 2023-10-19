@@ -8,10 +8,10 @@ export default async function getPokemonData(
 	try {
 		const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
 		const pokemonData: PokemonInterface = response.data;
-		console.log("function getPokemonData:success", pokemonData);
+		//console.log("function getPokemonData:success", pokemonData);
 		return pokemonData;
 	} catch (err) {
-		console.log("function getPokemonData:success", err);
+		console.log("function getPokemonData:failure", err);
 		throw err;
 	}
 }

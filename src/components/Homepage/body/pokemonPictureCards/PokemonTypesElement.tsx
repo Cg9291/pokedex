@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PokemonTypesPropsInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
+import { PokemonTypesPropsInterface } from "../../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled.div`
 	width: max-content;

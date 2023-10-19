@@ -1,4 +1,13 @@
 -When using $new Formdata() to capture the value passed/submitted by a form..remember that the returned object is an array.
 
-TS errors,meanings & solutions:
-    -
+-When using a generic/type parameter with an arrow function, we must add a comma (i.e <Type,>),otherwise the compiler will think it is JSX..the comma makes the compiler realize that its not valid JSX and must therefore be a type parameter.
+
+
+**TS errors,meanings & solutions:
+
+    -Element implicitly has an 'any' type because expression of type 'myType' can't be used to index type 'myInterface'.
+     No index signature with a parameter of type 'myType' was found on type 'myInterface'.
+        ----->Solution is to typecast using (as keyof myInterface);
+
+**CSS:
+-align-content is different from align-items,it should be used to align multi lines flexboxes (i.e when using flex-wrap)
