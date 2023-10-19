@@ -9,7 +9,6 @@ const Container = styled(ContainerPrototype)``;
 
 const Form = styled.form.attrs({
 	method: "get",
-	//onSubmit: handleSubmit,
 })`
 	width: 100%;
 	display: flex;
@@ -26,7 +25,7 @@ const Input = styled.input.attrs({
 	width: 100%;
 	height: 3rem;
 	border-radius: 99px;
-	margin-top: auto;
+	margin: auto;
 	padding-left: 1rem;
 `;
 

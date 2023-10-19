@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
+import ContainerPrototype from "../../../prototypes/ContainerPrototype.tsx";
 import PokemonTypesElement from "./PokemonTypesElement.tsx";
 
-import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
-import { PokemonNumberPropsInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
-import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
-import typesColors from "../../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
+import getPokemonData from "../../../../functions/api_calls/getPokemonData.tsx";
+import capitalizeWords from "../../../../functions/utilities/capitalizeWords.tsx";
+import { PokemonNumberPropsInterface } from "../../../../interfaces&types/misc_Interfaces.tsx";
+import PokemonInterface from "../../../../interfaces&types/pokemonInterface.tsx";
+import typesColors from "../../../../objects/typesColors.tsx";
+import { TypesColorsInt } from "../../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
-	width: 45%;
-	height: 19vh;
+	width: 10rem;
+	height: 7.5rem;
 	padding: 0.5rem;
 	border-radius: 25px;
 	text-decoration: none;
@@ -65,34 +65,14 @@ export default function PokemonPictureCard(
 	async function getData(pokeNumber: number): Promise<PokemonInterface | {}> {
 		const data: PokemonInterface = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
-		//console.log("function getData:success", data);
 		return pokemonInfo;
 	}
 
 	useEffect(() => {
 		getData(props.id);
-	}, []);
+	}, [props.id]);
 
-	const {
-		abilities,
-		base_experience,
-		forms,
-		game_indices,
-		height,
-		held_items,
-		id,
-		is_default,
-		location_area_encounters,
-		moves,
-		name,
-		order,
-		past_types,
-		species,
-		sprites,
-		stats,
-		types,
-		weight,
-	} = pokemonInfo;
+	const { id, name, sprites, types } = pokemonInfo;
 
 	const renderPokemonTypes = (): JSX.Element[] =>
 		types

@@ -20,7 +20,7 @@ export interface TypesColorsInt {
 	dark: string;
 	steel: string;
 	fairy: string;
-	none:string;
+	none: string;
 }
 
 export interface PokemonNumberPropsInterface {
@@ -59,4 +59,11 @@ export interface VitalsInterface {
 
 export interface EvolutionInterface {
 	url: string;
+}
+
+export interface RandomPokemonSelectionInterface {
+	randomPokemonSelection: number[] | [];
+	setRandomPokemonSelection?: React.Dispatch<
+		React.SetStateAction<[] | number[]>
+	>;
 }

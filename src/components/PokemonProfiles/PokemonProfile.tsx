@@ -57,7 +57,7 @@ const PokemonImg = styled.image.attrs(props => ({
 
 const ProfileContainer = styled(ContainerPrototype)`
 	max-height: 60%;
-	background-color: green;
+	overflow-y:hidden;
 `;
 
 export default function PokemonProfile(): JSX.Element {

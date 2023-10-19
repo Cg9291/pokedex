@@ -11,8 +11,8 @@ import typesColors from "../../../objects/typesColors.tsx";
 import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(ContainerPrototype)`
+	margin:2rem 0 0 0;
 	flex-direction: column;
-	overflow-y: scroll;
 `;
 
 const MoveContainer = styled.div`
@@ -22,7 +22,10 @@ const MoveContainer = styled.div`
 	padding: 0.8rem 0;
 `;
 
-const MoveNameContainer = styled.div``;
+const MoveNameContainer = styled.div`
+display:flex;
+align-items:center;
+`;
 
 const MoveTypeContainer = styled.div<{ $typeName: "string" }>`
 	width: 2.5rem;
