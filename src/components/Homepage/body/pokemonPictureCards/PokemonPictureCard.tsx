@@ -12,8 +12,8 @@ import typesColors from "../../../../objects/typesColors.tsx";
 import { TypesColorsInt } from "../../../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
-	width: 45%;
-	height: 19vh;
+	width: 10rem;
+	height: 7.5rem;
 	padding: 0.5rem;
 	border-radius: 25px;
 	text-decoration: none;

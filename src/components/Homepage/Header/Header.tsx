@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import Search from "./Search.tsx";
-import RandomizeSelectionButton from "../../Navigation/RandomizeSelectionButton.tsx";
+import RandomizeSelectionButton from "./RandomizeSelectionButton.tsx";
 
 const Container = styled(ContainerPrototype)`
 	max-height: 13rem;
@@ -16,10 +16,11 @@ const Container = styled(ContainerPrototype)`
 
 const HeaderText = styled.h2`
 	height: fit-content;
-	margin-top: 4.7rem;
+	margin-top: 3.7rem;
 	max-width: 85%;
 	color: white;
 	text-align: start;
+	padding:0 0 1rem;
 `;
 
 export default function Header(): JSX.Element {

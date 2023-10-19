@@ -22,6 +22,8 @@ import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 const Container = styled(ContainerPrototype)`
 	align-items: center;
 	justify-content: center;
+	height:fit-content;
+	margin-top:5.5rem;
 `;
 
 const PokemonContainer = styled.div`

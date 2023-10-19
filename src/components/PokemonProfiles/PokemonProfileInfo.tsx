@@ -17,17 +17,23 @@ const Container = styled(ContainerPrototype)`
 	position: absolute;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
+	overflow-y: scroll;
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
-	height: 10%;
+	position: fixed;
+	background-color:white;
+	height: 3rem;
 	padding: 0 1rem;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
+	align-items:flex-start;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-	height: 90%;
+	//margin:10% 0 0 0;
+	//min-height: 35rem;
+	height:max-content;
 	padding: 1rem;
 `;
 

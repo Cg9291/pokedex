@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import { Link } from "react-router-dom";
+import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
+import homeIcon from "../../assets/icons8-home-100.png";
+import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
 
 const Container = styled(ContainerPrototype)`
 	height: 9%;
@@ -31,6 +34,12 @@ const NavElementName = styled.span`
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
 	min-height: 60%;
 `;
+
+const NavImg = styled.image.attrs({})`
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1/1;
+`;
 const SvgPath = styled.path`
 	width: 200;
 	aspect-ratio: 1/1;
@@ -38,23 +47,23 @@ const SvgPath = styled.path`
 	color: yellow;
 `;
 
-type NavIconsType = { name: string; path: string; linkUrl: string }[];
+type NavIconsType = { name: string; icon: any; linkUrl: string }[];
 
 export default function Navigation(): JSX.Element {
 	const navIcons: NavIconsType = [
 		{
 			name: "Home",
-			path: "M21 13v10h-6v-6h-6v6h-6v-10h-3l12-12 12 12h-3zm-1-5.907v-5.093h-3v2.093l3 3z",
+			icon: homeIcon,
 			linkUrl: "/",
 		},
 		{
 			name: "Wtp",
-			path: "M21 13v10h-6v-6h-6v6h-6v-10h-3l12-12 12 12h-3zm-1-5.907v-5.093h-3v2.093l3 3z",
+			icon: WTPIcon,
 			linkUrl: "/wtp",
 		},
 		{
 			name: "Favorites",
-			path: "M21 13v10h-6v-6h-6v6h-6v-10h-3l12-12 12 12h-3zm-1-5.907v-5.093h-3v2.093l3 3z",
+			icon: pokeBallIcon,
 			linkUrl: "/favorites",
 		},
 	];
@@ -63,7 +72,7 @@ export default function Navigation(): JSX.Element {
 		navIcons.map(icon => (
 			<NavElement
 				name={icon.name}
-				pathInfo={icon.path}
+				iconInfo={icon.icon}
 				linkUrl={icon.linkUrl}
 			/>
 		));
@@ -73,13 +82,14 @@ export default function Navigation(): JSX.Element {
 
 function NavElement(props: {
 	name: string;
-	pathInfo: string;
+	iconInfo: string;
 	linkUrl: string;
 }): JSX.Element {
 	return (
 		<NavElementContainer to={props.linkUrl}>
 			<SvgImg>
-				<SvgPath d={props.pathInfo}></SvgPath>
+				{/* <SvgPath d={props.pathInfo}></SvgPath> */}
+				<NavImg href={props.iconInfo}></NavImg>
 			</SvgImg>
 			<NavElementName>{props.name}</NavElementName>
 		</NavElementContainer>

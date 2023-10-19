@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
+import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import { useContext } from "react";
-import pokemonLookupNumber from "../../functions/utilities/randomizePokemonSelection.tsx";
-import RandomPokemonSelectionContext from "../../contexts/randomPokemonSelectionContext.tsx";
+import pokemonLookupNumber from "../../../functions/utilities/randomizePokemonSelection.tsx";
+import RandomPokemonSelectionContext from "../../../contexts/randomPokemonSelectionContext.tsx";
 
 const Container = styled(ContainerPrototype)`
 	width: fit-content;
@@ -11,12 +11,12 @@ const Container = styled(ContainerPrototype)`
 	top: 0.5rem;
 	right: 0.5rem;
 	z-index: 1;
-	//border-radius: 50%;
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
 	width: 100%;
 	border-radius: 5%;
+	padding:0 0.5rem;
 	border: none;
 `;
 

@@ -12,8 +12,8 @@ import TypePrototype from "../../prototypes/TypePrototype.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
-	justify-content: space-around;
-	padding: 2rem 0 0 0;
+	justify-content: flex-start;
+	padding: 2rem 0 5rem 0;
 `;
 
 const Description = styled.p`
@@ -26,9 +26,10 @@ const VitalsSectionContainer = styled.div`
 	flex-wrap: wrap;
 	align-items: start;
 	//justify-content: space-between;
-	height: auto;
+	height: 7rem;
 	//background-color: red;
 	padding: 1rem 0 0 0;
+	margin: 0 0 1rem;
 	align-content: flex-start;
 	font-size: 0.8em;
 `;
@@ -37,7 +38,8 @@ const VitalsContainer = styled(ContainerPrototype)`
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
-	margin: 0 0 2rem;
+	margin: 0 0 3rem;
+	//padding:0 0 2rem;
 	height: 10%;
 	flex: 0 0 33%;
 `;
@@ -60,6 +62,7 @@ const SWSectionContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: auto;
+	padding-top: 1rem;
 `;
 
 const SWContainer = styled.div`
@@ -96,7 +99,14 @@ export default function About(): JSX.Element {
 		abilities,
 	});
 
-	console.log(types);
+	const displayEnglishDescription = (): string => {
+		const englishDescription = (): Flavor_text_entry =>
+			flavor_text_entries.find(
+				(i: Flavor_text_entry): boolean => i.language.name === "en",
+			)!; //review why is it boolean and not Flavor_text_entry
+
+		return englishDescription().flavor_text;
+	};
 
 	const displayVitals = (): JSX.Element[] =>
 		updatedVitalsArray.map(
@@ -107,15 +117,6 @@ export default function About(): JSX.Element {
 				/>
 			),
 		);
-
-	const displayEnglishDescription = (): string => {
-		const englishDescription = (): Flavor_text_entry =>
-			flavor_text_entries.find(
-				(i: Flavor_text_entry): boolean => i.language.name === "en",
-			)!; //review why is it boolean and not Flavor_text_entry
-
-		return englishDescription().flavor_text;
-	};
 
 	return (
 		flavor_text_entries && (
@@ -164,9 +165,9 @@ function StrengthsAndWeaknesses(props: { type: string }) {
 
 	return (
 		<SWContainer>
-			<h5>Strengths</h5>
+			<h3>Strengths</h3>
 			<SWElementsContainer>{displayStrengths()}</SWElementsContainer>
-			<h5>Weaknesses</h5>
+			<h3>Weaknesses</h3>
 			<SWElementsContainer>{displayWeaknesses()}</SWElementsContainer>
 		</SWContainer>
 	);

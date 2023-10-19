@@ -25,7 +25,7 @@ const Input = styled.input.attrs({
 	width: 100%;
 	height: 3rem;
 	border-radius: 99px;
-	margin-top: auto;
+	margin: auto;
 	padding-left: 1rem;
 `;
 
