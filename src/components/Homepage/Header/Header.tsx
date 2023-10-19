@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import Search from "./Search.tsx";
+import RandomizeSelectionButton from "../../Navigation/RandomizeSelectionButton.tsx";
 
 const Container = styled(ContainerPrototype)`
 	max-height: 13rem;
@@ -10,7 +11,7 @@ const Container = styled(ContainerPrototype)`
 	padding: 0.5rem 0.5rem;
 	border-bottom-left-radius: 25px;
 	border-bottom-right-radius: 25px;
-	position:fixed;
+	position: fixed;
 `;
 
 const HeaderText = styled.h2`
@@ -24,6 +25,7 @@ const HeaderText = styled.h2`
 export default function Header(): JSX.Element {
 	return (
 		<Container>
+			<RandomizeSelectionButton />
 			<HeaderText>
 				What Pokemon
 				<br /> would you like to find?

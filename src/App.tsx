@@ -5,6 +5,11 @@ import MapPathsToElement from "./components/MapPathsToElement.tsx";
 import Navigation from "./components/Navigation/Navigation.tsx";
 import BackButton from "./components/Navigation/BackButton.tsx";
 import { useNavigate } from "react-router-dom";
+import RandomizeSelectionButton from "./components/Navigation/RandomizeSelectionButton.tsx";
+import { useEffect, useState } from "react";
+import RandomPokemonSelectionContext from "./contexts/randomPokemonSelectionContext.tsx";
+import { Provider } from "react";
+import pokemonLookupNumber from "./functions/utilities/randomizePokemonSelection.tsx";
 
 /*
 TODO
@@ -22,17 +27,28 @@ const Container = styled(ContainerPrototype)`
 `;
 
 function App(): JSX.Element {
+	const [randomPokemonSelection, setRandomPokemonSelection] = useState<
+		number[] | []
+	>(pokemonLookupNumber());
+
 	const navigate = useNavigate();
 	const goBack = () => navigate(-1);
+	useEffect(() => console.log("rs", randomPokemonSelection), []);
 
 	return (
 		<Container>
 			<BackButton action={goBack} />
-			<MapPathsToElement />
+			<RandomPokemonSelectionContext.Provider
+				value={{
+					randomPokemonSelection: randomPokemonSelection,
+					setRandomPokemonSelection: setRandomPokemonSelection,
+				}}
+			>
+				<MapPathsToElement />
+			</RandomPokemonSelectionContext.Provider>
 			<Navigation />
 		</Container>
 	);
 }
 
 export default App;
-

@@ -65,34 +65,14 @@ export default function PokemonPictureCard(
 	async function getData(pokeNumber: number): Promise<PokemonInterface | {}> {
 		const data: PokemonInterface = await getPokemonData(pokeNumber);
 		setPokemonInfo(data);
-		//console.log("function getData:success", data);
 		return pokemonInfo;
 	}
 
 	useEffect(() => {
 		getData(props.id);
-	}, []);
+	}, [props.id]);
 
-	const {
-		abilities,
-		base_experience,
-		forms,
-		game_indices,
-		height,
-		held_items,
-		id,
-		is_default,
-		location_area_encounters,
-		moves,
-		name,
-		order,
-		past_types,
-		species,
-		sprites,
-		stats,
-		types,
-		weight,
-	} = pokemonInfo;
+	const { id, name, sprites, types } = pokemonInfo;
 
 	const renderPokemonTypes = (): JSX.Element[] =>
 		types
