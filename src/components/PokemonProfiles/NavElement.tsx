@@ -22,7 +22,7 @@ const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
 	visibility: ${props => props.$visibility};
 `;
 
-export default function PokemonProfileNavElement(props: {
+export default function NavElement(props: {
 	value: string;
 	navElementsNames: PokemonProfilesNavElementsInterface;
 	setNavElementsNames: React.Dispatch<

@@ -1,5 +1,5 @@
 import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface.tsx";
-import { Ability, Type } from "./pokemonInterface.tsx";
+import { Ability } from "./pokemonInterface.tsx";
 
 export interface TypesColorsInt {
 	normal: string;
@@ -20,7 +20,6 @@ export interface TypesColorsInt {
 	dark: string;
 	steel: string;
 	fairy: string;
-	none: string;
 }
 
 export interface PokemonNumberPropsInterface {
@@ -52,18 +51,6 @@ export interface VitalsInterface {
 	height: number;
 	weight: number;
 	color: Color;
-	types: Type[];
-	abilities: Ability[];
+	ability: Ability[];
 	flavor_text_entries: Flavor_text_entry;
-}
-
-export interface EvolutionInterface {
-	url: string;
-}
-
-export interface RandomPokemonSelectionInterface {
-	randomPokemonSelection: number[] | [];
-	setRandomPokemonSelection?: React.Dispatch<
-		React.SetStateAction<[] | number[]>
-	>;
 }
