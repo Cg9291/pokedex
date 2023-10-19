@@ -19,7 +19,6 @@ const typesColors: TypesColorsInt = {
 	dark: "#705746",
 	steel: "#B7B7CE",
 	fairy: "#D685AD",
-	none: "#ffffff",
 };
 
 export default typesColors;

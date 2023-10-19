@@ -11,23 +11,20 @@ import {
 	ObjectPlaceHolderInterface,
 	TypesColorsInt,
 } from "../../interfaces&types/misc_Interfaces.tsx";
-import StatsContext from "../../contexts/statsContext.tsx";
+import StatsContext from "../../contexts/statscontext.tsx";
 import { NumOrString } from "../../interfaces&types/misc_Types.tsx";
 import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
 import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesData.tsx";
-import VitalsContext from "../../contexts/vitalsContext.tsx";
-import EvolutionChainContext from "../../contexts/evolutionChainContext.tsx";
-import MovesContext from "../../contexts/movesContext.tsx";
+import VitalsContext from "../../contexts/vitalscontext.tsx";
 
 let spriteUrl: string;
 let maintype: string;
 
-const Container = styled(ContainerPrototype)<{ $mainType: string }>`
-	//mainType is written with a $ because otherwiswe compiler confuses it with a dom attribute because it has a capital letter
+const Container = styled(ContainerPrototype)<{ mainType: string }>`
 	flex-direction: column;
 	justify-content: center;
 	background-color: ${props =>
-		typesColors[props.$mainType as keyof TypesColorsInt]};
+		typesColors[props.mainType as keyof TypesColorsInt]};
 	z-index: 0;
 	position: relative;
 `;
@@ -57,7 +54,7 @@ const PokemonImg = styled.image.attrs(props => ({
 
 const ProfileContainer = styled(ContainerPrototype)`
 	max-height: 60%;
-	overflow-y:hidden;
+	background-color: green;
 `;
 
 export default function PokemonProfile(): JSX.Element {
@@ -73,18 +70,13 @@ export default function PokemonProfile(): JSX.Element {
 
 	async function getData(
 		pokeId: NumOrString,
-	): Promise<
-		[PokemonInterface, PokemonSpeciesInterface] | ObjectPlaceHolderInterface
-	> {
-		try {
-			const pokemonData = await getPokemonData(pokeId);
-			const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
-			setPokemonInfo(pokemonData);
-			setPokemonSpeciesInfo(pokemonSpeciesData);
-		} catch (err) {
-			console.log(err);
-		}
-		return [pokemonInfo, pokemonSpeciesInfo];
+	): Promise<[PokemonInterface, PokemonSpeciesInterface] | {}> {
+		const pokemonData = await getPokemonData(pokeId);
+		const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
+		setPokemonInfo(pokemonData);
+		setPokemonSpeciesInfo(pokemonSpeciesData);
+		console.log("info is ", pokemonSpeciesData);
+		return [pokemonData, pokemonSpeciesData];
 	}
 
 	useEffect(() => {
@@ -95,10 +87,52 @@ export default function PokemonProfile(): JSX.Element {
 		}
 	}, []);
 
-	const { abilities, height, id, moves, name, sprites, stats, types, weight } =
-		pokemonInfo;
+	const {
+		abilities,
+		base_experience,
+		forms,
+		game_indices,
+		height,
+		held_items,
+		id,
+		is_default,
+		location_area_encounters,
+		moves,
+		name,
+		order,
+		past_types,
+		species,
+		sprites,
+		stats,
+		types,
+		weight,
+	} = pokemonInfo;
 
-	const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
+	const {
+		gender_rate,
+		capture_rate,
+		base_happiness,
+		is_baby,
+		is_legendary,
+		is_mythical,
+		hatch_counter,
+		has_gender_differences,
+		forms_switchable,
+		growth_rate,
+		pokedex_numbers,
+		egg_groups,
+		color,
+		shape,
+		evolves_from_species,
+		evolution_chain,
+		habitat,
+		generation,
+		names,
+		flavor_text_entries,
+		form_descriptions,
+		genera,
+		varieties,
+	} = pokemonSpeciesInfo;
 
 	if (sprites) {
 		spriteUrl = sprites.front_default;
@@ -109,10 +143,8 @@ export default function PokemonProfile(): JSX.Element {
 		maintype = types[0].type.name;
 	}
 
-	console.log(moves);
-
 	return (
-		<Container $mainType={maintype}>
+		<Container mainType={maintype}>
 			<ImageContainer>
 				<PokeNumber>{id && id}</PokeNumber>
 				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
@@ -124,21 +156,10 @@ export default function PokemonProfile(): JSX.Element {
 			</ImageContainer>
 			<ProfileContainer>
 				<VitalsContext.Provider
-					value={{
-						height,
-						weight,
-						color,
-						abilities,
-						types,
-						flavor_text_entries,
-					}}
+					value={{  height, weight, color, abilities,flavor_text_entries, }}
 				>
 					<StatsContext.Provider value={stats}>
-						<EvolutionChainContext.Provider value={evolution_chain}>
-							<MovesContext.Provider value={moves}>
-								<PokemonProfileInfo />
-							</MovesContext.Provider>
-						</EvolutionChainContext.Provider>
+						<PokemonProfileInfo />
 					</StatsContext.Provider>
 				</VitalsContext.Provider>
 			</ProfileContainer>

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
-import PokemonProfileNavElement from "./PokemonProfileNavElement.tsx";
+import NavElement from "./NavElement.tsx";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces.tsx";
 import BaseStats from "./profileNavBodies/BaseStats.tsx";
 import About from "./profileNavBodies/About.tsx";
-import Moves from "./profileNavBodies/Moves.tsx";
-import Evolution from "./profileNavBodies/Evolution.tsx";
+import Moves from "../Moves.tsx";
+import Evolution from "../Evolution.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -17,23 +17,17 @@ const Container = styled(ContainerPrototype)`
 	position: absolute;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
-	overflow-y: scroll;
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
-	position: fixed;
-	background-color:white;
-	height: 3rem;
+	height: 10%;
 	padding: 0 1rem;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
-	align-items:flex-start;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-	//margin:10% 0 0 0;
-	//min-height: 35rem;
-	height:max-content;
+	height: 90%;
 	padding: 1rem;
 `;
 
@@ -52,7 +46,7 @@ export default function PokemonProfileInfo(): JSX.Element {
 	const mapObjectToComponent = (): JSX.Element[] =>
 		Object.keys(navElementsNames).map(
 			(key: string): JSX.Element => (
-				<PokemonProfileNavElement
+				<NavElement
 					value={key}
 					navElementsNames={navElementsNames}
 					setNavElementsNames={setNavElementsNames}
@@ -66,6 +60,7 @@ export default function PokemonProfileInfo(): JSX.Element {
 				navElementsNames[key as keyof PokemonProfilesNavElementsInterface]
 					.isFocused,
 		)!;
+				// I did work wasdfgadsfsdfadsfa
 		return navElementsNames[
 			focusedElement as keyof PokemonProfilesNavElementsInterface
 		].element;
