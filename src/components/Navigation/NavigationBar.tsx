@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
 import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
+import { NavIconsType } from "../../interfaces&types/misc_Types.js";
+import { IconInterface } from "../../interfaces&types/misc_Interfaces.tsx";
 
 const Container = styled(ContainerPrototype)`
 	height: 9%;
@@ -40,16 +42,8 @@ const NavImg = styled.image.attrs({})`
 	height: 100%;
 	aspect-ratio: 1/1;
 `;
-const SvgPath = styled.path`
-	width: 200;
-	aspect-ratio: 1/1;
-	fill: black;
-	color: yellow;
-`;
 
-type NavIconsType = { name: string; icon: any; linkUrl: string }[];
-
-export default function Navigation(): JSX.Element {
+export default function NavigationBar(): JSX.Element {
 	const navIcons: NavIconsType = [
 		{
 			name: "Home",
@@ -72,7 +66,7 @@ export default function Navigation(): JSX.Element {
 		navIcons.map(icon => (
 			<NavElement
 				name={icon.name}
-				iconInfo={icon.icon}
+				icon={icon.icon}
 				linkUrl={icon.linkUrl}
 			/>
 		));
@@ -80,16 +74,12 @@ export default function Navigation(): JSX.Element {
 	return <Container>{displayNavIcons()}</Container>;
 }
 
-function NavElement(props: {
-	name: string;
-	iconInfo: string;
-	linkUrl: string;
-}): JSX.Element {
+function NavElement(props: IconInterface): JSX.Element {
 	return (
 		<NavElementContainer to={props.linkUrl}>
 			<SvgImg>
 				{/* <SvgPath d={props.pathInfo}></SvgPath> */}
-				<NavImg href={props.iconInfo}></NavImg>
+				<NavImg href={props.icon}></NavImg>
 			</SvgImg>
 			<NavElementName>{props.name}</NavElementName>
 		</NavElementContainer>

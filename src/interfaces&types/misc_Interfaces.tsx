@@ -67,3 +67,9 @@ export interface RandomPokemonSelectionInterface {
 		React.SetStateAction<[] | number[]>
 	>;
 }
+
+export interface IconInterface {
+	name: string;
+	icon: string;
+	linkUrl: string;
+}

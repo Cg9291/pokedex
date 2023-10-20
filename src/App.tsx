@@ -2,16 +2,16 @@ import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
 import MapPathsToElement from "./components/MapPathsToElement.tsx";
-import Navigation from "./components/Navigation/Navigation.tsx";
+import NavigationBar from "./components/Navigation/NavigationBar.tsx";
 import BackButton from "./components/Navigation/BackButton.tsx";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import RandomPokemonSelectionContext from "./contexts/randomPokemonSelectionContext.tsx";
-import { Provider } from "react";
 import pokemonLookupNumber from "./functions/utilities/randomizePokemonSelection.tsx";
 
 /*
 TODO
+
+*maybe add routing to profile body elements
 
 *replace usages of Object placeholders by using the type extension way (TS)
 *add label/form elements to backbuttons
@@ -22,20 +22,16 @@ TODO
 
 const Container = styled(ContainerPrototype)`
 	background-color: white;
-	overflow-y: hidden;
 `;
 
 function App(): JSX.Element {
 	const [randomPokemonSelection, setRandomPokemonSelection] = useState<
-		number[] | []
+		number[]
 	>(pokemonLookupNumber());
-
-	const navigate = useNavigate();
-	const goBack = () => navigate(-1);
 
 	return (
 		<Container>
-			<BackButton action={goBack} />
+			<BackButton />
 			<RandomPokemonSelectionContext.Provider
 				value={{
 					randomPokemonSelection: randomPokemonSelection,
@@ -44,7 +40,7 @@ function App(): JSX.Element {
 			>
 				<MapPathsToElement />
 			</RandomPokemonSelectionContext.Provider>
-			<Navigation />
+			<NavigationBar />
 		</Container>
 	);
 }

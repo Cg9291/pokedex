@@ -23,11 +23,12 @@ const MainContainer = styled.div`
 
 export default function Homepage(): JSX.Element {
 	const localRandomPokemonSelection = useContext(RandomPokemonSelectionContext);
-	const { randomPokemonSelection/* , setRandomPokemonSelection */ } =
-		localRandomPokemonSelection;
+	const { randomPokemonSelection } = localRandomPokemonSelection;
 
 	const mapPictureCards = (): JSX.Element[] =>
-		randomPokemonSelection.map(i => <PokemonPictureCard id={i} />);
+		randomPokemonSelection.map((generatedNumber: number) => (
+			<PokemonPictureCard id={generatedNumber} />
+		));
 
 	return (
 		<Container>

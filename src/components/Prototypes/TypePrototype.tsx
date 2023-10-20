@@ -5,8 +5,10 @@ const TypePrototype = styled.div<{ $bgColor: string; $value?: string }>`
 	padding: 0.2rem 1rem;
 	background-color: ${props =>
 		props.$value === "none" ? "rgba(255,255,255,0)" : props.$bgColor};
-	border: ${props => (props.$value === "none" ? "solid yellow " : "none")};
+	border: ${props => (props.$value === "none" ? "0.1rem solid red " : "none")};
 	border-radius: 50px;
+	display:flex;
+	align-items:center;
 `;
 
 export default TypePrototype;

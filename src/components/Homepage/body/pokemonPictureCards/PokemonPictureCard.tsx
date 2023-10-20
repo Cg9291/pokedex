@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype.tsx";
 import PokemonTypesElement from "./PokemonTypesElement.tsx";
-
 import getPokemonData from "../../../../functions/api_calls/getPokemonData.tsx";
 import capitalizeWords from "../../../../functions/utilities/capitalizeWords.tsx";
-import { PokemonNumberPropsInterface } from "../../../../interfaces&types/misc_Interfaces.tsx";
-import PokemonInterface from "../../../../interfaces&types/pokemonInterface.tsx";
+import {
+	ObjectPlaceHolderInterface,
+	PokemonNumberPropsInterface,
+} from "../../../../interfaces&types/misc_Interfaces.tsx";
+import PokemonInterface, {
+	Type,
+} from "../../../../interfaces&types/pokemonInterface.tsx";
 import typesColors from "../../../../objects/typesColors.tsx";
 import { TypesColorsInt } from "../../../../interfaces&types/misc_Interfaces.tsx";
 
@@ -18,9 +22,7 @@ const Container = styled(Link)<{ $mainType: string }>`
 	border-radius: 25px;
 	text-decoration: none;
 	background-color: ${props =>
-		typesColors[
-			props.$mainType as keyof TypesColorsInt
-		]}; //review this answer for better "keyof" concept understanding
+		typesColors[props.$mainType as keyof TypesColorsInt]};
 `;
 
 const Wrapper = styled(ContainerPrototype)`
@@ -50,8 +52,8 @@ const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
 	width: 100%;
 	height: 100%;
 `;
-const PokemonImg = styled.image.attrs({})`
-	width: 200;
+const PokemonImg = styled.image`
+	width: 20rem;
 	aspect-ratio: 1/1;
 `;
 
@@ -59,12 +61,18 @@ export default function PokemonPictureCard(
 	props: PokemonNumberPropsInterface,
 ): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
-		PokemonInterface | { [key: string]: any }
+		PokemonInterface | ObjectPlaceHolderInterface
 	>({});
 
-	async function getData(pokeNumber: number): Promise<PokemonInterface | {}> {
-		const data: PokemonInterface = await getPokemonData(pokeNumber);
-		setPokemonInfo(data);
+	async function getData(
+		pokeNumber: number,
+	): Promise<PokemonInterface | ObjectPlaceHolderInterface> {
+		try {
+			const data: PokemonInterface = await getPokemonData(pokeNumber);
+			setPokemonInfo(data);
+		} catch (err) {
+			console.log(err);
+		}
 		return pokemonInfo;
 	}
 
@@ -74,15 +82,17 @@ export default function PokemonPictureCard(
 
 	const { id, name, sprites, types } = pokemonInfo;
 
-	const renderPokemonTypes = (): JSX.Element[] =>
-		types
-			.toReversed()
-			.map(
-				(x: /*replace this with an  interface-> */ {
-					slot: number;
-					type: { name: string; url: string };
-				}) => <PokemonTypesElement typeName={capitalizeWords(x.type.name)} />,
-			);
+	const displayPokemonTypes = (): JSX.Element[] | undefined => {
+		if (types) {
+			return types
+				.toReversed()
+				.map((x: Type) => (
+					<PokemonTypesElement typeName={capitalizeWords(x.type.name)} />
+				));
+		} else {
+			return;
+		}
+	};
 
 	return (
 		<Container
@@ -90,19 +100,15 @@ export default function PokemonPictureCard(
 			$mainType={types && types[0].type.name}
 		>
 			<Wrapper>
-				<PokeName>{name && capitalizeWords(name)}</PokeName>
+				<PokeName>{capitalizeWords(name)}</PokeName>
 				<SubContainer>
-					<PokemonTypesContainer>
-						{types && renderPokemonTypes()}
-					</PokemonTypesContainer>
+					<PokemonTypesContainer>{displayPokemonTypes()}</PokemonTypesContainer>
 					<PokemonImgWrapper>
 						{sprites && (
 							<SvgImg>
 								<PokemonImg
 									href={sprites.front_default}
 									/* 	alt="a pokemon image" */
-									width="325"
-									height="325" //move these to attrs
 								/>
 							</SvgImg>
 						)}

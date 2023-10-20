@@ -13,7 +13,6 @@ const GlobalStyle = styled.createGlobalStyle`
         width:100vw;
         padding:0;
         margin:0;
-        //border:1px solid yellow;
         overflow-x:hidden
     };
     #root{

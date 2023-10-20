@@ -25,9 +25,7 @@ const VitalsSectionContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	align-items: start;
-	//justify-content: space-between;
 	height: 7rem;
-	//background-color: red;
 	padding: 1rem 0 0 0;
 	margin: 0 0 1rem;
 	align-content: flex-start;
@@ -39,7 +37,6 @@ const VitalsContainer = styled(ContainerPrototype)`
 	flex-direction: column;
 	justify-content: start;
 	margin: 0 0 3rem;
-	//padding:0 0 2rem;
 	height: 10%;
 	flex: 0 0 33%;
 `;
@@ -77,7 +74,6 @@ const SWElementsContainer = styled.div`
 	align-content: start;
 	padding: 0.5rem 0 0 0;
 	margin: 0 0 1rem 0;
-	//justify-content: space-evenly;
 `;
 
 const SWElement = styled(TypePrototype)``;
@@ -103,7 +99,7 @@ export default function About(): JSX.Element {
 		const englishDescription = (): Flavor_text_entry =>
 			flavor_text_entries.find(
 				(i: Flavor_text_entry): boolean => i.language.name === "en",
-			)!; //review why is it boolean and not Flavor_text_entry
+			);
 
 		return englishDescription().flavor_text;
 	};

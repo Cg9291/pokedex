@@ -9,7 +9,7 @@ import Favorites from "../pages/Favorites.tsx";
 export default function MapPathsToElement(): React.ReactElement | null {
 	return useRoutes([
 		{ path: "/", element: <Homepage /> },
-		{ path: "/about", element: <About /> },
+		/* { path: "/about", element: <About /> }, */
 		{ path: "*", element: <NoMatch /> },
 		{ path: "/pokemons/id/:id", element: <PokemonProfile /> },
 		{ path: "/pokemons/name/:name", element: <PokemonProfile /> },
