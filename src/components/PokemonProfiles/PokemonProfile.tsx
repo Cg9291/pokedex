@@ -19,7 +19,7 @@ import VitalsContext from "../../contexts/vitalsContext.tsx";
 import EvolutionChainContext from "../../contexts/evolutionChainContext.tsx";
 import MovesContext from "../../contexts/movesContext.tsx";
 
-let spriteUrl: string;
+let spriteUrl: string | undefined; //undefined here fixes the problem of variable being used before it's assigned
 let maintype: string;
 
 const Container = styled(ContainerPrototype)<{ $mainType: string }>`
@@ -46,10 +46,9 @@ const SvgImg = styled.svg`
 	width: 100%;
 	height: 50%;
 `;
-const PokemonImg = styled.image.attrs(props => ({
+const PokemonImg = styled.image.attrs({
 	href: spriteUrl,
-	alt: "a pokemon image",
-}))`
+})`
 	width: 100%;
 	height: 100%;
 	border: solid black;
@@ -57,10 +56,12 @@ const PokemonImg = styled.image.attrs(props => ({
 
 const ProfileContainer = styled(ContainerPrototype)`
 	max-height: 60%;
-	overflow-y:hidden;
+	overflow-y: hidden;
 `;
 
-export default function PokemonProfile(): JSX.Element {
+export default function PokemonProfile(props: {
+	body?: JSX.Element | undefined | string;
+}): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
 		PokemonInterface | ObjectPlaceHolderInterface
 	>({});
@@ -105,17 +106,14 @@ export default function PokemonProfile(): JSX.Element {
 	}
 
 	if (types) {
-		//moved from inline to here for formatting purposes/bug
 		maintype = types[0].type.name;
 	}
-
-	console.log(moves);
-
+	console.log("parent", props.body);
 	return (
 		<Container $mainType={maintype}>
 			<ImageContainer>
 				<PokeNumber>{id && id}</PokeNumber>
-				<PokemonName>{name && capitalizeWords(name)}</PokemonName>
+				<PokemonName>{capitalizeWords(name)}</PokemonName>
 				{sprites && (
 					<SvgImg>
 						<PokemonImg />
@@ -131,12 +129,14 @@ export default function PokemonProfile(): JSX.Element {
 						abilities,
 						types,
 						flavor_text_entries,
+						id,
+						name,
 					}}
 				>
 					<StatsContext.Provider value={stats}>
 						<EvolutionChainContext.Provider value={evolution_chain}>
 							<MovesContext.Provider value={moves}>
-								<PokemonProfileInfo />
+								<PokemonProfileInfo body={props.body} />
 							</MovesContext.Provider>
 						</EvolutionChainContext.Provider>
 					</StatsContext.Provider>

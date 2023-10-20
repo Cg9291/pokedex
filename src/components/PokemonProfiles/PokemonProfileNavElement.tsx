@@ -2,6 +2,10 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import LinkPrototype from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import VitalsContext from "../../contexts/vitalsContext.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -11,8 +15,9 @@ const Container = styled(ContainerPrototype)`
 	align-items: center;
 `;
 
-const Link = styled(LinkPrototype)`
+const NavLink = styled(Link)`
 	color: black;
+	text-decoration: none;
 `;
 
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
@@ -29,6 +34,8 @@ export default function PokemonProfileNavElement(props: {
 		React.SetStateAction<PokemonProfilesNavElementsInterface>
 	>;
 }): JSX.Element {
+	const myVitalsContext = useContext(VitalsContext);
+	const { id, name } = myVitalsContext;
 	const navElementsNames = props.navElementsNames;
 	const setNavElementsNames = props.setNavElementsNames;
 
@@ -55,9 +62,18 @@ export default function PokemonProfileNavElement(props: {
 		navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface]
 			.isFocused === true;
 
+	const location = useLocation();
+	const checkPath =
+		location.pathname.search(`/pokemons/id/${id}`) !== -1
+			? `/pokemons/id/${id}/${props.value}`
+			: location.pathname.search(`/pokemons/name/${name}`) !== -1
+			? `/pokemons/name/${name}/${props.value}`
+			: "*";
+
+	console.log(`${location.pathname}`);
 	return (
 		<Container onFocus={focusHandler}>
-			<Link>{props.value}</Link>
+			<NavLink to={checkPath}>{props.value}</NavLink>
 			<SelectionUnderlineBar
 				$visibility={isElementFocused ? "visible" : "hidden"}
 			/>

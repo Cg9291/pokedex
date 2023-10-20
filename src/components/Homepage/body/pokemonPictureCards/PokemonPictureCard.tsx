@@ -96,7 +96,7 @@ export default function PokemonPictureCard(
 
 	return (
 		<Container
-			to={`/pokemons/id/${id}`}
+			to={`/pokemons/id/${id}/About`}
 			$mainType={types && types[0].type.name}
 		>
 			<Wrapper>

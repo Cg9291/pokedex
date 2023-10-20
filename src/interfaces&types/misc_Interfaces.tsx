@@ -52,6 +52,8 @@ export interface VitalsInterface {
 	height: number;
 	weight: number;
 	color: Color;
+	name: string;
+	id: number;
 	types: Type[];
 	abilities: Ability[];
 	flavor_text_entries: Flavor_text_entry;

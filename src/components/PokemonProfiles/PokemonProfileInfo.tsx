@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
 import PokemonProfileNavElement from "./PokemonProfileNavElement.tsx";
@@ -22,22 +22,23 @@ const Container = styled(ContainerPrototype)`
 
 const InfoNavBar = styled(ContainerPrototype)`
 	position: fixed;
-	background-color:white;
+	background-color: white;
 	height: 3rem;
 	padding: 0 1rem;
 	border-top-left-radius: 25px;
 	border-top-right-radius: 25px;
-	align-items:flex-start;
+	align-items: flex-start;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-	//margin:10% 0 0 0;
-	//min-height: 35rem;
-	height:max-content;
+	height: max-content;
 	padding: 1rem;
 `;
 
-export default function PokemonProfileInfo(): JSX.Element {
+export default function PokemonProfileInfo(props: {
+	body: JSX.Element | undefined |string ;
+}): JSX.Element {
+
 	const [navElementsNames, setNavElementsNames] =
 		useState<PokemonProfilesNavElementsInterface>({
 			About: { isFocused: true, element: <About /> },
@@ -81,11 +82,11 @@ export default function PokemonProfileInfo(): JSX.Element {
 		console.log("stats array ", finder());
 		return finder(); */
 	};
-
+console.log(props.body)
 	return (
 		<Container>
 			<InfoNavBar>{mapObjectToComponent()}</InfoNavBar>
-			<InfoNavBody>{displayNavBody()}</InfoNavBody>
+			<InfoNavBody>{props.body}</InfoNavBody>
 		</Container>
 	);
 }

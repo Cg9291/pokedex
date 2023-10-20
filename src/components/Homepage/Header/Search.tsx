@@ -49,7 +49,7 @@ export default function Search(): JSX.Element {
 
 		try {
 			data = await getPokemonData(name);
-			navigate(`/pokemons/name/${name}`);
+			navigate(`/pokemons/name/${name}/About`);
 		} catch (err) {
 			console.log(err);
 			navigate(`*`);
