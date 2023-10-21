@@ -18,6 +18,7 @@ import getPokemonSpeciesData from "../../functions/api_calls/getPokemonSpeciesDa
 import VitalsContext from "../../contexts/vitalsContext.tsx";
 import EvolutionChainContext from "../../contexts/evolutionChainContext.tsx";
 import MovesContext from "../../contexts/movesContext.tsx";
+import ComponentContext from "../../contexts/componentContext.tsx";
 
 let spriteUrl: string | undefined; //undefined here fixes the problem of variable being used before it's assigned
 let maintype: string;
@@ -60,7 +61,7 @@ const ProfileContainer = styled(ContainerPrototype)`
 `;
 
 export default function PokemonProfile(props: {
-	body?: JSX.Element | undefined | string;
+	body?: { name: string; element: JSX.Element } | undefined;
 }): JSX.Element {
 	const [pokemonInfo, setPokemonInfo] = useState<
 		PokemonInterface | ObjectPlaceHolderInterface
@@ -108,7 +109,7 @@ export default function PokemonProfile(props: {
 	if (types) {
 		maintype = types[0].type.name;
 	}
-	console.log("parent", props.body);
+
 	return (
 		<Container $mainType={maintype}>
 			<ImageContainer>
@@ -136,7 +137,11 @@ export default function PokemonProfile(props: {
 					<StatsContext.Provider value={stats}>
 						<EvolutionChainContext.Provider value={evolution_chain}>
 							<MovesContext.Provider value={moves}>
-								<PokemonProfileInfo body={props.body} />
+								<ComponentContext.Provider
+									value={props.body ? props.body : undefined}
+								>
+									<PokemonProfileInfo />
+								</ComponentContext.Provider>
 							</MovesContext.Provider>
 						</EvolutionChainContext.Provider>
 					</StatsContext.Provider>

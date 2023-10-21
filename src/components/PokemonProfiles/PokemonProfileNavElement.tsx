@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
-import LinkPrototype from "../prototypes/LinkPrototype";
-import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces";
+/* import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces"; */
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import VitalsContext from "../../contexts/vitalsContext.tsx";
+import ComponentContext from "../../contexts/componentContext.tsx";
 
 const Container = styled(ContainerPrototype)`
 	flex-direction: column;
@@ -29,38 +29,10 @@ const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
 
 export default function PokemonProfileNavElement(props: {
 	value: string;
-	navElementsNames: PokemonProfilesNavElementsInterface;
-	setNavElementsNames: React.Dispatch<
-		React.SetStateAction<PokemonProfilesNavElementsInterface>
-	>;
 }): JSX.Element {
+	const myComponentContext = useContext(ComponentContext);
 	const myVitalsContext = useContext(VitalsContext);
 	const { id, name } = myVitalsContext;
-	const navElementsNames = props.navElementsNames;
-	const setNavElementsNames = props.setNavElementsNames;
-
-	const focusHandler = (): void => {
-		let nextState = navElementsNames;
-		for (let obj in nextState) {
-			if (obj === props.value) {
-				nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused =
-					true;
-			} else {
-				nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused =
-					false;
-			}
-		}
-
-		setNavElementsNames(
-			(navElementsNames: PokemonProfilesNavElementsInterface) => ({
-				...navElementsNames, //this function works but shouldnt...review
-			}),
-		);
-	};
-
-	const isElementFocused: boolean =
-		navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface]
-			.isFocused === true;
 
 	const location = useLocation();
 	const checkPath =
@@ -70,21 +42,14 @@ export default function PokemonProfileNavElement(props: {
 			? `/pokemons/name/${name}/${props.value}`
 			: "*";
 
-	console.log(`${location.pathname}`);
 	return (
-		<Container onFocus={focusHandler}>
+		<Container>
 			<NavLink to={checkPath}>{props.value}</NavLink>
 			<SelectionUnderlineBar
-				$visibility={isElementFocused ? "visible" : "hidden"}
+				$visibility={
+					myComponentContext?.name === props.value ? "visible" : "hidden"
+				}
 			/>
 		</Container>
 	);
-	/* 	} else {
-		return (
-			<Container onFocus={focusHandler}>
-				<Link>{props.value}</Link>
-				<SelectionUnderlineBar $visibility={"hidden"} />
-			</Container>
-		);
-	} */
 }

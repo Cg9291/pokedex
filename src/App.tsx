@@ -11,13 +11,10 @@ import pokemonLookupNumber from "./functions/utilities/randomizePokemonSelection
 /*
 TODO
 
-*maybe add routing to profile body elements
-
 *replace usages of Object placeholders by using the type extension way (TS)
 *add label/form elements to backbuttons
 *maybe add icons in About elements
 *figure out keys for mapped elements
-*review focusHandler() in NavElements file
 */
 
 const Container = styled(ContainerPrototype)`

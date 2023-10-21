@@ -1,4 +1,4 @@
-import { useRoutes, Outlet } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import PokemonProfile from "./PokemonProfiles/PokemonProfile.tsx";
 import Homepage from "../pages/Homepage.tsx";
 import About from "./PokemonProfiles/profileNavBodies/About.tsx";
@@ -16,24 +16,66 @@ export default function MapPathsToElement(): React.ReactElement | null {
 		{
 			path: "/pokemons/id/:id/",
 			children: [
-				{ path: "About", element: <PokemonProfile body={<About />} /> },
-				{ path: "Evolution", element: <PokemonProfile body={<Evolution />} /> },
-				{ path: "Moves", element: <PokemonProfile body={<Moves />} /> },
+				{
+					path: "About",
+					element: (
+						<PokemonProfile body={{ name: "About", element: <About /> }} />
+					),
+				},
+				{
+					path: "Evolution",
+					element: (
+						<PokemonProfile
+							body={{ name: "Evolution", element: <Evolution /> }}
+						/>
+					),
+				},
+				{
+					path: "Moves",
+					element: (
+						<PokemonProfile body={{ name: "Moves", element: <Moves /> }} />
+					),
+				},
 				{
 					path: "Base Stats",
-					element: <PokemonProfile body={<BaseStats />} />,
+					element: (
+						<PokemonProfile
+							body={{ name: "Base Stats", element: <BaseStats /> }}
+						/>
+					),
 				},
 			],
 		},
 		{
 			path: "/pokemons/name/:name",
 			children: [
-				{ path: "About", element: <PokemonProfile body={<About />} /> },
-				{ path: "Evolution", element: <PokemonProfile body={<Evolution />} /> },
-				{ path: "Moves", element: <PokemonProfile body={<Moves />} /> },
+				{
+					path: "About",
+					element: (
+						<PokemonProfile body={{ name: "About", element: <About /> }} />
+					),
+				},
+				{
+					path: "Evolution",
+					element: (
+						<PokemonProfile
+							body={{ name: "Evolution", element: <Evolution /> }}
+						/>
+					),
+				},
+				{
+					path: "Moves",
+					element: (
+						<PokemonProfile body={{ name: "Moves", element: <Moves /> }} />
+					),
+				},
 				{
 					path: "Base Stats",
-					element: <PokemonProfile body={<BaseStats />} />,
+					element: (
+						<PokemonProfile
+							body={{ name: "Base Stats", element: <BaseStats /> }}
+						/>
+					),
 				},
 			],
 		},

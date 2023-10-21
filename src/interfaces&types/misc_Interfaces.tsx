@@ -31,12 +31,12 @@ export interface PokemonTypesPropsInterface {
 	typeName: string;
 }
 
-export interface PokemonProfilesNavElementsInterface {
+/* export interface PokemonProfilesNavElementsInterface {
 	About: { isFocused: boolean; element: JSX.Element };
 	"Base Stats": { isFocused: boolean; element: JSX.Element };
 	Evolution: { isFocused: boolean; element: JSX.Element };
 	Moves: { isFocused: boolean; element: JSX.Element };
-}
+} */
 
 export interface StatsInterface {
 	base_stat: number;
