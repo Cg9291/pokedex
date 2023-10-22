@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import VitalsContext from "../../../contexts/vitalscontext";
@@ -16,12 +16,12 @@ const VitalsLabel = styled.div``;
 
 const VitalsValue = styled.div``;
 
-export default function About(): JSX.Element {
+export default function About(): React.ReactElement {
     const { flavor_text_entries } = useContext(VitalsContext);
     const myVitalsContext = Object.entries(useContext(VitalsContext));
 
-    /* const displayVitals = (): JSX.Element =>
-		myVitalsContext.map((x: any): JSX.Element[] => (
+    /* const displayVitals = (): React.ReactElement =>
+		myVitalsContext.map((x: any): React.ReactElement[] => (
 			<Vitals
 				label={x[0]}
 				value={x[1]}
@@ -44,7 +44,7 @@ export default function About(): JSX.Element {
     );
 }
 
-/* function Vitals(props: { label: string; value: any }): JSX.Element {
+/* function Vitals(props: { label: string; value: any }): React.ReactElement {
 	return (
 		<VitalsContainer>
 			<VitalsLabel>{props.label}</VitalsLabel>

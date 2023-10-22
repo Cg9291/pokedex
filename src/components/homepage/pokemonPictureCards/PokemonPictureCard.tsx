@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
@@ -54,7 +54,7 @@ const PokemonImg = styled.image.attrs({})`
     aspect-ratio: 1/1;
 `;
 
-export default function PokemonPictureCard(props: PokemonNumberPropsInterface): JSX.Element {
+export default function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface | { [key: string]: any }>({});
 
     async function getData(pokeNumber: number): Promise<void> {

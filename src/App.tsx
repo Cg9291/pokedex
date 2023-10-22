@@ -2,6 +2,7 @@ import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype";
 import MapPathsToElement from "./components/MapPathsToElement";
+import React from "react";
 
 /*
 TODO
@@ -18,7 +19,7 @@ const Container = styled(ContainerPrototype)`
     background-color: white;
 `;
 
-function App(): JSX.Element {
+function App(): React.ReactElement {
     return (
         <Container>
             <MapPathsToElement />

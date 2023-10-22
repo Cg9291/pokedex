@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import Header from "../components/homepage/header/Header";
 import PokemonPictureCard from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
+import React from "react";
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
@@ -17,7 +18,7 @@ const MainContainer = styled.div`
     padding: 1vh 1vw;
 `;
 
-export default function Homepage(): JSX.Element {
+export default function Homepage(): React.ReactElement {
     const pokemonLookupNumber = (): number[] => {
         const numberArray: number[] = [];
         const randomNum = (): void => {
@@ -30,7 +31,7 @@ export default function Homepage(): JSX.Element {
         return numberArray;
     };
 
-    const mapPictureCards = (): JSX.Element[] => pokemonLookupNumber().map((i) => <PokemonPictureCard id={i} />);
+    const mapPictureCards = (): React.ReactElement[] => pokemonLookupNumber().map((i) => <PokemonPictureCard id={i} />);
 
     return (
         <Container>

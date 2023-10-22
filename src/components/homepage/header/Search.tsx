@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
+import React from "react";
 
 const Container = styled(ContainerPrototype)``;
 
@@ -33,7 +34,7 @@ const Button = styled.button.attrs({ type: "submit" })`
     border-radius: 10px;
 `;
 
-export default function Search(): JSX.Element {
+export default function Search(): React.ReactElement {
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import PokemonProfileInfo from "./PokemonProfileInfo";
@@ -53,7 +53,7 @@ const ProfileContainer = styled(ContainerPrototype)`
     background-color: green;
 `;
 
-export default function PokemonProfile(): JSX.Element {
+export default function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface | ObjectPlaceHolderInterface>({});
 
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface | ObjectPlaceHolderInterface>(

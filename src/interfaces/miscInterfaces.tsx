@@ -1,5 +1,6 @@
 import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface";
 import { Ability } from "./pokemonInterface";
+import React from "react";
 
 export interface TypesColorsInt {
     normal: string;
@@ -31,10 +32,10 @@ export interface PokemonTypesPropsInterface {
 }
 
 export interface PokemonProfilesNavElementsInterface {
-    About: { isFocused: boolean; element: JSX.Element };
-    "Base Stats": { isFocused: boolean; element: JSX.Element };
-    Evolution: { isFocused: boolean; element: JSX.Element };
-    Moves: { isFocused: boolean; element: JSX.Element };
+    About: { isFocused: boolean; element: React.ReactElement };
+    "Base Stats": { isFocused: boolean; element: React.ReactElement };
+    Evolution: { isFocused: boolean; element: React.ReactElement };
+    Moves: { isFocused: boolean; element: React.ReactElement };
 }
 
 export interface StatsInterface {

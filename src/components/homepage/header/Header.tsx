@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import Search from "./Search";
+import React from "react";
 
 const Container = styled(ContainerPrototype)`
     max-height: 13rem;
@@ -20,7 +21,7 @@ const HeaderText = styled.h2`
     text-align: start;
 `;
 
-export default function Header(): JSX.Element {
+export default function Header(): React.ReactElement {
     return (
         <Container>
             <HeaderText>

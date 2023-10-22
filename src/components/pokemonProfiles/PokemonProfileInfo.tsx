@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import NavElement from "./NavElement";
@@ -31,7 +31,7 @@ const InfoNavBody = styled(ContainerPrototype)`
     padding: 1rem;
 `;
 
-export default function PokemonProfileInfo(): JSX.Element {
+export default function PokemonProfileInfo(): React.ReactElement {
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true, element: <About /> },
         "Base Stats": {
@@ -42,9 +42,9 @@ export default function PokemonProfileInfo(): JSX.Element {
         Moves: { isFocused: false, element: <Moves /> }
     });
 
-    const mapObjectToComponent = (): JSX.Element[] =>
+    const mapObjectToComponent = (): React.ReactElement[] =>
         Object.keys(navElementsNames).map(
-            (key: string): JSX.Element => (
+            (key: string): React.ReactElement => (
                 <NavElement value={key} navElementsNames={navElementsNames} setNavElementsNames={setNavElementsNames} />
             )
         );
@@ -56,7 +56,7 @@ export default function PokemonProfileInfo(): JSX.Element {
         // I did work wasdfgadsfsdfadsfa
         return navElementsNames[focusedElement as keyof PokemonProfilesNavElementsInterface].element;
 
-        /* let finder = ():()=> JSX.Element => {
+        /* let finder = ():()=> React.ReactElement => {
 			for (let key in navElementsNames) {
 				let x = key as keyof PokemonProfilesNavElementsInt; //this was necessary because accessing properties from key var caused a type error
 				if (navElementsNames[x].isFocused === true) {

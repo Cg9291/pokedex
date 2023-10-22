@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import LinkPrototype from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
+import React from "react";
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
@@ -26,7 +27,7 @@ export default function NavElement(props: {
     value: string;
     navElementsNames: PokemonProfilesNavElementsInterface;
     setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface>>;
-}): JSX.Element {
+}): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
 
