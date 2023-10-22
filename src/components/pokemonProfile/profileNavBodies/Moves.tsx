@@ -2,16 +2,16 @@ import { useState, useContext, useEffect } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 import MovesContext from "../../../contexts/movesContext.tsx";
-import { Mfe } from "../../../interfaces&types/pokemonInterface.tsx";
+import { Mfe } from "../../../interfacesAndTypes/pokemonInterface.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
-import getPokemonMovesTypesData from "../../../functions/api_calls/getPokemonMovesTypesData.tsx";
-import { PokemonMovesInterface } from "../../../interfaces&types/pokemonMovesInterface.tsx";
-import { ObjectPlaceHolderInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
+import getPokemonMovesTypesData from "../../../functions/apiCalls/getPokemonMovesTypesData.tsx";
+import { PokemonMovesInterface } from "../../../interfacesAndTypes/pokemonMovesInterface.tsx";
+import { ObjectPlaceHolderInterface } from "../../../interfacesAndTypes/miscInterfaces.tsx";
 import typesColors from "../../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
+import { TypesColorsInt } from "../../../interfacesAndTypes/miscInterfaces.tsx";
 
 const Container = styled(ContainerPrototype)`
-	margin:2rem 0 0 0;
+	margin: 2rem 0 0 0;
 	flex-direction: column;
 `;
 
@@ -23,8 +23,8 @@ const MoveContainer = styled.div`
 `;
 
 const MoveNameContainer = styled.div`
-display:flex;
-align-items:center;
+	display: flex;
+	align-items: center;
 `;
 
 const MoveTypeContainer = styled.div<{ $typeName: "string" }>`

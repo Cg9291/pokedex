@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PokemonMovesInterface } from "../../interfaces&types/pokemonMovesInterface.tsx";
+import { PokemonMovesInterface } from "../../interfacesAndTypes/pokemonMovesInterface.tsx";
 
 const getPokemonMovesTypesData = async (
 	url: string,

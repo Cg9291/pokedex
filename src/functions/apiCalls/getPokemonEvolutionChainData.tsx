@@ -1,5 +1,5 @@
 import axios from "axios";
-import PokemonEvolutionChainInterface from "../../interfaces&types/pokemonEvolutionChainInterface.tsx";
+import PokemonEvolutionChainInterface from "../../interfacesAndTypes/pokemonEvolutionChainInterface.tsx";
 
 const getPokemonEvolutionChainData = async (
 	url: string,

@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
-import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
-import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
-import { ObjectPlaceHolderInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
+import getPokemonData from "../../../functions/apiCalls/getPokemonData.tsx";
+import PokemonInterface from "../../../interfacesAndTypes/pokemonInterface.tsx";
+import { ObjectPlaceHolderInterface } from "../../../interfacesAndTypes/miscInterfaces.tsx";
 
 const Container = styled(ContainerPrototype)``;
 

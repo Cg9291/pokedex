@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ContainerPrototype from "../prototypes/ContainerPrototype";
-import LinkPrototype from "../prototypes/LinkPrototype";
-import { PokemonProfilesNavElementsInterface } from "../../interfaces&types/misc_Interfaces";
+import ContainerPrototype from "../prototypes/ContainerPrototype.tsx";
+import LinkPrototype from "../prototypes/LinkPrototype.tsx";
+import { PokemonProfilesNavElementsInterface } from "../../interfacesAndTypes/miscInterfaces.tsx";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useContext } from "react";

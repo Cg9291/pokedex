@@ -1,4 +1,4 @@
-import TypesSWInterface from "../interfaces&types/pokemonTypesSWInterface.tsx";
+import TypesSWInterface from "../interfacesAndTypes/pokemonTypesSWInterface.tsx";
 
 export const typesSW: TypesSWInterface = {
 	normal: { strengths: ["none"], weaknesses: ["Fighting"] },

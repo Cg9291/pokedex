@@ -2,12 +2,12 @@ import { useContext } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 import VitalsContext from "../../../contexts/vitalsContext.tsx";
-import { Flavor_text_entry } from "../../../interfaces&types/pokemonSpeciesInterface.tsx";
+import { Flavor_text_entry } from "../../../interfacesAndTypes/pokemonSpeciesInterface.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 import { typesSW } from "../../../objects/typesSW.tsx";
-import TypesSWInterface from "../../../interfaces&types/pokemonTypesSWInterface.tsx";
+import TypesSWInterface from "../../../interfacesAndTypes/pokemonTypesSWInterface.tsx";
 import typesColors from "../../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces.tsx";
+import { TypesColorsInt } from "../../../interfacesAndTypes/miscInterfaces.tsx";
 import TypePrototype from "../../prototypes/TypePrototype.tsx";
 
 const Container = styled(ContainerPrototype)`

@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { VitalsInterface } from "../interfaces&types/misc_Interfaces.tsx";
-import { ObjectPlaceHolderInterface } from "../interfaces&types/misc_Interfaces.tsx";
+import { VitalsInterface } from "../interfacesAndTypes/miscInterfaces.tsx";
+import { ObjectPlaceHolderInterface } from "../interfacesAndTypes/miscInterfaces.tsx";
 
 const VitalsContext = createContext<
 	VitalsInterface | ObjectPlaceHolderInterface

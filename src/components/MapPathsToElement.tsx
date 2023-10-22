@@ -1,13 +1,13 @@
 import { useRoutes, Outlet } from "react-router-dom";
-import PokemonProfile from "./PokemonProfiles/PokemonProfile.tsx";
+import PokemonProfile from "./pokemonProfile/PokemonProfile.tsx";
 import Homepage from "../pages/Homepage.tsx";
-import About from "./PokemonProfiles/profileNavBodies/About.tsx";
+import About from "./pokemonProfile/profileNavBodies/About.tsx";
 import NoMatch from "../pages/NoMatch.tsx";
 import WTP from "../pages/Wtp.tsx";
 import Favorites from "../pages/Favorites.tsx";
-import Evolution from "./PokemonProfiles/profileNavBodies/Evolution.tsx";
-import Moves from "./PokemonProfiles/profileNavBodies/Moves.tsx";
-import BaseStats from "./PokemonProfiles/profileNavBodies/BaseStats.tsx";
+import Evolution from "./pokemonProfile/profileNavBodies/Evolution.tsx";
+import Moves from "./pokemonProfile/profileNavBodies/Moves.tsx";
+import BaseStats from "./pokemonProfile/profileNavBodies/BaseStats.tsx";
 
 export default function MapPathsToElement(): React.ReactElement | null {
 	return useRoutes([

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { RandomPokemonSelectionInterface } from "../interfaces&types/misc_Interfaces.tsx";
+import { RandomPokemonSelectionInterface } from "../interfacesAndTypes/miscInterfaces.tsx";
 
 const RandomPokemonSelectionContext =
 	createContext<RandomPokemonSelectionInterface>({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import  PokemonInterface  from "../../interfaces&types/pokemonInterface.tsx";
+import PokemonInterface from "../../interfacesAndTypes/pokemonInterface.tsx";
 //interface needs to be outside function,sometimes exported..meant to be reused
 
 export default async function getPokemonData(

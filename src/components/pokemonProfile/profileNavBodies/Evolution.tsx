@@ -2,19 +2,19 @@ import { useContext, useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
 import EvolutionChainContext from "../../../contexts/evolutionChainContext.tsx";
-import getPokemonEvolutionChainData from "../../../functions/api_calls/getPokemonEvolutionChainData.tsx";
-import PokemonEvolutionChainInterface from "../../../interfaces&types/pokemonEvolutionChainInterface.tsx";
+import getPokemonEvolutionChainData from "../../../functions/apiCalls/getPokemonEvolutionChainData.tsx";
+import PokemonEvolutionChainInterface from "../../../interfacesAndTypes/pokemonEvolutionChainInterface.tsx";
 import {
 	ObjectPlaceHolderInterface,
 	TypesColorsInt,
-} from "../../../interfaces&types/misc_Interfaces.tsx";
+} from "../../../interfacesAndTypes/miscInterfaces.tsx";
 import {
 	Chain,
 	EvolvesTo,
-} from "../../../interfaces&types/pokemonEvolutionChainInterface.tsx";
-import PokemonInterface from "../../../interfaces&types/pokemonInterface.tsx";
-import getPokemonData from "../../../functions/api_calls/getPokemonData.tsx";
-import { NumOrString } from "../../../interfaces&types/misc_Types.tsx";
+} from "../../../interfacesAndTypes/pokemonEvolutionChainInterface.tsx";
+import PokemonInterface from "../../../interfacesAndTypes/pokemonInterface.tsx";
+import getPokemonData from "../../../functions/apiCalls/getPokemonData.tsx";
+import { NumOrString } from "../../../interfacesAndTypes/miscTypes.tsx";
 import TypePrototype from "../../prototypes/TypePrototype.tsx";
 import typesColors from "../../../objects/typesColors.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
@@ -22,8 +22,8 @@ import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";
 const Container = styled(ContainerPrototype)`
 	align-items: center;
 	justify-content: center;
-	height:fit-content;
-	margin-top:5.5rem;
+	height: fit-content;
+	margin-top: 5.5rem;
 `;
 
 const PokemonContainer = styled.div`
@@ -111,7 +111,7 @@ export default function Evolution(): JSX.Element {
 	};
 
 	const displayPokemons = (): JSX.Element[] =>
-		fetchEvolutions().map((x: string) => (<PokemonEvolutionStage name={x} />));
+		fetchEvolutions().map((x: string) => <PokemonEvolutionStage name={x} />);
 
 	return <Container>{displayPokemons()}</Container>;
 }

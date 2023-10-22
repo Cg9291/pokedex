@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype.tsx";
 import PokemonTypesElement from "./PokemonTypesElement.tsx";
-import getPokemonData from "../../../../functions/api_calls/getPokemonData.tsx";
+import getPokemonData from "../../../../functions/apiCalls/getPokemonData.tsx";
 import capitalizeWords from "../../../../functions/utilities/capitalizeWords.tsx";
 import {
 	ObjectPlaceHolderInterface,
 	PokemonNumberPropsInterface,
-} from "../../../../interfaces&types/misc_Interfaces.tsx";
+} from "../../../../interfacesAndTypes/miscInterfaces.tsx";
 import PokemonInterface, {
 	Type,
-} from "../../../../interfaces&types/pokemonInterface.tsx";
+} from "../../../../interfacesAndTypes/pokemonInterface.tsx";
 import typesColors from "../../../../objects/typesColors.tsx";
-import { TypesColorsInt } from "../../../../interfaces&types/misc_Interfaces.tsx";
+import { TypesColorsInt } from "../../../../interfacesAndTypes/miscInterfaces.tsx";
 
 const Container = styled(Link)<{ $mainType: string }>`
 	width: 10rem;

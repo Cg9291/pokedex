@@ -1,4 +1,4 @@
-import { TypesColorsInt } from "../interfaces&types/misc_Interfaces.tsx";
+import { TypesColorsInt } from "../interfacesAndTypes/miscInterfaces.tsx";
 
 const typesColors: TypesColorsInt = {
 	normal: "#A8A77A",

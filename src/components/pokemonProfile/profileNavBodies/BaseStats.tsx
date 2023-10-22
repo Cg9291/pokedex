@@ -1,6 +1,6 @@
 import ContainerPrototype from "../../prototypes/ContainerPrototype.tsx";
 import styled from "styled-components";
-import { StatsInterface } from "../../../interfaces&types/misc_Interfaces.tsx";
+import { StatsInterface } from "../../../interfacesAndTypes/miscInterfaces.tsx";
 import { useContext } from "react";
 import StatsContext from "../../../contexts/statsContext.tsx";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords.tsx";

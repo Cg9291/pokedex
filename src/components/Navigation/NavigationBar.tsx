@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
 import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
-import { NavIconsType } from "../../interfaces&types/misc_Types.js";
-import { IconInterface } from "../../interfaces&types/misc_Interfaces.tsx";
+import { NavIconsType } from "../../interfacesAndTypes/miscTypes.js";
+import { IconInterface } from "../../interfacesAndTypes/miscInterfaces.tsx";
 
 const Container = styled(ContainerPrototype)`
 	height: 9%;

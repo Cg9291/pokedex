@@ -1,5 +1,8 @@
 import { createContext } from "react";
-import { EvolutionInterface, ObjectPlaceHolderInterface } from "../interfaces&types/misc_Interfaces.tsx";
+import {
+	EvolutionInterface,
+	ObjectPlaceHolderInterface,
+} from "../interfacesAndTypes/miscInterfaces.tsx";
 
 const EvolutionChainContext = createContext<
 	EvolutionInterface | ObjectPlaceHolderInterface

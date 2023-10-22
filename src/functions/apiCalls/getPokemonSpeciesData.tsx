@@ -1,7 +1,7 @@
 import axios from "axios";
-import PokemonSpeciesInterface from "../../interfaces&types/pokemonSpeciesInterface.tsx";
+import PokemonSpeciesInterface from "../../interfacesAndTypes/pokemonSpeciesInterface.tsx";
 import endpointsUrls from "../../objects/endpointsUrls.tsx";
-import { NumOrString } from "../../interfaces&types/misc_Types.tsx";
+import { NumOrString } from "../../interfacesAndTypes/miscTypes.tsx";
 
 export default async function getPokemonSpeciesData(
 	id: NumOrString,
