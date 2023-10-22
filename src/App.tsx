@@ -1,7 +1,7 @@
 import "./App.css";
 import styled from "styled-components";
-import ContainerPrototype from "./components/prototypes/ContainerPrototype.tsx";
-import MapPathsToElement from "./components/MapPathsToElement.tsx";
+import ContainerPrototype from "./components/prototypes/ContainerPrototype";
+import MapPathsToElement from "./components/MapPathsToElement";
 
 /*
 TODO
@@ -15,36 +15,15 @@ TODO
 */
 
 const Container = styled(ContainerPrototype)`
-	background-color: white;
+    background-color: white;
 `;
 
 function App(): JSX.Element {
-	return (
-		<Container>
-			<MapPathsToElement />
-		</Container>
-	);
+    return (
+        <Container>
+            <MapPathsToElement />
+        </Container>
+    );
 }
 
 export default App;
-
-{
-	/* <Container>
-			<Routes>
-				<Route
-					path="/"
-					element={<Homepage />}
-				/>
-				<Route
-					path="/about"
-					element={<About />}
-				/>
-
-				<MapPathsToElement />
-				<Route
-					path="*"
-					element={<NoMatch />}
-				/>
-			</Routes>
-		</Container> */
-}
