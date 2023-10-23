@@ -80,9 +80,9 @@ const NavImg = styled.image.attrs({})`
     height: 100%;
     aspect-ratio: 1/1;
 `;
-const SvgPath = styled.path`
+/* const SvgPath = styled.path`
     width: 200;
     aspect-ratio: 1/1;
     fill: black;
     color: yellow;
-`;
+`; */

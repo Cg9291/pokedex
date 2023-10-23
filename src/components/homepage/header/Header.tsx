@@ -23,12 +23,14 @@ const Container = styled(ContainerPrototype)`
     padding: 0.5rem 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    position: fixed;
 `;
 
 const HeaderText = styled.h2`
     height: fit-content;
-    margin-top: 4.7rem;
+    margin-top: 3.7rem;
     max-width: 85%;
     color: white;
     text-align: start;
+    padding: 0 0 1rem;
 `;

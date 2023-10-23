@@ -34,6 +34,8 @@ const MainContainer = styled.div`
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    height: 100%;
+    height: 400px;
     padding: 1vh 1vw;
+    margin-top: 13rem;
+    overflow-y: scroll;
 `;

@@ -95,7 +95,7 @@ const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
     width: 100%;
     height: 100%;
 `;
-const PokemonImg = styled.image.attrs({})`
-    width: 200px; // [NOTE] I dont know what you mean by 200 so I put px
+const PokemonImg = styled.image`
+    width: 300px; // [NOTE] I dont know what you mean by 200 so I put px
     aspect-ratio: 1/1;
 `;

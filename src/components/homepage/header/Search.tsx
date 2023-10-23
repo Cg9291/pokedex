@@ -3,6 +3,29 @@ import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import React from "react";
 
+export default function Search(): React.ReactElement {
+    const navigate = useNavigate();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const transmittedData = Object.fromEntries(formData.entries()).myInput;
+        const name = transmittedData.toString().toLowerCase();
+        navigate(`/pokemons/name/${name}`);
+    };
+
+    return (
+        <Container>
+            <Form onSubmit={handleSubmit}>
+                <Label>
+                    <Input />
+                </Label>
+                <Button>Search</Button>
+            </Form>
+        </Container>
+    );
+}
+
 const Container = styled(ContainerPrototype)``;
 
 const Form = styled.form.attrs({
@@ -33,26 +56,3 @@ const Button = styled.button.attrs({ type: "submit" })`
     height: 100%;
     border-radius: 10px;
 `;
-
-export default function Search(): React.ReactElement {
-    const navigate = useNavigate();
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).myInput;
-        const name = transmittedData.toString().toLowerCase();
-        navigate(`/pokemons/name/${name}`);
-    };
-
-    return (
-        <Container>
-            <Form onSubmit={handleSubmit}>
-                <Label>
-                    <Input />
-                </Label>
-                <Button>Search</Button>
-            </Form>
-        </Container>
-    );
-}
