@@ -3,6 +3,18 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import Search from "./Search";
 import React from "react";
 
+export default function Header(): React.ReactElement {
+    return (
+        <Container>
+            <HeaderText>
+                What Pokemon
+                <br /> would you like to find?
+            </HeaderText>
+            <Search />
+        </Container>
+    );
+}
+
 const Container = styled(ContainerPrototype)`
     max-height: 13rem;
     flex-direction: column;
@@ -20,15 +32,3 @@ const HeaderText = styled.h2`
     color: white;
     text-align: start;
 `;
-
-export default function Header(): React.ReactElement {
-    return (
-        <Container>
-            <HeaderText>
-                What Pokemon
-                <br /> would you like to find?
-            </HeaderText>
-            <Search />
-        </Container>
-    );
-}

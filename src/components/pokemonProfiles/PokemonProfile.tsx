@@ -3,12 +3,12 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import PokemonProfileInfo from "./PokemonProfileInfo";
 import PokemonInterface from "../../interfaces/pokemonInterface";
-import getPokemonData from "../../functions/api/getPokemonData";
+import GetPokemonData from "../../functions/api/GetPokemonData";
 import capitalizeWords from "../../functions/utilities/capitalizeWords";
 import { useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors";
 import { ObjectPlaceHolderInterface, TypesColorsInt } from "../../interfaces/miscInterfaces";
-import StatsContext from "../../contexts/statscontext";
+import StatsContext from "../../contexts/statsContext";
 import { NumOrString } from "../../interfaces/miscTypes";
 import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
@@ -63,7 +63,7 @@ export default function PokemonProfile(): React.ReactElement {
     const { id: paramId, name: paramName } = useParams();
 
     async function getData(pokeId: NumOrString): Promise<[PokemonInterface, PokemonSpeciesInterface]> {
-        const pokemonData = await getPokemonData(pokeId);
+        const pokemonData = await GetPokemonData(pokeId);
         const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
         setPokemonInfo(pokemonData);
         setPokemonSpeciesInfo(pokemonSpeciesData);

@@ -4,7 +4,7 @@ import Homepage from "../pages/Homepage";
 import About from "./pokemonProfiles/profileNavBodies/About";
 import NoMatch from "../pages/NoMatch";
 
-export default function MapPathsToElement(): React.ReactElement | null {
+export default function RoutesStructure(): React.ReactElement | null {
     return useRoutes([
         { path: "/", element: <Homepage /> },
         { path: "/about", element: <About /> },

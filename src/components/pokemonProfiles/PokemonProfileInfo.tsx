@@ -5,8 +5,8 @@ import NavElement from "./NavElement";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
 import BaseStats from "./profileNavBodies/BaseStats";
 import About from "./profileNavBodies/About";
-import Moves from "../Moves";
-import Evolution from "../Evolution";
+import Moves from "./profileNavBodies/Moves";
+import Evolution from "./profileNavBodies/Evolution";
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;

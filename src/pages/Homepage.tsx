@@ -4,6 +4,26 @@ import Header from "../components/homepage/header/Header";
 import PokemonPictureCard from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import React from "react";
 
+export default function Homepage(): React.ReactElement {
+    const pickRandomPokemonNumbers = (): number[] => {
+        const numberArray: number[] = [];
+        for (let i = 0; i < 6; i++) {
+            numberArray.push(Math.floor(Math.random() * (255 - 1) + 1));
+        }
+        return numberArray;
+    };
+
+    const mapPictureCards = (): React.ReactElement[] =>
+        pickRandomPokemonNumbers().map((i) => <PokemonPictureCard id={i} />);
+
+    return (
+        <Container>
+            <Header />
+            <MainContainer>{mapPictureCards()}</MainContainer>
+        </Container>
+    );
+}
+
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
 `;
@@ -17,26 +37,3 @@ const MainContainer = styled.div`
     height: 100%;
     padding: 1vh 1vw;
 `;
-
-export default function Homepage(): React.ReactElement {
-    const pokemonLookupNumber = (): number[] => {
-        const numberArray: number[] = [];
-        const randomNum = (): void => {
-            for (let i = 0; i < 6; i++) {
-                numberArray.push(Math.floor(Math.random() * (255 - 1) + 1));
-            }
-        };
-        randomNum();
-        //console.log(numberArray)
-        return numberArray;
-    };
-
-    const mapPictureCards = (): React.ReactElement[] => pokemonLookupNumber().map((i) => <PokemonPictureCard id={i} />);
-
-    return (
-        <Container>
-            <Header />
-            <MainContainer>{mapPictureCards()}</MainContainer>
-        </Container>
-    );
-}

@@ -2,7 +2,7 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { StatsInterface } from "../../../interfaces/miscInterfaces";
 import React, { useContext } from "react";
-import StatsContext from "../../../contexts/statscontext";
+import StatsContext from "../../../contexts/statsContext";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 
 const Container = styled(ContainerPrototype)`

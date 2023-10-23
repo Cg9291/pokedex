@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { PokemonTypesPropsInterface } from "../../../interfaces/miscInterfaces";
 import React from "react";
 
+export default function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
+    return <Container>{props.typeName}</Container>;
+}
 const Container = styled.div`
     width: max-content;
     height: max-content;
@@ -12,7 +15,3 @@ const Container = styled.div`
     color: white;
     text-align: center;
 `;
-
-export default function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
-    return <Container>{props.typeName}</Container>;
-}

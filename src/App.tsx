@@ -1,7 +1,7 @@
 import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype";
-import MapPathsToElement from "./components/MapPathsToElement";
+import RoutesStructure from "./components/RoutesStructure";
 import React from "react";
 
 /*
@@ -22,7 +22,7 @@ const Container = styled(ContainerPrototype)`
 function App(): React.ReactElement {
     return (
         <Container>
-            <MapPathsToElement />
+            <RoutesStructure />
         </Container>
     );
 }
