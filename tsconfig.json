@@ -14,9 +14,10 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "checkJs": true
     },
-    "include": ["src"]
+    "include": ["src", "declaration.d.ts"]
 }
 // {
 //   "compilerOptions": {
