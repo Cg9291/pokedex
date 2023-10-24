@@ -1,5 +1,5 @@
 import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface";
-import { Ability } from "./pokemonInterface";
+import { Ability, Type } from "./pokemonInterface";
 import React from "react";
 
 export interface TypesColorsInt {
@@ -54,4 +54,13 @@ export interface VitalsInterface {
     color: Color;
     ability: Ability[];
     flavor_text_entries: Flavor_text_entry;
+}
+
+export interface AboutComponentProps {
+    flavor_text_entries: Flavor_text_entry[];
+    height: number;
+    weight: number;
+    color: Color;
+    types: Type[];
+    abilities: Ability[];
 }

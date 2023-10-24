@@ -6,8 +6,14 @@ export default async function GetPokemonData(id: number | string): Promise<Pokem
     try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
         const pokemonData: PokemonInterface = response.data;
+
+        if (typeof pokemonData !== "object") {
+            throw new Error("wrong type");
+        } else {
+            return pokemonData;
+        }
+
         //console.log("function getPokemonData:success", pokemonData);
-        return pokemonData;
     } catch (err) {
         console.log("function getPokemonData:error", err);
         throw err;

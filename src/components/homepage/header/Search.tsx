@@ -9,7 +9,7 @@ export default function Search(): React.ReactElement {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).myInput;
+        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
         const name = transmittedData.toString().toLowerCase();
         navigate(`/pokemons/name/${name}`);
     };
@@ -30,7 +30,6 @@ const Container = styled(ContainerPrototype)``;
 
 const Form = styled.form.attrs({
     method: "get"
-    //onSubmit: handleSubmit,
 })`
     width: 100%;
     display: flex;
@@ -42,7 +41,7 @@ const Label = styled.label`
 
 const Input = styled.input.attrs({
     placeholder: "Search anything related to a pokemon",
-    name: "myInput"
+    name: "searchInput"
 })`
     width: 100%;
     height: 3rem;

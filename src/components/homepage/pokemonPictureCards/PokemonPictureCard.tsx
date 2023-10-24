@@ -30,33 +30,32 @@ export default function PokemonPictureCard(props: PokemonNumberPropsInterface): 
     const renderPokemonTypes = (typesArray: Type[]): JSX.Element[] =>
         typesArray.reverse().map((x: Type) => <PokemonTypesElement typeName={capitalizeWords(x.type.name)} />);
 
-    return (
-        <Container
-            to={`/pokemons/id/${pokemonInfo?.id}`}
-            $mainType={pokemonInfo ? pokemonInfo.types[0].type.name : "unavailable"}
-        >
-            <Wrapper>
-                <PokeName>{pokemonInfo?.name && capitalizeWords(pokemonInfo.name)}</PokeName>
-                <SubContainer>
-                    <PokemonTypesContainer>
-                        {pokemonInfo?.types && renderPokemonTypes(pokemonInfo.types)}
-                    </PokemonTypesContainer>
-                    <PokemonImgWrapper>
-                        {pokemonInfo?.sprites && (
+    if (pokemonInfo) {
+        return (
+            <Container to={`/pokemons/id/${pokemonInfo.id}`} $mainType={pokemonInfo.types[0].type.name}>
+                <Wrapper>
+                    <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
+                    <SubContainer>
+                        <PokemonTypesContainer>{renderPokemonTypes(pokemonInfo.types)}</PokemonTypesContainer>
+                        <PokemonImgWrapper>
                             <SvgImg>
                                 <PokemonImg
                                     href={pokemonInfo.sprites.front_default}
                                     /* 	alt="a pokemon image" */
-                                    width="325"
-                                    height="325" //move these to attrs
                                 />
                             </SvgImg>
-                        )}
-                    </PokemonImgWrapper>
-                </SubContainer>
-            </Wrapper>
-        </Container>
-    );
+                        </PokemonImgWrapper>
+                    </SubContainer>
+                </Wrapper>
+            </Container>
+        );
+    } else {
+        return (
+            <Container to="/" $mainType="none">
+                Loading
+            </Container>
+        );
+    }
 }
 
 const Container = styled(Link)<{ $mainType: string }>`
@@ -96,6 +95,6 @@ const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
     height: 100%;
 `;
 const PokemonImg = styled.image`
-    width: 300px; // [NOTE] I dont know what you mean by 200 so I put px
+    width: 20rem;
     aspect-ratio: 1/1;
 `;

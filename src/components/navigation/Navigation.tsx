@@ -6,7 +6,12 @@ import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
 import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
 
-type NavIconsType = { name: string; icon: string; linkUrl: string }[];
+interface NavIconsInterface {
+    name: string;
+    icon: string;
+    linkUrl: string;
+}
+type NavIconsType = NavIconsInterface[];
 
 export default function Navigation(): React.ReactElement {
     const navIcons: NavIconsType = [
@@ -28,17 +33,17 @@ export default function Navigation(): React.ReactElement {
     ];
 
     const displayNavIcons = () =>
-        navIcons.map((icon) => <NavElement name={icon.name} iconInfo={icon.icon} linkUrl={icon.linkUrl} />);
+        navIcons.map((icon) => <NavElement name={icon.name} icon={icon.icon} linkUrl={icon.linkUrl} />);
 
     return <Container>{displayNavIcons()}</Container>;
 }
 
-function NavElement(props: { name: string; iconInfo: string; linkUrl: string }): React.ReactElement {
+function NavElement(props: NavIconsInterface): React.ReactElement {
     return (
         <NavElementContainer to={props.linkUrl}>
             <SvgImg>
                 {/* <SvgPath d={props.pathInfo}></SvgPath> */}
-                <NavImg href={props.iconInfo}></NavImg>
+                <NavImg href={props.icon}></NavImg>
             </SvgImg>
             <NavElementName>{props.name}</NavElementName>
         </NavElementContainer>
@@ -80,9 +85,3 @@ const NavImg = styled.image.attrs({})`
     height: 100%;
     aspect-ratio: 1/1;
 `;
-/* const SvgPath = styled.path`
-    width: 200;
-    aspect-ratio: 1/1;
-    fill: black;
-    color: yellow;
-`; */
