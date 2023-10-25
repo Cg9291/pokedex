@@ -51,13 +51,13 @@ function Stat(props: LocalStat): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    padding: 0 1rem;
+    padding: 1rem 0 1rem;
     overflow-y: hidden;
 `;
 
 const StatContainer = styled.div`
     width: 100%;
-    min-height: 3rem;
+    min-height: 2.8rem;
     display: flex;
     justify-content: stretch;
 `;

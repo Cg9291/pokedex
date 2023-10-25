@@ -77,8 +77,10 @@ const InfoNavBar = styled(ContainerPrototype)`
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    height: fit-content;
+    //height: fit-content;
     max-height: 20rem;
     margin-top: 10%;
     overflow-y: scroll;
+    padding: 0 1rem;
+    background-color: rgba(0, 0, 0, 0.03);
 `;

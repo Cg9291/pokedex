@@ -72,3 +72,8 @@ export interface EvolutionComponentProps {
 export interface MovesComponentProps {
     moves: Mfe[];
 }
+
+export interface RandomPokemonSelectionInterface {
+    randomPokemonSelection?: number[];
+    setRandomPokemonSelection: React.Dispatch<React.SetStateAction<number[]>>;
+}

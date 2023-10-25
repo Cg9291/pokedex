@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import PokemonTypesElement from "./PokemonTypesElement";
-
 import getPokemonData from "../../../functions/api/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
@@ -13,9 +12,9 @@ import typesColors from "../../../objects/typesColors";
 export default function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
 
-    async function getData(pokeNumber: number): Promise<void> {
+    async function getData(pokemonNumber: number): Promise<void> {
         try {
-            const data: PokemonInterface = await getPokemonData(pokeNumber);
+            const data: PokemonInterface = await getPokemonData(pokemonNumber);
             setPokemonInfo(data);
         } catch (err) {
             console.log(err);
@@ -25,9 +24,9 @@ export default function PokemonPictureCard(props: PokemonNumberPropsInterface): 
 
     useEffect(() => {
         getData(props.id);
-    }, []);
+    }, [props.id]);
 
-    const renderPokemonTypes = (typesArray: Type[]): JSX.Element[] =>
+    const renderPokemonTypes = (typesArray: Type[]): React.ReactElement[] =>
         typesArray.reverse().map((x: Type) => <PokemonTypesElement typeName={capitalizeWords(x.type.name)} />);
 
     if (pokemonInfo) {

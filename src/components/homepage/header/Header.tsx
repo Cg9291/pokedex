@@ -2,10 +2,13 @@ import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import Search from "./Search";
 import React from "react";
+import RandomizeSelectionButton from "./RandomizeSelectionButton";
+import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
 
-export default function Header(): React.ReactElement {
+export default function Header(props: RandomPokemonSelectionInterface): React.ReactElement {
     return (
         <Container>
+            <RandomizeSelectionButton setRandomPokemonSelection={props.setRandomPokemonSelection} />
             <HeaderText>
                 What Pokemon
                 <br /> would you like to find?

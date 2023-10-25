@@ -92,38 +92,42 @@ function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem 0 1rem 0;
+    padding: 1rem 1rem;
     height: min-content;
 `;
 
 const Description = styled.p`
-    padding: 0 2rem;
+    padding: 0 0;
     font-size: 0.8em;
+    font-style: italic;
+    font-weight: bold;
 `;
 
 const VitalsSectionContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: start;
-    height: 7rem;
+    min-height: max-content;
+    margin: 0 0 1rem 0.5rem;
     padding: 1rem 0 0 0;
-    margin: 0 0 1rem;
-    align-content: flex-start;
+    //align-content: space-between;
     font-size: 0.8em;
+    justify-content: space-between;
+    gap: 1rem;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    margin: 0 0 3rem;
-    height: 10%;
-    flex: 0 0 33%;
+    min-height: 10%;
+    height: max-content;
+    flex: 0 0 20%;
 `;
 
 const VitalsLabel = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: start;
     width: 100%;
     margin-bottom: 0.5rem;
 `;
@@ -133,25 +137,30 @@ const VitalsValue = styled.div`
     justify-content: center;
     width: 100%;
     font-weight: bold;
+    justify-content: start;
 `;
 
 const SWSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: auto;
-    padding-top: 1rem;
+    margin-top: 1rem;
 `;
 
 const SWContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 0 0 0 2rem;
+    h3 {
+        margin-left: 0.2rem;
+    }
 `;
 
 const SWElementsContainer = styled.div`
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-content: start;
+    align-content: stretch;
+    justify-content: space-between;
     padding: 0.5rem 0 0 0;
     margin: 0 0 1rem 0;
 `;

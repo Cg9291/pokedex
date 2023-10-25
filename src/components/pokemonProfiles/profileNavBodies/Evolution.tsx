@@ -97,8 +97,10 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
 const Container = styled(ContainerPrototype)`
     align-items: center;
     justify-content: center;
-    height: fit-content;
-    margin-top: 5.5rem;
+    /* min-height: 100%; */
+    height: 100%;
+    padding: 1rem 0;
+    //margin-top: 5.5rem;
 `;
 
 const PokemonContainer = styled.div`
@@ -107,7 +109,7 @@ const PokemonContainer = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 33.33%;
-    height: max-content;
+    // height: 100%;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};

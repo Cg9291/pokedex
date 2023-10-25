@@ -2,23 +2,21 @@ import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import Header from "../components/homepage/header/Header";
 import PokemonPictureCard from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
-import React from "react";
+import React, { useState } from "react";
+import pickRandomPokemonNumbers from "../functions/utilities/pickRandomPokemonNumbers";
 
 export default function Homepage(): React.ReactElement {
-    const pickRandomPokemonNumbers = (): number[] => {
-        const numberArray: number[] = [];
-        for (let i = 0; i < 6; i++) {
-            numberArray.push(Math.floor(Math.random() * (255 - 1) + 1));
-        }
-        return numberArray;
-    };
+    const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
 
     const mapPictureCards = (): React.ReactElement[] =>
-        pickRandomPokemonNumbers().map((i) => <PokemonPictureCard id={i} />);
+        randomPokemonSelection.map((i) => <PokemonPictureCard id={i} />);
 
     return (
         <Container>
-            <Header />
+            <Header
+                randomPokemonSelection={randomPokemonSelection}
+                setRandomPokemonSelection={setRandomPokemonSelection}
+            />
             <MainContainer>{mapPictureCards()}</MainContainer>
         </Container>
     );
