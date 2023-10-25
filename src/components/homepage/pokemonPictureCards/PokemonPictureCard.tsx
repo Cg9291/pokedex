@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import PokemonTypesElement from "./PokemonTypesElement";
 
-import GetPokemonData from "../../../functions/api/GetPokemonData";
+import getPokemonData from "../../../functions/api/getPokemonData";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import PokemonInterface, { Type } from "../../../interfaces/pokemonInterface";
@@ -15,7 +15,7 @@ export default function PokemonPictureCard(props: PokemonNumberPropsInterface): 
 
     async function getData(pokeNumber: number): Promise<void> {
         try {
-            const data: PokemonInterface = await GetPokemonData(pokeNumber);
+            const data: PokemonInterface = await getPokemonData(pokeNumber);
             setPokemonInfo(data);
         } catch (err) {
             console.log(err);

@@ -5,11 +5,12 @@ import getPokemonEvolutionChainData from "../../../functions/api/getPokemonEvolu
 import { EvolutionComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import PokemonEvolutionChainInterface, { Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
 import PokemonInterface from "../../../interfaces/pokemonInterface";
-import GetPokemonData from "../../../functions/api/GetPokemonData";
+import getPokemonData from "../../../functions/api/getPokemonData";
 import { NumOrString } from "../../../interfaces/miscTypes";
 import TypePrototype from "../../prototypes/TypePrototype";
 import typesColors from "../../../objects/typesColors";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 
 export default function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
@@ -60,7 +61,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
 
     const getData = async (pokemonId: NumOrString): Promise<void> => {
         try {
-            const data = await GetPokemonData(pokemonId);
+            const data = await getPokemonData(pokemonId);
             setPokeEvolutionInfo(data);
         } catch (err) {
             console.log(err);
@@ -71,14 +72,6 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
     useEffect(() => {
         getData(props.pokemonEvolutionName);
     });
-
-    const displayId = (pokemonEvolutionId: number) => {
-        return pokemonEvolutionId.toString().length === 3
-            ? `#${pokemonEvolutionId}`
-            : pokemonEvolutionId.toString().length === 2
-            ? `#0${pokemonEvolutionId}`
-            : `#00${pokemonEvolutionId}`;
-    };
 
     if (pokemonEvolutionInfo) {
         const { id, sprites, types } = pokemonEvolutionInfo;
@@ -91,7 +84,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
                 </SvgImg>
                 <PokemonIdentifiers>
                     <PokemonName>{capitalizeWords(props.pokemonEvolutionName)}</PokemonName>
-                    <PokemonNumber>{displayId(id)}</PokemonNumber>
+                    <PokemonNumber>{displayFormattedId(id)}</PokemonNumber>
                 </PokemonIdentifiers>
                 <PokemonType $bgColor={typeColor}>{capitalizeWords(types[0].type.name)}</PokemonType>
             </PokemonContainer>

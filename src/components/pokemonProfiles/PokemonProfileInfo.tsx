@@ -6,18 +6,19 @@ import {
     AboutComponentProps,
     BaseStatsComponentProps,
     EvolutionComponentProps,
+    MovesComponentProps,
     PokemonProfilesNavElementsInterface
 } from "../../interfaces/miscInterfaces";
 import BaseStats from "./profileNavBodies/BaseStats";
 import About from "./profileNavBodies/About";
 import Moves from "./profileNavBodies/Moves";
 import Evolution from "./profileNavBodies/Evolution";
-import { Evolution_chain } from "../../interfaces/pokemonSpeciesInterface";
 
 export default function PokemonProfileInfo(props: {
     AboutProps: AboutComponentProps;
     BaseStatsProps: BaseStatsComponentProps;
     EvolutionProps: EvolutionComponentProps;
+    MovesProps: MovesComponentProps;
 }): React.ReactElement {
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true, element: <About ownProps={props.AboutProps} /> },
@@ -26,7 +27,7 @@ export default function PokemonProfileInfo(props: {
             element: <BaseStats ownProps={props.BaseStatsProps} />
         },
         Evolution: { isFocused: false, element: <Evolution ownProps={props.EvolutionProps} /> },
-        Moves: { isFocused: false, element: <Moves /> }
+        Moves: { isFocused: false, element: <Moves ownProps={props.MovesProps} /> }
     });
 
     const displayNavHeaders = (): React.ReactElement[] =>

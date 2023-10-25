@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import PokemonProfileInfo from "./PokemonProfileInfo";
 import PokemonInterface from "../../interfaces/pokemonInterface";
-import GetPokemonData from "../../functions/api/GetPokemonData";
+import getPokemonData from "../../functions/api/getPokemonData";
 import capitalizeWords from "../../functions/utilities/capitalizeWords";
 import { useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors";
@@ -11,6 +11,7 @@ import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { NumOrString } from "../../interfaces/miscTypes";
 import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
+import { displayFormattedId } from "../../functions/utilities/displayFormattedId";
 
 export default function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -18,7 +19,7 @@ export default function PokemonProfile(): React.ReactElement {
     const { id: paramId, name: paramName } = useParams();
 
     async function getData(pokeId: NumOrString): Promise<void> {
-        const pokemonData = await GetPokemonData(pokeId);
+        const pokemonData = await getPokemonData(pokeId);
         const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
         setPokemonInfo(pokemonData);
         setPokemonSpeciesInfo(pokemonSpeciesData);
@@ -34,7 +35,7 @@ export default function PokemonProfile(): React.ReactElement {
     }, []);
 
     if (pokemonInfo && pokemonSpeciesInfo) {
-        const { id, name, sprites, height, weight, abilities, stats, types } = pokemonInfo;
+        const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
         const AboutProps = {
             flavor_text_entries: flavor_text_entries,
@@ -51,10 +52,12 @@ export default function PokemonProfile(): React.ReactElement {
 
         const EvolutionProps = { evolution_chain: evolution_chain };
 
+        const MovesProps = { moves: moves };
+
         return (
             <Container mainType={types[0].type.name}>
                 <ImageContainer>
-                    <PokeNumber>{id}</PokeNumber>
+                    <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>{capitalizeWords(name)}</PokemonName>
                     <SvgImg>
                         <PokemonImg href={sprites.front_default} />
@@ -65,6 +68,7 @@ export default function PokemonProfile(): React.ReactElement {
                         AboutProps={AboutProps}
                         BaseStatsProps={BaseStatsProps}
                         EvolutionProps={EvolutionProps}
+                        MovesProps={MovesProps}
                     />
                 </ProfileContainer>
             </Container>

@@ -2,7 +2,7 @@ import axios from "axios";
 import PokemonInterface from "../../interfaces/pokemonInterface";
 //interfaces needs to be outside function,sometimes exported..meant to be reused
 
-export default async function GetPokemonData(id: number | string): Promise<PokemonInterface> {
+export default async function getPokemonData(id: number | string): Promise<PokemonInterface> {
     try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
         const pokemonData: PokemonInterface = response.data;
