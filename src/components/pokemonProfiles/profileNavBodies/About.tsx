@@ -2,11 +2,11 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-/* import { typesSW } from "../../../objects/typesSW"; */
-/* import TypesSWInterface from "../../../interfaces&types/pokemonTypesSWInterface"; */
+import { typesSW } from "../../../objects/typesSW";
+import TypesSWInterface from "../../../interfaces/pokemonTypesSWInterface";
 import typesColors from "../../../objects/typesColors";
-//import { TypesColorsInt } from "../../../interfaces&types/misc_Interfaces";
-//import TypePrototype from "../../prototypes/TypePrototype";
+import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import TypePrototype from "../../prototypes/TypePrototype";
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
 export default function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
@@ -36,7 +36,10 @@ export default function About(props: { ownProps: AboutComponentProps }): React.R
             <Container>
                 <Description>{displayEnglishDescription(flavor_text_entries)}</Description>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
-                <SWSectionContainer>{/*      <StrengthsAndWeaknesses type={types} /> */}</SWSectionContainer>
+                <SWSectionContainer>
+                    {" "}
+                    <StrengthsAndWeaknesses type={displayedValues[0][1]} />
+                </SWSectionContainer>
             </Container>
         )
     );
@@ -51,7 +54,7 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
     );
 }
 
-/* function StrengthsAndWeaknesses(props: { type: string }) {
+function StrengthsAndWeaknesses(props: { type: string }) {
     const displayStrengths = (): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface].strengths.map((x) => {
             const lowerCaseX = x.toLowerCase();
@@ -84,12 +87,13 @@ function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }
             {props.sValue}
         </SWElement>
     );
-} */
+}
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-start;
-    padding: 2rem 0 5rem 0;
+    padding: 1rem 0 1rem 0;
+    height: min-content;
 `;
 
 const Description = styled.p`
@@ -101,9 +105,7 @@ const VitalsSectionContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     align-items: start;
-    //justify-content: space-between;
     height: 7rem;
-    //background-color: red;
     padding: 1rem 0 0 0;
     margin: 0 0 1rem;
     align-content: flex-start;
@@ -115,7 +117,6 @@ const VitalsContainer = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: start;
     margin: 0 0 3rem;
-    //padding:0 0 2rem;
     height: 10%;
     flex: 0 0 33%;
 `;
@@ -153,7 +154,6 @@ const SWElementsContainer = styled.div`
     align-content: start;
     padding: 0.5rem 0 0 0;
     margin: 0 0 1rem 0;
-    //justify-content: space-evenly;
 `;
 
-//const SWElement = styled(TypePrototype)``;
+const SWElement = styled(TypePrototype)``;

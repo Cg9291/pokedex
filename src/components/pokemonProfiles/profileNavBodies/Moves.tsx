@@ -49,8 +49,8 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
 }
 
 const Container = styled(ContainerPrototype)`
-    margin: 2rem 0 0 0;
     flex-direction: column;
+    height: 100%;
 `;
 
 const MoveContainer = styled.div`

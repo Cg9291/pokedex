@@ -84,6 +84,7 @@ const Container = styled(ContainerPrototype)<{ mainType: string }>`
     background-color: ${(props) => typesColors[props.mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
+    overflow-y: hidden;
 `;
 const ImageContainer = styled(ContainerPrototype)`
     flex-direction: column;
@@ -108,4 +109,5 @@ const PokemonImg = styled.image`
 const ProfileContainer = styled(ContainerPrototype)`
     max-height: 60%;
     overflow-y: hidden;
+    padding-bottom: 9%;
 `;

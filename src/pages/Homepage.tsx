@@ -37,5 +37,4 @@ const MainContainer = styled.div`
     height: 400px;
     padding: 1vh 1vw;
     margin-top: 13rem;
-    overflow-y: scroll;
 `;

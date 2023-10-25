@@ -51,28 +51,31 @@ function Stat(props: LocalStat): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    margin-top: 3rem;
+    padding: 0 1rem;
+    overflow-y: hidden;
 `;
 
 const StatContainer = styled.div`
     width: 100%;
-    height: 2.5rem;
+    min-height: 3rem;
     display: flex;
     justify-content: stretch;
 `;
 const StatName = styled(ContainerPrototype)`
-    min-width: 45%;
+    min-width: 35%;
 `;
 const StatValue = styled(ContainerPrototype)`
+    justify-content: end;
     min-width: 1%;
+    padding-right: 0.8rem;
 `;
 const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};
-    min-width: 45%;
-    height: 20%;
+    min-width: 50%;
+    height: 30%;
     background-color: grey;
     border-radius: 99px;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`

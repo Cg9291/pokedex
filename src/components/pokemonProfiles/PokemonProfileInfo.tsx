@@ -72,9 +72,13 @@ const InfoNavBar = styled(ContainerPrototype)`
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
+    position: absolute;
+    background-color: inherit;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    height: 90%;
-    padding: 1rem;
+    height: fit-content;
+    max-height: 20rem;
+    margin-top: 10%;
+    overflow-y: scroll;
 `;
