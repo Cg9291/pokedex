@@ -2,23 +2,32 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import NavElement from "./NavElement";
-import { AboutComponentProps, PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
+import {
+    AboutComponentProps,
+    BaseStatsComponentProps,
+    EvolutionComponentProps,
+    PokemonProfilesNavElementsInterface
+} from "../../interfaces/miscInterfaces";
 import BaseStats from "./profileNavBodies/BaseStats";
 import About from "./profileNavBodies/About";
 import Moves from "./profileNavBodies/Moves";
 import Evolution from "./profileNavBodies/Evolution";
+import { Evolution_chain } from "../../interfaces/pokemonSpeciesInterface";
 
-export default function PokemonProfileInfo(props: { AboutProps: AboutComponentProps }): React.ReactElement {
+export default function PokemonProfileInfo(props: {
+    AboutProps: AboutComponentProps;
+    BaseStatsProps: BaseStatsComponentProps;
+    EvolutionProps: EvolutionComponentProps;
+}): React.ReactElement {
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true, element: <About ownProps={props.AboutProps} /> },
         "Base Stats": {
             isFocused: false,
-            element: <BaseStats />
+            element: <BaseStats ownProps={props.BaseStatsProps} />
         },
-        Evolution: { isFocused: false, element: <Evolution /> },
+        Evolution: { isFocused: false, element: <Evolution ownProps={props.EvolutionProps} /> },
         Moves: { isFocused: false, element: <Moves /> }
     });
-    
 
     const displayNavHeaders = (): React.ReactElement[] =>
         Object.keys(navElementsNames).map(

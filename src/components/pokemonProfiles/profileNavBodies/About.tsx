@@ -21,16 +21,15 @@ export default function About(props: { ownProps: AboutComponentProps }): React.R
     ];
 
     const displayEnglishDescription = (entry: Flavor_text_entry[]): string => {
-        const englishDescription = entry.find((i: Flavor_text_entry): boolean => i.language.name === "en"); //review why is it boolean and not Flavor_text_entry
+        const englishDescription = entry.find((i: Flavor_text_entry): boolean => i.language.name === "en");
         if (!englishDescription) {
             throw new Error("No english description found");
         }
-
         return englishDescription.flavor_text;
     };
 
-    const displayVitals = (): JSX.Element[] =>
-        displayedValues.map((entry: [string, string]): JSX.Element => <Vitals label={entry[0]} value={entry[1]} />);
+    const displayVitals = (): React.ReactElement[] =>
+        displayedValues.map((x: string[]): React.ReactElement => <Vitals label={x[0]} value={x[1]} />);
 
     return (
         flavor_text_entries && (
@@ -43,7 +42,7 @@ export default function About(props: { ownProps: AboutComponentProps }): React.R
     );
 }
 
-function Vitals(props: { label: string; value: string }): JSX.Element {
+function Vitals(props: { label: string; value: string }): React.ReactElement {
     return (
         <VitalsContainer>
             <VitalsLabel>{capitalizeWords(props.label)}</VitalsLabel>
@@ -53,7 +52,7 @@ function Vitals(props: { label: string; value: string }): JSX.Element {
 }
 
 /* function StrengthsAndWeaknesses(props: { type: string }) {
-    const displayStrengths = (): JSX.Element[] =>
+    const displayStrengths = (): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface].strengths.map((x) => {
             const lowerCaseX = x.toLowerCase();
             return (
@@ -61,7 +60,7 @@ function Vitals(props: { label: string; value: string }): JSX.Element {
             );
         });
 
-    const displayWeaknesses = (): JSX.Element[] =>
+    const displayWeaknesses = (): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface].weaknesses.map((x) => {
             const lowerCaseX = x.toLowerCase();
             return (
@@ -79,7 +78,7 @@ function Vitals(props: { label: string; value: string }): JSX.Element {
     );
 }
 
-function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }): JSX.Element {
+function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }): React.ReactElement {
     return (
         <SWElement $bgColor={props.sColor} $value={props.sValue}>
             {props.sValue}

@@ -1,5 +1,5 @@
-import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface";
-import { Ability, Type } from "./pokemonInterface";
+import { Color, Evolution_chain, Flavor_text_entry } from "./pokemonSpeciesInterface";
+import { Ability, Stat, Type } from "./pokemonInterface";
 import React from "react";
 
 export interface TypesColorsInt {
@@ -44,10 +44,6 @@ export interface StatsInterface {
     stat: { name: string; url: string };
 }
 
-export interface ObjectPlaceHolderInterface {
-    [key: string]: any;
-}
-
 export interface VitalsInterface {
     height: number;
     weight: number;
@@ -63,4 +59,12 @@ export interface AboutComponentProps {
     color: Color;
     types: Type[];
     abilities: Ability[];
+}
+
+export interface BaseStatsComponentProps {
+    stats: Stat[];
+}
+
+export interface EvolutionComponentProps {
+    evolution_chain: Evolution_chain;
 }

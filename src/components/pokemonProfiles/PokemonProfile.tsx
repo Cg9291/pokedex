@@ -11,7 +11,6 @@ import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { NumOrString } from "../../interfaces/miscTypes";
 import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
-import VitalsContext from "../../contexts/vitalscontext";
 
 export default function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -36,7 +35,7 @@ export default function PokemonProfile(): React.ReactElement {
 
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types } = pokemonInfo;
-        const { color, flavor_text_entries } = pokemonSpeciesInfo;
+        const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
         const AboutProps = {
             flavor_text_entries: flavor_text_entries,
             height: height,
@@ -45,6 +44,12 @@ export default function PokemonProfile(): React.ReactElement {
             types: types,
             abilities: abilities
         };
+
+        const BaseStatsProps = {
+            stats: stats
+        };
+
+        const EvolutionProps = { evolution_chain: evolution_chain };
 
         return (
             <Container mainType={types[0].type.name}>
@@ -56,7 +61,11 @@ export default function PokemonProfile(): React.ReactElement {
                     </SvgImg>
                 </ImageContainer>
                 <ProfileContainer>
-                    <PokemonProfileInfo AboutProps={AboutProps} />
+                    <PokemonProfileInfo
+                        AboutProps={AboutProps}
+                        BaseStatsProps={BaseStatsProps}
+                        EvolutionProps={EvolutionProps}
+                    />
                 </ProfileContainer>
             </Container>
         );
