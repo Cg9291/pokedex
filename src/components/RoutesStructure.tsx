@@ -1,3 +1,4 @@
+import React from "react";
 import { useRoutes } from "react-router-dom";
 import PokemonProfile from "./pokemonProfiles/PokemonProfile";
 import Homepage from "../pages/Homepage";

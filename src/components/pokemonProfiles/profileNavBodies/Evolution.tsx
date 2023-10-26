@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import getPokemonEvolutionChainData from "../../../functions/api/getPokemonEvolutionChainData";
@@ -18,12 +18,13 @@ export default function Evolution(props: { ownProps: EvolutionComponentProps }):
 
     const getData = async (url: string): Promise<void> => {
         try {
-            const data = await getPokemonEvolutionChainData(url);
+            const data: PokemonEvolutionChainInterface = await getPokemonEvolutionChainData(url);
             setEvolutionChainData(data);
+            console.log("url", url);
         } catch (err) {
             console.log(err);
+            return;
         }
-        return;
     };
 
     useEffect(() => {
@@ -71,7 +72,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
 
     useEffect(() => {
         getData(props.pokemonEvolutionName);
-    });
+    }, []);
 
     if (pokemonEvolutionInfo) {
         const { id, sprites, types } = pokemonEvolutionInfo;
@@ -90,20 +91,18 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
             </PokemonContainer>
         );
     } else {
-        return <Container>Loading</Container>;
+        return <PokemonContainer>Loading</PokemonContainer>;
     }
 }
 
 const Container = styled(ContainerPrototype)`
     align-items: center;
     justify-content: center;
-    /* min-height: 100%; */
     height: 100%;
     padding: 1rem 0;
-    //margin-top: 5.5rem;
 `;
 
-const PokemonContainer = styled.div`
+const PokemonContainer = styled(ContainerPrototype)`
     display: flex;
     flex-direction: column;
     align-items: center;

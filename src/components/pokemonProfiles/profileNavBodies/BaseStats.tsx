@@ -1,3 +1,4 @@
+import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { StatsInterface } from "../../../interfaces/miscInterfaces";

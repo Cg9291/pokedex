@@ -8,12 +8,8 @@ import Navigation from "./components/navigation/Navigation";
 /*
 TODO
 
-*add type to index
 *figure out keys for mapped elements
-*review focusHandler() in NavElements file
 *add handler for when a searched pokemon doesnt exist
-*figure out best routing structure
-*review globalstyles implementatoion to ensure it wasnt overwritten
 */
 
 const Container = styled(ContainerPrototype)`

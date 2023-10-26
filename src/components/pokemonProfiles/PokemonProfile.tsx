@@ -32,7 +32,7 @@ export default function PokemonProfile(): React.ReactElement {
         } else if (paramName) {
             getData(paramName);
         }
-    }, []);
+    }, [paramId, paramName]);
 
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
@@ -49,9 +49,7 @@ export default function PokemonProfile(): React.ReactElement {
         const BaseStatsProps = {
             stats: stats
         };
-
         const EvolutionProps = { evolution_chain: evolution_chain };
-
         const MovesProps = { moves: moves };
 
         return (

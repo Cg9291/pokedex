@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import pickRandomPokemonNumbers from "../../../functions/utilities/pickRandomPokemonNumbers";

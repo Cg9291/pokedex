@@ -1,6 +1,5 @@
 import axios from "axios";
 import PokemonInterface from "../../interfaces/pokemonInterface";
-//interfaces needs to be outside function,sometimes exported..meant to be reused
 
 export default async function getPokemonData(id: number | string): Promise<PokemonInterface> {
     try {
