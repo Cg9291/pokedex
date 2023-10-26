@@ -11,6 +11,7 @@ import TypePrototype from "../../prototypes/TypePrototype";
 import typesColors from "../../../objects/typesColors";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
+import { Link } from "react-router-dom";
 
 export default function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
@@ -79,7 +80,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
         const typeColor = typesColors[types[0].type.name as keyof TypesColorsInt];
 
         return (
-            <PokemonContainer>
+            <PokemonContainer to={`/pokemons/id/${id}`}>
                 <SvgImg $bgColor={typeColor}>
                     <PokemonImage href={sprites.front_default} />
                 </SvgImg>
@@ -91,7 +92,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
             </PokemonContainer>
         );
     } else {
-        return <PokemonContainer>Loading</PokemonContainer>;
+        return <PokemonContainer to="/">Loading</PokemonContainer>;
     }
 }
 
@@ -102,7 +103,7 @@ const Container = styled(ContainerPrototype)`
     padding: 1rem 0;
 `;
 
-const PokemonContainer = styled(ContainerPrototype)`
+const PokemonContainer = styled(Link)`
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -52,6 +52,7 @@ export interface VitalsInterface {
 }
 
 export interface PokemonProfilePropsInterface {
+    id: number;
     AboutProps: AboutComponentProps;
     BaseStatsProps: BaseStatsComponentProps;
     EvolutionProps: EvolutionComponentProps;

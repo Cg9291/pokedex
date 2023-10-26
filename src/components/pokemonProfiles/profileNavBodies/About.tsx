@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
@@ -12,7 +12,14 @@ import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
 export default function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
+    const [description, setDescription] = useState<string>(flavor_text_entries[0].flavor_text);
 
+    if (flavor_text_entries[0].flavor_text !== description) {
+        setDescription(flavor_text_entries[0].flavor_text);
+    }
+    useEffect(() => {
+        console.log(flavor_text_entries[0].flavor_text, description);
+    });
     const displayedValues = [
         ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],

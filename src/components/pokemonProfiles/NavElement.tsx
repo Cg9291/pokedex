@@ -7,13 +7,13 @@ import React from "react";
 export default function NavElement(props: {
     value: string;
     navElementsNames: PokemonProfilesNavElementsInterface;
-    setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface>>;
+    setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface | undefined>>;
 }): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
 
     const focusHandler = (): void => {
-        const nextState = navElementsNames;
+        const nextState = { ...navElementsNames };
         for (const obj in nextState) {
             if (obj === props.value) {
                 nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused = true;
@@ -22,9 +22,9 @@ export default function NavElement(props: {
             }
         }
 
-        setNavElementsNames((navElementsNames: PokemonProfilesNavElementsInterface) => ({
-            ...navElementsNames //this function works but shouldn't...review
-        }));
+        setNavElementsNames(
+            nextState //this function works but shouldn't...review
+        );
     };
 
     const isElementFocused: boolean =
