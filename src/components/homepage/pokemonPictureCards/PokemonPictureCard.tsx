@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { PokemonTypesElement } from "./PokemonTypesElement";
-import { getPokemonData } from "../../../functions/api/getPokemonData";
+import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";

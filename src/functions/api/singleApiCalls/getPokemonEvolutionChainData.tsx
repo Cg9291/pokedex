@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PokemonEvolutionChainInterface } from "../../interfaces/pokemonEvolutionChainInterface";
+import { PokemonEvolutionChainInterface } from "../../../interfaces/pokemonEvolutionChainInterface";
 
 export const getPokemonEvolutionChainData = async (url: string): Promise<PokemonEvolutionChainInterface> => {
     try {

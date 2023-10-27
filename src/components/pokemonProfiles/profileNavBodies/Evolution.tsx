@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
-import { getPokemonEvolutionChainData } from "../../../functions/api/getPokemonEvolutionChainData";
+import { getPokemonEvolutionChainData } from "../../../functions/api/singleApiCalls/getPokemonEvolutionChainData";
 import { EvolutionComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonEvolutionChainInterface, Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
 import { PokemonInterface } from "../../../interfaces/pokemonInterface";
-import { getPokemonData } from "../../../functions/api/getPokemonData";
+import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { NumOrString } from "../../../interfaces/miscTypes";
 import { TypePrototype } from "../../prototypes/TypePrototype";
 import { typesColors } from "../../../objects/typesColors";

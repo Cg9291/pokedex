@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PokemonInterface } from "../../interfaces/pokemonInterface";
+import { PokemonInterface } from "../../../interfaces/pokemonInterface";
 
 export async function getPokemonData(pokemonIdentifier: number | string): Promise<PokemonInterface> {
     try {

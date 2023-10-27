@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PokemonSpeciesInterface } from "../../interfaces/pokemonSpeciesInterface";
-import { endpointsUrls } from "../../objects/endpointsUrls";
-import { NumOrString } from "../../interfaces/miscTypes";
+import { PokemonSpeciesInterface } from "../../../interfaces/pokemonSpeciesInterface";
+import { endpointsUrls } from "../../../objects/endpointsUrls";
+import { NumOrString } from "../../../interfaces/miscTypes";
 
 export async function getPokemonSpeciesData(id: NumOrString): Promise<PokemonSpeciesInterface> {
     try {

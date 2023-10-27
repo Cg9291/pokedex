@@ -3,7 +3,7 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Mfe } from "../../../interfaces/pokemonInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
-import { getPokemonMovesTypesData } from "../../../functions/api/getPokemonMovesTypesData";
+import { getPokemonMovesTypesData } from "../../../functions/api/singleApiCalls/getPokemonMovesTypesData";
 import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
