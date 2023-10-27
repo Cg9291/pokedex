@@ -28,7 +28,7 @@ export default function BaseStats(props: { ownProps: BaseStatsComponentProps }):
     };
 
     const mapStats = (): React.ReactElement[] =>
-        stats.map((x: StatsInterface) => <Stat name={x.stat.name} baseStatValue={x.base_stat} />);
+        stats.map((x: StatsInterface) => <Stat name={x.stat.name} baseStatValue={x.base_stat} key={x.stat.name} />);
 
     return (
         <Container>

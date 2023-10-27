@@ -50,7 +50,7 @@ export default function Evolution(props: { ownProps: EvolutionComponentProps }):
         };
 
         const displayPokemons = (): React.ReactElement[] =>
-            fetchEvolutions().map((x: string) => <PokemonEvolutionStage pokemonEvolutionName={x} />);
+            fetchEvolutions().map((x: string) => <PokemonEvolutionStage pokemonEvolutionName={x} key={x} />);
 
         return <Container>{displayPokemons()}</Container>;
     } else {
@@ -109,7 +109,8 @@ const PokemonContainer = styled(Link)`
     align-items: center;
     justify-content: space-between;
     width: 33.33%;
-    // height: 100%;
+    text-decoration: none;
+    color: black;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};

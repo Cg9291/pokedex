@@ -12,7 +12,7 @@ export default function Moves(props: { ownProps: MovesComponentProps }): React.R
     const { moves } = props.ownProps;
 
     const displayMoves = (): React.ReactElement[] =>
-        moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} />);
+        moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} key={x.move.name} />);
 
     return <Container>{displayMoves()}</Container>;
 }

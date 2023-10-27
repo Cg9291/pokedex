@@ -2,41 +2,60 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import PokemonInterface from "../../interfaces/pokemonInterface";
+import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonData from "../../functions/api/getPokemonData";
 import capitalizeWords from "../../functions/utilities/capitalizeWords";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors";
-import {
-    AboutComponentProps,
-    BaseStatsComponentProps,
-    EvolutionComponentProps,
-    MovesComponentProps,
-    TypesColorsInt
-} from "../../interfaces/miscInterfaces";
+import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { NumOrString } from "../../interfaces/miscTypes";
-import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
 import { displayFormattedId } from "../../functions/utilities/displayFormattedId";
+import { AxiosError } from "axios";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
 import NavElement from "./NavElement";
 import Moves from "./profileNavBodies/Moves";
 import Evolution from "./profileNavBodies/Evolution";
 import BaseStats from "./profileNavBodies/BaseStats";
 import About from "./profileNavBodies/About";
+import { MyPropsInt } from "../../interfaces/miscInterfaces";
 
 export default function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>();
     const { id: paramId, name: paramName } = useParams();
+    const navigate = useNavigate();
+
+    let myProps: MyPropsInt;
 
     async function getData(pokeId: NumOrString): Promise<void> {
-        const pokemonData = await getPokemonData(pokeId);
-        const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
-        setPokemonInfo(pokemonData);
-        setPokemonSpeciesInfo(pokemonSpeciesData);
+        try {
+            const pokemonData = await getPokemonData(pokeId);
+            const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
+            setPokemonInfo(pokemonData);
+            setPokemonSpeciesInfo(pokemonSpeciesData);
+        } catch (err) {
+            if (err instanceof AxiosError && err.response?.status === 404) {
+                navigate("/pokemon-not-found");
+            }
+        }
         return;
     }
+
+    const setNavNames = (myprops: MyPropsInt) => {
+        if (pokemonInfo && pokemonSpeciesInfo) {
+            setNavElementsNames({
+                About: { isFocused: true, element: <About ownProps={myprops.AboutProps} /> },
+                "Base Stats": {
+                    isFocused: false,
+                    element: <BaseStats ownProps={myprops.BaseStatsProps} />
+                },
+                Evolution: { isFocused: false, element: <Evolution ownProps={myprops.EvolutionProps} /> },
+                Moves: { isFocused: false, element: <Moves ownProps={myprops.MovesProps} /> }
+            });
+        } else return;
+    };
 
     useEffect(() => {
         if (paramId) {
@@ -46,24 +65,9 @@ export default function PokemonProfile(): React.ReactElement {
         }
     }, [paramId, paramName]);
 
-    const setNavNames = async (
-        A: AboutComponentProps,
-        B: BaseStatsComponentProps,
-        E: EvolutionComponentProps,
-        M: MovesComponentProps
-    ) => {
-        if (pokemonInfo && pokemonSpeciesInfo) {
-            await setNavElementsNames({
-                About: { isFocused: true, element: <About ownProps={A} /> },
-                "Base Stats": {
-                    isFocused: false,
-                    element: <BaseStats ownProps={B} />
-                },
-                Evolution: { isFocused: false, element: <Evolution ownProps={E} /> },
-                Moves: { isFocused: false, element: <Moves ownProps={M} /> }
-            });
-        }
-    };
+    useEffect(() => {
+        setNavNames(myProps);
+    }, [pokemonInfo, pokemonSpeciesInfo]);
 
     const displayNavBody = (): React.ReactNode => {
         //maybe review this function
@@ -78,19 +82,20 @@ export default function PokemonProfile(): React.ReactElement {
         }
     };
 
-    const displayNavHeaders = (): React.ReactElement[] => {
+    const displayNavHeaders = (): React.ReactElement[] | React.ReactElement => {
         if (navElementsNames) {
             return Object.keys(navElementsNames).map(
-                (key: string): React.ReactElement => (
+                (objectKey: string): React.ReactElement => (
                     <NavElement
-                        value={key}
+                        value={objectKey}
                         navElementsNames={navElementsNames}
                         setNavElementsNames={setNavElementsNames}
+                        key={objectKey}
                     />
                 )
             );
         } else {
-            throw new Error("No nav elements");
+            return <PokeNumber>loading</PokeNumber>;
         }
     };
 
@@ -98,7 +103,7 @@ export default function PokemonProfile(): React.ReactElement {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
 
-        const myProps = {
+        myProps = {
             AboutProps: {
                 flavor_text_entries: flavor_text_entries,
                 height: height,
@@ -114,10 +119,8 @@ export default function PokemonProfile(): React.ReactElement {
             MovesProps: { moves: moves }
         };
 
-        setNavNames(myProps.AboutProps, myProps.BaseStatsProps, myProps.EvolutionProps, myProps.MovesProps);
-
         return (
-            <Container mainType={types[0].type.name}>
+            <Container $mainType={types[0].type.name}>
                 <ImageContainer>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>{capitalizeWords(name)}</PokemonName>
@@ -134,14 +137,14 @@ export default function PokemonProfile(): React.ReactElement {
             </Container>
         );
     } else {
-        return <Container mainType="none">Loading</Container>;
+        return <Container $mainType="none">Loading</Container>;
     }
 }
 
-const Container = styled(ContainerPrototype)<{ mainType: string }>`
+const Container = styled(ContainerPrototype)<{ $mainType: string }>`
     flex-direction: column;
     justify-content: center;
-    background-color: ${(props) => typesColors[props.mainType as keyof TypesColorsInt]};
+    background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
     overflow-y: hidden;

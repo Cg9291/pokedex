@@ -9,7 +9,7 @@ export default function Homepage(): React.ReactElement {
     const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
 
     const mapPictureCards = (): React.ReactElement[] =>
-        randomPokemonSelection.map((i) => <PokemonPictureCard id={i} />);
+        randomPokemonSelection.map((number, index) => <PokemonPictureCard id={number} key={index} />);
 
     return (
         <Container>

@@ -90,3 +90,23 @@ export interface NavIconsInterface {
     icon: string;
     linkUrl: string;
 }
+
+export interface MyPropsInt {
+    AboutProps: {
+        flavor_text_entries: Flavor_text_entry[];
+        height: number;
+        weight: number;
+        color: Color;
+        types: Type[];
+        abilities: Ability[];
+    };
+    BaseStatsProps: {
+        stats: Stat[];
+    };
+    EvolutionProps: {
+        evolution_chain: Evolution_chain;
+    };
+    MovesProps: {
+        moves: Mfe[];
+    };
+}
