@@ -9,7 +9,7 @@ export default async function getPokemonSpeciesData(id: NumOrString): Promise<Po
         const pokemonSpeciesData: PokemonSpeciesInterface = response.data;
         return pokemonSpeciesData;
     } catch (err) {
-        console.log("function getPokemonSpeciesData:success", err);
+        console.log("function getPokemonSpeciesData:failure", err);
         throw err;
     }
 }

@@ -5,6 +5,7 @@ import Homepage from "../pages/Homepage";
 import NoMatch from "../pages/NoMatch";
 import Wtp from "../pages/Wtp";
 import Favorites from "../pages/Favorites";
+import { PokemonNotFound } from "../pages/PokemonNotFound";
 
 export default function RoutesStructure(): React.ReactElement | null {
     return useRoutes([
@@ -13,6 +14,7 @@ export default function RoutesStructure(): React.ReactElement | null {
         { path: "/pokemons/id/:id", element: <PokemonProfile /> },
         { path: "/pokemons/name/:name", element: <PokemonProfile /> },
         { path: "/wtp", element: <Wtp /> },
-        { path: "/favorites", element: <Favorites /> }
+        { path: "/favorites", element: <Favorites /> },
+        { path: "/pokemon-not-found", element: <PokemonNotFound /> }
     ]);
 }

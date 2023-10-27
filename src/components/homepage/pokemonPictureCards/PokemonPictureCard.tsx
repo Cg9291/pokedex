@@ -27,7 +27,11 @@ export default function PokemonPictureCard(props: PokemonNumberPropsInterface): 
     }, [props.id]);
 
     const renderPokemonTypes = (typesArray: Type[]): React.ReactElement[] =>
-        typesArray.reverse().map((x: Type) => <PokemonTypesElement typeName={capitalizeWords(x.type.name)} />);
+        typesArray
+            .reverse()
+            .map((x: Type, index: number) => (
+                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
+            ));
 
     if (pokemonInfo) {
         return (

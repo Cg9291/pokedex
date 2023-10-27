@@ -21,8 +21,13 @@ export default function PokemonProfileInfo(props: PokemonProfilePropsInterface):
 
     const displayNavHeaders = (): React.ReactElement[] =>
         Object.keys(navElementsNames).map(
-            (key: string): React.ReactElement => (
-                <NavElement value={key} navElementsNames={navElementsNames} setNavElementsNames={setNavElementsNames} />
+            (objectKey: string): React.ReactElement => (
+                <NavElement
+                    value={objectKey}
+                    navElementsNames={navElementsNames}
+                    setNavElementsNames={setNavElementsNames}
+                    key={objectKey}
+                />
             )
         );
 

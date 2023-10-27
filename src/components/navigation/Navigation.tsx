@@ -28,7 +28,9 @@ export default function Navigation(): React.ReactElement {
     ];
 
     const displayNavIcons = () =>
-        navIcons.map((icon) => <NavElement name={icon.name} icon={icon.icon} linkUrl={icon.linkUrl} />);
+        navIcons.map((icon) => (
+            <NavElement name={icon.name} icon={icon.icon} linkUrl={icon.linkUrl} key={`${icon.name}_key`} />
+        ));
 
     return <Container>{displayNavIcons()}</Container>;
 }

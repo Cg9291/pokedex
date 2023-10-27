@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
 import capitalizeWords from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";
-import TypesSWInterface from "../../../interfaces/pokemonTypesSWInterface";
+import TypesSWInterface, { TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
 import typesColors from "../../../objects/typesColors";
 import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import TypePrototype from "../../prototypes/TypePrototype";
@@ -30,7 +30,7 @@ export default function About(props: { ownProps: AboutComponentProps }): React.R
     };
 
     const displayVitals = (): React.ReactElement[] =>
-        displayedValues.map((x: string[]): React.ReactElement => <Vitals label={x[0]} value={x[1]} />);
+        displayedValues.map((x: string[]): React.ReactElement => <Vitals label={x[0]} value={x[1]} key={x[0]} />);
 
     return (
         flavor_text_entries && (
@@ -56,28 +56,26 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
 }
 
 function StrengthsAndWeaknesses(props: { type: string }) {
-    const displayStrengths = (): React.ReactElement[] =>
-        typesSW[props.type as keyof TypesSWInterface].strengths.map((x) => {
-            const lowerCaseX = x.toLowerCase();
-            return (
-                <StrengthsAndWeaknessesElement sValue={x} sColor={typesColors[lowerCaseX as keyof TypesColorsInt]} />
-            );
-        });
-
-    const displayWeaknesses = (): React.ReactElement[] =>
-        typesSW[props.type as keyof TypesSWInterface].weaknesses.map((x) => {
-            const lowerCaseX = x.toLowerCase();
-            return (
-                <StrengthsAndWeaknessesElement sValue={x} sColor={typesColors[lowerCaseX as keyof TypesColorsInt]} />
-            );
-        });
+    const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
+        typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
+            (x: string) => {
+                const lowerCaseX = x.toLowerCase();
+                return (
+                    <StrengthsAndWeaknessesElement
+                        sValue={x}
+                        sColor={typesColors[lowerCaseX as keyof TypesColorsInt]}
+                        key={x}
+                    />
+                );
+            }
+        );
 
     return (
         <SWContainer>
             <h3>Strengths</h3>
-            <SWElementsContainer>{displayStrengths()}</SWElementsContainer>
+            <SWElementsContainer>{displayStrengths("strengths")}</SWElementsContainer>
             <h3>Weaknesses</h3>
-            <SWElementsContainer>{displayWeaknesses()}</SWElementsContainer>
+            <SWElementsContainer>{displayStrengths("weaknesses")}</SWElementsContainer>
         </SWContainer>
     );
 }

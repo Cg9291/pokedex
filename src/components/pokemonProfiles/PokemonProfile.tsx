@@ -5,24 +5,32 @@ import PokemonProfileInfo from "./PokemonProfileInfo";
 import PokemonInterface from "../../interfaces/pokemonInterface";
 import getPokemonData from "../../functions/api/getPokemonData";
 import capitalizeWords from "../../functions/utilities/capitalizeWords";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import typesColors from "../../objects/typesColors";
 import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { NumOrString } from "../../interfaces/miscTypes";
 import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
 import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
 import { displayFormattedId } from "../../functions/utilities/displayFormattedId";
+import { AxiosError } from "axios";
 
 export default function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
     const { id: paramId, name: paramName } = useParams();
+    const navigate = useNavigate();
 
     async function getData(pokeId: NumOrString): Promise<void> {
-        const pokemonData = await getPokemonData(pokeId);
-        const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
-        setPokemonInfo(pokemonData);
-        setPokemonSpeciesInfo(pokemonSpeciesData);
+        try {
+            const pokemonData = await getPokemonData(pokeId);
+            const pokemonSpeciesData = await getPokemonSpeciesData(pokeId);
+            setPokemonInfo(pokemonData);
+            setPokemonSpeciesInfo(pokemonSpeciesData);
+        } catch (err) {
+            if (err instanceof AxiosError && err.response?.status === 404) {
+                navigate("/pokemon-not-found");
+            }
+        }
         return;
     }
 
@@ -53,7 +61,7 @@ export default function PokemonProfile(): React.ReactElement {
         const MovesProps = { moves: moves };
 
         return (
-            <Container mainType={types[0].type.name}>
+            <Container $mainType={types[0].type.name}>
                 <ImageContainer>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>{capitalizeWords(name)}</PokemonName>
@@ -72,14 +80,14 @@ export default function PokemonProfile(): React.ReactElement {
             </Container>
         );
     } else {
-        return <Container mainType="none">Loading</Container>;
+        return <Container $mainType="none">Loading</Container>;
     }
 }
 
-const Container = styled(ContainerPrototype)<{ mainType: string }>`
+const Container = styled(ContainerPrototype)<{ $mainType: string }>`
     flex-direction: column;
     justify-content: center;
-    background-color: ${(props) => typesColors[props.mainType as keyof TypesColorsInt]};
+    background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
     overflow-y: hidden;

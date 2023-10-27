@@ -18,7 +18,7 @@ export default function Search(): React.ReactElement {
         <Container>
             <Form onSubmit={handleSubmit}>
                 <Label>
-                    <Input />
+                    <Input required />
                 </Label>
                 <Button>Search</Button>
             </Form>
