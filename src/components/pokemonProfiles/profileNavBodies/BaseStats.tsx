@@ -2,7 +2,7 @@ import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { StatsInterface } from "../../../interfaces/miscInterfaces";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { BaseStatsComponentProps } from "../../../interfaces/miscInterfaces";
 
 interface StatsOverlayPropsInt {
@@ -16,7 +16,7 @@ interface LocalStat {
     isTotal?: boolean;
 }
 
-export default function BaseStats(props: { ownProps: BaseStatsComponentProps }): React.ReactElement {
+export function BaseStats(props: { ownProps: BaseStatsComponentProps }): React.ReactElement {
     const { stats } = props.ownProps;
 
     const statsTotal = () => {

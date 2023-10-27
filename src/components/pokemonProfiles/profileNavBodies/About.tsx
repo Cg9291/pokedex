@@ -1,22 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";
-import TypesSWInterface, { TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
-import typesColors from "../../../objects/typesColors";
+import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
+import { typesColors } from "../../../objects/typesColors";
 import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import TypePrototype from "../../prototypes/TypePrototype";
+import { TypePrototype } from "../../prototypes/TypePrototype";
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
-export default function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
+export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
-    /*     const [description, setDescription] = useState<string>(flavor_text_entries[0].flavor_text); */
 
-    /*  if (flavor_text_entries[0].flavor_text !== description) {
-        setDescription(flavor_text_entries[0].flavor_text);
-    } */
     const displayedValues = [
         ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import PokemonTypesElement from "./PokemonTypesElement";
-import getPokemonData from "../../../functions/api/getPokemonData";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { PokemonTypesElement } from "./PokemonTypesElement";
+import { getPokemonData } from "../../../functions/api/getPokemonData";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import PokemonInterface, { Type } from "../../../interfaces/pokemonInterface";
-import typesColors from "../../../objects/typesColors";
+import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
+import { typesColors } from "../../../objects/typesColors";
 
-export default function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
+export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
 
     async function getData(pokemonNumber: number): Promise<void> {

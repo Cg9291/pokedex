@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Mfe } from "../../../interfaces/pokemonInterface";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-import getPokemonMovesTypesData from "../../../functions/api/getPokemonMovesTypesData";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
+import { getPokemonMovesTypesData } from "../../../functions/api/getPokemonMovesTypesData";
 import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface";
-import typesColors from "../../../objects/typesColors";
+import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 
-export default function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
+export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
 
     const displayMoves = (): React.ReactElement[] =>

@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
-import PokemonInterface from "../../interfaces/pokemonInterface";
-import PokemonSpeciesInterface from "../../interfaces/pokemonSpeciesInterface";
-import getPokemonData from "../../functions/api/getPokemonData";
-import capitalizeWords from "../../functions/utilities/capitalizeWords";
+import { PokemonInterface } from "../../interfaces/pokemonInterface";
+import { PokemonSpeciesInterface } from "../../interfaces/pokemonSpeciesInterface";
+import { getPokemonData } from "../../functions/api/getPokemonData";
+import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
 import { useNavigate, useParams } from "react-router-dom";
-import typesColors from "../../objects/typesColors";
+import { typesColors } from "../../objects/typesColors";
 import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { NumOrString } from "../../interfaces/miscTypes";
-import getPokemonSpeciesData from "../../functions/api/getPokemonSpeciesData";
+import { getPokemonSpeciesData } from "../../functions/api/getPokemonSpeciesData";
 import { displayFormattedId } from "../../functions/utilities/displayFormattedId";
 import { AxiosError } from "axios";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
-import NavElement from "./NavElement";
-import Moves from "./profileNavBodies/Moves";
-import Evolution from "./profileNavBodies/Evolution";
-import BaseStats from "./profileNavBodies/BaseStats";
-import About from "./profileNavBodies/About";
+import { NavElement } from "./NavElement";
+import { Moves } from "./profileNavBodies/Moves";
+import { Evolution } from "./profileNavBodies/Evolution";
+import { BaseStats } from "./profileNavBodies/BaseStats";
+import { About } from "./profileNavBodies/About";
 import { MyPropsInt } from "../../interfaces/miscInterfaces";
 
-export default function PokemonProfile(): React.ReactElement {
+export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>();

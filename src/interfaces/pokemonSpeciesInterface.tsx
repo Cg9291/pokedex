@@ -1,4 +1,4 @@
-export default interface PokemonSpeciesInterface {
+export interface PokemonSpeciesInterface {
     id: number;
     name: string;
     order: number;

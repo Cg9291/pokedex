@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import pickRandomPokemonNumbers from "../../../functions/utilities/pickRandomPokemonNumbers";
+import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
 
-export default function RandomizeSelectionButton(props: RandomPokemonSelectionInterface): React.ReactElement {
+export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface): React.ReactElement {
     const { setRandomPokemonSelection } = props;
 
     const randomize = () => {

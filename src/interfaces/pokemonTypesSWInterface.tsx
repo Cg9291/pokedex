@@ -1,4 +1,4 @@
-export default interface TypesSWInterface {
+export interface TypesSWInterface {
     normal: TypeSWInterface;
     fire: TypeSWInterface;
     water: TypeSWInterface;

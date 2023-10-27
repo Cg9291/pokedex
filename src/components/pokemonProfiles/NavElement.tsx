@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
-import LinkPrototype from "../prototypes/LinkPrototype";
+import { LinkPrototype } from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
 import React from "react";
 
-export default function NavElement(props: {
+export function NavElement(props: {
     value: string;
     navElementsNames: PokemonProfilesNavElementsInterface;
     setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface | undefined>>;

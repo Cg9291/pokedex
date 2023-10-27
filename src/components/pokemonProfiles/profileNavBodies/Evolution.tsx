@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
-import getPokemonEvolutionChainData from "../../../functions/api/getPokemonEvolutionChainData";
+import { getPokemonEvolutionChainData } from "../../../functions/api/getPokemonEvolutionChainData";
 import { EvolutionComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import PokemonEvolutionChainInterface, { Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
-import PokemonInterface from "../../../interfaces/pokemonInterface";
-import getPokemonData from "../../../functions/api/getPokemonData";
+import { PokemonEvolutionChainInterface, Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
+import { PokemonInterface } from "../../../interfaces/pokemonInterface";
+import { getPokemonData } from "../../../functions/api/getPokemonData";
 import { NumOrString } from "../../../interfaces/miscTypes";
-import TypePrototype from "../../prototypes/TypePrototype";
-import typesColors from "../../../objects/typesColors";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { TypePrototype } from "../../prototypes/TypePrototype";
+import { typesColors } from "../../../objects/typesColors";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 import { Link } from "react-router-dom";
 
-export default function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
+export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
     const evolutionChainUrl: string = props.ownProps.evolution_chain.url;
 

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
-import Header from "../components/homepage/header/Header";
-import PokemonPictureCard from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
+import { Header } from "../components/homepage/header/Header";
+import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import React, { useState } from "react";
-import pickRandomPokemonNumbers from "../functions/utilities/pickRandomPokemonNumbers";
+import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokemonNumbers";
 
-export default function Homepage(): React.ReactElement {
+export function Homepage(): React.ReactElement {
     const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
 
     const mapPictureCards = (): React.ReactElement[] =>

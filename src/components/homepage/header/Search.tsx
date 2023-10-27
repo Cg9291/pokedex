@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import React from "react";
 
-export default function Search(): React.ReactElement {
+export function Search(): React.ReactElement {
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {

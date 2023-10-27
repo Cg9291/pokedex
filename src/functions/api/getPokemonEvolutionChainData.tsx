@@ -1,7 +1,7 @@
 import axios from "axios";
-import PokemonEvolutionChainInterface from "../../interfaces/pokemonEvolutionChainInterface";
+import { PokemonEvolutionChainInterface } from "../../interfaces/pokemonEvolutionChainInterface";
 
-const getPokemonEvolutionChainData = async (url: string): Promise<PokemonEvolutionChainInterface> => {
+export const getPokemonEvolutionChainData = async (url: string): Promise<PokemonEvolutionChainInterface> => {
     try {
         const response = await axios.get(url);
         const evolutionData: PokemonEvolutionChainInterface = response.data;
@@ -11,5 +11,3 @@ const getPokemonEvolutionChainData = async (url: string): Promise<PokemonEvoluti
         throw err;
     }
 };
-
-export default getPokemonEvolutionChainData;

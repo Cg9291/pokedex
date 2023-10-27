@@ -8,7 +8,7 @@ import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
 import { NavIconsInterface } from "../../interfaces/miscInterfaces";
 import { NavIconsType } from "../../interfaces/miscTypes";
 
-export default function Navigation(): React.ReactElement {
+export function Navigation(): React.ReactElement {
     const navIcons: NavIconsType = [
         {
             name: "Home",
