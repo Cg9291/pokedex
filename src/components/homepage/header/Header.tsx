@@ -2,6 +2,21 @@ import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import Search from "./Search";
 import React from "react";
+import RandomizeSelectionButton from "./RandomizeSelectionButton";
+import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
+
+export default function Header(props: RandomPokemonSelectionInterface): React.ReactElement {
+    return (
+        <Container>
+            <RandomizeSelectionButton setRandomPokemonSelection={props.setRandomPokemonSelection} />
+            <HeaderText>
+                What Pokemon
+                <br /> would you like to find?
+            </HeaderText>
+            <Search />
+        </Container>
+    );
+}
 
 const Container = styled(ContainerPrototype)`
     max-height: 13rem;
@@ -11,24 +26,14 @@ const Container = styled(ContainerPrototype)`
     padding: 0.5rem 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    position: fixed;
 `;
 
 const HeaderText = styled.h2`
     height: fit-content;
-    margin-top: 4.7rem;
+    margin-top: 3.7rem;
     max-width: 85%;
     color: white;
     text-align: start;
+    padding: 0 0 1rem;
 `;
-
-export default function Header(): React.ReactElement {
-    return (
-        <Container>
-            <HeaderText>
-                What Pokemon
-                <br /> would you like to find?
-            </HeaderText>
-            <Search />
-        </Container>
-    );
-}

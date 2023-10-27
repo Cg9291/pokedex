@@ -1,15 +1,13 @@
 import axios from "axios";
 import PokemonInterface from "../../interfaces/pokemonInterface";
-//interfaces needs to be outside function,sometimes exported..meant to be reused
 
-export default async function getPokemonData(id: number | string): Promise<PokemonInterface> {
+export default async function getPokemonData(pokemonIdentifier: number | string): Promise<PokemonInterface> {
     try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonIdentifier}`);
         const pokemonData: PokemonInterface = response.data;
-        console.log("function getPokemonData:success", pokemonData);
         return pokemonData;
     } catch (err) {
-        console.log("function getPokemonData:success", err);
+        console.log("function getPokemonData:failure", err);
         throw err;
     }
 }

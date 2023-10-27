@@ -1,6 +1,5 @@
-import { Color, Flavor_text_entry } from "./pokemonSpeciesInterface";
-import { Ability } from "./pokemonInterface";
-import React from "react";
+import { Color, Evolution_chain, Flavor_text_entry } from "./pokemonSpeciesInterface";
+import { Ability, Mfe, Stat, Type } from "./pokemonInterface";
 
 export interface TypesColorsInt {
     normal: string;
@@ -44,14 +43,49 @@ export interface StatsInterface {
     stat: { name: string; url: string };
 }
 
-export interface ObjectPlaceHolderInterface {
-    [key: string]: any;
-}
-
 export interface VitalsInterface {
     height: number;
     weight: number;
     color: Color;
     ability: Ability[];
     flavor_text_entries: Flavor_text_entry;
+}
+
+export interface PokemonProfilePropsInterface {
+    AboutProps: AboutComponentProps;
+    BaseStatsProps: BaseStatsComponentProps;
+    EvolutionProps: EvolutionComponentProps;
+    MovesProps: MovesComponentProps;
+}
+
+export interface AboutComponentProps {
+    flavor_text_entries: Flavor_text_entry[];
+    height: number;
+    weight: number;
+    color: Color;
+    types: Type[];
+    abilities: Ability[];
+}
+
+export interface BaseStatsComponentProps {
+    stats: Stat[];
+}
+
+export interface EvolutionComponentProps {
+    evolution_chain: Evolution_chain;
+}
+
+export interface MovesComponentProps {
+    moves: Mfe[];
+}
+
+export interface RandomPokemonSelectionInterface {
+    randomPokemonSelection?: number[];
+    setRandomPokemonSelection: React.Dispatch<React.SetStateAction<number[]>>;
+}
+
+export interface NavIconsInterface {
+    name: string;
+    icon: string;
+    linkUrl: string;
 }
