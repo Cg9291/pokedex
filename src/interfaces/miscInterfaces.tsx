@@ -110,3 +110,13 @@ export interface MyPropsInt {
         moves: Mfe[];
     };
 }
+
+export interface FilterInfoInterface {
+    type: FilterInfoPropInterface;
+    type2: FilterInfoPropInterface;
+}
+
+export interface FilterInfoPropInterface {
+    name: string;
+    value: string | undefined;
+}

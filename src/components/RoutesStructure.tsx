@@ -7,6 +7,7 @@ import { Wtp } from "../pages/Wtp";
 import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
 import { FilteredSearchModal } from "./homepage/FilteredSearchModal";
+import { FilteredSearchResults } from "../pages/filteredSearchResults";
 
 export function RoutesStructure(): React.ReactElement | null {
     return useRoutes([
@@ -17,6 +18,7 @@ export function RoutesStructure(): React.ReactElement | null {
         { path: "/wtp", element: <Wtp /> },
         { path: "/favorites", element: <Favorites /> },
         { path: "/pokemon-not-found", element: <PokemonNotFound /> },
-        { path: "/filter/:gen", element: <FilteredSearchModal /> }
+        { path: "/filter/:gen", element: <FilteredSearchModal /> },
+        { path: "/filtered-search/:param/:type/:param2/:type2/", element: <FilteredSearchResults /> }
     ]);
 }

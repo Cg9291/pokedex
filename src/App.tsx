@@ -9,6 +9,7 @@ import { Navigation } from "./components/navigation/Navigation";
 TODO
 
 *update all containerPrototypes imports/export
+*handle odd pokemons[deoxys,eeviee,]
 */
 
 const Container = styled(ContainerPrototype)`
