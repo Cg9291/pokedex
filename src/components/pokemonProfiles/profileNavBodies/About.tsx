@@ -16,7 +16,7 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
     const displayedValues = [
         ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],
-        ["weight", `${weight + "kg"}`],
+        ["weight", `${weight / 10 + "kg"}`],
         ["color", `${color.name}`],
         ["abilities", `${abilities[0].ability.name}`]
     ];

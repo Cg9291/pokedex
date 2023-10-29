@@ -120,3 +120,9 @@ export interface FilterInfoPropInterface {
     name: string;
     value: string | undefined;
 }
+
+export interface CustomPokemonInfo {
+    name: string;
+    id: number;
+    types: Type[];
+}

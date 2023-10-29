@@ -15,33 +15,6 @@ export function FilteredSearchModal(): React.ReactElement {
     const filterParameters = { ...filterInfo };
     const navigate = useNavigate();
 
-    /*  const getData = async (pokeGen: number): Promise<void> => {
-        try {
-            const generationData: GenerationsInterface = await getGenerationsData(pokeGen);
-            const pokemonSpecies: PokemonSpecy[] = generationData.pokemon_species;
-            console.log("ps", pokemonSpecies);
-            const generationPokemonList: { name: string; id: number; types: Type[] }[] = await Promise.all(
-                pokemonSpecies.map(async (x: PokemonSpecy) => await getPokemonNameAndTypes(x.name))
-            );
-            setMyState(generationPokemonList);
-        } catch (err) {
-            console.log(err);
-            return;
-        }
-    }; */
-
-    /*  useEffect(() => {
-        getData(Number(gen));
-    }, [gen]); */
-
-    /*     const applyFilter = () => {
-        if (myState) {
-            return myState
-                .filter((x) => x.types[0].type.name === filterInfo.type && x.types[1]?.type.name === filterInfo.type2)
-                .map((y) => <PokemonPictureCard id={y.id} />);
-        }
-    }; */
-
     const displayFilters = () => {
         const myArr: React.ReactElement[] = [];
         for (const param in filterInfo) {

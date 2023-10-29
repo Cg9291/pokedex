@@ -8,28 +8,24 @@ import { Type } from "../interfaces/pokemonInterface";
 import { getGenerationsData } from "../functions/api/batchApiCalls/getGenerationsData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
+import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 
 export function FilteredSearchResults(): React.ReactElement {
-    const [myState, setMyState] = useState<{ name: string; id: number; types: Type[] }[]>();
-    const myParams = useParams();
-    const paramEntries = Object.entries(myParams).filter((x) => x[0].includes("param"));
-    console.log("pe", paramEntries);
+    const [myState, setMyState] = useState<CustomPokemonInfo[]>();
+    const NamesAndValuesOfFilters = useParams();
+    const NamesOfFilters = Object.entries(NamesAndValuesOfFilters).filter((x) => x[0].includes("param"));
 
-    console.log(useParams().param);
     useEffect(() => {
         getData(Number(1));
     }, []);
-    //console.log(typeParam, type2Param);
 
     const getData = async (pokeGen: number): Promise<void> => {
         try {
             const generationData: GenerationsInterface = await getGenerationsData(pokeGen);
             const pokemonSpecies: PokemonSpecy[] = generationData.pokemon_species;
-            //console.log("ps", pokemonSpecies);
-            const generationPokemonList: { name: string; id: number; types: Type[] }[] = await Promise.all(
+            const generationPokemonList: CustomPokemonInfo[] = await Promise.all(
                 pokemonSpecies.map(async (x: PokemonSpecy) => await getPokemonNameAndTypes(x.name))
             );
-            //console.log(generationPokemonList);
             setMyState(generationPokemonList);
         } catch (err) {
             console.log(err);
@@ -37,58 +33,34 @@ export function FilteredSearchResults(): React.ReactElement {
         }
     };
 
-    const conditions = (pokemon: any) => {
-        for (let i = 0; i < paramEntries.length; i++) {
-            if (paramChecker[paramEntries[i][1]!](pokemon) !== true) {
-                console.log("i stopped", i);
-                return false;
-            }
-        }
-        return true;
+    const filterChecker: { [key: string]: (x: CustomPokemonInfo) => boolean } = {
+        type: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[0].type.name}`) === NamesAndValuesOfFilters.type,
+        type2: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[1]?.type.name}`) === NamesAndValuesOfFilters.type2
     };
 
-    /* const check=(pokemon:any)=>{
-        myState?.filter(x=>)
-    } */
+    const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {
+        for (let i = 0; i < NamesOfFilters.length; i++) {
+            const nameOfFilter = NamesOfFilters[i][1]!;
+            const isFilterActive = NamesAndValuesOfFilters[nameOfFilter] !== "undefined";
 
-    const paramChecker: { [key: string]: (x: { name: string; id: number; types: Type[] }) => boolean } = {
-        type: (x: { name: string; id: number; types: Type[] }) =>
-            capitalizeWords(`${x.types[0]?.type.name}`) === useParams().type,
-        type2: (x: { name: string; id: number; types: Type[] }) =>
-            capitalizeWords(`${x.types[1]?.type.name}`) === useParams().type2
-    };
-
-    /*  const checkConditions = () => {
-        const myArr = [];
-        // console.log("up", useParams());
-        for (const param in useParams()) {
-            if (useParams().param === undefined) {
-                console.log(`${param} is undefined`);
-            } else {
-                myArr.push(paramChecker[param]);
-                console.log(`${param} is gucci`, param);
+            if (isFilterActive === false) {
+                continue;
             }
-        }
 
-        return myArr;
-    }; */
-
-    /*  const inspectPokemon = (pokemon: any) => {
-        for (let i = 0; i < checkConditions().length; i++) {
-            if (checkConditions()[i](pokemon) === false) {
+            if (filterChecker[nameOfFilter](pokemon) === false) {
                 return false;
-            } else {
-                console.log("tc", checkConditions()[i](pokemon), pokemon);
-                i++;
             }
+            console.log(filterChecker[nameOfFilter](pokemon));
         }
-        console.log("pk", pokemon);
+        console.log(pokemon);
         return true;
-    }; */
+    };
 
     const applyFilter = () => {
         if (myState) {
-            return myState.filter((x) => conditions(x) === true).map((y) => <PokemonPictureCard id={y.id} />);
+            return myState
+                .filter((x) => checkPokemonForFilters(x) === true)
+                .map((y) => <PokemonPictureCard id={y.id} />);
         }
     };
 
