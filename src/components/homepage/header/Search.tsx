@@ -14,13 +14,21 @@ export function Search(): React.ReactElement {
         navigate(`/pokemons/name/${name}`);
     };
 
+    const handleClick = () => {
+        navigate(`/filter/:gen`);
+    };
+
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
                 <Label>
                     <Input required />
                 </Label>
-                <Button>Search</Button>
+
+                <ButtonsContainer>
+                    <Button>Search</Button>
+                    <FilterButton onClick={handleClick}>Filter</FilterButton>
+                </ButtonsContainer>
             </Form>
         </Container>
     );
@@ -51,6 +59,15 @@ const Input = styled.input.attrs({
 `;
 
 const Button = styled.button.attrs({ type: "submit" })`
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+`;
+const ButtonsContainer = styled(ContainerPrototype)`
+    flex-direction: column;
+`;
+
+const FilterButton = styled.button.attrs({ type: "button" })`
     width: 100%;
     height: 100%;
     border-radius: 10px;

@@ -114,15 +114,25 @@ export interface MyPropsInt {
 export interface FilterInfoInterface {
     type: FilterInfoPropInterface;
     type2: FilterInfoPropInterface;
+    height: FilterNumberPropInterface;
+    weight: FilterNumberPropInterface;
 }
 
 export interface FilterInfoPropInterface {
     name: string;
     value: string | undefined;
+    style: string;
+}
+export interface FilterNumberPropInterface {
+    name: string;
+    value: number;
+    style: string;
 }
 
 export interface CustomPokemonInfo {
     name: string;
     id: number;
     types: Type[];
+    height: number;
+    weight: number;
 }

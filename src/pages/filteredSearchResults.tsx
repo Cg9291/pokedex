@@ -4,7 +4,6 @@ import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { useParams } from "react-router-dom";
 import { getPokemonNameAndTypes } from "../functions/api/batchApiCalls/getPokemonNameAndTypes";
 import { GenerationsInterface, PokemonSpecy } from "../interfaces/generationsInterface";
-import { Type } from "../interfaces/pokemonInterface";
 import { getGenerationsData } from "../functions/api/batchApiCalls/getGenerationsData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
@@ -35,7 +34,9 @@ export function FilteredSearchResults(): React.ReactElement {
 
     const filterChecker: { [key: string]: (x: CustomPokemonInfo) => boolean } = {
         type: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[0].type.name}`) === NamesAndValuesOfFilters.type,
-        type2: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[1]?.type.name}`) === NamesAndValuesOfFilters.type2
+        type2: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[1]?.type.name}`) === NamesAndValuesOfFilters.type2,
+        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(NamesAndValuesOfFilters.height),
+        weight: (x: CustomPokemonInfo) => x.weight >= Number(NamesAndValuesOfFilters.height)
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {

@@ -19,6 +19,9 @@ export function RoutesStructure(): React.ReactElement | null {
         { path: "/favorites", element: <Favorites /> },
         { path: "/pokemon-not-found", element: <PokemonNotFound /> },
         { path: "/filter/:gen", element: <FilteredSearchModal /> },
-        { path: "/filtered-search/:param/:type/:param2/:type2/", element: <FilteredSearchResults /> }
+        {
+            path: "/filtered-search/:param/:type/:param2/:type2/:param3/:height/:param4/:weight",
+            element: <FilteredSearchResults />
+        }
     ]);
 }
