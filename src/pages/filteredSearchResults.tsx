@@ -12,10 +12,13 @@ import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
     const NamesAndValuesOfFilters = useParams();
-    const NamesOfFilters = Object.entries(NamesAndValuesOfFilters).filter((x) => x[0].includes("param"));
+    const NamesOfFilters = Object.entries(NamesAndValuesOfFilters).filter(
+        (x) => x[0].includes("param") && x[1] !== "generation" //[Note] Band aid solution,will fix later
+    );
 
     useEffect(() => {
-        getData(Number(1));
+        getData(Number(NamesAndValuesOfFilters.generation));
+        console.log("nof", Number(NamesAndValuesOfFilters.generation));
     }, []);
 
     const getData = async (pokeGen: number): Promise<void> => {
@@ -51,24 +54,26 @@ export function FilteredSearchResults(): React.ReactElement {
             if (filterChecker[nameOfFilter](pokemon) === false) {
                 return false;
             }
-            console.log(filterChecker[nameOfFilter](pokemon));
         }
-        console.log(pokemon);
+
         return true;
     };
 
     const applyFilter = () => {
         if (myState) {
-            return myState
-                .filter((x) => checkPokemonForFilters(x) === true)
-                .map((y) => <PokemonPictureCard id={y.id} />);
+            const displayMatchingPokemons = () =>
+                myState.filter((x) => checkPokemonForFilters(x) === true).map((y) => <PokemonPictureCard id={y.id} />);
+
+            return displayMatchingPokemons().length <= 0
+                ? "No Pokemon matching these criterias have been found"
+                : displayMatchingPokemons();
         }
     };
 
     if (myState) {
         return <Container>{applyFilter()}</Container>;
     } else {
-        return <Container>Nothing yet</Container>;
+        return <Container>Loading</Container>;
     }
 }
 

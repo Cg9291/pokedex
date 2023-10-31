@@ -20,7 +20,7 @@ export function RoutesStructure(): React.ReactElement | null {
         { path: "/pokemon-not-found", element: <PokemonNotFound /> },
         { path: "/filter/:gen", element: <FilteredSearchModal /> },
         {
-            path: "/filtered-search/:param/:type/:param2/:type2/:param3/:height/:param4/:weight",
+            path: "/filtered-search/:param/:generation/:param2/:type/:param3/:type2/:param4/:height/:param5/:weight", //[NOTE]band aid solution,will change to make it dynamic
             element: <FilteredSearchResults />
         }
     ]);

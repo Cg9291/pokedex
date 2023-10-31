@@ -116,6 +116,7 @@ export interface FilterInfoInterface {
     type2: FilterInfoPropInterface;
     height: FilterNumberPropInterface;
     weight: FilterNumberPropInterface;
+    generation: FilterNumberPropInterface;
 }
 
 export interface FilterInfoPropInterface {
@@ -135,4 +136,9 @@ export interface CustomPokemonInfo {
     types: Type[];
     height: number;
     weight: number;
+}
+
+export interface PokemonGenerationsListInterface {
+    generation: string;
+    numerals: string;
 }

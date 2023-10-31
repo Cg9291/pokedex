@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { useNavigate } from "react-router-dom";
-import { FilterInfoInterface } from "../../interfaces/miscInterfaces";
+import { FilterInfoInterface, PokemonGenerationsListInterface } from "../../interfaces/miscInterfaces";
 import { typesColors } from "../../objects/typesColors";
 import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
+import { pokemonGenerationsList } from "../../objects/pokemonGenerationsList";
 
 export function FilteredSearchModal(): React.ReactElement {
     const [filterInfo, setFilterInfo] = useState<FilterInfoInterface>({
+        generation: { name: "generation", value: 1, style: "button" },
         type: { name: "type", value: "undefined", style: "button" },
         type2: { name: "type2", value: "undefined", style: "button" },
         height: { name: "height", value: 0, style: "slider" },
@@ -18,7 +20,9 @@ export function FilteredSearchModal(): React.ReactElement {
 
     //LOGIC/HANDLER FUNCTIONS
     const handleButtonClick = (buttonTitle: string, buttonCategory: string, parameterName: string): void => {
-        filterParameters[parameterName as keyof typeof filterParameters].value = buttonTitle;
+        parameterName === "generation"
+            ? (filterParameters[parameterName as keyof typeof filterParameters].value = Number(buttonTitle))
+            : (filterParameters[parameterName as keyof typeof filterParameters].value = buttonTitle);
         setFilterInfo(filterParameters);
     };
 
@@ -61,16 +65,26 @@ export function FilteredSearchModal(): React.ReactElement {
         const myArr: React.ReactElement[] = [];
 
         if (categoryParameter === "button") {
-            for (const oneType in typesColors) {
-                myArr.push(
+            if (categoryName.includes("type")) {
+                for (const oneType in typesColors) {
+                    myArr.push(
+                        <OptionsOfFilters
+                            title={capitalizeWords(oneType)}
+                            category={categoryParameter}
+                            parameterName={categoryName}
+                        />
+                    );
+                }
+                return myArr;
+            } else if (categoryName === "generation") {
+                return pokemonGenerationsList.map((x: PokemonGenerationsListInterface) => (
                     <OptionsOfFilters
-                        title={capitalizeWords(oneType)}
+                        title={capitalizeWords(` ${x.generation}`)}
                         category={categoryParameter}
                         parameterName={categoryName}
                     />
-                );
+                ));
             }
-            return myArr;
         } else if (categoryParameter === "slider") {
             return <OptionsOfFilters category={categoryParameter} title="Slider" parameterName={categoryName} />;
         }
@@ -88,7 +102,9 @@ export function FilteredSearchModal(): React.ReactElement {
     function OptionsOfFilters(props: { title: string; category: string; parameterName: string }): React.ReactElement {
         return props.category === "button" ? (
             <OptionsButtonWrapper onClick={() => handleButtonClick(props.title, props.category, props.parameterName)}>
-                <TypeTitle>{props.title}</TypeTitle>
+                <TypeTitle>
+                    {props.parameterName === "generation" ? ` Generation ${Number(props.title)}` : props.title}
+                </TypeTitle>
             </OptionsButtonWrapper>
         ) : (
             <Sliders parameterName={props.parameterName} />
