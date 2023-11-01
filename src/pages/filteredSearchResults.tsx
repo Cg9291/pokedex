@@ -38,8 +38,8 @@ export function FilteredSearchResults(): React.ReactElement {
     const filterChecker: { [key: string]: (x: CustomPokemonInfo) => boolean } = {
         type: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[0].type.name}`) === NamesAndValuesOfFilters.type,
         type2: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[1]?.type.name}`) === NamesAndValuesOfFilters.type2,
-        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(NamesAndValuesOfFilters.height),
-        weight: (x: CustomPokemonInfo) => x.weight >= Number(NamesAndValuesOfFilters.height)
+        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(NamesAndValuesOfFilters.height) * 10,
+        weight: (x: CustomPokemonInfo) => Number(x.weight) >= Number(NamesAndValuesOfFilters.weight) * 10
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {

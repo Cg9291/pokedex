@@ -119,6 +119,11 @@ export interface FilterInfoInterface {
     generation: FilterNumberPropInterface;
 }
 
+export interface FilterInfoNumInterface {
+    height: FilterNumberPropInterface;
+    weight: FilterNumberPropInterface;
+}
+
 export interface FilterInfoPropInterface {
     name: string;
     value: string | undefined;

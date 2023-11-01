@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { useNavigate } from "react-router-dom";
-import { FilterInfoInterface, PokemonGenerationsListInterface } from "../../interfaces/miscInterfaces";
+import {
+    FilterInfoInterface,
+    FilterInfoNumInterface,
+    PokemonGenerationsListInterface
+} from "../../interfaces/miscInterfaces";
 import { typesColors } from "../../objects/typesColors";
 import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
 import { pokemonGenerationsList } from "../../objects/pokemonGenerationsList";
@@ -20,14 +24,22 @@ export function FilteredSearchModal(): React.ReactElement {
 
     //LOGIC/HANDLER FUNCTIONS
     const handleButtonClick = (buttonTitle: string, buttonCategory: string, parameterName: string): void => {
-        parameterName === "generation"
-            ? (filterParameters[parameterName as keyof typeof filterParameters].value = Number(buttonTitle))
-            : (filterParameters[parameterName as keyof typeof filterParameters].value = buttonTitle);
-        setFilterInfo(filterParameters);
+        if (parameterName === "generation") {
+            filterParameters[parameterName as keyof typeof filterParameters].value = Number(buttonTitle);
+        } else {
+            filterParameters[parameterName as keyof typeof filterParameters].value = buttonTitle;
+            setFilterInfo(filterParameters);
+        }
+        return;
     };
 
-    const handleSubmit = () => {
-        navigate(buildUrl());
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const transmittedData = Object.fromEntries(formData.entries()).type;
+        const name = transmittedData.toString().toLowerCase();
+        console.log(transmittedData, formData);
+        //navigate(buildUrl());
     };
 
     const buildUrl = () => {
@@ -101,37 +113,56 @@ export function FilteredSearchModal(): React.ReactElement {
 
     function OptionsOfFilters(props: { title: string; category: string; parameterName: string }): React.ReactElement {
         return props.category === "button" ? (
-            <OptionsButtonWrapper onClick={() => handleButtonClick(props.title, props.category, props.parameterName)}>
-                <TypeTitle>
-                    {props.parameterName === "generation" ? ` Generation ${Number(props.title)}` : props.title}
-                </TypeTitle>
-            </OptionsButtonWrapper>
+            <OptionsButtonContainer>
+                <OptionsButtonLabel>
+                    <ButtonInput
+                        name={props.parameterName}
+                        value={props.title}
+                        /*     onClick={() => handleButtonClick(props.title, props.category, props.parameterName)} */
+                    />
+                    <TypeTitle>
+                        {props.parameterName === "generation" ? ` Generation ${Number(props.title)}` : props.title}
+                    </TypeTitle>
+                </OptionsButtonLabel>
+            </OptionsButtonContainer>
         ) : (
             <Sliders parameterName={props.parameterName} />
         );
     }
 
     function SubmitButton(): React.ReactElement {
-        return <SubmitButtonContainer onClick={() => handleSubmit()}>Search</SubmitButtonContainer>;
+        return <SubmitButtonContainer>Search</SubmitButtonContainer>;
     }
 
     function Sliders(props: { parameterName: string }): React.ReactElement {
-        const [sliderValue, setSliderValue] = useState<number>(0);
+        const [sliderValue, setSliderValue] = useState<number>(
+            filterInfo[props.parameterName as keyof FilterInfoNumInterface].value
+        );
+        const filterParameters = { ...filterInfo };
 
         const handleSliderChange = (e: React.FormEvent<HTMLInputElement>) => {
             setSliderValue(Number(e.currentTarget.value));
+            filterParameters[props.parameterName as keyof FilterInfoInterface].value = Number(e.currentTarget.value);
+            //setFilterInfo(filterParameters);
+
             console.log(props.parameterName);
         };
 
-        useEffect(() => {
-            const infoObj = { ...filterInfo };
-            infoObj[props.parameterName as keyof FilterInfoInterface].value = sliderValue;
-            console.log(filterInfo);
-        }, [handleSliderChange]);
+        const handleBlur = (e: React.MouseEvent | React.TouchEvent<HTMLInputElement>) => {
+            setFilterInfo(filterParameters);
+        };
 
         return (
             <OptionsSliderWrapper>
-                <OptionsSliderInput type="range" min="0" max="100" value={sliderValue} onChange={handleSliderChange} />
+                <OptionsSliderInput
+                    type="range"
+                    min="0"
+                    max={props.parameterName === "height" ? 20 : 1000}
+                    value={sliderValue}
+                    onChange={handleSliderChange}
+                    onMouseUp={handleBlur}
+                    onTouchEnd={handleBlur}
+                />
                 <>{sliderValue}</>
             </OptionsSliderWrapper>
         );
@@ -139,15 +170,25 @@ export function FilteredSearchModal(): React.ReactElement {
 
     return (
         <Container>
-            <Title>Filters</Title>
-            {displayFilters()}
-            <SubmitButton />
+            <Form onSubmit={handleSubmit}>
+                <Title>Filters</Title>
+                {displayFilters()}
+                <SubmitButton />
+            </Form>
         </Container>
     );
 }
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+`;
+
+const Form = styled.form.attrs({
+    method: "get"
+})`
+    flex-direction: inherit;
+    width: 100%;
+    display: flex;
 `;
 const Title = styled.h3`
     margin: 1rem 0 0 1rem;
@@ -167,19 +208,32 @@ const OptionsContainer = styled(ContainerPrototype)`
     height: 3rem;
     overflow-x: scroll;
 `;
-const OptionsButtonWrapper = styled.button.attrs({ type: "button" })`
+
+const OptionsButtonContainer = styled.div`
     width: max-content;
     height: 2rem;
     margin: 0 0.1rem;
     padding: 0 0.5rem;
     border: 0.1rem solid transparent;
-    &:focus {
-        border: 0.1rem solid;
-    }
 `;
-const TypeTitle = styled.h6``;
 
-const SubmitButtonContainer = styled.button.attrs({ type: "button" })`
+const OptionsButtonLabel = styled.label`
+    display: flex;
+    width: inherit;
+    height: inherit;
+`;
+
+const ButtonInput = styled.input.attrs({ type: "radio" })`
+    /*     height: 0;
+    width: 0; */
+`;
+
+const TypeTitle = styled.h6`
+    width: 100%;
+    height: 100%;
+`;
+
+const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     width: 4rem;
     height: 2rem;
 `;
