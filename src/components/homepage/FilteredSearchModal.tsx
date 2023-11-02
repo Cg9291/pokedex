@@ -2,45 +2,37 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { useNavigate } from "react-router-dom";
-import {
-    FilterInfoInterface,
-    FilterInfoNumInterface,
-    PokemonGenerationsListInterface
-} from "../../interfaces/miscInterfaces";
+import { FilterInfoInterface, PokemonGenerationsListInterface } from "../../interfaces/miscInterfaces";
 import { typesColors } from "../../objects/typesColors";
 import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
 import { pokemonGenerationsList } from "../../objects/pokemonGenerationsList";
 
 export function FilteredSearchModal(): React.ReactElement {
-    const [filterInfo, setFilterInfo] = useState<FilterInfoInterface>({
-        generation: { name: "generation", value: 1, style: "button" },
-        type: { name: "type", value: "undefined", style: "button" },
-        type2: { name: "type2", value: "undefined", style: "button" },
-        height: { name: "height", value: 0, style: "slider" },
-        weight: { name: "weight", value: 0, style: "slider" }
+    const [filterInfo] = useState<FilterInfoInterface>({
+        generation: { name: "generation", style: "button" },
+        type: { name: "type", style: "button" },
+        type2: { name: "type2", style: "button" },
+        height: { name: "height", style: "slider" },
+        weight: { name: "weight", style: "slider" }
     });
 
-    const [transmittedData, setTransmittedData] = useState<{ [k: string]: FormDataEntryValue }>();
+    interface LocalTransmittedDataInterface {
+        generation?: string;
+        type?: string;
+        type2?: string;
+        height?: string;
+        weight?: string;
+    }
+    const [, setTransmittedData] = useState<LocalTransmittedDataInterface>();
     const navigate = useNavigate();
-    const filterParameters = { ...filterInfo };
 
     //LOGIC/HANDLER FUNCTIONS
-    /*    const handleButtonClick = (buttonTitle: string, buttonCategory: string, parameterName: string): void => {
-        if (parameterName === "generation") {
-            filterParameters[parameterName as keyof typeof filterParameters].value = Number(buttonTitle);
-        } else {
-            filterParameters[parameterName as keyof typeof filterParameters].value = buttonTitle;
-            setFilterInfo(filterParameters);
-        }
-        return;
-    }; */
 
-    const buildUrl = (obj: { [k: string]: FormDataEntryValue }) => {
+    const buildUrl = (obj: LocalTransmittedDataInterface) => {
         const myArr = [`/filtered-search/`];
         for (const x in obj) {
             myArr.push(`${x}/${obj[x as keyof typeof obj]}/`);
         }
-        console.log("js", myArr.join(""));
         return myArr.join("");
     };
 
@@ -49,9 +41,7 @@ export function FilteredSearchModal(): React.ReactElement {
         const formData = new FormData(e.currentTarget);
         const localTransmittedData = Object.fromEntries(formData.entries());
         setTransmittedData(localTransmittedData);
-        console.log(localTransmittedData);
         navigate(buildUrl(localTransmittedData));
-        //navigate("/", { state: localTransmittedData });
     };
 
     //DISPLAY/MAP/HYBRID FUNCTIONS
@@ -112,15 +102,13 @@ export function FilteredSearchModal(): React.ReactElement {
     }
 
     function OptionsOfFilters(props: { title: string; category: string; parameterName: string }): React.ReactElement {
-        const [checkedState, setCheckedState] = useState<boolean>(false);
-        /* console.log(props.parameterName, typeof props.title); */
         return props.category === "button" ? (
             <OptionsButtonContainer>
                 <OptionsButtonLabel>
-                    <ButtonInput name={props.parameterName} value={props.title} />
                     <TypeTitle>
                         {props.parameterName === "generation" ? ` Generation ${Number(props.title)}` : props.title}
                     </TypeTitle>
+                    <ButtonInput name={props.parameterName} value={props.title} />
                 </OptionsButtonLabel>
             </OptionsButtonContainer>
         ) : (
@@ -133,15 +121,10 @@ export function FilteredSearchModal(): React.ReactElement {
     }
 
     function Sliders(props: { parameterName: string }): React.ReactElement {
-        const [sliderValue, setSliderValue] = useState<number>(
-            filterInfo[props.parameterName as keyof FilterInfoNumInterface].value
-        );
-        const filterParameters = { ...filterInfo };
+        const [sliderValue, setSliderValue] = useState<number>(0);
 
         const handleSliderChange = (e: React.FormEvent<HTMLInputElement>) => {
             setSliderValue(Number(e.currentTarget.value));
-            filterParameters[props.parameterName as keyof FilterInfoInterface].value = Number(e.currentTarget.value);
-            console.log(props.parameterName);
         };
 
         return (
@@ -213,6 +196,7 @@ const OptionsButtonContainer = styled.div`
 
 const OptionsButtonLabel = styled.label`
     display: flex;
+    flex-direction: column;
     width: inherit;
     height: inherit;
 `;

@@ -126,12 +126,12 @@ export interface FilterInfoNumInterface {
 
 export interface FilterInfoPropInterface {
     name: string;
-    value: string | undefined;
+    /* value: string | undefined; */
     style: string;
 }
 export interface FilterNumberPropInterface {
     name: string;
-    value: number;
+    /*  value: number; */
     style: string;
 }
 

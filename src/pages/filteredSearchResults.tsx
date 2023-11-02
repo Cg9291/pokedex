@@ -12,45 +12,56 @@ import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
     const params = useParams();
-    const generationInfo: string[] = params["*"]?.split("/").splice(0, 2) as [string: string];
+    const [, generationInfo]: string[] = params["*"]?.split("/").splice(0, 2) as [string: string];
     const generalFilters = params["*"]
         ?.split("/")
-        ?.splice(2)
+        .splice(2)
         .filter((x) => x !== "");
 
-    console.log(generationInfo[1]);
-
-    interface ReceivedParameters {
-        generation?: string;
+    interface ReceivedParametersInterface {
         type?: string;
         type2?: string;
         height?: string;
         weight?: string;
     }
-    const turnSplitsToObject = (arr: string[] | undefined) => {
+
+    interface SettledPromiseInterface {
+        status: string;
+        value: CustomPokemonInfo;
+    }
+    const createFilterObject = (arr: string[] | undefined) => {
         if (arr) {
-            const data: ReceivedParameters = {};
+            const myFilterObject: ReceivedParametersInterface = {};
             for (let i = 0; i < arr.length; i += 2) {
                 const key = arr[i];
                 const value = arr[i + 1];
-                data[key as keyof ReceivedParameters] = value;
+                myFilterObject[key as keyof ReceivedParametersInterface] = value;
             }
-            return data;
+            return myFilterObject;
         }
     };
 
     useEffect(() => {
-        getData(Number(generationInfo[1]));
+        getData(Number(generationInfo));
     }, []);
 
     const getData = async (pokeGen: number): Promise<void> => {
         try {
             const generationData: GenerationsInterface = await getGenerationsData(pokeGen);
             const pokemonSpecies: PokemonSpecy[] = generationData.pokemon_species;
-            const generationPokemonList: CustomPokemonInfo[] = await Promise.all(
-                pokemonSpecies.map(async (x: PokemonSpecy) => await getPokemonNameAndTypes(x.name))
+            const generationPokemonListResults: PromiseSettledResult<CustomPokemonInfo>[] = await Promise.allSettled(
+                pokemonSpecies.map((x: PokemonSpecy) => getPokemonNameAndTypes(x.name))
             );
-            setMyState(generationPokemonList);
+
+            const fulfilledPromises = generationPokemonListResults.filter(
+                (y) => y.status === "fulfilled"
+            ) as PromiseFulfilledResult<CustomPokemonInfo>[];
+
+            const generationPokemonList = fulfilledPromises.map(
+                (z: PromiseFulfilledResult<CustomPokemonInfo>) => z.value
+            );
+
+            setMyState([...generationPokemonList]);
         } catch (err) {
             console.log(err);
             return;
@@ -59,15 +70,17 @@ export function FilteredSearchResults(): React.ReactElement {
 
     const filterChecker: { [key: string]: (x: CustomPokemonInfo) => boolean } = {
         type: (x: CustomPokemonInfo) =>
-            capitalizeWords(`${x.types[0].type.name}`) === turnSplitsToObject(generalFilters)?.type,
+            capitalizeWords(`${x.types[0].type.name}`) === createFilterObject(generalFilters)?.type,
         type2: (x: CustomPokemonInfo) =>
-            capitalizeWords(`${x.types[1]?.type.name}`) === turnSplitsToObject(generalFilters)?.type2,
-        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(turnSplitsToObject(generalFilters)?.height) * 10,
-        weight: (x: CustomPokemonInfo) => Number(x.weight) >= Number(turnSplitsToObject(generalFilters)?.weight) * 10
+            capitalizeWords(`${x.types[1]?.type.name}`) === createFilterObject(generalFilters)?.type2,
+        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(createFilterObject(generalFilters)?.height) * 10,
+        weight: (x: CustomPokemonInfo) => Number(x.weight) >= Number(createFilterObject(generalFilters)?.weight) * 10
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {
-        return Object.keys(turnSplitsToObject(generalFilters)!).every((x) => filterChecker[x](pokemon) === true);
+        return Object.keys(createFilterObject(generalFilters) as ReceivedParametersInterface).every(
+            (x) => filterChecker[x](pokemon) === true
+        );
     };
 
     const applyFilter = () => {

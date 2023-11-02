@@ -37,7 +37,7 @@ export function PokemonProfile(): React.ReactElement {
             setPokemonSpeciesInfo(pokemonSpeciesData);
         } catch (err) {
             if (err instanceof AxiosError && err.response?.status === 404) {
-                navigate("/pokemon-not-found");
+                navigate(`/pokemon-not-found`);
             }
         }
         return;
