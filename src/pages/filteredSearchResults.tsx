@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPokemonNameAndTypes } from "../functions/api/batchApiCalls/getPokemonNameAndTypes";
 import { GenerationsInterface, PokemonSpecy } from "../interfaces/generationsInterface";
 import { getGenerationsData } from "../functions/api/batchApiCalls/getGenerationsData";
@@ -11,31 +11,36 @@ import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
-    const generationInfo = useParams()["*"]?.split("/").splice(0, 2);
-    const generalFilters = useParams()
-        ["*"]?.split("/")
+    const params = useParams();
+    const generationInfo: string[] = params["*"]?.split("/").splice(0, 2) as [string: string];
+    const generalFilters = params["*"]
+        ?.split("/")
         ?.splice(2)
         .filter((x) => x !== "");
 
+    console.log(generationInfo[1]);
+
+    interface ReceivedParameters {
+        generation?: string;
+        type?: string;
+        type2?: string;
+        height?: string;
+        weight?: string;
+    }
     const turnSplitsToObject = (arr: string[] | undefined) => {
         if (arr) {
-            const data: Record<string, string> = {};
+            const data: ReceivedParameters = {};
             for (let i = 0; i < arr.length; i += 2) {
                 const key = arr[i];
                 const value = arr[i + 1];
-                data[key] = value;
+                data[key as keyof ReceivedParameters] = value;
             }
             return data;
         }
     };
 
-    /* const NamesOfFilters = Object.entries(NamesAndValuesOfFilters).filter(
-        (x) => x[0].includes("param") && x[1] !== "generation" //[Note] Band aid solution,will fix later
-    ); */
-
     useEffect(() => {
-        getData(Number(turnSplitsToObject(generalFilters)?.generation));
-        console.log("nof", generationInfo, generalFilters, turnSplitsToObject(generalFilters));
+        getData(Number(generationInfo[1]));
     }, []);
 
     const getData = async (pokeGen: number): Promise<void> => {
@@ -53,7 +58,8 @@ export function FilteredSearchResults(): React.ReactElement {
     };
 
     const filterChecker: { [key: string]: (x: CustomPokemonInfo) => boolean } = {
-        type: (x: CustomPokemonInfo) => capitalizeWords(`${x.types[0].type.name}`) === turnSplitsToObject(generalFilters)?.type,
+        type: (x: CustomPokemonInfo) =>
+            capitalizeWords(`${x.types[0].type.name}`) === turnSplitsToObject(generalFilters)?.type,
         type2: (x: CustomPokemonInfo) =>
             capitalizeWords(`${x.types[1]?.type.name}`) === turnSplitsToObject(generalFilters)?.type2,
         height: (x: CustomPokemonInfo) => Number(x.height) >= Number(turnSplitsToObject(generalFilters)?.height) * 10,
@@ -61,20 +67,7 @@ export function FilteredSearchResults(): React.ReactElement {
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {
-        for (let i = 0; i < turnSplitsToObject(generalFilters)?.length; i++) {
-            const nameOfFilter = NamesOfFilters[i][1]!;
-            const isFilterActive = generationInfo[nameOfFilter] !== "undefined";
-
-            if (isFilterActive === false) {
-                continue;
-            }
-
-            if (filterChecker[nameOfFilter](pokemon) === false) {
-                return false;
-            }
-        }
-
-        return true;
+        return Object.keys(turnSplitsToObject(generalFilters)!).every((x) => filterChecker[x](pokemon) === true);
     };
 
     const applyFilter = () => {
