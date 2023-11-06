@@ -29,11 +29,11 @@ export function FilteredSearchModal(): React.ReactElement {
     //LOGIC/HANDLER FUNCTIONS
 
     const buildUrl = (obj: LocalTransmittedDataInterface) => {
-        const myArr = [`/filtered-search/`];
+        const urlObject = [`/filtered-search/`];
         for (const x in obj) {
-            myArr.push(`${x}/${obj[x as keyof typeof obj]}/`);
+            urlObject.push(`${x}/${obj[x as keyof typeof obj]}/`);
         }
-        return myArr.join("");
+        return urlObject.join("");
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -105,10 +105,17 @@ export function FilteredSearchModal(): React.ReactElement {
         return props.category === "button" ? (
             <OptionsButtonContainer>
                 <OptionsButtonLabel>
-                    <TypeTitle>
-                        {props.parameterName === "generation" ? ` Generation ${Number(props.title)}` : props.title}
-                    </TypeTitle>
-                    <ButtonInput name={props.parameterName} value={props.title} />
+                    {props.parameterName === "generation" ? (
+                        <>
+                            <TypeTitle>{` Generation ${Number(props.title)}`}</TypeTitle>
+                            <ButtonInput name={props.parameterName} value={props.title} required />
+                        </>
+                    ) : (
+                        <>
+                            <TypeTitle>{props.title}</TypeTitle>
+                            <ButtonInput name={props.parameterName} value={props.title} />
+                        </>
+                    )}
                 </OptionsButtonLabel>
             </OptionsButtonContainer>
         ) : (

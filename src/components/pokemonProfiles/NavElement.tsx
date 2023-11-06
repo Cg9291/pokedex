@@ -7,7 +7,7 @@ import React from "react";
 export function NavElement(props: {
     value: string;
     navElementsNames: PokemonProfilesNavElementsInterface;
-    setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface | undefined>>;
+    setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface>>;
 }): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
@@ -22,9 +22,7 @@ export function NavElement(props: {
             }
         }
 
-        setNavElementsNames(
-            nextState //this function works but shouldn't...review
-        );
+        setNavElementsNames(nextState);
     };
 
     const isElementFocused: boolean =
@@ -36,14 +34,6 @@ export function NavElement(props: {
             <SelectionUnderlineBar $visibility={isElementFocused ? "visible" : "hidden"} />
         </Container>
     );
-    /* 	} else {
-		return (
-			<Container onFocus={focusHandler}>
-				<Link>{props.value}</Link>
-				<SelectionUnderlineBar $visibility={"hidden"} />
-			</Container>
-		);
-	} */
 }
 
 const Container = styled(ContainerPrototype)`

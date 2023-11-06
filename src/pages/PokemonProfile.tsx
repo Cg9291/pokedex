@@ -23,7 +23,14 @@ import { MyPropsInt } from "../interfaces/miscInterfaces";
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
-    const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>();
+    const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
+        About: { isFocused: true },
+        "Base Stats": {
+            isFocused: false
+        },
+        Evolution: { isFocused: false },
+        Moves: { isFocused: false }
+    });
     const { id: paramId, name: paramName } = useParams();
     const navigate = useNavigate();
 
@@ -70,33 +77,26 @@ export function PokemonProfile(): React.ReactElement {
     }, [pokemonInfo, pokemonSpeciesInfo]);
 
     const displayNavBody = (): React.ReactNode => {
-        //maybe review this function
-        if (navElementsNames) {
-            const focusedElement: string | undefined = Object.keys(navElementsNames).find(
-                (key: string) => navElementsNames[key as keyof PokemonProfilesNavElementsInterface].isFocused
-            );
-            if (!focusedElement) {
-                throw new Error("find() has not found!");
-            }
-            return navElementsNames[focusedElement as keyof PokemonProfilesNavElementsInterface].element;
+        const focusedElement = Object.keys(navElementsNames).find(
+            (key: string): boolean => navElementsNames[key as keyof PokemonProfilesNavElementsInterface].isFocused
+        );
+        if (!focusedElement) {
+            throw new Error("find() has not found!");
         }
+        return navElementsNames[focusedElement as keyof PokemonProfilesNavElementsInterface].element;
     };
 
     const displayNavHeaders = (): React.ReactElement[] | React.ReactElement => {
-        if (navElementsNames) {
-            return Object.keys(navElementsNames).map(
-                (objectKey: string): React.ReactElement => (
-                    <NavElement
-                        value={objectKey}
-                        navElementsNames={navElementsNames}
-                        setNavElementsNames={setNavElementsNames}
-                        key={objectKey}
-                    />
-                )
-            );
-        } else {
-            return <PokeNumber>loading</PokeNumber>;
-        }
+        return Object.keys(navElementsNames).map(
+            (objectKey: string): React.ReactElement => (
+                <NavElement
+                    value={objectKey}
+                    navElementsNames={navElementsNames}
+                    setNavElementsNames={setNavElementsNames}
+                    key={objectKey}
+                />
+            )
+        );
     };
 
     if (pokemonInfo && pokemonSpeciesInfo) {

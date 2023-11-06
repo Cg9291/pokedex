@@ -11,13 +11,15 @@ import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
-    const params = useParams();
+    const params = useParams() as { "*": string };
+    console.log(params);
     const [, generationInfo]: string[] = params["*"]?.split("/").splice(0, 2) as [string: string];
     const generalFilters = params["*"]
         ?.split("/")
         .splice(2)
         .filter((x) => x !== "");
 
+    console.log(generalFilters);
     interface ReceivedParametersInterface {
         type?: string;
         type2?: string;
@@ -25,11 +27,7 @@ export function FilteredSearchResults(): React.ReactElement {
         weight?: string;
     }
 
-    interface SettledPromiseInterface {
-        status: string;
-        value: CustomPokemonInfo;
-    }
-    const createFilterObject = (arr: string[] | undefined) => {
+    const createFilterObject = (arr: string[]) => {
         if (arr) {
             const myFilterObject: ReceivedParametersInterface = {};
             for (let i = 0; i < arr.length; i += 2) {

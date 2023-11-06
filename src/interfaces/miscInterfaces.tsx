@@ -31,10 +31,10 @@ export interface PokemonTypesPropsInterface {
 }
 
 export interface PokemonProfilesNavElementsInterface {
-    About: { isFocused: boolean; element: React.ReactElement };
-    "Base Stats": { isFocused: boolean; element: React.ReactElement };
-    Evolution: { isFocused: boolean; element: React.ReactElement };
-    Moves: { isFocused: boolean; element: React.ReactElement };
+    About: { isFocused: boolean; element?: React.ReactElement };
+    "Base Stats": { isFocused: boolean; element?: React.ReactElement };
+    Evolution: { isFocused: boolean; element?: React.ReactElement };
+    Moves: { isFocused: boolean; element?: React.ReactElement };
 }
 
 export interface StatsInterface {
