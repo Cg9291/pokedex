@@ -8,6 +8,7 @@ import { getGenerationsData } from "../functions/api/batchApiCalls/getGeneration
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
+import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
@@ -95,10 +96,18 @@ export function FilteredSearchResults(): React.ReactElement {
     if (myState) {
         return <Container>{applyFilter()}</Container>;
     } else {
-        return <Container>Loading</Container>;
+        return (
+            <Container>
+                <LoadingAnimation />
+            </Container>
+        );
     }
 }
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+`;
+
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    margin: auto;
 `;

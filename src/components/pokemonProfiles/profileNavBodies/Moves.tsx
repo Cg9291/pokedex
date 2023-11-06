@@ -7,6 +7,7 @@ import { getPokemonMovesTypesData } from "../../../functions/api/singleApiCalls/
 import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
 export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
@@ -44,7 +45,11 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
             </MoveContainer>
         );
     } else {
-        return <MoveContainer>Loading</MoveContainer>;
+        return (
+            <MoveContainer>
+                <LoadingAnimation />
+            </MoveContainer>
+        );
     }
 }
 
@@ -71,4 +76,9 @@ const MoveTypeContainer = styled.div<{ $typeName: string }>`
     border-radius: 50%;
     background-color: ${(props) => typesColors[props.$typeName as keyof TypesColorsInt]};
     margin-right: 1rem;
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    max-width: 2.5rem;
+    border: 0.5rem solid grey;
+    border-bottom-color: yellow;
 `;

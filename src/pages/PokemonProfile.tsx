@@ -19,6 +19,7 @@ import { Evolution } from "../components/pokemonProfiles/profileNavBodies/Evolut
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
 import { About } from "../components/pokemonProfiles/profileNavBodies/About";
 import { MyPropsInt } from "../interfaces/miscInterfaces";
+import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -137,13 +138,18 @@ export function PokemonProfile(): React.ReactElement {
             </Container>
         );
     } else {
-        return <Container $mainType="none">Loading</Container>;
+        return (
+            <Container $mainType="none">
+                <LoadingAnimation />
+            </Container>
+        );
     }
 }
 
 const Container = styled(ContainerPrototype)<{ $mainType: string }>`
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
@@ -196,10 +202,13 @@ const InfoNavBar = styled(ContainerPrototype)`
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    //height: fit-content;
     max-height: 20rem;
     margin-top: 10%;
     overflow-y: scroll;
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.03);
+`;
+
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: yellow;
 `;

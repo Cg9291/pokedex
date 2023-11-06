@@ -7,7 +7,7 @@ import { Wtp } from "../pages/Wtp";
 import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
 import { FilteredSearchModal } from "./homepage/FilteredSearchModal";
-import { FilteredSearchResults } from "../pages/filteredSearchResults";
+import { FilteredSearchResults } from "../pages/FilteredSearchResults";
 
 export function RoutesStructure(): React.ReactElement | null {
     return useRoutes([

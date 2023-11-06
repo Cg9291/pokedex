@@ -8,6 +8,7 @@ import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
+import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
 export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -55,13 +56,16 @@ export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.Re
     } else {
         return (
             <Container to="/" $mainType="none">
-                Loading
+                <LoadingAnimation />
             </Container>
         );
     }
 }
 
 const Container = styled(Link)<{ $mainType: string }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 45%;
     height: 19vh;
     padding: 0.5rem;
@@ -100,4 +104,8 @@ const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
 const PokemonImg = styled.image`
     width: 20rem;
     aspect-ratio: 1/1;
+`;
+
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: green;
 `;

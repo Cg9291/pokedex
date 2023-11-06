@@ -12,6 +12,7 @@ import { typesColors } from "../../../objects/typesColors";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 import { Link } from "react-router-dom";
+import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
 export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
@@ -54,7 +55,11 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
 
         return <Container>{displayPokemons()}</Container>;
     } else {
-        return <Container>Loading</Container>;
+        return (
+            <Container>
+                <LoadingAnimation />
+            </Container>
+        );
     }
 }
 
@@ -92,7 +97,11 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
             </PokemonContainer>
         );
     } else {
-        return <PokemonContainer to="/">Loading</PokemonContainer>;
+        return (
+            <PokemonContainer to="/">
+                <LoadingAnimation />
+            </PokemonContainer>
+        );
     }
 }
 
@@ -135,4 +144,7 @@ const PokemonNumber = styled.span`
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: green;
 `;
