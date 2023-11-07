@@ -31,10 +31,10 @@ export interface PokemonTypesPropsInterface {
 }
 
 export interface PokemonProfilesNavElementsInterface {
-    About: { isFocused: boolean; element: React.ReactElement };
-    "Base Stats": { isFocused: boolean; element: React.ReactElement };
-    Evolution: { isFocused: boolean; element: React.ReactElement };
-    Moves: { isFocused: boolean; element: React.ReactElement };
+    About: { isFocused: boolean; element?: React.ReactElement };
+    "Base Stats": { isFocused: boolean; element?: React.ReactElement };
+    Evolution: { isFocused: boolean; element?: React.ReactElement };
+    Moves: { isFocused: boolean; element?: React.ReactElement };
 }
 
 export interface StatsInterface {
@@ -52,6 +52,7 @@ export interface VitalsInterface {
 }
 
 export interface PokemonProfilePropsInterface {
+    id: number;
     AboutProps: AboutComponentProps;
     BaseStatsProps: BaseStatsComponentProps;
     EvolutionProps: EvolutionComponentProps;
@@ -88,4 +89,61 @@ export interface NavIconsInterface {
     name: string;
     icon: string;
     linkUrl: string;
+}
+
+export interface MyPropsInt {
+    AboutProps: {
+        flavor_text_entries: Flavor_text_entry[];
+        height: number;
+        weight: number;
+        color: Color;
+        types: Type[];
+        abilities: Ability[];
+    };
+    BaseStatsProps: {
+        stats: Stat[];
+    };
+    EvolutionProps: {
+        evolution_chain: Evolution_chain;
+    };
+    MovesProps: {
+        moves: Mfe[];
+    };
+}
+
+export interface FilterInfoInterface {
+    type: FilterInfoPropInterface;
+    type2: FilterInfoPropInterface;
+    height: FilterNumberPropInterface;
+    weight: FilterNumberPropInterface;
+    generation: FilterNumberPropInterface;
+}
+
+export interface FilterInfoNumInterface {
+    height: FilterNumberPropInterface;
+    weight: FilterNumberPropInterface;
+}
+
+export interface FilterInfoPropInterface {
+    name: string;
+    /* value: string | undefined; */
+    style: string;
+}
+export interface FilterNumberPropInterface {
+    name: string;
+    /*  value: number; */
+    style: string;
+}
+
+export interface CustomPokemonInfo {
+    name: string;
+    id: number;
+    types: Type[];
+    height: number;
+    weight: number;
+}
+
+export interface PokemonGenerationsListInterface {
+    generation: string;
+    numerals: string;
 }

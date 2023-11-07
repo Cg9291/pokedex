@@ -1,4 +1,4 @@
-export default interface PokemonEvolutionChainInterface {
+export interface PokemonEvolutionChainInterface {
     baby_trigger_item: any;
     chain: Chain;
     id: number;

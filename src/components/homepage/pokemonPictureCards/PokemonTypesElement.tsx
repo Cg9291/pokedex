@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { PokemonTypesPropsInterface } from "../../../interfaces/miscInterfaces";
 import React from "react";
 
-export default function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
+export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
     return <Container>{props.typeName}</Container>;
 }
 const Container = styled.div`

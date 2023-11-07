@@ -2,21 +2,21 @@ import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";
-import TypesSWInterface, { TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
-import typesColors from "../../../objects/typesColors";
+import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
+import { typesColors } from "../../../objects/typesColors";
 import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import TypePrototype from "../../prototypes/TypePrototype";
+import { TypePrototype } from "../../prototypes/TypePrototype";
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
-export default function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
+export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
 
     const displayedValues = [
         ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],
-        ["weight", `${weight + "kg"}`],
+        ["weight", `${weight / 10 + "kg"}`],
         ["color", `${color.name}`],
         ["abilities", `${abilities[0].ability.name}`]
     ];

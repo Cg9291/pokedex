@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
 import { Mfe } from "../../../interfaces/pokemonInterface";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
-import getPokemonMovesTypesData from "../../../functions/api/getPokemonMovesTypesData";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
+import { getPokemonMovesTypesData } from "../../../functions/api/singleApiCalls/getPokemonMovesTypesData";
 import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface";
-import typesColors from "../../../objects/typesColors";
+import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
-export default function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
+export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
 
     const displayMoves = (): React.ReactElement[] =>
-        moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} />);
+        moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} key={x.move.name} />);
 
     return <Container>{displayMoves()}</Container>;
 }
@@ -44,7 +45,11 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
             </MoveContainer>
         );
     } else {
-        return <MoveContainer>Loading</MoveContainer>;
+        return (
+            <MoveContainer>
+                <LoadingAnimation />
+            </MoveContainer>
+        );
     }
 }
 
@@ -71,4 +76,9 @@ const MoveTypeContainer = styled.div<{ $typeName: string }>`
     border-radius: 50%;
     background-color: ${(props) => typesColors[props.$typeName as keyof TypesColorsInt]};
     margin-right: 1rem;
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    max-width: 2.5rem;
+    border: 0.5rem solid grey;
+    border-bottom-color: yellow;
 `;

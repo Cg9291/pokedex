@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
-import LinkPrototype from "../prototypes/LinkPrototype";
+import { LinkPrototype } from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
 import React from "react";
 
-export default function NavElement(props: {
+export function NavElement(props: {
     value: string;
     navElementsNames: PokemonProfilesNavElementsInterface;
     setNavElementsNames: React.Dispatch<React.SetStateAction<PokemonProfilesNavElementsInterface>>;
@@ -13,7 +13,7 @@ export default function NavElement(props: {
     const setNavElementsNames = props.setNavElementsNames;
 
     const focusHandler = (): void => {
-        const nextState = navElementsNames;
+        const nextState = { ...navElementsNames };
         for (const obj in nextState) {
             if (obj === props.value) {
                 nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused = true;
@@ -22,9 +22,7 @@ export default function NavElement(props: {
             }
         }
 
-        setNavElementsNames((navElementsNames: PokemonProfilesNavElementsInterface) => ({
-            ...navElementsNames //this function works but shouldn't...review
-        }));
+        setNavElementsNames(nextState);
     };
 
     const isElementFocused: boolean =
@@ -36,14 +34,6 @@ export default function NavElement(props: {
             <SelectionUnderlineBar $visibility={isElementFocused ? "visible" : "hidden"} />
         </Container>
     );
-    /* 	} else {
-		return (
-			<Container onFocus={focusHandler}>
-				<Link>{props.value}</Link>
-				<SelectionUnderlineBar $visibility={"hidden"} />
-			</Container>
-		);
-	} */
 }
 
 const Container = styled(ContainerPrototype)`

@@ -1,4 +1,4 @@
-export default interface PokemonInterface {
+export interface PokemonInterface {
     id: number;
     name: string;
     base_experience: number;

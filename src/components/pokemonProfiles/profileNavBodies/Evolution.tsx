@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import styled from "styled-components";
-import getPokemonEvolutionChainData from "../../../functions/api/getPokemonEvolutionChainData";
+import { getPokemonEvolutionChainData } from "../../../functions/api/singleApiCalls/getPokemonEvolutionChainData";
 import { EvolutionComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import PokemonEvolutionChainInterface, { Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
-import PokemonInterface from "../../../interfaces/pokemonInterface";
-import getPokemonData from "../../../functions/api/getPokemonData";
+import { PokemonEvolutionChainInterface, Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
+import { PokemonInterface } from "../../../interfaces/pokemonInterface";
+import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { NumOrString } from "../../../interfaces/miscTypes";
-import TypePrototype from "../../prototypes/TypePrototype";
-import typesColors from "../../../objects/typesColors";
-import capitalizeWords from "../../../functions/utilities/capitalizeWords";
+import { TypePrototype } from "../../prototypes/TypePrototype";
+import { typesColors } from "../../../objects/typesColors";
+import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
+import { Link } from "react-router-dom";
+import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
-export default function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
+export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
     const evolutionChainUrl: string = props.ownProps.evolution_chain.url;
 
@@ -49,11 +51,15 @@ export default function Evolution(props: { ownProps: EvolutionComponentProps }):
         };
 
         const displayPokemons = (): React.ReactElement[] =>
-            fetchEvolutions().map((x: string) => <PokemonEvolutionStage pokemonEvolutionName={x} />);
+            fetchEvolutions().map((x: string) => <PokemonEvolutionStage pokemonEvolutionName={x} key={x} />);
 
         return <Container>{displayPokemons()}</Container>;
     } else {
-        return <Container>Loading</Container>;
+        return (
+            <Container>
+                <LoadingAnimation />
+            </Container>
+        );
     }
 }
 
@@ -79,7 +85,7 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
         const typeColor = typesColors[types[0].type.name as keyof TypesColorsInt];
 
         return (
-            <PokemonContainer>
+            <PokemonContainer to={`/pokemons/id/${id}`}>
                 <SvgImg $bgColor={typeColor}>
                     <PokemonImage href={sprites.front_default} />
                 </SvgImg>
@@ -91,7 +97,11 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
             </PokemonContainer>
         );
     } else {
-        return <PokemonContainer>Loading</PokemonContainer>;
+        return (
+            <PokemonContainer to="/">
+                <LoadingAnimation />
+            </PokemonContainer>
+        );
     }
 }
 
@@ -102,13 +112,14 @@ const Container = styled(ContainerPrototype)`
     padding: 1rem 0;
 `;
 
-const PokemonContainer = styled(ContainerPrototype)`
+const PokemonContainer = styled(Link)`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 33.33%;
-    // height: 100%;
+    text-decoration: none;
+    color: black;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
@@ -133,4 +144,7 @@ const PokemonNumber = styled.span`
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: green;
 `;

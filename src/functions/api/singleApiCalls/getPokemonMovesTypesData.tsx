@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PokemonMovesInterface } from "../../interfaces/pokemonMovesInterface";
+import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface";
 
-const getPokemonMovesTypesData = async (url: string): Promise<PokemonMovesInterface> => {
+export const getPokemonMovesTypesData = async (url: string): Promise<PokemonMovesInterface> => {
     try {
         const response = await axios.get(url);
         const movesTypesData: PokemonMovesInterface = response.data;
@@ -11,5 +11,3 @@ const getPokemonMovesTypesData = async (url: string): Promise<PokemonMovesInterf
         throw err;
     }
 };
-
-export default getPokemonMovesTypesData;

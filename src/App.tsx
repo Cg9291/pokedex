@@ -1,15 +1,15 @@
 import "./App.css";
 import styled from "styled-components";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype";
-import RoutesStructure from "./components/RoutesStructure";
+import { RoutesStructure } from "./components/RoutesStructure";
 import React from "react";
-import Navigation from "./components/navigation/Navigation";
+import { Navigation } from "./components/navigation/Navigation";
 
 /*
 TODO
 
-*figure out keys for mapped elements
-*add handler for when a searched pokemon doesnt exist
+*update all containerPrototypes imports/export
+*handle odd pokemons[deoxys,eeviee,]
 */
 
 const Container = styled(ContainerPrototype)`
