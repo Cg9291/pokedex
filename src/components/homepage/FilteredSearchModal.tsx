@@ -37,7 +37,7 @@ export function FilteredSearchModal(): React.ReactElement {
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
+        //e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const localTransmittedData = Object.fromEntries(formData.entries());
         setTransmittedData(localTransmittedData);
@@ -45,20 +45,14 @@ export function FilteredSearchModal(): React.ReactElement {
     };
 
     //DISPLAY/MAP/HYBRID FUNCTIONS
-    const displayFilters = () => {
+    const displayFilters = (): React.ReactElement[] => {
         const myArr: React.ReactElement[] = [];
 
         for (const parameter in filterInfo) {
             const parameterStyle = filterInfo[parameter as keyof FilterInfoInterface].style;
             const parameterName = filterInfo[parameter as keyof FilterInfoInterface].name;
 
-            myArr.push(
-                //rewrite & extract component for clarity
-                <ContainerOfFilters>
-                    <HeadersOfFilters title={capitalizeWords(parameter)} />
-                    <OptionsContainer>{displayOptions(parameterStyle, parameterName)}</OptionsContainer>
-                </ContainerOfFilters>
-            );
+            myArr.push(<Filters parameter={parameter} parameterStyle={parameterStyle} parameterName={parameterName} />);
         }
         return myArr;
     };
@@ -93,6 +87,15 @@ export function FilteredSearchModal(): React.ReactElement {
     };
 
     //JSX COMPONENTS
+    function Filters(props: { parameter: string; parameterStyle: string; parameterName: string }): React.ReactElement {
+        return (
+            <ContainerOfFilters>
+                <HeadersOfFilters title={capitalizeWords(props.parameter)} />
+                <OptionsContainer>{displayOptions(props.parameterStyle, props.parameterName)}</OptionsContainer>
+            </ContainerOfFilters>
+        );
+    }
+
     function HeadersOfFilters(props: { title: string }): React.ReactElement {
         return (
             <ContainerOfHeadersOfFilters>
@@ -107,12 +110,12 @@ export function FilteredSearchModal(): React.ReactElement {
                 <OptionsButtonLabel>
                     {props.parameterName === "generation" ? (
                         <>
-                            <TypeTitle>{` Generation ${Number(props.title)}`}</TypeTitle>
+                            <OptionTitle>{` Generation ${Number(props.title)}`}</OptionTitle>
                             <ButtonInput name={props.parameterName} value={props.title} required />
                         </>
                     ) : (
                         <>
-                            <TypeTitle>{props.title}</TypeTitle>
+                            <OptionTitle>{props.title}</OptionTitle>
                             <ButtonInput name={props.parameterName} value={props.title} />
                         </>
                     )}
@@ -121,10 +124,6 @@ export function FilteredSearchModal(): React.ReactElement {
         ) : (
             <Sliders parameterName={props.parameterName} />
         );
-    }
-
-    function SubmitButton(): React.ReactElement {
-        return <SubmitButtonContainer>Search</SubmitButtonContainer>;
     }
 
     function Sliders(props: { parameterName: string }): React.ReactElement {
@@ -142,13 +141,18 @@ export function FilteredSearchModal(): React.ReactElement {
                         type="range"
                         min="0"
                         max={props.parameterName === "height" ? 20 : 1000}
+                        step={1}
                         value={sliderValue}
                         onChange={handleSliderChange}
                     />
-                    <>{sliderValue}</>
+                    <>{props.parameterName === "height" ? `${sliderValue}m` : `${sliderValue}kgs`}</>
                 </OptionsSliderLabel>
             </OptionsSliderContainer>
         );
+    }
+
+    function SubmitButton(): React.ReactElement {
+        return <SubmitButtonContainer>Search</SubmitButtonContainer>;
     }
 
     return (
@@ -213,7 +217,7 @@ const ButtonInput = styled.input.attrs({ type: "radio" })`
     width: 0; */
 `;
 
-const TypeTitle = styled.h6`
+const OptionTitle = styled.h6`
     width: 100%;
     height: 100%;
 `;
