@@ -85,7 +85,9 @@ export function FilteredSearchResults(): React.ReactElement {
     const applyFilter = () => {
         if (myState) {
             const displayMatchingPokemons = () =>
-                myState.filter((x) => checkPokemonForFilters(x) === true).map((y) => <PokemonPictureCard id={y.id} />);
+                myState
+                    .filter((x) => checkPokemonForFilters(x) === true)
+                    .map((y, index) => <PokemonPictureCard key={index} id={y.id} />);
 
             return displayMatchingPokemons().length <= 0
                 ? "No Pokemon matching these criterias have been found"

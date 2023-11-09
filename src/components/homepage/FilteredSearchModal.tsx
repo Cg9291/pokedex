@@ -47,86 +47,101 @@ export function FilteredSearchModal(): React.ReactElement {
     //DISPLAY/MAP/HYBRID FUNCTIONS
     const displayFilters = (): React.ReactElement[] => {
         const myArr: React.ReactElement[] = [];
+        let keyValue = 0;
+        for (const key in filterInfo) {
+            const styleOfFilter: string = filterInfo[key as keyof FilterInfoInterface].style;
+            const nameOfFilter: string = filterInfo[key as keyof FilterInfoInterface].name;
 
-        for (const parameter in filterInfo) {
-            const parameterStyle = filterInfo[parameter as keyof FilterInfoInterface].style;
-            const parameterName = filterInfo[parameter as keyof FilterInfoInterface].name;
-
-            myArr.push(<Filters parameter={parameter} parameterStyle={parameterStyle} parameterName={parameterName} />);
+            myArr.push(<Filters key={keyValue} styleOfFilter={styleOfFilter} nameOfFilter={nameOfFilter} />);
+            keyValue++;
         }
         return myArr;
     };
 
-    const displayOptions = (categoryParameter: string, categoryName: string) => {
+    const displayOptions = (styleOfParentFilter: string, nameOfParentFilter: string) => {
         const myArr: React.ReactElement[] = [];
 
-        if (categoryParameter === "button") {
-            if (categoryName.includes("type")) {
+        if (styleOfParentFilter === "button") {
+            if (nameOfParentFilter.includes("type")) {
+                let keyValue = 0;
                 for (const oneType in typesColors) {
                     myArr.push(
                         <OptionsOfFilters
-                            title={capitalizeWords(oneType)}
-                            category={categoryParameter}
-                            parameterName={categoryName}
+                            key={keyValue}
+                            optionValue={capitalizeWords(oneType)}
+                            optionStyle={styleOfParentFilter}
+                            nameOfParentFilter={nameOfParentFilter}
                         />
                     );
+                    keyValue++;
                 }
                 return myArr;
-            } else if (categoryName === "generation") {
-                return pokemonGenerationsList.map((x: PokemonGenerationsListInterface) => (
+            } else if (nameOfParentFilter === "generation") {
+                return pokemonGenerationsList.map((x: PokemonGenerationsListInterface, index: number) => (
                     <OptionsOfFilters
-                        title={capitalizeWords(`${x.generation}`)}
-                        category={categoryParameter}
-                        parameterName={categoryName}
+                        key={index}
+                        optionValue={capitalizeWords(`${x.generation}`)}
+                        optionStyle={styleOfParentFilter}
+                        nameOfParentFilter={nameOfParentFilter}
                     />
                 ));
             }
-        } else if (categoryParameter === "slider") {
-            return <OptionsOfFilters category={categoryParameter} title="Slider" parameterName={categoryName} />;
+        } else if (styleOfParentFilter === "slider") {
+            return (
+                <OptionsOfFilters
+                    optionStyle={styleOfParentFilter}
+                    optionValue="Slider"
+                    nameOfParentFilter={nameOfParentFilter}
+                />
+            );
         }
     };
 
     //JSX COMPONENTS
-    function Filters(props: { parameter: string; parameterStyle: string; parameterName: string }): React.ReactElement {
+    function Filters(props: { styleOfFilter: string; nameOfFilter: string }): React.ReactElement {
         return (
             <ContainerOfFilters>
-                <HeadersOfFilters title={capitalizeWords(props.parameter)} />
-                <OptionsContainer>{displayOptions(props.parameterStyle, props.parameterName)}</OptionsContainer>
+                <HeadersOfFilters headerValue={capitalizeWords(props.nameOfFilter)} />
+                <OptionsContainer>{displayOptions(props.styleOfFilter, props.nameOfFilter)}</OptionsContainer>
             </ContainerOfFilters>
         );
     }
 
-    function HeadersOfFilters(props: { title: string }): React.ReactElement {
+    function HeadersOfFilters(props: { headerValue: string }): React.ReactElement {
         return (
             <ContainerOfHeadersOfFilters>
-                <TitleOfHeadersOfFilters>{props.title}</TitleOfHeadersOfFilters>
+                <ValueOfHeadersOfFilters>{props.headerValue}</ValueOfHeadersOfFilters>
             </ContainerOfHeadersOfFilters>
         );
     }
 
-    function OptionsOfFilters(props: { title: string; category: string; parameterName: string }): React.ReactElement {
-        return props.category === "button" ? (
+    function OptionsOfFilters(props: {
+        optionValue: string;
+        optionStyle: string;
+        nameOfParentFilter: string;
+    }): React.ReactElement {
+        return props.optionStyle === "button" ? (
             <OptionsButtonContainer>
                 <OptionsButtonLabel>
-                    {props.parameterName === "generation" ? (
+                    {props.nameOfParentFilter === "generation" ? (
                         <>
-                            <OptionTitle>{` Generation ${Number(props.title)}`}</OptionTitle>
-                            <ButtonInput name={props.parameterName} value={props.title} required />
+                            <OptionValue>{` Generation ${Number(props.optionValue)}`}</OptionValue>
+                            <ButtonInput name={props.nameOfParentFilter} value={props.optionValue} required />
                         </>
                     ) : (
                         <>
-                            <OptionTitle>{props.title}</OptionTitle>
-                            <ButtonInput name={props.parameterName} value={props.title} />
+                            <OptionValue>{props.optionValue}</OptionValue>
+                            <ButtonInput name={props.nameOfParentFilter} value={props.optionValue} />
                         </>
                     )}
                 </OptionsButtonLabel>
             </OptionsButtonContainer>
         ) : (
-            <Sliders parameterName={props.parameterName} />
+            <Sliders nameOfParentFilter={props.nameOfParentFilter} />
         );
     }
 
-    function Sliders(props: { parameterName: string }): React.ReactElement {
+    function Sliders(props: { nameOfParentFilter: string }): React.ReactElement {
         const [sliderValue, setSliderValue] = useState<number>(0);
 
         const handleSliderChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -137,15 +152,15 @@ export function FilteredSearchModal(): React.ReactElement {
             <OptionsSliderContainer>
                 <OptionsSliderLabel>
                     <OptionsSliderInput
-                        name={props.parameterName}
+                        name={props.nameOfParentFilter}
                         type="range"
                         min="0"
-                        max={props.parameterName === "height" ? 20 : 1000}
+                        max={props.nameOfParentFilter === "height" ? 20 : 1000}
                         step={1}
                         value={sliderValue}
                         onChange={handleSliderChange}
                     />
-                    <>{props.parameterName === "height" ? `${sliderValue}m` : `${sliderValue}kgs`}</>
+                    <>{props.nameOfParentFilter === "height" ? `${sliderValue}m` : `${sliderValue}kgs`}</>
                 </OptionsSliderLabel>
             </OptionsSliderContainer>
         );
@@ -187,7 +202,7 @@ const ContainerOfFilters = styled(ContainerPrototype)`
     border: 0.1rem solid red;
 `;
 const ContainerOfHeadersOfFilters = styled.div``;
-const TitleOfHeadersOfFilters = styled.h5`
+const ValueOfHeadersOfFilters = styled.h5`
     margin: 1rem 0 0 1rem;
 `;
 
@@ -217,7 +232,7 @@ const ButtonInput = styled.input.attrs({ type: "radio" })`
     width: 0; */
 `;
 
-const OptionTitle = styled.h6`
+const OptionValue = styled.h6`
     width: 100%;
     height: 100%;
 `;

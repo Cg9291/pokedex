@@ -6,8 +6,7 @@ export const pickRandomPokemonNumbers = (): number[] => {
             num = Math.floor(Math.random() * (255 - 1) + 1);
         } while (numberArray.includes(num));
         numberArray.push(num);
-        console.log("pushed" + num);
     }
-    console.log(numberArray);
+
     return numberArray;
 };
