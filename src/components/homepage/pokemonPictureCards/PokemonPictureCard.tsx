@@ -12,11 +12,14 @@ import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototyp
 
 export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
+    const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
     async function getData(pokemonNumber: number): Promise<void> {
         try {
+            await setLoadingStatus(true);
             const data: PokemonInterface = await getPokemonData(pokemonNumber);
             setPokemonInfo(data);
+            setLoadingStatus(false);
         } catch (err) {
             console.log(err);
             return;
@@ -34,7 +37,7 @@ export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.Re
                 <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
             ));
 
-    if (pokemonInfo) {
+    if (pokemonInfo && loadingStatus === false) {
         return (
             <Container to={`/pokemons/id/${pokemonInfo.id}`} $mainType={pokemonInfo.types[0].type.name}>
                 <Wrapper>
