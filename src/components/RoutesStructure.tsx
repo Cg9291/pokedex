@@ -8,6 +8,7 @@ import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
 import { FilteredSearchModal } from "./homepage/FilteredSearchModal";
 import { FilteredSearchResults } from "../pages/FilteredSearchResults";
+import { Comparator } from "../pages/Comparator";
 
 export function RoutesStructure(): React.ReactElement | null {
     return useRoutes([
@@ -22,6 +23,10 @@ export function RoutesStructure(): React.ReactElement | null {
         {
             path: "/filtered-search/*",
             element: <FilteredSearchResults />
+        },
+        {
+            path: "/comparator",
+            element: <Comparator />
         }
     ]);
 }

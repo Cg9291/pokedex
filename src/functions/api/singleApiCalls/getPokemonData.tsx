@@ -5,6 +5,7 @@ export async function getPokemonData(pokemonIdentifier: number | string): Promis
     try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonIdentifier}`);
         const pokemonData: PokemonInterface = response.data;
+        console.log(response, pokemonData);
         return pokemonData;
     } catch (err) {
         console.log("function getPokemonData:failure", err);
