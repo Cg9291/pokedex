@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 
 export function Comparator(): React.ReactElement {
+    const [modalIsActive, setModalIsActive] = useState<boolean>(false);
     const pokemonImages: { topImg: string; bottomImg: string } = {
         topImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
         bottomImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
@@ -13,32 +14,51 @@ export function Comparator(): React.ReactElement {
  */ // [NOTE!] To be used later
 
     return (
-        <Container>
+        <Container isActive={modalIsActive}>
             <Header>
                 <HeaderTitle>Comparator</HeaderTitle>
                 <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
             </Header>
             <ComparatorBody>
-                <ComparatorPokemonCards imgUrl={pokemonImages.topImg} />
+                <ComparatorPokemonCards imgUrl={pokemonImages.topImg} setModalIsActive={setModalIsActive} />
                 <RandomizeButton></RandomizeButton>
-                <ComparatorPokemonCards imgUrl={pokemonImages.bottomImg} />
+                <ComparatorPokemonCards imgUrl={pokemonImages.bottomImg} setModalIsActive={setModalIsActive} />
                 <CompareButton> COMPARE!</CompareButton>
             </ComparatorBody>
+            <ComparatorPokemonSearchModal isActive={modalIsActive} setModalIsActive={setModalIsActive} />
         </Container>
     );
 }
 
-function ComparatorPokemonCards(props: { imgUrl: string }): React.ReactElement {
+function ComparatorPokemonCards(props: {
+    imgUrl: string;
+    setModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+}): React.ReactElement {
     return (
         <ComparatorPokemonCardsContainer>
+            <ChangeSelectionButton onFocus={() => props.setModalIsActive(true)}>Switch</ChangeSelectionButton>
             <PokemonImg src={props.imgUrl} />
         </ComparatorPokemonCardsContainer>
     );
 }
 
-const Container = styled(ContainerPrototype)`
+function ComparatorPokemonSearchModal(props: {
+    isActive: boolean;
+    setModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+}): React.ReactElement {
+    return (
+        <ComparatorSearchModalContainer isActive={props.isActive} onBlur={() => props.setModalIsActive(false)}>
+            {/* [NOTE]theonblur attribute is a quick fix(partial) for focus loss detection,will update */}
+            <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
+            <Input />
+        </ComparatorSearchModalContainer>
+    );
+}
+
+const Container = styled(ContainerPrototype)<{ isActive: boolean }>`
     padding: 0 1rem;
     flex-direction: column;
+    background-color: ${(props) => (props.isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
 `;
 
 const Header = styled(ContainerPrototype)`
@@ -71,6 +91,43 @@ const ComparatorPokemonCardsContainer = styled(ContainerPrototype)`
 const PokemonImg = styled.img`
     width: 9rem;
     aspect-ratio: 1/1;
+`;
+
+const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
+    //Will review
+    position: absolute;
+    width: fit-content;
+    aspect-ratio: 1/1;
+    margin-left: -80%;
+`;
+
+const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isActive: boolean }>`
+    flex-direction: column;
+    display: ${(props) => (props.isActive ? "flex" : "none")};
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 7vh;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding: 2rem 1rem;
+`;
+
+const SearchModalHeader = styled.h2``;
+
+const Input = styled.input.attrs({
+    placeholder: "Search a Pokemon",
+    name: "searchInput"
+})`
+    width: 100%;
+    height: 3rem;
+    border-radius: 99px;
+    margin-top: 1rem;
+    padding-left: 1rem;
 `;
 
 const CompareButton = styled.button.attrs({ type: "button" })`
