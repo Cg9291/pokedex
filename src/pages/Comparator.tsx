@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
+import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
+import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 
 export function Comparator(): React.ReactElement {
     const [modalIsActive, setModalIsActive] = useState<boolean>(false);
@@ -46,11 +48,28 @@ function ComparatorPokemonSearchModal(props: {
     isActive: boolean;
     setModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
+    const [searchedPokemonId, setSearchedPokemonId] = useState<number>();
+
+    const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
+        const name = transmittedData.toString().toLowerCase();
+        const pokemonData = await getPokemonData(name);
+        await setSearchedPokemonId(pokemonData.id);
+        return;
+    };
+
     return (
         <ComparatorSearchModalContainer isActive={props.isActive} onBlur={() => props.setModalIsActive(false)}>
             {/* [NOTE]theonblur attribute is a quick fix(partial) for focus loss detection,will update */}
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
-            <Input />
+            <Form onSubmit={handleSearch}>
+                <Label>
+                    <Input />
+                </Label>
+            </Form>
+            {searchedPokemonId && <PokemonPictureCard id={searchedPokemonId} />}
         </ComparatorSearchModalContainer>
     );
 }
@@ -118,6 +137,17 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isActive: bo
 `;
 
 const SearchModalHeader = styled.h2``;
+
+const Form = styled.form.attrs({
+    method: "get"
+})`
+    width: 100%;
+    display: flex;
+`;
+
+const Label = styled.label`
+    flex: 3 0 85%;
+`;
 
 const Input = styled.input.attrs({
     placeholder: "Search a Pokemon",
