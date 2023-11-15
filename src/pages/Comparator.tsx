@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
+import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks";
 
 export function Comparator(): React.ReactElement {
-    const [modalIsActive, setModalIsActive] = useState<boolean>(false);
+    const [isModalActive, setIsModalActive] = useState<boolean>(false);
     const pokemonImages: { topImg: string; bottomImg: string } = {
         topImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
         bottomImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
@@ -16,39 +17,43 @@ export function Comparator(): React.ReactElement {
  */ // [NOTE!] To be used later
 
     return (
-        <Container isActive={modalIsActive}>
+        <Container isActive={isModalActive}>
             <Header>
                 <HeaderTitle>Comparator</HeaderTitle>
                 <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
             </Header>
             <ComparatorBody>
-                <ComparatorPokemonCards imgUrl={pokemonImages.topImg} setModalIsActive={setModalIsActive} />
+                <ComparatorPokemonCards imgUrl={pokemonImages.topImg} setIsModalActive={setIsModalActive} />
                 <RandomizeButton></RandomizeButton>
-                <ComparatorPokemonCards imgUrl={pokemonImages.bottomImg} setModalIsActive={setModalIsActive} />
+                <ComparatorPokemonCards imgUrl={pokemonImages.bottomImg} setIsModalActive={setIsModalActive} />
                 <CompareButton> COMPARE!</CompareButton>
             </ComparatorBody>
-            <ComparatorPokemonSearchModal isActive={modalIsActive} setModalIsActive={setModalIsActive} />
+            {isModalActive && (
+                <ComparatorPokemonSearchModal isModalActive={isModalActive} setIsModalActive={setIsModalActive} />
+            )}
         </Container>
     );
 }
 
 function ComparatorPokemonCards(props: {
     imgUrl: string;
-    setModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsModalActive: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
     return (
         <ComparatorPokemonCardsContainer>
-            <ChangeSelectionButton onFocus={() => props.setModalIsActive(true)}>Switch</ChangeSelectionButton>
+            <ChangeSelectionButton onClick={() => props.setIsModalActive(true)}>Switch</ChangeSelectionButton>
             <PokemonImg src={props.imgUrl} />
         </ComparatorPokemonCardsContainer>
     );
 }
 
 function ComparatorPokemonSearchModal(props: {
-    isActive: boolean;
-    setModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+    isModalActive: boolean;
+    setIsModalActive: React.Dispatch<React.SetStateAction<boolean>>;
 }): React.ReactElement {
-    const [searchedPokemonId, setSearchedPokemonId] = useState<number>();
+    const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
+    const modalRef = useRef<HTMLDivElement>(null);
+    handleOutsideClicks(modalRef, props.setIsModalActive);
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
@@ -61,12 +66,11 @@ function ComparatorPokemonSearchModal(props: {
     };
 
     return (
-        <ComparatorSearchModalContainer isActive={props.isActive} onBlur={() => props.setModalIsActive(false)}>
-            {/* [NOTE]theonblur attribute is a quick fix(partial) for focus loss detection,will update */}
+        <ComparatorSearchModalContainer isActive={props.isModalActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Form onSubmit={handleSearch}>
                 <Label>
-                    <Input />
+                    <Input required />
                 </Label>
             </Form>
             {searchedPokemonId && <PokemonPictureCard id={searchedPokemonId} />}
