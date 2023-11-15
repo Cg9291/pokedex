@@ -24,17 +24,17 @@ export interface TypesColorsInt {
 
 export interface PokemonPictureCardsPropsInterface {
     id: number;
-    isLink?: boolean;
-    pokemonImagesSet?: PokemonImagesSetInterface;
-    isModalActiveSet?: IsModalActiveSetInterface;
+    isLink: boolean;
+    pokemonImagesKit?: PokemonImagesKitInterface;
+    isModalActiveKit?: IsModalActiveKitInterface;
 }
 
-export interface PokemonImagesSetInterface {
+export interface PokemonImagesKitInterface {
     pokemonImages: ComparatorPokemonImagesInterface;
     setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonImagesInterface>>;
 }
 
-export interface IsModalActiveSetInterface {
+export interface IsModalActiveKitInterface {
     isModalActive: IsModalActiveInterface;
     setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
 }

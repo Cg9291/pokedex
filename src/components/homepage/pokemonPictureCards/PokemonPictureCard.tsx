@@ -41,21 +41,21 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
         const handleClick = () => {
             if (props.isLink) {
                 return;
-            } else if (props.pokemonImagesSet && props.isModalActiveSet) {
-                const { pokemonImages, setPokemonImages } = props.pokemonImagesSet;
-                if (props.isModalActiveSet.isModalActive.activeImageNumber === 1) {
+            } else if (props.pokemonImagesKit && props.isModalActiveKit) {
+                const { pokemonImages, setPokemonImages } = props.pokemonImagesKit;
+                if (props.isModalActiveKit.isModalActive.activeImageNumber === 1) {
                     setPokemonImages({
                         ...pokemonImages,
                         topImg: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Pok%C3%A9mon_Mew_art.png/220px-Pok%C3%A9mon_Mew_art.png"
                     });
-                } else if (props.isModalActiveSet.isModalActive.activeImageNumber === 2) {
+                } else if (props.isModalActiveKit.isModalActive.activeImageNumber === 2) {
                     setPokemonImages({
                         ...pokemonImages,
                         bottomImg:
                             "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Pok%C3%A9mon_Mew_art.png/220px-Pok%C3%A9mon_Mew_art.png"
                     });
                 }
-                props.isModalActiveSet.setIsModalActive({ isActive: false, activeImageNumber: 0 });
+                props.isModalActiveKit.setIsModalActive({ isActive: false, activeImageNumber: 0 });
             }
         };
         return (

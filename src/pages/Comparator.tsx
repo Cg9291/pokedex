@@ -7,7 +7,8 @@ import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks"
 import {
     ComparatorPokemonImagesInterface,
     IsModalActiveInterface,
-    IsModalActiveSetInterface
+    IsModalActiveKitInterface,
+    PokemonImagesKitInterface
 } from "../interfaces/miscInterfaces";
 
 export function Comparator(): React.ReactElement {
@@ -25,7 +26,7 @@ export function Comparator(): React.ReactElement {
  */ // [NOTE!] To be used later
 
     return (
-        <Container isActive={isModalActive.isActive}>
+        <Container $isActive={isModalActive.isActive}>
             <Header>
                 <HeaderTitle>Comparator</HeaderTitle>
                 <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
@@ -46,9 +47,8 @@ export function Comparator(): React.ReactElement {
             </ComparatorBody>
             {isModalActive && (
                 <ComparatorPokemonSearchModal
-                    isModalActiveSet={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
-                    pokemonImages={pokemonImages}
-                    setPokemonImages={setPokemonImages}
+                    isModalActiveKit={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
+                    pokemonImagesKit={{ pokemonImages: pokemonImages, setPokemonImages: setPokemonImages }}
                 />
             )}
         </Container>
@@ -73,13 +73,12 @@ function ComparatorPokemonCards(props: {
 }
 
 function ComparatorPokemonSearchModal(props: {
-    isModalActiveSet: IsModalActiveSetInterface;
-    pokemonImages: ComparatorPokemonImagesInterface;
-    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonImagesInterface>>;
+    isModalActiveKit: IsModalActiveKitInterface;
+    pokemonImagesKit: PokemonImagesKitInterface;
 }): React.ReactElement {
     const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
-    handleOutsideClicks(modalRef, props.isModalActiveSet.setIsModalActive);
+    handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
@@ -92,7 +91,7 @@ function ComparatorPokemonSearchModal(props: {
     };
 
     return (
-        <ComparatorSearchModalContainer isModalActive={props.isModalActiveSet.isModalActive.isActive} ref={modalRef}>
+        <ComparatorSearchModalContainer isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Form onSubmit={handleSearch}>
                 <Label>
@@ -102,18 +101,19 @@ function ComparatorPokemonSearchModal(props: {
             {searchedPokemonId && (
                 <PokemonPictureCard
                     id={searchedPokemonId}
-                    pokemonImagesSet={{ pokemonImages: props.pokemonImages, setPokemonImages: props.setPokemonImages }}
-                    isModalActiveSet={props.isModalActiveSet}
+                    pokemonImagesKit={props.pokemonImagesKit}
+                    isModalActiveKit={props.isModalActiveKit}
+                    isLink={false}
                 />
             )}
         </ComparatorSearchModalContainer>
     );
 }
 
-const Container = styled(ContainerPrototype)<{ isActive: boolean }>`
+const Container = styled(ContainerPrototype)<{ $isActive: boolean }>`
     padding: 0 1rem;
     flex-direction: column;
-    background-color: ${(props) => (props.isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
+    background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
 `;
 
 const Header = styled(ContainerPrototype)`
