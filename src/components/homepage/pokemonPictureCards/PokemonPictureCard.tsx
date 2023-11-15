@@ -38,24 +38,30 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
             ));
 
     if (pokemonInfo && !loadingStatus) {
+        const pokeInfoObject = {
+            name: pokemonInfo.name,
+            id: pokemonInfo.id,
+            sprites: pokemonInfo.sprites,
+            stats: pokemonInfo.stats
+        };
         const handleClick = () => {
             if (props.isLink) {
                 return;
             } else if (props.pokemonImagesKit && props.isModalActiveKit) {
                 const { pokemonImages, setPokemonImages } = props.pokemonImagesKit;
-                if (props.isModalActiveKit.isModalActive.activeImageNumber === 1) {
+                const { isModalActive, setIsModalActive } = props.isModalActiveKit;
+                if (isModalActive.activeImageNumber === 1) {
                     setPokemonImages({
                         ...pokemonImages,
-                        topImg: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Pok%C3%A9mon_Mew_art.png/220px-Pok%C3%A9mon_Mew_art.png"
+                        topPokemon: pokeInfoObject
                     });
-                } else if (props.isModalActiveKit.isModalActive.activeImageNumber === 2) {
+                } else if (isModalActive.activeImageNumber === 2) {
                     setPokemonImages({
                         ...pokemonImages,
-                        bottomImg:
-                            "https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Pok%C3%A9mon_Mew_art.png/220px-Pok%C3%A9mon_Mew_art.png"
+                        bottomPokemon: pokeInfoObject
                     });
                 }
-                props.isModalActiveKit.setIsModalActive({ isActive: false, activeImageNumber: 0 });
+                setIsModalActive({ isActive: false, activeImageNumber: 0 });
             }
         };
         return (

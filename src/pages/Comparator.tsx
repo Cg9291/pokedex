@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AxiosError } from "axios";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
@@ -11,15 +13,30 @@ import {
     PokemonImagesKitInterface
 } from "../interfaces/miscInterfaces";
 
+import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
+
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
         isActive: false,
         activeImageNumber: 0
     });
-    const [pokemonImages, setPokemonImages] = useState<ComparatorPokemonImagesInterface>({
-        topImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
-        bottomImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
-    });
+    const [pokemonImages, setPokemonImages] = useState<ComparatorPokemonImagesInterface>(comparatorDefaultPokemonInfo);
+
+    /*[NOTE] To be used later
+      const getData = async (identifier: NumOrString, imgOrder: number): Promise<void> => {
+        const data = await getPokemonData(identifier);
+        const pokemonInfo: ComparatorPokemonInfoInterface = {
+            name: data.name,
+            id: data.id,
+            sprites: data.sprites,
+            stats: data.stats
+        };
+        if (imgOrder === 1) {
+            setPokemonImages({ ...pokemonImages, topPokemon: pokemonInfo });
+        } else if (imgOrder === 2) {
+            setPokemonImages({ ...pokemonImages, bottomPokemon: pokemonInfo });
+        }
+    }; */
 
     /* const randomizeButtonImage =
         "https://cdn4.iconfinder.com/data/icons/game-design-flat-icons-2/512/13_dice_roll_random_game_design_flat_icon-512.png";
@@ -33,13 +50,13 @@ export function Comparator(): React.ReactElement {
             </Header>
             <ComparatorBody>
                 <ComparatorPokemonCards
-                    imgUrl={pokemonImages.topImg}
+                    imgUrl={pokemonImages.topPokemon.sprites.front_default}
                     imgOrder={1}
                     setIsModalActive={setIsModalActive}
                 />
                 <RandomizeButton></RandomizeButton>
                 <ComparatorPokemonCards
-                    imgUrl={pokemonImages.bottomImg}
+                    imgUrl={pokemonImages.bottomPokemon.sprites.front_default}
                     imgOrder={2}
                     setIsModalActive={setIsModalActive}
                 />
@@ -79,14 +96,22 @@ function ComparatorPokemonSearchModal(props: {
     const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
+    const navigate = useNavigate();
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const transmittedData = Object.fromEntries(formData.entries()).searchInput;
         const name = transmittedData.toString().toLowerCase();
-        const pokemonData = await getPokemonData(name);
-        await setSearchedPokemonId(pokemonData.id);
+        try {
+            const pokemonData = await getPokemonData(name);
+            await setSearchedPokemonId(pokemonData.id);
+        } catch (err) {
+            if (err instanceof AxiosError && err.response?.status === 404) {
+                navigate(`/pokemon-not-found`);
+            }
+        }
+
         return;
     };
 
@@ -110,7 +135,7 @@ function ComparatorPokemonSearchModal(props: {
     );
 }
 
-const Container = styled(ContainerPrototype)<{ $isActive: boolean }>`
+const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     padding: 0 1rem;
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};

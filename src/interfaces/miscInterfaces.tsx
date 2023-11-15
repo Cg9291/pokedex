@@ -1,5 +1,5 @@
 import { Color, Evolution_chain, Flavor_text_entry } from "./pokemonSpeciesInterface";
-import { Ability, Mfe, Stat, Type } from "./pokemonInterface";
+import { Ability, Mfe, Sprites, Stat, Type } from "./pokemonInterface";
 
 export interface TypesColorsInt {
     normal: string;
@@ -162,8 +162,15 @@ export interface PokemonGenerationsListInterface {
 }
 
 export interface ComparatorPokemonImagesInterface {
-    topImg: string;
-    bottomImg: string;
+    topPokemon: ComparatorPokemonInfoInterface;
+    bottomPokemon: ComparatorPokemonInfoInterface;
+}
+
+export interface ComparatorPokemonInfoInterface {
+    name: string;
+    id: number;
+    sprites: Sprites;
+    stats: Stat[];
 }
 
 export interface IsModalActiveInterface {
