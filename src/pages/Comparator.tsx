@@ -4,32 +4,52 @@ import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks";
+import {
+    ComparatorPokemonImagesInterface,
+    IsModalActiveInterface,
+    IsModalActiveSetInterface
+} from "../interfaces/miscInterfaces";
 
 export function Comparator(): React.ReactElement {
-    const [isModalActive, setIsModalActive] = useState<boolean>(false);
-    const pokemonImages: { topImg: string; bottomImg: string } = {
+    const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
+        isActive: false,
+        activeImageNumber: 0
+    });
+    const [pokemonImages, setPokemonImages] = useState<ComparatorPokemonImagesInterface>({
         topImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
         bottomImg: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
-    };
+    });
 
     /* const randomizeButtonImage =
         "https://cdn4.iconfinder.com/data/icons/game-design-flat-icons-2/512/13_dice_roll_random_game_design_flat_icon-512.png";
  */ // [NOTE!] To be used later
 
     return (
-        <Container isActive={isModalActive}>
+        <Container isActive={isModalActive.isActive}>
             <Header>
                 <HeaderTitle>Comparator</HeaderTitle>
                 <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
             </Header>
             <ComparatorBody>
-                <ComparatorPokemonCards imgUrl={pokemonImages.topImg} setIsModalActive={setIsModalActive} />
+                <ComparatorPokemonCards
+                    imgUrl={pokemonImages.topImg}
+                    imgOrder={1}
+                    setIsModalActive={setIsModalActive}
+                />
                 <RandomizeButton></RandomizeButton>
-                <ComparatorPokemonCards imgUrl={pokemonImages.bottomImg} setIsModalActive={setIsModalActive} />
+                <ComparatorPokemonCards
+                    imgUrl={pokemonImages.bottomImg}
+                    imgOrder={2}
+                    setIsModalActive={setIsModalActive}
+                />
                 <CompareButton> COMPARE!</CompareButton>
             </ComparatorBody>
             {isModalActive && (
-                <ComparatorPokemonSearchModal isModalActive={isModalActive} setIsModalActive={setIsModalActive} />
+                <ComparatorPokemonSearchModal
+                    isModalActiveSet={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
+                    pokemonImages={pokemonImages}
+                    setPokemonImages={setPokemonImages}
+                />
             )}
         </Container>
     );
@@ -37,23 +57,29 @@ export function Comparator(): React.ReactElement {
 
 function ComparatorPokemonCards(props: {
     imgUrl: string;
-    setIsModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+    imgOrder: number;
+    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
 }): React.ReactElement {
     return (
         <ComparatorPokemonCardsContainer>
-            <ChangeSelectionButton onClick={() => props.setIsModalActive(true)}>Switch</ChangeSelectionButton>
+            <ChangeSelectionButton
+                onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
+            >
+                Switch
+            </ChangeSelectionButton>
             <PokemonImg src={props.imgUrl} />
         </ComparatorPokemonCardsContainer>
     );
 }
 
 function ComparatorPokemonSearchModal(props: {
-    isModalActive: boolean;
-    setIsModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+    isModalActiveSet: IsModalActiveSetInterface;
+    pokemonImages: ComparatorPokemonImagesInterface;
+    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonImagesInterface>>;
 }): React.ReactElement {
     const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
-    handleOutsideClicks(modalRef, props.setIsModalActive);
+    handleOutsideClicks(modalRef, props.isModalActiveSet.setIsModalActive);
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
@@ -66,14 +92,20 @@ function ComparatorPokemonSearchModal(props: {
     };
 
     return (
-        <ComparatorSearchModalContainer isActive={props.isModalActive} ref={modalRef}>
+        <ComparatorSearchModalContainer isModalActive={props.isModalActiveSet.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Form onSubmit={handleSearch}>
                 <Label>
                     <Input required />
                 </Label>
             </Form>
-            {searchedPokemonId && <PokemonPictureCard id={searchedPokemonId} />}
+            {searchedPokemonId && (
+                <PokemonPictureCard
+                    id={searchedPokemonId}
+                    pokemonImagesSet={{ pokemonImages: props.pokemonImages, setPokemonImages: props.setPokemonImages }}
+                    isModalActiveSet={props.isModalActiveSet}
+                />
+            )}
         </ComparatorSearchModalContainer>
     );
 }
@@ -124,9 +156,9 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     margin-left: -80%;
 `;
 
-const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isActive: boolean }>`
+const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isModalActive: boolean }>`
     flex-direction: column;
-    display: ${(props) => (props.isActive ? "flex" : "none")};
+    display: ${(props) => (props.isModalActive ? "flex" : "none")};
     position: fixed;
     width: 100%;
     height: 100vh;

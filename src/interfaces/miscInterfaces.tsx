@@ -22,8 +22,21 @@ export interface TypesColorsInt {
     fairy: string;
 }
 
-export interface PokemonNumberPropsInterface {
+export interface PokemonPictureCardsPropsInterface {
     id: number;
+    isLink?: boolean;
+    pokemonImagesSet?: PokemonImagesSetInterface;
+    isModalActiveSet?: IsModalActiveSetInterface;
+}
+
+export interface PokemonImagesSetInterface {
+    pokemonImages: ComparatorPokemonImagesInterface;
+    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonImagesInterface>>;
+}
+
+export interface IsModalActiveSetInterface {
+    isModalActive: IsModalActiveInterface;
+    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
 }
 
 export interface PokemonTypesPropsInterface {
@@ -146,4 +159,14 @@ export interface CustomPokemonInfo {
 export interface PokemonGenerationsListInterface {
     generation: string;
     numerals: string;
+}
+
+export interface ComparatorPokemonImagesInterface {
+    topImg: string;
+    bottomImg: string;
+}
+
+export interface IsModalActiveInterface {
+    isActive: boolean;
+    activeImageNumber: number;
 }
