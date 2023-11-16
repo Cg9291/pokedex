@@ -7,12 +7,12 @@ import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks";
 import {
-    ComparatorPokemonImagesInterface,
+    ComparatorPokemonDataInterface,
+    ComparatorPokemonInfoInterface,
     IsModalActiveInterface,
     IsModalActiveKitInterface,
     PokemonImagesKitInterface
 } from "../interfaces/miscInterfaces";
-
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
 
 export function Comparator(): React.ReactElement {
@@ -20,7 +20,9 @@ export function Comparator(): React.ReactElement {
         isActive: false,
         activeImageNumber: 0
     });
-    const [pokemonImages, setPokemonImages] = useState<ComparatorPokemonImagesInterface>(comparatorDefaultPokemonInfo);
+    const [pokemonData, setPokemonData] = useState<ComparatorPokemonDataInterface>(comparatorDefaultPokemonInfo);
+    const [isCompared, setIsCompared] = useState<boolean>(false);
+    const [winner, setWinner] = useState<string>();
 
     /*[NOTE] To be used later
       const getData = async (identifier: NumOrString, imgOrder: number): Promise<void> => {
@@ -42,30 +44,79 @@ export function Comparator(): React.ReactElement {
         "https://cdn4.iconfinder.com/data/icons/game-design-flat-icons-2/512/13_dice_roll_random_game_design_flat_icon-512.png";
  */ // [NOTE!] To be used later
 
+    const compareStats = () => {
+        const { topPokemon, bottomPokemon } = pokemonData;
+        const scores = { topPokemonScore: 0, bottomPokemonScore: 0 };
+        for (let i = 0; i < 6; i++) {
+            if (topPokemon.stats[i].base_stat > bottomPokemon.stats[i].base_stat) {
+                scores.topPokemonScore += 1;
+            } else if (topPokemon.stats[i].base_stat === bottomPokemon.stats[i].base_stat) {
+                scores.topPokemonScore += 1;
+                scores.bottomPokemonScore += 1;
+            } else {
+                scores.bottomPokemonScore += 1;
+            }
+        }
+        return scores.topPokemonScore > scores.bottomPokemonScore
+            ? topPokemon.name
+            : scores.topPokemonScore === scores.bottomPokemonScore
+            ? "tie"
+            : bottomPokemon.name;
+    };
+
+    const handleCompare = () => {
+        setIsCompared(true);
+        const comparisonResult = compareStats();
+        comparisonResult === "tie" ? setWinner(`It's a tie!`) : setWinner(`${comparisonResult} is the winner!`);
+        console.log(comparisonResult);
+    };
+
     return (
         <Container $isActive={isModalActive.isActive}>
             <Header>
                 <HeaderTitle>Comparator</HeaderTitle>
                 <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
             </Header>
-            <ComparatorBody>
-                <ComparatorPokemonCards
-                    imgUrl={pokemonImages.topPokemon.sprites.front_default}
-                    imgOrder={1}
-                    setIsModalActive={setIsModalActive}
-                />
-                <RandomizeButton></RandomizeButton>
-                <ComparatorPokemonCards
-                    imgUrl={pokemonImages.bottomPokemon.sprites.front_default}
-                    imgOrder={2}
-                    setIsModalActive={setIsModalActive}
-                />
-                <CompareButton> COMPARE!</CompareButton>
+            <ComparatorBody $isCompared={isCompared}>
+                {isCompared ? (
+                    <>
+                        <CardsRow>
+                            <ComparatorPokemonCards
+                                pokemonData={pokemonData.topPokemon}
+                                imgOrder={1}
+                                setIsModalActive={setIsModalActive}
+                                isCompared={isCompared}
+                            />
+                            <ComparatorPokemonCards
+                                pokemonData={pokemonData.bottomPokemon}
+                                imgOrder={2}
+                                setIsModalActive={setIsModalActive}
+                                isCompared={isCompared}
+                            />
+                        </CardsRow>
+                        <>{winner}</>
+                    </>
+                ) : (
+                    <>
+                        <ComparatorPokemonCards
+                            pokemonData={pokemonData.topPokemon}
+                            imgOrder={1}
+                            setIsModalActive={setIsModalActive}
+                        />
+                        <RandomizeButton></RandomizeButton>
+                        <ComparatorPokemonCards
+                            pokemonData={pokemonData.bottomPokemon}
+                            imgOrder={2}
+                            setIsModalActive={setIsModalActive}
+                        />
+                        <CompareButton onClick={handleCompare}> COMPARE!</CompareButton>
+                    </>
+                )}
             </ComparatorBody>
             {isModalActive && (
                 <ComparatorPokemonSearchModal
                     isModalActiveKit={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
-                    pokemonImagesKit={{ pokemonImages: pokemonImages, setPokemonImages: setPokemonImages }}
+                    pokemonImagesKit={{ pokemonImages: pokemonData, setPokemonImages: setPokemonData }}
                 />
             )}
         </Container>
@@ -73,18 +124,23 @@ export function Comparator(): React.ReactElement {
 }
 
 function ComparatorPokemonCards(props: {
-    imgUrl: string;
+    pokemonData: ComparatorPokemonInfoInterface;
     imgOrder: number;
+    isCompared?: boolean;
     setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
 }): React.ReactElement {
+    const { name, sprites } = props.pokemonData;
     return (
-        <ComparatorPokemonCardsContainer>
-            <ChangeSelectionButton
-                onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
-            >
-                Switch
-            </ChangeSelectionButton>
-            <PokemonImg src={props.imgUrl} />
+        <ComparatorPokemonCardsContainer $isCompared={props.isCompared ? props.isCompared : false}>
+            {!props.isCompared && (
+                <ChangeSelectionButton
+                    onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
+                >
+                    Switch
+                </ChangeSelectionButton>
+            )}
+            <PokemonImg src={sprites.front_default} />
+            {props.isCompared && <PokemonName>{name}</PokemonName>}
         </ComparatorPokemonCardsContainer>
     );
 }
@@ -111,7 +167,6 @@ function ComparatorPokemonSearchModal(props: {
                 navigate(`/pokemon-not-found`);
             }
         }
-
         return;
     };
 
@@ -155,17 +210,35 @@ const HeaderDescription = styled.p`
     min-height: fit-content;
 `;
 
-const ComparatorBody = styled(ContainerPrototype)`
+const ComparatorBody = styled(ContainerPrototype)<{ $isCompared?: boolean }>`
     flex-direction: column;
     align-items: center;
+
+    //${({ $isCompared }) => $isCompared && `flex-direction: row;align-items: start;justify-content:space-evenly;`}
 `;
 
-const ComparatorPokemonCardsContainer = styled(ContainerPrototype)`
+const CardsRow = styled(ContainerPrototype)`
+    height: fit-content;
+    min-height: fit-content;
+    max-height: fit-content;
+    justify-content: space-evenly;
+`;
+
+const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared: boolean }>`
     height: 30%;
     background-color: lightgrey;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
+
+    ${({ $isCompared }) => $isCompared && ` width: 40%;height:fit-content;`}
+`;
+
+const PokemonName = styled.h5`
+    background-color: white;
+    border: 0.1rem solid grey;
+    border-radius: 50px;
+    padding: 0.5rem 0.2rem;
 `;
 
 const PokemonImg = styled.img`

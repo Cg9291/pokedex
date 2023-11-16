@@ -30,8 +30,8 @@ export interface PokemonPictureCardsPropsInterface {
 }
 
 export interface PokemonImagesKitInterface {
-    pokemonImages: ComparatorPokemonImagesInterface;
-    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonImagesInterface>>;
+    pokemonImages: ComparatorPokemonDataInterface;
+    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonDataInterface>>;
 }
 
 export interface IsModalActiveKitInterface {
@@ -161,7 +161,7 @@ export interface PokemonGenerationsListInterface {
     numerals: string;
 }
 
-export interface ComparatorPokemonImagesInterface {
+export interface ComparatorPokemonDataInterface {
     topPokemon: ComparatorPokemonInfoInterface;
     bottomPokemon: ComparatorPokemonInfoInterface;
 }
