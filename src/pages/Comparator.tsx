@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AxiosError } from "axios";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
@@ -15,6 +14,8 @@ import {
 } from "../interfaces/miscInterfaces";
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
+import { PokemonNotFound } from "./PokemonNotFound";
+import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -157,34 +158,44 @@ function ComparatorPokemonSearchModal(props: {
     pokemonImagesKit: PokemonImagesKitInterface;
 }): React.ReactElement {
     const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
+    const [searchError, setSearchError] = useState<boolean>(false);
+    const [isSearching, setIsSearching] = useState<boolean>(false);
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
-    const navigate = useNavigate();
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const transmittedData = Object.fromEntries(formData.entries()).searchInput;
         const name = transmittedData.toString().toLowerCase();
+
+        searchError && (await setSearchError(false));
+        searchedPokemonId && (await setSearchedPokemonId(null));
+
         try {
+            await setIsSearching(true);
             const pokemonData = await getPokemonData(name);
-            await setSearchedPokemonId(pokemonData.id);
+            setSearchedPokemonId(pokemonData.id);
+            setIsSearching(false);
         } catch (err) {
             if (err instanceof AxiosError && err.response?.status === 404) {
-                navigate(`/pokemon-not-found`);
+                setSearchError(true);
+                setIsSearching(false);
             }
         }
         return;
     };
 
     return (
-        <ComparatorSearchModalContainer isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
+        <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Form onSubmit={handleSearch}>
                 <Label>
                     <Input required />
                 </Label>
             </Form>
+            {isSearching && <LoadingAnimation />}
+            {searchError && <PokemonNotFound />}
             {searchedPokemonId && (
                 <PokemonPictureCard
                     id={searchedPokemonId}
@@ -265,9 +276,9 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     margin-left: -80%;
 `;
 
-const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isModalActive: boolean }>`
+const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
     flex-direction: column;
-    display: ${(props) => (props.isModalActive ? "flex" : "none")};
+    display: ${(props) => (props.$isModalActive ? "flex" : "none")};
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -324,4 +335,8 @@ const RandomizeButton = styled.button.attrs({ type: "button" })`
     border-radius: 50%;
     background-color: white;
     border: none;
+`;
+
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: green;
 `;
