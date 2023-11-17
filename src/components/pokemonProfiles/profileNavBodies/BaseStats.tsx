@@ -72,9 +72,9 @@ function Stat(props: LocalStat): React.ReactElement {
     return (
         <StatContainer>
             <StatName>{capitalizeWords(props.name)}</StatName>
-            {!props.isComparison && <StatValue>{props.baseStatValue}</StatValue>}
-            <StatBar $isTotal={props.isTotal}>
-                {props.isComparison && props.baseStatValue && props.baseStatValue2 ? (
+            <StatValue>{props.baseStatValue}</StatValue>
+            <StatBar $isTotal={props.isTotal} $isComparison={props.isComparison}>
+                {props.isComparison && props.baseStatValue2 ? (
                     <StatBarComparisonOverlayContainer>
                         <StatBarComparisonOverlay
                             $firstPokemonStatValue={props.baseStatValue}
@@ -91,6 +91,7 @@ function Stat(props: LocalStat): React.ReactElement {
                     <StatBarOverlay $value={props.baseStatValue} $isTotal={props.isTotal} />
                 )}
             </StatBar>
+            {props.baseStatValue2 && <StatValue>{props.baseStatValue2}</StatValue>}
         </StatContainer>
     );
 }
@@ -115,9 +116,9 @@ const StatValue = styled(ContainerPrototype)`
     min-width: 1%;
     padding-right: 0.8rem;
 `;
-const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean }>`
+const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};
-    min-width: 50%;
+    min-width: ${(props) => (props.$isComparison ? "40%" : "50%")};
     height: 30%;
     background-color: grey;
     border-radius: 99px;
@@ -136,7 +137,6 @@ const StatBarComparisonOverlayContainer = styled.div`
     display: flex;
     min-width: 100%;
     height: 100%;
-    //background-color: yellow;
     border-radius: 99px;
 `;
 
