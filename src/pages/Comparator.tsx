@@ -45,7 +45,7 @@ export function Comparator(): React.ReactElement {
         "https://cdn4.iconfinder.com/data/icons/game-design-flat-icons-2/512/13_dice_roll_random_game_design_flat_icon-512.png";
  */ // [NOTE!] To be used later
 
-    const compareStats = () => {
+    const compareStats = (): string => {
         const { topPokemon, bottomPokemon } = pokemonData;
         const scores = { topPokemonScore: 0, bottomPokemonScore: 0 };
         for (let i = 0; i < 6; i++) {
@@ -69,16 +69,18 @@ export function Comparator(): React.ReactElement {
         setIsCompared(true);
         const comparisonResult = compareStats();
         comparisonResult === "tie" ? setWinner(`It's a tie!`) : setWinner(`${comparisonResult} is the winner!`);
-        console.log(comparisonResult);
     };
 
     return (
         <Container $isActive={isModalActive.isActive}>
+            {isCompared && <BackButton onClick={() => setIsCompared(false)}>Back</BackButton>}
             <Header>
-                <HeaderTitle>Comparator</HeaderTitle>
-                <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
+                <HeaderTitle $isCompared={isCompared}>Comparator</HeaderTitle>
+                {!isCompared && (
+                    <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
+                )}
             </Header>
-            <ComparatorBody $isCompared={isCompared}>
+            <ComparatorBody>
                 {isCompared ? (
                     <>
                         <CardsRow>
@@ -136,7 +138,7 @@ function ComparatorPokemonCards(props: {
 }): React.ReactElement {
     const { name, sprites } = props.pokemonData;
     return (
-        <ComparatorPokemonCardsContainer $isCompared={props.isCompared ? props.isCompared : false}>
+        <ComparatorPokemonCardsContainer $isCompared={props.isCompared && props.isCompared}>
             {!props.isCompared && (
                 <ChangeSelectionButton
                     onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
@@ -207,21 +209,25 @@ const Header = styled(ContainerPrototype)`
     margin-bottom: 1.5rem;
 `;
 
-const HeaderTitle = styled.h1`
-    margin-bottom: 0.5rem;
+const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
+    margin: ${(props) => props.$isCompared && "auto"};
+    font-size: ${(props) => props.$isCompared && "1.5em"};
 `;
 
 const HeaderDescription = styled.p`
     min-height: fit-content;
 `;
 
-const ComparatorBody = styled(ContainerPrototype)<{ $isCompared?: boolean }>`
+const ComparatorBody = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
-
-    //${({ $isCompared }) => $isCompared && `flex-direction: row;align-items: start;justify-content:space-evenly;`}
 `;
 
+const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
+    position: absolute;
+    width: 3rem;
+    height: 2rem;
+`;
 const CardsRow = styled(ContainerPrototype)`
     height: fit-content;
     min-height: fit-content;
@@ -229,14 +235,14 @@ const CardsRow = styled(ContainerPrototype)`
     justify-content: space-evenly;
 `;
 
-const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared: boolean }>`
+const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean }>`
     height: 30%;
     background-color: lightgrey;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
-
-    ${({ $isCompared }) => $isCompared && ` width: 40%;height:fit-content;`}
+    width: ${({ $isCompared }) => $isCompared && ` 40%`};
+    height: ${({ $isCompared }) => $isCompared && ` fit-content;`};
 `;
 
 const PokemonName = styled.h5`
@@ -265,7 +271,7 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ isModalActiv
     position: fixed;
     width: 100%;
     height: 100vh;
-    top: 7vh;
+    top: 12vh;
     left: 0;
     right: 0;
     background-color: white;

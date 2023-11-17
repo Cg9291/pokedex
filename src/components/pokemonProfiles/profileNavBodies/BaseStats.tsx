@@ -38,7 +38,7 @@ export function BaseStats(props: {
         return total;
     };
 
-    const mapStats = (): React.ReactElement[] => {
+    const displayStats = (): React.ReactElement[] => {
         if (props.secondPokemonStatsProps) {
             const StatsArray = [];
             for (let i = 0; i < pokemonStats.stats.length; i++) {
@@ -53,15 +53,16 @@ export function BaseStats(props: {
                 );
             }
             return StatsArray;
-        } else
+        } else {
             return pokemonStats.stats.map((x: StatsInterface) => (
                 <Stat name={x.stat.name} baseStatValue={x.base_stat} key={x.stat.name} />
             ));
+        }
     };
 
     return (
         <Container>
-            {mapStats()}
+            {displayStats()}
             {!secondPokemonStats && <Stat name="total" baseStatValue={statsTotal()} isTotal={true} />}
         </Container>
     );
