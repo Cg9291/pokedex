@@ -57,7 +57,7 @@ export function PokemonProfile(): React.ReactElement {
                 About: { isFocused: true, element: <About ownProps={myprops.AboutProps} /> },
                 "Base Stats": {
                     isFocused: false,
-                    element: <BaseStats ownProps={myprops.BaseStatsProps} />
+                    element: <BaseStats pokemonStatsProps={myprops.BaseStatsProps} />
                 },
                 Evolution: { isFocused: false, element: <Evolution ownProps={myprops.EvolutionProps} /> },
                 Moves: { isFocused: false, element: <Moves ownProps={myprops.MovesProps} /> }

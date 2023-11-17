@@ -14,6 +14,7 @@ import {
     PokemonImagesKitInterface
 } from "../interfaces/miscInterfaces";
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
+import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -95,6 +96,10 @@ export function Comparator(): React.ReactElement {
                             />
                         </CardsRow>
                         <>{winner}</>
+                        <BaseStats
+                            pokemonStatsProps={pokemonData.topPokemon}
+                            secondPokemonStatsProps={pokemonData.bottomPokemon}
+                        />
                     </>
                 ) : (
                     <>
