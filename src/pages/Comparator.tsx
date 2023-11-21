@@ -6,16 +6,20 @@ import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks";
 import {
+    ComparatorPokemonCardsPropsInterface,
     ComparatorPokemonDataInterface,
     ComparatorPokemonInfoInterface,
-    IsModalActiveInterface,
-    IsModalActiveKitInterface,
-    PokemonImagesKitInterface
+    ComparatorPokemonSearchModalInterface,
+    IsModalActiveInterface
 } from "../interfaces/miscInterfaces";
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
 import { PokemonNotFound } from "./PokemonNotFound";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
+import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokemonNumbers";
+import { NumOrString } from "../interfaces/miscTypes";
+import { capitalizeWords } from "../functions/utilities/capitalizeWords";
+import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -26,8 +30,7 @@ export function Comparator(): React.ReactElement {
     const [isCompared, setIsCompared] = useState<boolean>(false);
     const [winner, setWinner] = useState<string>();
 
-    /*[NOTE] To be used later
-      const getData = async (identifier: NumOrString, imgOrder: number): Promise<void> => {
+    const getData = async (identifier: NumOrString, imgOrder: number): Promise<void> => {
         const data = await getPokemonData(identifier);
         const pokemonInfo: ComparatorPokemonInfoInterface = {
             name: data.name,
@@ -36,15 +39,12 @@ export function Comparator(): React.ReactElement {
             stats: data.stats
         };
         if (imgOrder === 1) {
-            setPokemonImages({ ...pokemonImages, topPokemon: pokemonInfo });
+            await setPokemonData((oldState) => ({ ...oldState, topPokemon: pokemonInfo }));
         } else if (imgOrder === 2) {
-            setPokemonImages({ ...pokemonImages, bottomPokemon: pokemonInfo });
+            await setPokemonData((oldState) => ({ ...oldState, bottomPokemon: pokemonInfo }));
         }
-    }; */
-
-    /* const randomizeButtonImage =
-        "https://cdn4.iconfinder.com/data/icons/game-design-flat-icons-2/512/13_dice_roll_random_game_design_flat_icon-512.png";
- */ // [NOTE!] To be used later
+        return;
+    };
 
     const compareStats = (): string => {
         const { topPokemon, bottomPokemon } = pokemonData;
@@ -52,9 +52,6 @@ export function Comparator(): React.ReactElement {
         for (let i = 0; i < 6; i++) {
             if (topPokemon.stats[i].base_stat > bottomPokemon.stats[i].base_stat) {
                 scores.topPokemonScore += 1;
-            } else if (topPokemon.stats[i].base_stat === bottomPokemon.stats[i].base_stat) {
-                scores.topPokemonScore += 1;
-                scores.bottomPokemonScore += 1;
             } else {
                 scores.bottomPokemonScore += 1;
             }
@@ -69,7 +66,16 @@ export function Comparator(): React.ReactElement {
     const handleCompare = () => {
         setIsCompared(true);
         const comparisonResult = compareStats();
-        comparisonResult === "tie" ? setWinner(`It's a tie!`) : setWinner(`${comparisonResult} is the winner!`);
+        comparisonResult === "tie"
+            ? setWinner(`It's a tie!`)
+            : setWinner(`${capitalizeWords(comparisonResult)} is the winner!`);
+    };
+
+    const handleRandomize = async () => {
+        const pokemonNumbersArray: number[] = pickRandomPokemonNumbers(true);
+        await getData(pokemonNumbersArray[0], 1);
+        await getData(pokemonNumbersArray[1], 2);
+        return;
     };
 
     return (
@@ -85,13 +91,13 @@ export function Comparator(): React.ReactElement {
                 {isCompared ? (
                     <>
                         <CardsRow>
-                            <ComparatorPokemonCards
+                            <ComparatorsPokemonCards
                                 pokemonData={pokemonData.topPokemon}
                                 imgOrder={1}
                                 setIsModalActive={setIsModalActive}
                                 isCompared={isCompared}
                             />
-                            <ComparatorPokemonCards
+                            <ComparatorsPokemonCards
                                 pokemonData={pokemonData.bottomPokemon}
                                 imgOrder={2}
                                 setIsModalActive={setIsModalActive}
@@ -106,13 +112,15 @@ export function Comparator(): React.ReactElement {
                     </>
                 ) : (
                     <>
-                        <ComparatorPokemonCards
+                        <ComparatorsPokemonCards
                             pokemonData={pokemonData.topPokemon}
                             imgOrder={1}
                             setIsModalActive={setIsModalActive}
                         />
-                        <RandomizeButton></RandomizeButton>
-                        <ComparatorPokemonCards
+                        <RandomizeButton>
+                            <RandomizeButtonImage onClick={handleRandomize} />
+                        </RandomizeButton>
+                        <ComparatorsPokemonCards
                             pokemonData={pokemonData.bottomPokemon}
                             imgOrder={2}
                             setIsModalActive={setIsModalActive}
@@ -122,7 +130,7 @@ export function Comparator(): React.ReactElement {
                 )}
             </ComparatorBody>
             {isModalActive && (
-                <ComparatorPokemonSearchModal
+                <ComparatorsPokemonSearchModal
                     isModalActiveKit={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
                     pokemonImagesKit={{ pokemonImages: pokemonData, setPokemonImages: setPokemonData }}
                 />
@@ -131,12 +139,7 @@ export function Comparator(): React.ReactElement {
     );
 }
 
-function ComparatorPokemonCards(props: {
-    pokemonData: ComparatorPokemonInfoInterface;
-    imgOrder: number;
-    isCompared?: boolean;
-    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
-}): React.ReactElement {
+function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
     const { name, sprites } = props.pokemonData;
     return (
         <ComparatorPokemonCardsContainer $isCompared={props.isCompared && props.isCompared}>
@@ -153,10 +156,7 @@ function ComparatorPokemonCards(props: {
     );
 }
 
-function ComparatorPokemonSearchModal(props: {
-    isModalActiveKit: IsModalActiveKitInterface;
-    pokemonImagesKit: PokemonImagesKitInterface;
-}): React.ReactElement {
+function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterface): React.ReactElement {
     const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
     const [searchError, setSearchError] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -335,6 +335,13 @@ const RandomizeButton = styled.button.attrs({ type: "button" })`
     border-radius: 50%;
     background-color: white;
     border: none;
+`;
+
+const RandomizeButtonImage = styled.img.attrs({
+    src: comparatorsButtonLogo
+})`
+    width: 100%;
+    height: 100%;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

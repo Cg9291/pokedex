@@ -161,6 +161,13 @@ export interface PokemonGenerationsListInterface {
     numerals: string;
 }
 
+export interface ComparatorPokemonCardsPropsInterface {
+    pokemonData: ComparatorPokemonInfoInterface;
+    imgOrder: number;
+    isCompared?: boolean;
+    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
+}
+
 export interface ComparatorPokemonDataInterface {
     topPokemon: ComparatorPokemonInfoInterface;
     bottomPokemon: ComparatorPokemonInfoInterface;
@@ -176,4 +183,9 @@ export interface ComparatorPokemonInfoInterface {
 export interface IsModalActiveInterface {
     isActive: boolean;
     activeImageNumber: number;
+}
+
+export interface ComparatorPokemonSearchModalInterface {
+    isModalActiveKit: IsModalActiveKitInterface;
+    pokemonImagesKit: PokemonImagesKitInterface;
 }
