@@ -40,6 +40,7 @@ export function FilteredSearchModal(): React.ReactElement {
         //e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const localTransmittedData = Object.fromEntries(formData.entries());
+        console.log(localTransmittedData);
         setTransmittedData(localTransmittedData);
         navigate(buildUrl(localTransmittedData));
     };
@@ -142,26 +143,47 @@ export function FilteredSearchModal(): React.ReactElement {
     }
 
     function Sliders(props: { nameOfParentFilter: string }): React.ReactElement {
-        const [sliderValue, setSliderValue] = useState<number>(0);
+        const [sliderMinValue, setSliderMinValue] = useState<number>(0);
+        const [sliderMaxValue, setSliderMaxValue] = useState<number>(props.nameOfParentFilter === "height" ? 20 : 1000);
 
-        const handleSliderChange = (e: React.FormEvent<HTMLInputElement>) => {
-            setSliderValue(Number(e.currentTarget.value));
+        const handleSliderMinChange = (e: React.FormEvent<HTMLInputElement>, isSliderMax?: boolean) => {
+            isSliderMax
+                ? setSliderMaxValue(Number(e.currentTarget.value))
+                : setSliderMinValue(Number(e.currentTarget.value));
         };
 
         return (
             <OptionsSliderContainer>
                 <OptionsSliderLabel>
                     <OptionsSliderInput
-                        name={props.nameOfParentFilter}
+                        name={`min${capitalizeWords(props.nameOfParentFilter)}`}
                         type="range"
                         min="0"
                         max={props.nameOfParentFilter === "height" ? 20 : 1000}
                         step={1}
-                        value={sliderValue}
-                        onChange={handleSliderChange}
+                        value={sliderMinValue}
+                        onChange={(e) => handleSliderMinChange(e)}
                     />
-                    <>{props.nameOfParentFilter === "height" ? `${sliderValue}m` : `${sliderValue}kgs`}</>
                 </OptionsSliderLabel>
+                <OptionsSliderLabel>
+                    <OptionsSliderInput
+                        name={`max${capitalizeWords(props.nameOfParentFilter)}`}
+                        type="range"
+                        min="0"
+                        max={props.nameOfParentFilter === "height" ? 20 : 1000}
+                        step={1}
+                        value={sliderMaxValue}
+                        onChange={(e) => handleSliderMinChange(e, true)}
+                    />
+                </OptionsSliderLabel>
+                <OptionsSliderValuesRow>
+                    <OptionsSliderValue>
+                        {props.nameOfParentFilter === "height" ? `${sliderMinValue}m` : `${sliderMinValue}kgs`}
+                    </OptionsSliderValue>
+                    <OptionsSliderValue>
+                        {props.nameOfParentFilter === "height" ? `${sliderMaxValue}m` : `${sliderMaxValue}kgs`}
+                    </OptionsSliderValue>
+                </OptionsSliderValuesRow>
             </OptionsSliderContainer>
         );
     }
@@ -243,13 +265,47 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
 `;
 
 const OptionsSliderLabel = styled.label`
+    max-width: 100%;
     width: inherit;
-    height: inherit;
+    height: 1em;
+    background-color: grey;
+    display: flex;
+    align-items: center;
 `;
+
 const OptionsSliderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
     width: 100%;
 `;
 
 const OptionsSliderInput = styled.input`
+    position: absolute;
+    margin-top: 0.5rem;
     width: 100%;
+    pointer-events: none;
+
+    &::-webkit-slider-runnable-track,
+    & {
+        -webkit-appearance: none;
+    }
+
+    background: none; /* get rid of white Chrome background */
+    color: #000;
+    font: inherit; /* fix too small font-size in both Chrome & Firefox */
+    margin: 0;
+    pointer-events: none; /* let clicks pass through */
+
+    &::-webkit-slider-thumb {
+        pointer-events: auto;
+    }
+`;
+
+const OptionsSliderValuesRow = styled(ContainerPrototype)`
+    justify-content: space-between;
+`;
+
+const OptionsSliderValue = styled.div`
+    align-self: flex-start;
+    /* background-color: blue; */
 `;

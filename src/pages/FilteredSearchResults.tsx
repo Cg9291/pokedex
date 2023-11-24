@@ -24,8 +24,10 @@ export function FilteredSearchResults(): React.ReactElement {
     interface ReceivedParametersInterface {
         type?: string;
         type2?: string;
-        height?: string;
-        weight?: string;
+        minHeight?: string;
+        maxHeight?: string;
+        minWeight?: string;
+        maxWeight?: string;
     }
 
     const createFilterObject = (arr: string[]) => {
@@ -72,8 +74,14 @@ export function FilteredSearchResults(): React.ReactElement {
             capitalizeWords(`${x.types[0].type.name}`) === createFilterObject(generalFilters)?.type,
         type2: (x: CustomPokemonInfo) =>
             capitalizeWords(`${x.types[1]?.type.name}`) === createFilterObject(generalFilters)?.type2,
-        height: (x: CustomPokemonInfo) => Number(x.height) >= Number(createFilterObject(generalFilters)?.height) * 10,
-        weight: (x: CustomPokemonInfo) => Number(x.weight) >= Number(createFilterObject(generalFilters)?.weight) * 10
+        minHeight: (x: CustomPokemonInfo) =>
+            Number(x.height) >= Number(createFilterObject(generalFilters)?.minHeight) * 10,
+        maxHeight: (x: CustomPokemonInfo) =>
+            Number(x.height) <= Number(createFilterObject(generalFilters)?.maxHeight) * 10,
+        minWeight: (x: CustomPokemonInfo) =>
+            Number(x.weight) >= Number(createFilterObject(generalFilters)?.minWeight) * 10,
+        maxWeight: (x: CustomPokemonInfo) =>
+            Number(x.weight) <= Number(createFilterObject(generalFilters)?.maxWeight) * 10
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {
@@ -107,7 +115,10 @@ export function FilteredSearchResults(): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    flex-direction: column;
+    padding: 1rem 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

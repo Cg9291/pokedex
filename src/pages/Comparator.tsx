@@ -176,12 +176,12 @@ function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterf
             await setIsSearching(true);
             const pokemonData = await getPokemonData(name);
             setSearchedPokemonId(pokemonData.id);
-            setIsSearching(false);
         } catch (err) {
             if (err instanceof AxiosError && err.response?.status === 404) {
                 setSearchError(true);
-                setIsSearching(false);
             }
+        } finally {
+            setIsSearching(false);
         }
         return;
     };
