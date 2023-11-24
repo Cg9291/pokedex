@@ -2,9 +2,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import React from "react";
-import { IsFiltersModalActiveKitInterface } from "../../../interfaces/miscInterfaces";
 
-export function Search(props: IsFiltersModalActiveKitInterface): React.ReactElement {
+export function Search(): React.ReactElement {
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -15,9 +14,8 @@ export function Search(props: IsFiltersModalActiveKitInterface): React.ReactElem
         navigate(`/pokemons/name/${name}`);
     };
 
-    const handleFilterClick = () => {
-        //navigate(`/filter/:gen`);
-        props.setIsFilterModalActive(true);
+    const handleClick = () => {
+        navigate(`/filter/:gen`);
     };
 
     return (
@@ -29,7 +27,7 @@ export function Search(props: IsFiltersModalActiveKitInterface): React.ReactElem
 
                 <ButtonsContainer>
                     <Button>Search</Button>
-                    <FilterButton onClick={handleFilterClick}>Filter</FilterButton>
+                    <FilterButton onClick={handleClick}>Filter</FilterButton>
                 </ButtonsContainer>
             </Form>
         </Container>

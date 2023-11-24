@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
-import { HeaderPropsInterface } from "../../../interfaces/miscInterfaces";
+import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
 
-export function RandomizeSelectionButton(props: HeaderPropsInterface): React.ReactElement {
+export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface): React.ReactElement {
     const { setRandomPokemonSelection } = props;
 
     const randomize = () => {

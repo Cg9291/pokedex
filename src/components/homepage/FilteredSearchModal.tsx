@@ -204,15 +204,7 @@ export function FilteredSearchModal(): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    position: absolute;
     flex-direction: column;
-    z-index: 2;
-    height: 100vh;
-    width: 100%;
-    background-color: white;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
-    padding: 0 1rem 5rem;
 `;
 
 const Form = styled.form.attrs({
@@ -221,7 +213,6 @@ const Form = styled.form.attrs({
 })`
     flex-direction: inherit;
     width: 100%;
-    height: 100%;
     display: flex;
 `;
 const Title = styled.h3`
@@ -229,9 +220,6 @@ const Title = styled.h3`
 `;
 const ContainerOfFilters = styled(ContainerPrototype)`
     height: 5rem;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
     flex-direction: column;
     border: 0.1rem solid red;
 `;
@@ -274,26 +262,21 @@ const OptionValue = styled.h6`
 const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     width: 4rem;
     height: 2rem;
-    justify-self: flex-end;
-    margin-top: auto;
 `;
 
 const OptionsSliderLabel = styled.label`
     max-width: 100%;
-    width: 100%;
+    width: inherit;
     height: 1em;
     background-color: grey;
     display: flex;
     align-items: center;
-    position: absolute;
 `;
 
 const OptionsSliderContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 100%;
-    //overflow-x: hidden;
 `;
 
 const OptionsSliderInput = styled.input`

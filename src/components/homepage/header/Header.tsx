@@ -3,9 +3,9 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { Search } from "./Search";
 import React from "react";
 import { RandomizeSelectionButton } from "./RandomizeSelectionButton";
-import { HeaderPropsInterface } from "../../../interfaces/miscInterfaces";
+import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
 
-export function Header(props: HeaderPropsInterface): React.ReactElement {
+export function Header(props: RandomPokemonSelectionInterface): React.ReactElement {
     return (
         <Container>
             <RandomizeSelectionButton setRandomPokemonSelection={props.setRandomPokemonSelection} />
@@ -13,9 +13,7 @@ export function Header(props: HeaderPropsInterface): React.ReactElement {
                 What Pokemon
                 <br /> would you like to find?
             </HeaderText>
-            {props.FiltersModalStatus && (
-                <Search setIsFilterModalActive={props.FiltersModalStatus?.setIsFilterModalActive} />
-            )}
+            <Search />
         </Container>
     );
 }

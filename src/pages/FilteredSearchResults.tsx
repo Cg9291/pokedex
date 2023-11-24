@@ -119,8 +119,6 @@ const Container = styled(ContainerPrototype)`
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
-    max-height: 91%;
-    overflow-y: scroll;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

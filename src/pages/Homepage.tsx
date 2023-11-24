@@ -4,11 +4,9 @@ import { Header } from "../components/homepage/header/Header";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import React, { useState } from "react";
 import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokemonNumbers";
-import { FilteredSearchModal } from "../components/homepage/FilteredSearchModal";
 
 export function Homepage(): React.ReactElement {
     const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
-    const [isFilterModalActive, setIsFilterModalActive] = useState<boolean>(false);
 
     const mapPictureCards = (): React.ReactElement[] =>
         randomPokemonSelection.map((number, index) => <PokemonPictureCard id={number} isLink={true} key={index} />);
@@ -18,11 +16,8 @@ export function Homepage(): React.ReactElement {
             <Header
                 randomPokemonSelection={randomPokemonSelection}
                 setRandomPokemonSelection={setRandomPokemonSelection}
-                FiltersModalStatus={{ setIsFilterModalActive }}
             />
-            <MainContainer>
-                {mapPictureCards()} {isFilterModalActive && <FilteredSearchModal />}
-            </MainContainer>
+            <MainContainer>{mapPictureCards()}</MainContainer>
         </Container>
     );
 }
