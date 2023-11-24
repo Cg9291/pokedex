@@ -2,18 +2,12 @@ import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import React from "react";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
-import { MainContainer } from "./Homepage";
 import { typesColors } from "../objects/typesColors";
 
 export function Favorites(): React.ReactElement {
     const favoritedPokemons = JSON.parse(localStorage.getItem("pokemons") || "[]");
     const mapPictureCards = (): React.ReactElement[] =>
         favoritedPokemons.map((number: number, index: number) => <PokemonPictureCard id={number} key={index} />);
-    console.log(favoritedPokemons.length);
-
-    favoritedPokemons.forEach(function (favoritedPokemon: number, index: number) {
-        console.log("[" + index + "]: " + favoritedPokemons.id);
-    });
 
     return (
         <Container>

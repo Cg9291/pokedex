@@ -19,5 +19,6 @@ export const typesColors: TypesColorsInt = {
     dark: "#705746",
     steel: "#B7B7CE",
     fairy: "#D685AD",
-    black: "#000000"
+    black: "#000000",
+    white: "#ffffff"
 };

@@ -21,7 +21,11 @@ import { About } from "../components/pokemonProfiles/profileNavBodies/About";
 import { MyPropsInt } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { HeartIcon } from "../assets/heartIcon";
-import { addFavoritePokemon } from "../functions/utilities/useLocalStorage";
+import {
+    addFavoritePokemon,
+    isPokemonFavorited,
+    removePokemonFromFavorites
+} from "../functions/utilities/useLocalStorage";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -122,6 +126,11 @@ export function PokemonProfile(): React.ReactElement {
             MovesProps: { moves: moves }
         };
 
+        const favoriteHandler = (id: number) => {
+            // removePokemonFromFavorites(id);
+            console.log("is this pokemon in favs? ", isPokemonFavorited(id));
+        };
+
         return (
             <Container $mainType={types[0].type.name}>
                 <ImageContainer>
@@ -130,10 +139,10 @@ export function PokemonProfile(): React.ReactElement {
                         {capitalizeWords(name)}
                         <p
                             onClick={() => {
-                                addFavoritePokemon(id);
+                                favoriteHandler(id);
                             }}
                         >
-                            <HeartIcon />
+                            <HeartIcon favorite={isPokemonFavorited(id)} />
                         </p>
                     </PokemonName>
                     <SvgImg>
