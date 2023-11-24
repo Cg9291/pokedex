@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import React from "react";
+import ContainerPrototype from "../../../prototypes/ContainerPrototype";
+import React, { useState } from "react";
+import { SearchSuggestions } from "./SearchSuggestions";
 
 export function Search(): React.ReactElement {
+    const [isFocused, setIsFocused] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -21,9 +23,17 @@ export function Search(): React.ReactElement {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <Label>
-                    <Input required />
-                </Label>
+                <InputContainer>
+                    <Label>
+                        <Input
+                            $isFocused={isFocused}
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => setIsFocused(false)}
+                            required
+                        />
+                    </Label>
+                    {isFocused && <SearchSuggestions />}
+                </InputContainer>
 
                 <ButtonsContainer>
                     <Button>Search</Button>
@@ -43,19 +53,33 @@ const Form = styled.form.attrs({
     display: flex;
 `;
 
+const InputContainer = styled.div`
+    position: relative;
+    min-width: 85%;
+    width: 85%;
+    max-width: 85%;
+    height: fit-content;
+`;
 const Label = styled.label`
-    flex: 3 0 85%;
+    width: 100%;
 `;
 
-const Input = styled.input.attrs({
+const Input = styled.input.attrs<{ $isFocused: boolean }>((props) => ({
     placeholder: "Search anything related to a pokemon",
     name: "searchInput"
-})`
+}))`
     width: 100%;
     height: 3rem;
     border-radius: 99px;
+    z-index: 1;
+    border-top-left-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
+    border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
+    border-bottom-left-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
     margin-top: auto;
     padding-left: 1rem;
+    box-shadow: 0 0 2px 1px grey;
+    border: none;
 `;
 
 const Button = styled.button.attrs({ type: "submit" })`

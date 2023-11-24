@@ -6,6 +6,8 @@ export function PokemonGuess() {
     const [pokemonChoices, setPokemonChoices] = useState<PokemonGuessInfo[]>([]);
     const [correctPokemon, setCorrectPokemon] = useState<PokemonGuessInfo>();
     const { pokemons, fetchPokemons, pending } = getPokemonGameList();
+
+    console.log(pokemons);
     function shuffle(arr: Array<any>) {
         return arr
             .map((value) => ({ value, sort: Math.random() }))
