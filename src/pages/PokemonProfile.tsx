@@ -20,6 +20,8 @@ import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseSt
 import { About } from "../components/pokemonProfiles/profileNavBodies/About";
 import { MyPropsInt } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
+import { HeartIcon } from "../assets/heartIcon";
+import { addFavoritePokemon } from "../functions/utilities/useLocalStorage";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -124,7 +126,16 @@ export function PokemonProfile(): React.ReactElement {
             <Container $mainType={types[0].type.name}>
                 <ImageContainer>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
-                    <PokemonName>{capitalizeWords(name)}</PokemonName>
+                    <PokemonName>
+                        {capitalizeWords(name)}
+                        <p
+                            onClick={() => {
+                                addFavoritePokemon(id);
+                            }}
+                        >
+                            <HeartIcon />
+                        </p>
+                    </PokemonName>
                     <SvgImg>
                         <PokemonImg href={sprites.front_default} />
                     </SvgImg>
