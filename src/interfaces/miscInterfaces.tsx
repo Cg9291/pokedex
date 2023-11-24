@@ -93,9 +93,15 @@ export interface MovesComponentProps {
     moves: Mfe[];
 }
 
-export interface RandomPokemonSelectionInterface {
+export interface HeaderPropsInterface {
     randomPokemonSelection?: number[];
     setRandomPokemonSelection: React.Dispatch<React.SetStateAction<number[]>>;
+    FiltersModalStatus?: IsFiltersModalActiveKitInterface;
+}
+
+export interface IsFiltersModalActiveKitInterface {
+    isFilterModalActive?: boolean;
+    setIsFilterModalActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface NavIconsInterface {
