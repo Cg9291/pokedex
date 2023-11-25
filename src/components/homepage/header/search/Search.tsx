@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
 
 export function Search(): React.ReactElement {
     const [isFocused, setIsFocused] = useState<boolean>(false);
+    const [searchInput, setSearchInput] = useState<string>("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(searchInput);
+    });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -27,12 +32,17 @@ export function Search(): React.ReactElement {
                     <Label>
                         <Input
                             $isFocused={isFocused}
+                            onChange={(e) => {
+                                const targetValue = e.currentTarget.value;
+                                setSearchInput((oldState) => oldState.concat(targetValue));
+                                return;
+                            }}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => setIsFocused(false)}
                             required
                         />
                     </Label>
-                    {isFocused && <SearchSuggestions />}
+                    {isFocused && <SearchSuggestions searchInput={searchInput} />}
                 </InputContainer>
 
                 <ButtonsContainer>
@@ -64,10 +74,10 @@ const Label = styled.label`
     width: 100%;
 `;
 
-const Input = styled.input.attrs<{ $isFocused: boolean }>((props) => ({
+const Input = styled.input.attrs<{ $isFocused: boolean }>({
     placeholder: "Search anything related to a pokemon",
     name: "searchInput"
-}))`
+})`
     width: 100%;
     height: 3rem;
     border-radius: 99px;

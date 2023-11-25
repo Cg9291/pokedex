@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
+import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
+import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 
-export function SearchSuggestions(): React.ReactElement {
+export function SearchSuggestions(props: { searchInput: string }): React.ReactElement {
+    const { pokemons, pending } = getPokemonGameList();
+    const pokemonNamesList = pokemons
+        .map((x: PokemonGuessInfo) => x.pokemonName)
+        .sort(); /* [NOTE] will create custom sort function later */
+    console.log("aa", pokemonNamesList);
     return (
         <Container>
             <SuggestionsList>
