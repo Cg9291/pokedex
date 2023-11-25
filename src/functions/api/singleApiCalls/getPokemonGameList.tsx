@@ -13,13 +13,13 @@ type PokemonListResponse = {
     url: string;
 };
 
-export function getPokemonGameList() {
+export function getPokemonGameList(limitNum?: number) {
     const [pokemons, setPokemons] = useState<PokemonGuessInfo[]>([]);
     const [pending, setPending] = useState(true);
 
     useEffect(() => {
         (async () => {
-            await fetchPokemons(151);
+            await fetchPokemons(limitNum ? limitNum : 151);
         })();
     }, []);
 

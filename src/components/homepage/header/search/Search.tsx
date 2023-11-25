@@ -11,7 +11,7 @@ export function Search(): React.ReactElement {
 
     useEffect(() => {
         console.log(searchInput);
-    });
+    }, [searchInput]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -32,17 +32,21 @@ export function Search(): React.ReactElement {
                     <Label>
                         <Input
                             $isFocused={isFocused}
+                            value={searchInput}
                             onChange={(e) => {
-                                const targetValue = e.currentTarget.value;
-                                setSearchInput((oldState) => oldState.concat(targetValue));
-                                return;
+                                setSearchInput(e.target.value);
                             }}
                             onFocus={() => setIsFocused(true)}
-                            onBlur={() => setIsFocused(false)}
                             required
                         />
                     </Label>
-                    {isFocused && <SearchSuggestions searchInput={searchInput} />}
+                    {isFocused && (
+                        <SearchSuggestions
+                            searchInput={searchInput}
+                            setSearchInput={setSearchInput}
+                            setIsFocused={setIsFocused}
+                        />
+                    )}
                 </InputContainer>
 
                 <ButtonsContainer>
@@ -81,7 +85,7 @@ const Input = styled.input.attrs<{ $isFocused: boolean }>({
     width: 100%;
     height: 3rem;
     border-radius: 99px;
-    z-index: 1;
+    z-index: 2;
     border-top-left-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
     border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
