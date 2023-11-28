@@ -32,15 +32,16 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
             if (e.key === "ArrowUp") {
                 focusedElement > 0 && setFocusedElement((count) => count - 1);
             } else if (e.key === "ArrowDown") {
-                setFocusedElement((count) => count + 1);
+                inputSuggestionsList &&
+                    focusedElement <= inputSuggestionsList.length &&
+                    setFocusedElement((count) => count + 1);
             }
         };
 
         document.addEventListener("keydown", handleNav);
         return () => document.removeEventListener("keydown", handleNav);
-    }, [focusedElement]);
+    }, [focusedElement, inputSuggestionsList]);
 
-    console.log("mvmt", focusedElement);
     const handleClick = (name: string) => {
         props.setSearchInput(name);
         props.setIsFocused(false);
@@ -89,6 +90,8 @@ const Container = styled(ContainerPrototype)`
 
 const SuggestionsList = styled.ul`
     width: 100%;
+    height: 50vh;
+    overflow-y: scroll;
 `;
 
 const ListItem = styled.li`
