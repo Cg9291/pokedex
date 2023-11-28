@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import React, { useEffect, useState } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
+import SearchIcon from "../../../../assets/icons8-search-100.png";
 
 export function Search(): React.ReactElement {
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -29,10 +30,8 @@ export function Search(): React.ReactElement {
         <Container>
             <Form onSubmit={handleSubmit}>
                 <InputContainer>
-                    <Label>
+                    <Label $isFocused={isFocused}>
                         <Input
-                            $isFocused={isFocused}
-                            list="myList"
                             value={searchInput}
                             onChange={(e) => {
                                 setSearchInput(e.target.value);
@@ -40,10 +39,15 @@ export function Search(): React.ReactElement {
                             onFocus={() => setIsFocused(true)}
                             required
                         />
+                        <SearchIconButton $isFocused={isFocused}>
+                            <SvgImg>
+                                <SearchIconImg href={SearchIcon} />
+                            </SvgImg>
+                        </SearchIconButton>
                     </Label>
                     {isFocused && (
                         <SearchSuggestions
-                            searchInput={searchInput}
+                            searchInput={searchInput.toLowerCase()}
                             setSearchInput={setSearchInput}
                             setIsFocused={setIsFocused}
                         />
@@ -75,26 +79,34 @@ const InputContainer = styled.div`
     max-width: 85%;
     height: fit-content;
 `;
-const Label = styled.label`
-    width: 100%;
-`;
-
-const Input = styled.input.attrs<{ $isFocused: boolean }>({
-    placeholder: "Search anything related to a pokemon",
-    name: "searchInput"
-})`
+const Label = styled.label<{ $isFocused: boolean }>`
     width: 100%;
     height: 3rem;
+    display: flex;
     border-radius: 99px;
     z-index: 2;
+    background-color: white;
+    padding-right: 0.5rem;
     border-top-left-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
     border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
     border-bottom-right-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
+    padding: 0.5rem 0;
+`;
+
+const Input = styled.input.attrs({
+    placeholder: "Search anything related to a pokemon",
+    name: "searchInput"
+})`
+    width: 85%;
+    height: 100%;
+    z-index: 2;
+
     margin-top: auto;
     padding-left: 1rem;
-    box-shadow: 0 0 2px 1px grey;
     border: none;
+    background-color: transparent;
+    border-right: 0.1px solid grey;
 `;
 
 const Button = styled.button.attrs({ type: "submit" })`
@@ -110,4 +122,30 @@ const FilterButton = styled.button.attrs({ type: "button" })`
     width: 100%;
     height: 100%;
     border-radius: 10px;
+`;
+
+const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isFocused: boolean }>`
+    width: 15%;
+    height: 100%;
+    border: none;
+    background-color: white;
+    border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
+`;
+
+const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
+    display: flex;
+    justify-content: center;
+    min-height: 60%;
+    width: 100%;
+    height: 100%;
+    //padding-left: 0.3rem;
+`;
+
+const SearchIconImg = styled.image`
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1/1;
+    align-self: center;
+    //padding-left: 0.3rem;
 `;

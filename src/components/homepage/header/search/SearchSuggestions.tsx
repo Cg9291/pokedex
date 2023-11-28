@@ -17,15 +17,21 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         .sort(); /* [NOTE] will create custom sort function later */
     const [inputSuggestionsList, setInputSuggestionsList] = useState<React.ReactElement[]>();
     const [focusedElement, setFocusedElement] = useState<number>(0);
-    const suggestionRef = useRef<any>(null);
+    const suggestionRef = useRef<any>(null); //[NOTE!]will fix any
 
     useEffect(() => {
         displaySearchInputSuggestions();
-    }, [props.searchInput, focusedElement]);
+        setFocusedElement(0);
+    }, [props.searchInput]);
 
     useEffect(() => {
-        suggestionRef.current?.focus();
-    });
+        displaySearchInputSuggestions();
+        suggestionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest"
+        });
+    }, [focusedElement]);
 
     useEffect(() => {
         const handleNav = (e: KeyboardEvent) => {
@@ -33,11 +39,10 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                 focusedElement > 0 && setFocusedElement((count) => count - 1);
             } else if (e.key === "ArrowDown") {
                 inputSuggestionsList &&
-                    focusedElement <= inputSuggestionsList.length &&
+                    focusedElement < inputSuggestionsList.length - 1 &&
                     setFocusedElement((count) => count + 1);
             }
         };
-
         document.addEventListener("keydown", handleNav);
         return () => document.removeEventListener("keydown", handleNav);
     }, [focusedElement, inputSuggestionsList]);
@@ -48,7 +53,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     };
 
     const displaySearchInputSuggestions = () => {
-        let tabIndexNum = 0;
+        let tabIndexValue = 0;
         const inputRegex = new RegExp(`^${props.searchInput}`);
 
         const displaySuggestionsList = pokemonNamesList
@@ -59,11 +64,13 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                     ref={(node) => {
                         focusedElement === idx ? (suggestionRef.current = node) : null;
                     }}
-                    tabIndex={(tabIndexNum += 1)}
+                    tabIndex={(tabIndexValue += 1)}
+                    $isFocused={focusedElement === idx ? true : false}
                 >
                     <Button onClick={() => handleClick(name)}>{name}</Button>
                 </ListItem>
             ));
+
         setInputSuggestionsList(displaySuggestionsList);
     };
 
@@ -94,15 +101,11 @@ const SuggestionsList = styled.ul`
     overflow-y: scroll;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<{ $isFocused: boolean }>`
     width: 100%;
     height: 2rem;
     border: 0.1px solid;
-
-    &:focus {
-        background-color: lightgray;
-        color: red;
-    }
+    background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
