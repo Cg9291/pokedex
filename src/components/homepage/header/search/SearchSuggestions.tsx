@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
@@ -15,32 +15,60 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     const pokemonNamesList = pokemons
         .map((x: PokemonGuessInfo) => x.pokemonName)
         .sort(); /* [NOTE] will create custom sort function later */
-    const [pokemonSuggestions, setPokemonSuggestions] = useState<React.ReactElement[]>();
+    const [inputSuggestionsList, setInputSuggestionsList] = useState<React.ReactElement[]>();
+    const [focusedElement, setFocusedElement] = useState<number>(0);
+    const suggestionRef = useRef<any>(null);
 
     useEffect(() => {
-        displayInputMatches(props.searchInput, pokemonNamesList);
-    }, [props.searchInput]);
+        displaySearchInputSuggestions();
+    }, [props.searchInput, focusedElement]);
 
+    useEffect(() => {
+        suggestionRef.current?.focus();
+    });
+
+    useEffect(() => {
+        const handleNav = (e: KeyboardEvent) => {
+            if (e.key === "ArrowUp") {
+                focusedElement > 0 && setFocusedElement((count) => count - 1);
+            } else if (e.key === "ArrowDown") {
+                setFocusedElement((count) => count + 1);
+            }
+        };
+
+        document.addEventListener("keydown", handleNav);
+        return () => document.removeEventListener("keydown", handleNav);
+    }, [focusedElement]);
+
+    console.log("mvmt", focusedElement);
     const handleClick = (name: string) => {
         props.setSearchInput(name);
         props.setIsFocused(false);
     };
 
-    const displayInputMatches = (input: string, list: string[]) => {
+    const displaySearchInputSuggestions = () => {
+        let tabIndexNum = 0;
         const inputRegex = new RegExp(`^${props.searchInput}`);
-        const suggestionsList = list
+
+        const displaySuggestionsList = pokemonNamesList
             .filter((x: string) => inputRegex.test(x))
             .map((name: string, idx: number) => (
-                <ListItem key={idx}>
+                <ListItem
+                    key={name}
+                    ref={(node) => {
+                        focusedElement === idx ? (suggestionRef.current = node) : null;
+                    }}
+                    tabIndex={(tabIndexNum += 1)}
+                >
                     <Button onClick={() => handleClick(name)}>{name}</Button>
                 </ListItem>
             ));
-        setPokemonSuggestions(suggestionsList);
+        setInputSuggestionsList(displaySuggestionsList);
     };
 
     return (
         <Container>
-            <SuggestionsList>{pokemonSuggestions}</SuggestionsList>
+            <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
         </Container>
     );
 }
@@ -67,11 +95,16 @@ const ListItem = styled.li`
     width: 100%;
     height: 2rem;
     border: 0.1px solid;
+
+    &:focus {
+        background-color: lightgray;
+        color: red;
+    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
     height: 100%;
     border: none;
-    background-color: white;
+    background-color: transparent;
 `;

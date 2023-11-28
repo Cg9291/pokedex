@@ -32,6 +32,7 @@ export function Search(): React.ReactElement {
                     <Label>
                         <Input
                             $isFocused={isFocused}
+                            list="myList"
                             value={searchInput}
                             onChange={(e) => {
                                 setSearchInput(e.target.value);
