@@ -1,18 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
+import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
 
 export function Search(): React.ReactElement {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState<string>("");
     const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log(searchInput);
-    }, [searchInput]);
 
     const hasInputAndIsFocused = searchInput.length > 0 && isFocused;
 
@@ -28,22 +25,23 @@ export function Search(): React.ReactElement {
         navigate(`/filter/:gen`);
     };
 
-    console.log(hasInputAndIsFocused, searchInput.length);
+    const handleChange = (e: React.ChangeEvent) => {
+        const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
+        setSearchInput(clearedInput);
+    };
 
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
                 <InputContainer>
-                    <Label $showSuggestions={hasInputAndIsFocused}>
+                    <Label $isShowingSuggestions={hasInputAndIsFocused}>
                         <Input
                             value={searchInput}
-                            onChange={(e) => {
-                                setSearchInput(e.target.value);
-                            }}
+                            onChange={handleChange}
                             onFocus={() => setIsFocused(true)}
                             required
                         />
-                        <SearchIconButton $showSuggestions={hasInputAndIsFocused}>
+                        <SearchIconButton $isShowingSuggestions={hasInputAndIsFocused}>
                             <SvgImg>
                                 <SearchIconImg href={SearchIcon} />
                             </SvgImg>
@@ -83,7 +81,7 @@ const InputContainer = styled.div`
     max-width: 85%;
     height: fit-content;
 `;
-const Label = styled.label<{ $showSuggestions: boolean }>`
+const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
     height: 3rem;
     display: flex;
@@ -91,10 +89,10 @@ const Label = styled.label<{ $showSuggestions: boolean }>`
     z-index: 2;
     background-color: white;
     padding-right: 0.5rem;
-    border-top-left-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
-    border-top-right-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
-    border-bottom-left-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
-    border-bottom-right-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
+    border-top-left-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
+    border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
+    border-bottom-left-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     padding: 0.5rem 0;
 `;
 
@@ -105,7 +103,6 @@ const Input = styled.input.attrs({
     width: 85%;
     height: 100%;
     z-index: 2;
-
     margin-top: auto;
     padding-left: 1rem;
     border: none;
@@ -128,28 +125,27 @@ const FilterButton = styled.button.attrs({ type: "button" })`
     border-radius: 10px;
 `;
 
-const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $showSuggestions: boolean }>`
+const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSuggestions: boolean }>`
     width: 15%;
     height: 100%;
     border: none;
     background-color: white;
-    border-top-right-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
-    border-bottom-right-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
+    border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
+    display: flex;
+    justify-content: center;
 `;
 
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
     display: flex;
     justify-content: center;
-    min-height: 60%;
-    width: 100%;
-    height: 100%;
-    //padding-left: 0.3rem;
+    max-height: 100%;
+    max-width: 100%;
 `;
 
 const SearchIconImg = styled.image`
     height: 100%;
-    width: auto;
+    width: 100%;
     aspect-ratio: 1/1;
     align-self: center;
-    //padding-left: 0.3rem;
 `;
