@@ -14,6 +14,8 @@ export function Search(): React.ReactElement {
         console.log(searchInput);
     }, [searchInput]);
 
+    const hasInputAndIsFocused = searchInput.length > 0 && isFocused;
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -26,11 +28,13 @@ export function Search(): React.ReactElement {
         navigate(`/filter/:gen`);
     };
 
+    console.log(hasInputAndIsFocused, searchInput.length);
+
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
                 <InputContainer>
-                    <Label $isFocused={isFocused}>
+                    <Label $showSuggestions={hasInputAndIsFocused}>
                         <Input
                             value={searchInput}
                             onChange={(e) => {
@@ -39,7 +43,7 @@ export function Search(): React.ReactElement {
                             onFocus={() => setIsFocused(true)}
                             required
                         />
-                        <SearchIconButton $isFocused={isFocused}>
+                        <SearchIconButton $showSuggestions={hasInputAndIsFocused}>
                             <SvgImg>
                                 <SearchIconImg href={SearchIcon} />
                             </SvgImg>
@@ -79,7 +83,7 @@ const InputContainer = styled.div`
     max-width: 85%;
     height: fit-content;
 `;
-const Label = styled.label<{ $isFocused: boolean }>`
+const Label = styled.label<{ $showSuggestions: boolean }>`
     width: 100%;
     height: 3rem;
     display: flex;
@@ -87,10 +91,10 @@ const Label = styled.label<{ $isFocused: boolean }>`
     z-index: 2;
     background-color: white;
     padding-right: 0.5rem;
-    border-top-left-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
-    border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
-    border-bottom-left-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
-    border-bottom-right-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
+    border-top-left-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
+    border-top-right-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
+    border-bottom-left-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
     padding: 0.5rem 0;
 `;
 
@@ -124,13 +128,13 @@ const FilterButton = styled.button.attrs({ type: "button" })`
     border-radius: 10px;
 `;
 
-const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isFocused: boolean }>`
+const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $showSuggestions: boolean }>`
     width: 15%;
     height: 100%;
     border: none;
     background-color: white;
-    border-top-right-radius: ${(props) => (props.$isFocused ? "24px" : "99px")};
-    border-bottom-right-radius: ${(props) => (props.$isFocused ? "0" : "99px")};
+    border-top-right-radius: ${(props) => (props.$showSuggestions ? "24px" : "99px")};
+    border-bottom-right-radius: ${(props) => (props.$showSuggestions ? "0" : "99px")};
 `;
 
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`

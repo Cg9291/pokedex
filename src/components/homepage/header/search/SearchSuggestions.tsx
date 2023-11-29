@@ -74,10 +74,12 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         setInputSuggestionsList(displaySuggestionsList);
     };
 
-    return (
+    return props.searchInput ? (
         <Container>
             <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
         </Container>
+    ) : (
+        <></>
     );
 }
 

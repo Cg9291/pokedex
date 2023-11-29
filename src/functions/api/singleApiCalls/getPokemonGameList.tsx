@@ -30,7 +30,7 @@ export function getPokemonGameList(limitNum?: number) {
             if (res.data) {
                 const _pokemons = res.data.results.map((item: PokemonListResponse) => {
                     const separated = item.url.split("/");
-                    console.log(item.url);
+
                     return {
                         pokemonName: item.name,
                         // url contains the id of the Pokemon
