@@ -9,16 +9,30 @@ import { punctuationRegex } from "../../../../regularExpressions/punctuationRege
 export function Search(): React.ReactElement {
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState<string>("");
+    const [suggestedInput, setSuggestedInput] = useState<string>("");
     const navigate = useNavigate();
 
-    const hasInputAndIsFocused = searchInput.length > 0 && isFocused;
+    const hasInputAndIsFocused = suggestedInput?.length > 0 && isFocused;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
-        const name = transmittedData.toString().toLowerCase();
-        navigate(`/pokemons/name/${name}`);
+
+        if (suggestedInput.length > 0) {
+            (async function () {
+                try {
+                    console.log("si", suggestedInput);
+                    await setSearchInput(suggestedInput);
+                } finally {
+                    setSuggestedInput("");
+                }
+            })();
+            console.log("ss", suggestedInput, searchInput);
+        } else {
+            const formData = new FormData(e.currentTarget);
+            const transmittedData = Object.fromEntries(formData.entries()).searchInput;
+            const name = transmittedData.toString().toLowerCase();
+            navigate(`/pokemons/name/${name}`);
+        }
     };
 
     const handleClick = () => {
@@ -28,6 +42,7 @@ export function Search(): React.ReactElement {
     const handleChange = (e: React.ChangeEvent) => {
         const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
         setSearchInput(clearedInput);
+        /*  setSuggestedInput(clearedInput); */
     };
 
     return (
@@ -51,6 +66,8 @@ export function Search(): React.ReactElement {
                         <SearchSuggestions
                             searchInput={searchInput.toLowerCase()}
                             setSearchInput={setSearchInput}
+                            suggestedInput={suggestedInput}
+                            setSuggestedInput={setSuggestedInput}
                             setIsFocused={setIsFocused}
                         />
                     )}

@@ -7,6 +7,8 @@ import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPo
 export interface SearchSuggestionsProps {
     searchInput: string;
     setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+    suggestedInput: string;
+    setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
     setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -21,6 +23,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 
     useEffect(() => {
         displaySearchInputSuggestions();
+        props.setSuggestedInput(matchSuggestionsToInput()[0]);
         setFocusedElementIndex(0);
     }, [props.searchInput]);
 
@@ -36,13 +39,18 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     useEffect(() => {
         const handleNav = (e: KeyboardEvent) => {
             if (e.key === "ArrowUp") {
-                focusedElementIndex > 0 && setFocusedElementIndex((count) => count - 1);
+                if (focusedElementIndex > 0 && inputSuggestionsList) {
+                    setFocusedElementIndex((count) => count - 1);
+                    props.setSuggestedInput(matchSuggestionsToInput()[focusedElementIndex - 1]); //[!NOTE]Will improve code
+                }
             } else if (e.key === "ArrowDown") {
-                inputSuggestionsList &&
-                    focusedElementIndex < inputSuggestionsList.length - 1 &&
+                if (inputSuggestionsList && focusedElementIndex < inputSuggestionsList.length - 1) {
                     setFocusedElementIndex((count) => count + 1);
+                    props.setSuggestedInput(matchSuggestionsToInput()[focusedElementIndex + 1]); //[!NOTE]Will improve code
+                }
             }
         };
+
         document.addEventListener("keydown", handleNav);
         return () => document.removeEventListener("keydown", handleNav);
     }, [focusedElementIndex, inputSuggestionsList]);
@@ -52,10 +60,15 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         props.setIsFocused(false);
     };
 
+    const matchSuggestionsToInput = () => {
+        const inputRegex = new RegExp(`^${props.searchInput}`);
+        const result = pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
+        return result;
+    };
+
     const displaySearchInputSuggestions = () => {
         let tabIndexValue = 0;
         const inputRegex = new RegExp(`^${props.searchInput}`);
-
         const displaySuggestionsList = pokemonNamesList
             .filter((x: string) => inputRegex.test(x))
             .map((name: string, idx: number) => (
@@ -74,7 +87,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         setInputSuggestionsList(displaySuggestionsList);
     };
 
-    return props.searchInput ? (
+    return props.suggestedInput ? (
         <Container>
             <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
         </Container>
