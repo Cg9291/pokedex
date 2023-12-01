@@ -26,7 +26,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         displaySearchInputSuggestions();
         props.setSuggestedInput(matchSuggestionsToInput()[0]);
         setFocusedElementIndex(0);
-        console.log(pokemonNamesList.filter((x) => x.includes("-")));
+        //console.log(pokemonNamesList.filter((x) => x.includes("-")));
     }, [props.searchInput]);
 
     useEffect(() => {
@@ -45,7 +45,9 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 
     const matchSuggestionsToInput = () => {
         const inputRegex = new RegExp(`^${props.searchInput}`);
-        return pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
+        return props.searchInput.length === 0
+            ? []
+            : pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
     };
 
     const displaySearchInputSuggestions = () => {
@@ -85,7 +87,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         navigate(`/pokemons/name/${name}`);
     };
 
-    return props.suggestedInput?.length > 0 ? (
+    return props.suggestedInput ? (
         <Container>
             <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
         </Container>
