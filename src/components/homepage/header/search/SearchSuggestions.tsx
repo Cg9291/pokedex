@@ -3,13 +3,13 @@ import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
+import { useNavigate } from "react-router-dom";
 
 export interface SearchSuggestionsProps {
     searchInput: string;
     setSearchInput: React.Dispatch<React.SetStateAction<string>>;
     suggestedInput: string;
     setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
-    setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactElement {
@@ -19,12 +19,14 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         .sort(); /* [NOTE] will create custom sort function later */
     const [inputSuggestionsList, setInputSuggestionsList] = useState<React.ReactElement[]>();
     const [focusedElementIndex, setFocusedElementIndex] = useState<number>(0);
-    const suggestionRef = useRef<any>(null); //[NOTE!]will fix any
+    const suggestionRef = useRef<HTMLLIElement | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         displaySearchInputSuggestions();
         props.setSuggestedInput(matchSuggestionsToInput()[0]);
         setFocusedElementIndex(0);
+        console.log(pokemonNamesList.filter((x) => x.includes("-")));
     }, [props.searchInput]);
 
     useEffect(() => {
@@ -37,57 +39,53 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     }, [focusedElementIndex]);
 
     useEffect(() => {
-        const handleNav = (e: KeyboardEvent) => {
-            if (e.key === "ArrowUp") {
-                if (focusedElementIndex > 0 && inputSuggestionsList) {
-                    setFocusedElementIndex((count) => count - 1);
-                    props.setSuggestedInput(matchSuggestionsToInput()[focusedElementIndex - 1]); //[!NOTE]Will improve code
-                }
-            } else if (e.key === "ArrowDown") {
-                if (inputSuggestionsList && focusedElementIndex < inputSuggestionsList.length - 1) {
-                    setFocusedElementIndex((count) => count + 1);
-                    props.setSuggestedInput(matchSuggestionsToInput()[focusedElementIndex + 1]); //[!NOTE]Will improve code
-                }
-            }
-        };
-
         document.addEventListener("keydown", handleNav);
         return () => document.removeEventListener("keydown", handleNav);
-    }, [focusedElementIndex, inputSuggestionsList]);
-
-    const handleClick = (name: string) => {
-        props.setSearchInput(name);
-        props.setIsFocused(false);
-    };
+    }, [inputSuggestionsList]);
 
     const matchSuggestionsToInput = () => {
         const inputRegex = new RegExp(`^${props.searchInput}`);
-        const result = pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
-        return result;
+        return pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
     };
 
     const displaySearchInputSuggestions = () => {
         let tabIndexValue = 0;
-        const inputRegex = new RegExp(`^${props.searchInput}`);
-        const displaySuggestionsList = pokemonNamesList
-            .filter((x: string) => inputRegex.test(x))
-            .map((name: string, idx: number) => (
-                <ListItem
-                    key={name}
-                    ref={(node) => {
-                        focusedElementIndex === idx ? (suggestionRef.current = node) : null;
-                    }}
-                    tabIndex={(tabIndexValue += 1)}
-                    $isFocused={focusedElementIndex === idx ? true : false}
-                >
-                    <Button onClick={() => handleClick(name)}>{name}</Button>
-                </ListItem>
-            ));
-
+        const displaySuggestionsList = matchSuggestionsToInput().map((name: string, idx: number) => (
+            <ListItem
+                key={name}
+                ref={(node) => {
+                    focusedElementIndex === idx ? (suggestionRef.current = node) : null;
+                }}
+                tabIndex={(tabIndexValue += 1)}
+                $isFocused={focusedElementIndex === idx ? true : false}
+            >
+                <Button onClick={() => handleClick(name)}>{name}</Button>
+            </ListItem>
+        ));
         setInputSuggestionsList(displaySuggestionsList);
     };
 
-    return props.suggestedInput ? (
+    const handleNav = (e: KeyboardEvent) => {
+        if (e.key === "ArrowUp") {
+            if (inputSuggestionsList && focusedElementIndex > 0) {
+                const index = focusedElementIndex - 1;
+                setFocusedElementIndex(index);
+                props.setSuggestedInput(matchSuggestionsToInput()[index]);
+            }
+        } else if (e.key === "ArrowDown") {
+            if (inputSuggestionsList && focusedElementIndex < inputSuggestionsList.length - 1) {
+                const index = focusedElementIndex + 1;
+                setFocusedElementIndex(index);
+                props.setSuggestedInput(matchSuggestionsToInput()[index]);
+            }
+        }
+    };
+
+    const handleClick = (name: string) => {
+        navigate(`/pokemons/name/${name}`);
+    };
+
+    return props.suggestedInput?.length > 0 ? (
         <Container>
             <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
         </Container>

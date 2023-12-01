@@ -7,26 +7,15 @@ import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
 
 export function Search(): React.ReactElement {
-    const [isFocused, setIsFocused] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState<string>("");
     const [suggestedInput, setSuggestedInput] = useState<string>("");
     const navigate = useNavigate();
-
-    const hasInputAndIsFocused = suggestedInput?.length > 0 && isFocused;
+    const hasSuggestionsAndIsFocused = suggestedInput?.length > 0;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-
-        if (suggestedInput.length > 0) {
-            (async function () {
-                try {
-                    console.log("si", suggestedInput);
-                    await setSearchInput(suggestedInput);
-                } finally {
-                    setSuggestedInput("");
-                }
-            })();
-            console.log("ss", suggestedInput, searchInput);
+        if (suggestedInput?.length > 0) {
+            navigate(`/pokemons/name/${suggestedInput}`);
         } else {
             const formData = new FormData(e.currentTarget);
             const transmittedData = Object.fromEntries(formData.entries()).searchInput;
@@ -35,47 +24,37 @@ export function Search(): React.ReactElement {
         }
     };
 
-    const handleClick = () => {
+    const handleFilterClick = () => {
         navigate(`/filter/:gen`);
     };
 
     const handleChange = (e: React.ChangeEvent) => {
         const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
         setSearchInput(clearedInput);
-        /*  setSuggestedInput(clearedInput); */
     };
 
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
                 <InputContainer>
-                    <Label $isShowingSuggestions={hasInputAndIsFocused}>
-                        <Input
-                            value={searchInput}
-                            onChange={handleChange}
-                            onFocus={() => setIsFocused(true)}
-                            required
-                        />
-                        <SearchIconButton $isShowingSuggestions={hasInputAndIsFocused}>
+                    <Label $isShowingSuggestions={hasSuggestionsAndIsFocused}>
+                        <Input value={searchInput} onChange={handleChange} required />
+                        <SearchIconButton $isShowingSuggestions={hasSuggestionsAndIsFocused}>
                             <SvgImg>
                                 <SearchIconImg href={SearchIcon} />
                             </SvgImg>
                         </SearchIconButton>
                     </Label>
-                    {isFocused && (
-                        <SearchSuggestions
-                            searchInput={searchInput.toLowerCase()}
-                            setSearchInput={setSearchInput}
-                            suggestedInput={suggestedInput}
-                            setSuggestedInput={setSuggestedInput}
-                            setIsFocused={setIsFocused}
-                        />
-                    )}
+                    <SearchSuggestions
+                        searchInput={searchInput.toLowerCase()}
+                        setSearchInput={setSearchInput}
+                        suggestedInput={suggestedInput}
+                        setSuggestedInput={setSuggestedInput}
+                    />
                 </InputContainer>
-
                 <ButtonsContainer>
                     <Button>Search</Button>
-                    <FilterButton onClick={handleClick}>Filter</FilterButton>
+                    <FilterButton onClick={handleFilterClick}>Filter</FilterButton>
                 </ButtonsContainer>
             </Form>
         </Container>
