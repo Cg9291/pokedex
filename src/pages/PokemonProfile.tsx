@@ -22,7 +22,7 @@ import { MyPropsInt } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { HeartIcon } from "../assets/heartIcon";
 import {
-    addFavoritePokemon,
+    addPokemonToFavorites,
     isPokemonFavorited,
     removePokemonFromFavorites
 } from "../functions/utilities/useLocalStorage";
@@ -30,6 +30,7 @@ import {
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true },
         "Base Stats": {
@@ -38,6 +39,7 @@ export function PokemonProfile(): React.ReactElement {
         Evolution: { isFocused: false },
         Moves: { isFocused: false }
     });
+
     const { id: paramId, name: paramName } = useParams();
     const navigate = useNavigate();
 
@@ -106,6 +108,18 @@ export function PokemonProfile(): React.ReactElement {
         );
     };
 
+    const favoriteHandler = (id: number) => {
+        if (isPokemonFavorited(id)) {
+            removePokemonFromFavorites(id);
+            setIsFavorite(false);
+        } else {
+            addPokemonToFavorites(id);
+            setIsFavorite(true);
+        }
+
+        console.log("is this pokemon in favs? ", isPokemonFavorited(id));
+    };
+
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
@@ -126,11 +140,6 @@ export function PokemonProfile(): React.ReactElement {
             MovesProps: { moves: moves }
         };
 
-        const favoriteHandler = (id: number) => {
-            // removePokemonFromFavorites(id);
-            console.log("is this pokemon in favs? ", isPokemonFavorited(id));
-        };
-
         return (
             <Container $mainType={types[0].type.name}>
                 <ImageContainer>
@@ -142,7 +151,7 @@ export function PokemonProfile(): React.ReactElement {
                                 favoriteHandler(id);
                             }}
                         >
-                            <HeartIcon favorite={isPokemonFavorited(id)} />
+                            <HeartIcon favorite={isFavorite} />
                         </p>
                     </PokemonName>
                     <SvgImg>

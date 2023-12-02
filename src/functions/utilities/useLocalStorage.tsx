@@ -17,7 +17,7 @@ export function removePokemonFromFavorites(id: number) {
     localStorage.setItem("pokemons", JSON.stringify(favoritedPokemons));
 }
 
-export const addFavoritePokemon = (id: number) => {
+export const addPokemonToFavorites = (id: number) => {
     const favoritedPokemons = getFavoritedPokemons();
     const pokemonId = id.toString();
     favoritedPokemons.push(pokemonId);
