@@ -17,14 +17,14 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     const pokemonNamesList = pokemons
         .map((x: PokemonGuessInfo) => x.pokemonName)
         .sort(); /* [NOTE] will create custom sort function later */
-    const [inputSuggestionsList, setInputSuggestionsList] = useState<React.ReactElement[]>();
+    const [suggestionsList, setSuggestionsList] = useState<React.ReactElement[]>();
     const [focusedElementIndex, setFocusedElementIndex] = useState<number>(0);
     const suggestionRef = useRef<HTMLLIElement | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         displaySearchInputSuggestions();
-        props.setSuggestedInput(matchSuggestionsToInput()[0]);
+        props.setSuggestedInput(generateSuggestions()[0]);
         setFocusedElementIndex(0);
         //console.log(pokemonNamesList.filter((x) => x.includes("-")));
     }, [props.searchInput]);
@@ -41,9 +41,9 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     useEffect(() => {
         document.addEventListener("keydown", handleNav);
         return () => document.removeEventListener("keydown", handleNav);
-    }, [inputSuggestionsList]);
+    }, [suggestionsList]);
 
-    const matchSuggestionsToInput = () => {
+    const generateSuggestions = () => {
         const inputRegex = new RegExp(`^${props.searchInput}`);
         return props.searchInput.length === 0
             ? []
@@ -52,7 +52,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 
     const displaySearchInputSuggestions = () => {
         let tabIndexValue = 0;
-        const displaySuggestionsList = matchSuggestionsToInput().map((name: string, idx: number) => (
+        const displaySuggestionsList = generateSuggestions().map((name: string, idx: number) => (
             <ListItem
                 key={name}
                 ref={(node) => {
@@ -64,32 +64,32 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                 <Button onClick={() => handleClick(name)}>{name}</Button>
             </ListItem>
         ));
-        setInputSuggestionsList(displaySuggestionsList);
+        setSuggestionsList(displaySuggestionsList);
     };
 
     const handleNav = (e: KeyboardEvent) => {
         if (e.key === "ArrowUp") {
-            if (inputSuggestionsList && focusedElementIndex > 0) {
+            if (suggestionsList && focusedElementIndex > 0) {
                 const index = focusedElementIndex - 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(matchSuggestionsToInput()[index]);
+                props.setSuggestedInput(generateSuggestions()[index]);
             }
         } else if (e.key === "ArrowDown") {
-            if (inputSuggestionsList && focusedElementIndex < inputSuggestionsList.length - 1) {
+            if (suggestionsList && focusedElementIndex < suggestionsList.length - 1) {
                 const index = focusedElementIndex + 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(matchSuggestionsToInput()[index]);
+                props.setSuggestedInput(generateSuggestions()[index]);
             }
         }
     };
 
-    const handleClick = (name: string) => {
-        navigate(`/pokemons/name/${name}`);
+    const handleClick = (suggestedName: string) => {
+        navigate(`/pokemons/name/${suggestedName}`);
     };
 
     return props.suggestedInput ? (
         <Container>
-            <SuggestionsList>{inputSuggestionsList}</SuggestionsList>
+            <SuggestionsList>{suggestionsList}</SuggestionsList>
         </Container>
     ) : (
         <></>

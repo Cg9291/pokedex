@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
@@ -9,18 +9,33 @@ import { punctuationRegex } from "../../../../regularExpressions/punctuationRege
 export function Search(): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string>("");
     const [suggestedInput, setSuggestedInput] = useState<string>("");
+    const searchRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
-    const hasSuggestionsAndIsFocused = suggestedInput?.length > 0;
+    const hasSuggestions = suggestedInput?.length > 0;
+
+    (function handleOutsideClicks() {
+        useEffect(() => {
+            const detectOutsideClicks = (e: MouseEvent) => {
+                if (!searchRef.current?.contains(e.target as Node)) {
+                    setSuggestedInput("");
+                }
+            };
+
+            document.addEventListener("mousedown", detectOutsideClicks);
+            return () => {
+                document.removeEventListener("mousedown", detectOutsideClicks);
+            };
+        }, []);
+    })();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        e.preventDefault();
-        if (suggestedInput?.length > 0) {
+        if (hasSuggestions) {
             navigate(`/pokemons/name/${suggestedInput}`);
         } else {
             const formData = new FormData(e.currentTarget);
-            const transmittedData = Object.fromEntries(formData.entries()).searchInput;
-            const name = transmittedData.toString().toLowerCase();
-            navigate(`/pokemons/name/${name}`);
+            const transmittedDataObject = Object.fromEntries(formData.entries());
+            const searchedPokemoName = transmittedDataObject.searchInput.toString().toLowerCase();
+            navigate(`/pokemons/name/${searchedPokemoName}`);
         }
     };
 
@@ -36,13 +51,13 @@ export function Search(): React.ReactElement {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <InputContainer>
-                    <Label $isShowingSuggestions={hasSuggestionsAndIsFocused}>
+                <InputContainer ref={searchRef}>
+                    <Label $isShowingSuggestions={hasSuggestions}>
                         <Input value={searchInput} onChange={handleChange} required />
-                        <SearchIconButton $isShowingSuggestions={hasSuggestionsAndIsFocused}>
-                            <SvgImg>
+                        <SearchIconButton $isShowingSuggestions={hasSuggestions}>
+                            <ImgSvgContainer>
                                 <SearchIconImg href={SearchIcon} />
-                            </SvgImg>
+                            </ImgSvgContainer>
                         </SearchIconButton>
                     </Label>
                     <SearchSuggestions
@@ -53,7 +68,7 @@ export function Search(): React.ReactElement {
                     />
                 </InputContainer>
                 <ButtonsContainer>
-                    <Button>Search</Button>
+                    <SearchButton>Search</SearchButton>
                     <FilterButton onClick={handleFilterClick}>Filter</FilterButton>
                 </ButtonsContainer>
             </Form>
@@ -106,7 +121,7 @@ const Input = styled.input.attrs({
     border-right: 0.1px solid grey;
 `;
 
-const Button = styled.button.attrs({ type: "submit" })`
+const SearchButton = styled.button.attrs({ type: "submit" })`
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -132,7 +147,7 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     justify-content: center;
 `;
 
-const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
+const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`
     display: flex;
     justify-content: center;
     max-height: 100%;
