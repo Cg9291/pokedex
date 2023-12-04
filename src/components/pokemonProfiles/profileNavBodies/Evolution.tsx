@@ -14,6 +14,8 @@ import { displayFormattedId } from "../../../functions/utilities/displayFormatte
 import { Link } from "react-router-dom";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
+export type StringArrays = (string | string[])[];
+
 export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
     const evolutionChainUrl: string = props.ownProps.evolution_chain.url;
@@ -22,7 +24,6 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
         try {
             const data: PokemonEvolutionChainInterface = await getPokemonEvolutionChainData(url);
             setEvolutionChainData(data);
-            console.log("url", url);
         } catch (err) {
             console.log(err);
             return;
@@ -34,24 +35,35 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
     }, []);
 
     if (evolutionChainData) {
-        const fetchEvolutions = (): string[] => {
-            const evolutionsArray: string[] = [];
+        const fetchEvolutions = (): StringArrays => {
+            const evolutionsArray: StringArrays = [];
             const targetObject: Chain = evolutionChainData.chain;
             evolutionsArray.push(targetObject.species.name);
 
-            if (targetObject.evolves_to.length > 0) {
+            if (targetObject.evolves_to.length === 1) {
                 const secondFormLocation: EvolvesTo = targetObject.evolves_to[0];
                 evolutionsArray.push(secondFormLocation.species.name);
-                if (secondFormLocation.evolves_to.length > 0) {
+                if (secondFormLocation.evolves_to.length === 1) {
                     const thirdFormLocation: EvolvesTo = secondFormLocation.evolves_to[0];
                     evolutionsArray.push(thirdFormLocation.species.name);
                 }
+            } else if (targetObject.evolves_to.length > 1) {
+                const secondForms: string[] = targetObject.evolves_to.map((x: EvolvesTo) => x.species.name);
+                evolutionsArray.push(secondForms);
             }
             return evolutionsArray;
         };
 
-        const displayPokemons = (): React.ReactElement[] =>
-            fetchEvolutions().map((x: string) => <PokemonEvolutionStage pokemonEvolutionName={x} key={x} />);
+        const displayPokemons = (): (React.ReactElement | React.ReactElement[])[] =>
+            fetchEvolutions().map((x: string | string[]) => {
+                return Array.isArray(x) ? (
+                    x.map((y: string) => <PokemonEvolutionStage pokemonEvolutionName={y} key={y} />)
+                ) : (
+                    <PokemonEvolutionStage pokemonEvolutionName={x} key={x} />
+                );
+            });
+
+        console.log(displayPokemons());
 
         return <Container>{displayPokemons()}</Container>;
     } else {

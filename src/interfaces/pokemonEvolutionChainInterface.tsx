@@ -13,7 +13,7 @@ export interface Chain {
 
 export interface EvolvesTo {
     evolution_details: EvolutionDetail[];
-    evolves_to: any[];
+    evolves_to: EvolvesTo[] | [];
     is_baby: boolean;
     species: Species;
 }
