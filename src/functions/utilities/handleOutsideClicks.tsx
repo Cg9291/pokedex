@@ -7,9 +7,8 @@ export function handleOutsideClicks(
 ) {
     useEffect(() => {
         const detectOutsideClicks = (e: MouseEvent) => {
-            if (ref.current && !ref.current.contains(e.target as Node)) {
+            if (!ref.current?.contains(e.target as Node)) {
                 stateSetter({ isActive: false, activeImageNumber: 0 });
-                console.log(e.target);
             }
         };
 

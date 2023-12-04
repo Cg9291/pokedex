@@ -169,11 +169,11 @@ function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterf
         const transmittedData = Object.fromEntries(formData.entries()).searchInput;
         const name = transmittedData.toString().toLowerCase();
 
-        searchError && (await setSearchError(false));
-        searchedPokemonId && (await setSearchedPokemonId(null));
+        searchError && setSearchError(false);
+        searchedPokemonId && setSearchedPokemonId(null);
 
         try {
-            await setIsSearching(true);
+            setIsSearching(true);
             const pokemonData = await getPokemonData(name);
             setSearchedPokemonId(pokemonData.id);
         } catch (err) {
@@ -253,7 +253,7 @@ const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared
     border-radius: 12px;
     align-items: center;
     width: ${({ $isCompared }) => $isCompared && ` 40%`};
-    height: ${({ $isCompared }) => $isCompared && ` fit-content;`};
+    height: ${({ $isCompared }) => ($isCompared ? ` fit-content;` : `30%`)};
 `;
 
 const PokemonName = styled.h5`

@@ -5,12 +5,12 @@ import { StatsInterface } from "../../../interfaces/miscInterfaces";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { BaseStatsComponentProps } from "../../../interfaces/miscInterfaces";
 
-interface StatsOverlayPropsInt {
+export interface StatsOverlayPropsInt {
     $value: number;
     $isTotal: boolean | undefined;
 }
 
-interface StatsComparisonOverlayInterface {
+export interface StatsComparisonOverlayInterface {
     $firstPokemonStatValue: number;
     $secondPokemonStatValue: number;
     $currentPokemon: number;
@@ -151,5 +151,4 @@ const StatBarComparisonOverlay = styled.div<StatsComparisonOverlayInterface>`
               }%)`};
     height: 100%;
     background-color: ${(props) => (props.$currentPokemon === 1 ? "red" : "green")};
-    //border-radius: 99px;
 `;

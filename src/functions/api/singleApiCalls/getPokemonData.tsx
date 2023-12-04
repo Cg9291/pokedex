@@ -6,10 +6,9 @@ export async function getPokemonData(pokemonIdentifier: NumOrString): Promise<Po
     try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonIdentifier}`);
         const pokemonData: PokemonInterface = response.data;
-        console.log(response, pokemonData);
         return pokemonData;
     } catch (err) {
-        console.log("function getPokemonData:failure", err);
+        console.log(err);
         throw err;
     }
 }

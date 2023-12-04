@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ContainerPrototype from "../prototypes/ContainerPrototype";
+import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { useNavigate } from "react-router-dom";
-import { FilterInfoInterface, PokemonGenerationsListInterface } from "../../interfaces/miscInterfaces";
-import { typesColors } from "../../objects/typesColors";
-import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
-import { pokemonGenerationsList } from "../../objects/pokemonGenerationsList";
+import { FilterInfoInterface, PokemonGenerationsListInterface } from "../interfaces/miscInterfaces";
+import { typesColors } from "../objects/typesColors";
+import { capitalizeWords } from "../functions/utilities/capitalizeWords";
+import { pokemonGenerationsList } from "../objects/pokemonGenerationsList";
 
 export function FilteredSearchModal(): React.ReactElement {
     const [filterInfo] = useState<FilterInfoInterface>({
@@ -40,7 +40,6 @@ export function FilteredSearchModal(): React.ReactElement {
         //e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const localTransmittedData = Object.fromEntries(formData.entries());
-        console.log(localTransmittedData);
         setTransmittedData(localTransmittedData);
         navigate(buildUrl(localTransmittedData));
     };
@@ -281,21 +280,18 @@ const OptionsSliderContainer = styled.div`
 
 const OptionsSliderInput = styled.input`
     position: absolute;
-    margin-top: 0.5rem;
     width: 100%;
     pointer-events: none;
-
-    &::-webkit-slider-runnable-track,
-    & {
-        -webkit-appearance: none;
-    }
-
     background: none; /* get rid of white Chrome background */
     color: #000;
     font: inherit; /* fix too small font-size in both Chrome & Firefox */
     margin: 0;
     pointer-events: none; /* let clicks pass through */
 
+    &::-webkit-slider-runnable-track,
+    & {
+        -webkit-appearance: none;
+    }
     &::-webkit-slider-thumb {
         pointer-events: auto;
     }
@@ -307,5 +303,4 @@ const OptionsSliderValuesRow = styled(ContainerPrototype)`
 
 const OptionsSliderValue = styled.div`
     align-self: flex-start;
-    /* background-color: blue; */
 `;

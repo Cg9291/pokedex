@@ -6,7 +6,7 @@ import { NoMatch } from "../pages/NoMatch";
 import { Wtp } from "../pages/Wtp";
 import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
-import { FilteredSearchModal } from "./homepage/FilteredSearchModal";
+import { FilteredSearchModal } from "../pages/FilteredSearch";
 import { FilteredSearchResults } from "../pages/FilteredSearchResults";
 import { Comparator } from "../pages/Comparator";
 
