@@ -57,13 +57,15 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
         const displayPokemons = (): (React.ReactElement | React.ReactElement[])[] =>
             fetchEvolutions().map((x: string | string[]) => {
                 return Array.isArray(x) ? (
-                    x.map((y: string) => <PokemonEvolutionStage pokemonEvolutionName={y} key={y} />)
+                    <SameStageEvolutionsContainer>
+                        {x.map((y: string) => (
+                            <PokemonEvolutionStage pokemonEvolutionName={y} $multi={true} key={y} />
+                        ))}
+                    </SameStageEvolutionsContainer>
                 ) : (
                     <PokemonEvolutionStage pokemonEvolutionName={x} key={x} />
                 );
             });
-
-        console.log(displayPokemons());
 
         return <Container>{displayPokemons()}</Container>;
     } else {
@@ -75,7 +77,7 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
     }
 }
 
-function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.ReactElement {
+function PokemonEvolutionStage(props: { pokemonEvolutionName: string; $multi?: boolean }): React.ReactElement {
     const [pokemonEvolutionInfo, setPokeEvolutionInfo] = useState<PokemonInterface>();
 
     const getData = async (pokemonId: NumOrString): Promise<void> => {
@@ -97,11 +99,11 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
         const typeColor = typesColors[types[0].type.name as keyof TypesColorsInt];
 
         return (
-            <PokemonContainer to={`/pokemons/id/${id}`}>
+            <PokemonContainer to={`/pokemons/id/${id}`} $multi={props.$multi}>
                 <SvgImg $bgColor={typeColor}>
                     <PokemonImage href={sprites.front_default} />
                 </SvgImg>
-                <PokemonIdentifiers>
+                <PokemonIdentifiers $multi={props.$multi}>
                     <PokemonName>{capitalizeWords(props.pokemonEvolutionName)}</PokemonName>
                     <PokemonNumber>{displayFormattedId(id)}</PokemonNumber>
                 </PokemonIdentifiers>
@@ -124,12 +126,19 @@ const Container = styled(ContainerPrototype)`
     padding: 1rem 0;
 `;
 
-const PokemonContainer = styled(Link)`
+const SameStageEvolutionsContainer = styled(ContainerPrototype)`
+    max-width: 70%;
+    height: 100%;
+    flex-wrap: wrap;
+`;
+
+const PokemonContainer = styled(Link)<{ $multi?: boolean }>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 33.33%;
+    justify-content: ${(props) => (props.$multi ? "space-around" : "space-between")};
+    width: ${(props) => (props.$multi ? "25%" : "33.33%")};
+    height: min-content;
     text-decoration: none;
     color: black;
 `;
@@ -143,9 +152,11 @@ const PokemonImage = styled.image`
     height: 100%;
 `;
 
-const PokemonIdentifiers = styled.div`
+const PokemonIdentifiers = styled.div<{ $multi?: boolean }>`
     display: flex;
-    margin: 1rem 0;
+    flex-direction: ${(props) => (props.$multi ? "column" : "row")};
+    justify-content: ${(props) => (props.$multi ? "space-around" : "space-between")};
+    margin: ${(props) => (props.$multi ? "0" : "1rem 0")};
 `;
 const PokemonName = styled.span`
     font-size: 0.9em;
@@ -156,6 +167,7 @@ const PokemonNumber = styled.span`
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
+    max-width: 100%;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: green;
