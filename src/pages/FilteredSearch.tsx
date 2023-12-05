@@ -23,7 +23,7 @@ export function FilteredSearchModal(): React.ReactElement {
         height?: string;
         weight?: string;
     }
-    const [, setTransmittedData] = useState<LocalTransmittedDataInterface>();
+
     const navigate = useNavigate();
 
     //LOGIC/HANDLER FUNCTIONS
@@ -37,10 +37,8 @@ export function FilteredSearchModal(): React.ReactElement {
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        //e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const localTransmittedData = Object.fromEntries(formData.entries());
-        setTransmittedData(localTransmittedData);
         navigate(buildUrl(localTransmittedData));
     };
 
