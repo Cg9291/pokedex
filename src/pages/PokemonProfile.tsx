@@ -18,7 +18,7 @@ import { Moves } from "../components/pokemonProfiles/profileNavBodies/Moves";
 import { Evolution } from "../components/pokemonProfiles/profileNavBodies/Evolution";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
 import { About } from "../components/pokemonProfiles/profileNavBodies/About";
-import { MyPropsInt } from "../interfaces/miscInterfaces";
+import { profileTabsPropsInterface } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { HeartIcon } from "../assets/heartIcon";
 import {
@@ -43,7 +43,20 @@ export function PokemonProfile(): React.ReactElement {
     const { id: paramId, name: paramName } = useParams();
     const navigate = useNavigate();
 
-    let myProps: MyPropsInt;
+    let profileTabsProps: profileTabsPropsInterface;
+
+    useEffect(() => {
+        if (paramId) {
+            getData(Number(paramId));
+        } else if (paramName) {
+            getData(paramName);
+        }
+    }, [paramId, paramName]);
+
+    useEffect(() => {
+        setNavNames(profileTabsProps);
+        pokemonInfo && setIsFavorite(isPokemonFavorited(Number(pokemonInfo.id)));
+    }, [pokemonInfo, pokemonSpeciesInfo]);
 
     async function getData(pokeId: NumOrString): Promise<void> {
         try {
@@ -59,31 +72,19 @@ export function PokemonProfile(): React.ReactElement {
         return;
     }
 
-    const setNavNames = (myprops: MyPropsInt) => {
+    const setNavNames = (tabProps: profileTabsPropsInterface) => {
         if (pokemonInfo && pokemonSpeciesInfo) {
             setNavElementsNames({
-                About: { isFocused: true, element: <About ownProps={myprops.AboutProps} /> },
+                About: { isFocused: true, element: <About ownProps={tabProps.AboutProps} /> },
                 "Base Stats": {
                     isFocused: false,
-                    element: <BaseStats ownProps={myprops.BaseStatsProps} />
+                    element: <BaseStats ownProps={tabProps.BaseStatsProps} />
                 },
-                Evolution: { isFocused: false, element: <Evolution ownProps={myprops.EvolutionProps} /> },
-                Moves: { isFocused: false, element: <Moves ownProps={myprops.MovesProps} /> }
+                Evolution: { isFocused: false, element: <Evolution ownProps={tabProps.EvolutionProps} /> },
+                Moves: { isFocused: false, element: <Moves ownProps={tabProps.MovesProps} /> }
             });
         } else return;
     };
-
-    useEffect(() => {
-        if (paramId) {
-            getData(Number(paramId));
-        } else if (paramName) {
-            getData(paramName);
-        }
-    }, [paramId, paramName]);
-
-    useEffect(() => {
-        setNavNames(myProps);
-    }, [pokemonInfo, pokemonSpeciesInfo]);
 
     const displayNavBody = (): React.ReactNode => {
         const focusedElement = Object.keys(navElementsNames).find(
@@ -124,7 +125,7 @@ export function PokemonProfile(): React.ReactElement {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
 
-        myProps = {
+        profileTabsProps = {
             AboutProps: {
                 flavor_text_entries: flavor_text_entries,
                 height: height,

@@ -93,7 +93,7 @@ export interface NavIconsInterface {
     linkUrl: string;
 }
 
-export interface MyPropsInt {
+export interface profileTabsPropsInterface {
     AboutProps: {
         flavor_text_entries: Flavor_text_entry[];
         height: number;
