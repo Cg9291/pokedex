@@ -9,9 +9,12 @@ export function Search(): React.ReactElement {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
-        const name = transmittedData.toString().toLowerCase();
-        navigate(`/pokemons/name/${name}`);
+        const transmittedData = Object.fromEntries(formData.entries());
+        const identifier = isNaN(Number(transmittedData.searchInput))
+            ? transmittedData.searchInput.toString().toLowerCase()
+            : Number(transmittedData.searchInput);
+
+        navigate(typeof identifier === "number" ? `/pokemons/id/${identifier}` : `/pokemons/name/${identifier}`);
     };
 
     const handleClick = () => {
