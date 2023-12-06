@@ -20,6 +20,8 @@ export interface TypesColorsInt {
     dark: string;
     steel: string;
     fairy: string;
+    black: string;
+    white: string;
 }
 
 export interface PokemonNumberPropsInterface {
@@ -91,7 +93,7 @@ export interface NavIconsInterface {
     linkUrl: string;
 }
 
-export interface MyPropsInt {
+export interface profileTabsPropsInterface {
     AboutProps: {
         flavor_text_entries: Flavor_text_entry[];
         height: number;
