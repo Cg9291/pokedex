@@ -6,6 +6,7 @@ export function PokemonGuess() {
     const [pokemonChoices, setPokemonChoices] = useState<PokemonGuessInfo[]>([]);
     const [correctPokemon, setCorrectPokemon] = useState<PokemonGuessInfo>();
     const { pokemons, fetchPokemons, pending } = getPokemonGameList();
+    const [isReveal, setIsReveal] = useState<boolean>(false);
     function shuffle(arr: Array<any>) {
         return arr
             .map((value) => ({ value, sort: Math.random() }))
@@ -16,9 +17,34 @@ export function PokemonGuess() {
     function setupGame() {
         const choices = shuffle(pokemons).slice(0, 4);
         const [correct] = choices;
-        console.log(shuffle(choices), correct);
         setCorrectPokemon(correct);
         setPokemonChoices(shuffle(choices));
+    }
+
+    function handleChoice(pokemonName: string) {
+        const updated = pokemonChoices.map((item) => {
+            if (item.pokemonName == pokemonName && pokemonName == correctPokemon?.pokemonName) {
+                return {
+                    ...item,
+                    colour: "green"
+                };
+            } else if (item.pokemonName == pokemonName) {
+                return {
+                    ...item,
+                    colour: "red"
+                };
+            } else {
+                return item;
+            }
+        });
+        setPokemonChoices(updated);
+        if (pokemonName == correctPokemon?.pokemonName) {
+            setIsReveal(true);
+            //set up a new game
+            setTimeout(async () => {
+                await fetchPokemons();
+            }, 3000);
+        }
     }
 
     useEffect(() => {
@@ -26,28 +52,68 @@ export function PokemonGuess() {
             return;
         }
         setupGame();
+        setIsReveal(false);
     }, [pokemons]);
 
     return (
-        <div>
-            <h1>Who is that Pokemon!!!!</h1>
-
+        <Container>
+            <Title>Who is that Pokemon ?</Title>
             <ImageContainer>
-                <HiddenImage>
+                <HiddenImage $isOpen={isReveal} style={{ filter: `brightness(${isReveal ? 1 : 0})` }}>
                     <PokemonImage href={correctPokemon?.pokemonSprite} />
                 </HiddenImage>
             </ImageContainer>
-            <div>
+            <Choices>
                 {pokemonChoices &&
                     pokemonChoices.map((item: PokemonGuessInfo, idx) => (
-                        <div key={idx}>
-                            <h1>PokemonName: {item.pokemonName}</h1>
-                        </div>
+                        <ChoiceButton
+                            key={idx}
+                            onClick={() => !isReveal && handleChoice(item.pokemonName)}
+                            style={{ background: item.colour }}
+                        >
+                            <h1> {item.pokemonName}</h1>
+                        </ChoiceButton>
                     ))}
-            </div>
-        </div>
+            </Choices>
+        </Container>
     );
 }
+
+const Container = styled(ContainerPrototype)`
+    display: block;
+`;
+
+const Title = styled.h1`
+    text-align: center;
+`;
+
+const ChoiceButton = styled.button`
+    border-radius: 8px;
+    border-width: 0;
+    color: #333333;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    touch-action: manipulation;
+`;
+
+const Choices = styled.div`
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    row-gap: 15px;
+    text-align: center;
+`;
 
 const ImageContainer = styled(ContainerPrototype)`
     flex-direction: column;
@@ -56,16 +122,14 @@ const ImageContainer = styled(ContainerPrototype)`
     max-height: 40%;
 `;
 
-const HiddenImage = styled.svg`
-    width: 100%;
-    height: 50%;
-    transform: scale(2.5);
-    filter: brightness(0);
-    transition: filter 0.5s ease-out;
-`;
-
 const PokemonImage = styled.image`
     width: 100%;
     height: 100%;
     border: solid black;
+`;
+
+const HiddenImage = styled.svg<{ $isOpen: boolean }>`
+    width: 100%;
+    height: 50%;
+    transition: filter ${(props) => (props.$isOpen ? 2 : 0)}s ease-out;
 `;
