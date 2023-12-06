@@ -112,7 +112,6 @@ const Choices = styled.div`
     grid-template-rows: auto auto;
     column-gap: 10px;
     row-gap: 15px;
-    //justify-items: center;
     text-align: center;
 `;
 
