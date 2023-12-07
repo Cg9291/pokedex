@@ -18,12 +18,19 @@ import { Moves } from "../components/pokemonProfiles/profileNavBodies/Moves";
 import { Evolution } from "../components/pokemonProfiles/profileNavBodies/Evolution";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
 import { About } from "../components/pokemonProfiles/profileNavBodies/About";
-import { MyPropsInt } from "../interfaces/miscInterfaces";
+import { profileTabsPropsInterface } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
+import { HeartIcon } from "../assets/heartIcon";
+import {
+    addPokemonToFavorites,
+    isPokemonFavorited,
+    removePokemonFromFavorites
+} from "../functions/utilities/useLocalStorage";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true },
         "Base Stats": {
@@ -32,10 +39,24 @@ export function PokemonProfile(): React.ReactElement {
         Evolution: { isFocused: false },
         Moves: { isFocused: false }
     });
+
     const { id: paramId, name: paramName } = useParams();
     const navigate = useNavigate();
 
-    let myProps: MyPropsInt;
+    let profileTabsProps: profileTabsPropsInterface;
+
+    useEffect(() => {
+        if (paramId) {
+            getData(Number(paramId));
+        } else if (paramName) {
+            getData(paramName);
+        }
+    }, [paramId, paramName]);
+
+    useEffect(() => {
+        setNavNames(profileTabsProps);
+        pokemonInfo && setIsFavorite(isPokemonFavorited(Number(pokemonInfo.id)));
+    }, [pokemonInfo, pokemonSpeciesInfo]);
 
     async function getData(pokeId: NumOrString): Promise<void> {
         try {
@@ -51,31 +72,19 @@ export function PokemonProfile(): React.ReactElement {
         return;
     }
 
-    const setNavNames = (myprops: MyPropsInt) => {
+    const setNavNames = (tabProps: profileTabsPropsInterface) => {
         if (pokemonInfo && pokemonSpeciesInfo) {
             setNavElementsNames({
-                About: { isFocused: true, element: <About ownProps={myprops.AboutProps} /> },
+                About: { isFocused: true, element: <About ownProps={tabProps.AboutProps} /> },
                 "Base Stats": {
                     isFocused: false,
-                    element: <BaseStats pokemonStatsProps={myprops.BaseStatsProps} />
+                    element: <BaseStats pokemonStatsProps={tabProps.BaseStatsProps} />
                 },
-                Evolution: { isFocused: false, element: <Evolution ownProps={myprops.EvolutionProps} /> },
-                Moves: { isFocused: false, element: <Moves ownProps={myprops.MovesProps} /> }
+                Evolution: { isFocused: false, element: <Evolution ownProps={tabProps.EvolutionProps} /> },
+                Moves: { isFocused: false, element: <Moves ownProps={tabProps.MovesProps} /> }
             });
         } else return;
     };
-
-    useEffect(() => {
-        if (paramId) {
-            getData(Number(paramId));
-        } else if (paramName) {
-            getData(paramName);
-        }
-    }, [paramId, paramName]);
-
-    useEffect(() => {
-        setNavNames(myProps);
-    }, [pokemonInfo, pokemonSpeciesInfo]);
 
     const displayNavBody = (): React.ReactNode => {
         const focusedElement = Object.keys(navElementsNames).find(
@@ -100,11 +109,23 @@ export function PokemonProfile(): React.ReactElement {
         );
     };
 
+    const favoriteHandler = (id: number) => {
+        if (isPokemonFavorited(id)) {
+            removePokemonFromFavorites(id);
+            setIsFavorite(false);
+        } else {
+            addPokemonToFavorites(id);
+            setIsFavorite(true);
+        }
+
+        console.log("is this pokemon in favs? ", isPokemonFavorited(id));
+    };
+
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
 
-        myProps = {
+        profileTabsProps = {
             AboutProps: {
                 flavor_text_entries: flavor_text_entries,
                 height: height,
@@ -124,7 +145,16 @@ export function PokemonProfile(): React.ReactElement {
             <Container $mainType={types[0].type.name}>
                 <ImageContainer>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
-                    <PokemonName>{capitalizeWords(name)}</PokemonName>
+                    <PokemonName>
+                        {capitalizeWords(name)}
+                        <p
+                            onClick={() => {
+                                favoriteHandler(id);
+                            }}
+                        >
+                            <HeartIcon favorite={isFavorite} />
+                        </p>
+                    </PokemonName>
                     <SvgImg>
                         <PokemonImg href={sprites.front_default} />
                     </SvgImg>

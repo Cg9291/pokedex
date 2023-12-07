@@ -26,7 +26,7 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
 `;
 
-const MainContainer = styled.div`
+export const MainContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;

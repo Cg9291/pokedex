@@ -20,11 +20,13 @@ export interface TypesColorsInt {
     dark: string;
     steel: string;
     fairy: string;
+    black: string;
+    white: string;
 }
 
 export interface PokemonPictureCardsPropsInterface {
     id: number;
-    isLink: boolean;
+    isLink?: boolean;
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;
 }
@@ -104,7 +106,7 @@ export interface NavIconsInterface {
     linkUrl: string;
 }
 
-export interface MyPropsInt {
+export interface profileTabsPropsInterface {
     AboutProps: {
         flavor_text_entries: Flavor_text_entry[];
         height: number;

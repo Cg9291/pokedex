@@ -33,8 +33,7 @@ export function FilteredSearchResults(): React.ReactElement {
             const myFilterObject: ReceivedParametersInterface = {};
             for (let i = 0; i < arr.length; i += 2) {
                 const key = arr[i];
-                const value = arr[i + 1];
-                myFilterObject[key as keyof ReceivedParametersInterface] = value;
+                myFilterObject[key as keyof ReceivedParametersInterface] = arr[i + 1];
             }
             return myFilterObject;
         }
@@ -83,8 +82,8 @@ export function FilteredSearchResults(): React.ReactElement {
     };
 
     const checkPokemonForFilters = (pokemon: CustomPokemonInfo) => {
-        return Object.keys(createFilterObject(generalFilters) as ReceivedParametersInterface).every(
-            (x) => filterChecker[x](pokemon) === true
+        return Object.keys(createFilterObject(generalFilters) as ReceivedParametersInterface).every((x) =>
+            filterChecker[x](pokemon)
         );
     };
 
@@ -92,7 +91,7 @@ export function FilteredSearchResults(): React.ReactElement {
         if (myState) {
             const displayMatchingPokemons = () =>
                 myState
-                    .filter((x) => checkPokemonForFilters(x) === true)
+                    .filter((x) => checkPokemonForFilters(x))
                     .map((y, index) => <PokemonPictureCard key={index} id={y.id} isLink={true} />);
 
             return displayMatchingPokemons().length <= 0
