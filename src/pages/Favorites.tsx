@@ -7,7 +7,9 @@ import { typesColors } from "../objects/typesColors";
 export function Favorites(): React.ReactElement {
     const favoritedPokemons = JSON.parse(localStorage.getItem("pokemons") || "[]");
     const mapPictureCards = (): React.ReactElement[] =>
-        favoritedPokemons.map((number: number, index: number) => <PokemonPictureCard id={number} key={index} />);
+        favoritedPokemons.map((number: number, index: number) => (
+            <PokemonPictureCard id={number} key={index} isLink={true} />
+        ));
 
     return (
         <Container>
