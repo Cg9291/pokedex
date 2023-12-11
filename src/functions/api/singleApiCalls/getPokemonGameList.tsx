@@ -15,7 +15,7 @@ type PokemonListResponse = {
 };
 const FIRST_GEN_COUNT = 151;
 
-export function getPokemonGameList(limitNum?: number) {
+export function getPokemonGameList() {
     const [pokemons, setPokemons] = useState<PokemonGuessInfo[]>([]);
     const [pending, setPending] = useState(true);
 
@@ -32,7 +32,6 @@ export function getPokemonGameList(limitNum?: number) {
             if (res.data) {
                 const _pokemons = res.data.results.map((item: PokemonListResponse) => {
                     const separated = item.url.split("/");
-
                     return {
                         pokemonName: item.name,
                         // url contains the id of the Pokemon
