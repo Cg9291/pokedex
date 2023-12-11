@@ -22,7 +22,6 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
         try {
             const data: PokemonEvolutionChainInterface = await getPokemonEvolutionChainData(url);
             setEvolutionChainData(data);
-            console.log("url", url);
         } catch (err) {
             console.log(err);
             return;
