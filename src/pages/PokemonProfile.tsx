@@ -117,8 +117,6 @@ export function PokemonProfile(): React.ReactElement {
             addPokemonToFavorites(id);
             setIsFavorite(true);
         }
-
-        console.log("is this pokemon in favs? ", isPokemonFavorited(id));
     };
 
     if (pokemonInfo && pokemonSpeciesInfo) {
