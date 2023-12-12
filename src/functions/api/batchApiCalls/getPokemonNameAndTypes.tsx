@@ -10,7 +10,7 @@ export async function getPokemonNameAndTypes(pokemonIdentifier: string): Promise
         const { name, id, types, height, weight }: CustomPokemonInfo = responseData;
         return { name, id, types, height, weight };
     } catch (err) {
-        console.log(err);
+        console.log("function getPokemonData:failure", err);
         throw err;
     }
 }
