@@ -33,9 +33,12 @@ export function Search(): React.ReactElement {
             navigate(`/pokemons/name/${suggestedInput}`);
         } else {
             const formData = new FormData(e.currentTarget);
-            const transmittedDataObject = Object.fromEntries(formData.entries());
-            const searchedPokemoName = transmittedDataObject.searchInput.toString().toLowerCase();
-            navigate(`/pokemons/name/${searchedPokemoName}`);
+            const transmittedData = Object.fromEntries(formData.entries());
+            const identifier = isNaN(Number(transmittedData.searchInput))
+                ? transmittedData.searchInput.toString().toLowerCase()
+                : Number(transmittedData.searchInput);
+
+            navigate(typeof identifier === "number" ? `/pokemons/id/${identifier}` : `/pokemons/name/${identifier}`);
         }
     };
 
