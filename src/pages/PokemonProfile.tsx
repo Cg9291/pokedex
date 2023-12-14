@@ -206,7 +206,6 @@ const PokemonImg = styled.image`
 `;
 
 const ProfileContainer = styled(ContainerPrototype)`
-    max-height: 60%;
     overflow-y: hidden;
     padding-bottom: 9%;
 `;
@@ -227,13 +226,13 @@ const InfoNavBar = styled(ContainerPrototype)`
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    position: absolute;
+    //position: absolute;
     background-color: inherit;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    max-height: 20rem;
-    margin-top: 10%;
+    //max-height: 20rem;
+    //margin-top: 10%;
     overflow-y: scroll;
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.03);

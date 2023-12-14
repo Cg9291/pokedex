@@ -12,10 +12,6 @@ TODO
 *handle odd pokemons[deoxys,eeviee,]
 */
 
-const Container = styled(ContainerPrototype)`
-    background-color: white;
-`;
-
 function App(): React.ReactElement {
     return (
         <Container>
@@ -24,5 +20,12 @@ function App(): React.ReactElement {
         </Container>
     );
 }
+
+const Container = styled(ContainerPrototype)`
+    background-color: white;
+    flex-direction: column;
+    max-height: 100vh;
+    overflow-y: hidden;
+`;
 
 export default App;

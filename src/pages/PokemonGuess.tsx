@@ -81,6 +81,7 @@ export function PokemonGuess() {
 
 const Container = styled(ContainerPrototype)`
     display: block;
+    max-height: 100%;
 `;
 
 const Title = styled.h1`
@@ -113,6 +114,7 @@ const Choices = styled.div`
     column-gap: 10px;
     row-gap: 15px;
     text-align: center;
+    padding: 0 1rem;
 `;
 
 const ImageContainer = styled(ContainerPrototype)`

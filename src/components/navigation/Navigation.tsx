@@ -50,7 +50,6 @@ function NavElement(props: NavIconsInterface): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     height: 9%;
     background-color: white;
-    position: fixed;
     bottom: 0;
     padding: 2.5% 0;
 `;

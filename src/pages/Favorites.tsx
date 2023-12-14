@@ -20,7 +20,9 @@ export function Favorites(): React.ReactElement {
     );
 }
 const Container = styled(ContainerPrototype)`
-    display: block;
+    flex-direction: column;
+    max-height: 100%;
+    overflow-y: hidden;
 `;
 
 export const FavoritesContainer = styled.div`
@@ -29,8 +31,10 @@ export const FavoritesContainer = styled.div`
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    height: 100vh;
+    height: fit-content;
+    //max-height: 100%;
     padding: 1vh 1vw 90px;
+    row-gap: 1rem;
     overflow: scroll;
 `;
 

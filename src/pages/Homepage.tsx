@@ -32,7 +32,6 @@ export const MainContainer = styled.div`
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    height: 400px;
+    height: 100%;
     padding: 1vh 1vw;
-    margin-top: 13rem;
 `;
