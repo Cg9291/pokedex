@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
-import compareIcon from "../../assets/icons8-compare-24.png";
 import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
 import { NavIconsInterface } from "../../interfaces/miscInterfaces";
 import { NavIconsType } from "../../interfaces/miscTypes";
@@ -16,7 +15,6 @@ export function Navigation(): React.ReactElement {
             icon: homeIcon,
             linkUrl: "/"
         },
-        { name: "Compare", icon: compareIcon, linkUrl: "/comparator" },
         {
             name: "Wtp",
             icon: WTPIcon,

@@ -78,7 +78,7 @@ export function PokemonProfile(): React.ReactElement {
                 About: { isFocused: true, element: <About ownProps={tabProps.AboutProps} /> },
                 "Base Stats": {
                     isFocused: false,
-                    element: <BaseStats pokemonStatsProps={tabProps.BaseStatsProps} />
+                    element: <BaseStats ownProps={tabProps.BaseStatsProps} />
                 },
                 Evolution: { isFocused: false, element: <Evolution ownProps={tabProps.EvolutionProps} /> },
                 Moves: { isFocused: false, element: <Moves ownProps={tabProps.MovesProps} /> }
@@ -117,8 +117,6 @@ export function PokemonProfile(): React.ReactElement {
             addPokemonToFavorites(id);
             setIsFavorite(true);
         }
-
-        console.log("is this pokemon in favs? ", isPokemonFavorited(id));
     };
 
     if (pokemonInfo && pokemonSpeciesInfo) {
