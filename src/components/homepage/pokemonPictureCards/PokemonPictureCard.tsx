@@ -5,12 +5,12 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { PokemonTypesElement } from "./PokemonTypesElement";
 import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
-import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import { PokemonPictureCardsPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 
-export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
+export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
@@ -37,9 +37,39 @@ export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.Re
                 <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
             ));
 
-    if (pokemonInfo && loadingStatus === false) {
+    if (pokemonInfo && !loadingStatus) {
+        const pokeInfoObject = {
+            name: pokemonInfo.name,
+            id: pokemonInfo.id,
+            sprites: pokemonInfo.sprites,
+            stats: pokemonInfo.stats
+        };
+        const handleClick = () => {
+            if (props.isLink) {
+                return;
+            } else if (props.pokemonImagesKit && props.isModalActiveKit) {
+                const { pokemonImages, setPokemonImages } = props.pokemonImagesKit;
+                const { isModalActive, setIsModalActive } = props.isModalActiveKit;
+                if (isModalActive.activeImageNumber === 1) {
+                    setPokemonImages({
+                        ...pokemonImages,
+                        topPokemon: pokeInfoObject
+                    });
+                } else if (isModalActive.activeImageNumber === 2) {
+                    setPokemonImages({
+                        ...pokemonImages,
+                        bottomPokemon: pokeInfoObject
+                    });
+                }
+                setIsModalActive({ isActive: false, activeImageNumber: 0 });
+            }
+        };
         return (
-            <Container to={`/pokemons/id/${pokemonInfo.id}`} $mainType={pokemonInfo.types[0].type.name}>
+            <Container
+                to={props.isLink ? `/pokemons/id/${pokemonInfo.id}` : ""}
+                onClick={handleClick}
+                $mainType={pokemonInfo.types[0].type.name}
+            >
                 <Wrapper>
                     <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
                     <SubContainer>
