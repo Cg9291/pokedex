@@ -8,7 +8,7 @@ export async function getPokemonSpeciesData(id: NumOrString): Promise<PokemonSpe
         const response = await axios.get(endpoints.pokemonSpecies(id));
         return response.data;
     } catch (err) {
-        console.log("function getPokemonSpeciesData:failure", err);
+        console.log(err);
         throw err;
     }
 }

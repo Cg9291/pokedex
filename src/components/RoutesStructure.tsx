@@ -5,8 +5,9 @@ import { Homepage } from "../pages/Homepage";
 import { NoMatch } from "../pages/NoMatch";
 import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
-import { FilteredSearchModal } from "./homepage/FilteredSearchModal";
+import { FilteredSearchModal } from "../pages/FilteredSearch";
 import { FilteredSearchResults } from "../pages/FilteredSearchResults";
+import { Comparator } from "../pages/Comparator";
 import { PokemonGuess } from "../pages/PokemonGuess";
 
 export function RoutesStructure(): React.ReactElement | null {
@@ -22,6 +23,10 @@ export function RoutesStructure(): React.ReactElement | null {
         {
             path: "/filtered-search/*",
             element: <FilteredSearchResults />
+        },
+        {
+            path: "/comparator",
+            element: <Comparator />
         }
     ]);
 }

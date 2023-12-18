@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import { Search } from "./Search";
+import { Search } from "./search/Search";
 import React from "react";
 import { RandomizeSelectionButton } from "./RandomizeSelectionButton";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";

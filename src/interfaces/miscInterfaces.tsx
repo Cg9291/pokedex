@@ -1,5 +1,5 @@
 import { Color, Evolution_chain, Flavor_text_entry } from "./pokemonSpeciesInterface";
-import { Ability, Mfe, Stat, Type } from "./pokemonInterface";
+import { Ability, Mfe, Sprites, Stat, Type } from "./pokemonInterface";
 
 export interface TypesColorsInt {
     normal: string;
@@ -24,8 +24,21 @@ export interface TypesColorsInt {
     white: string;
 }
 
-export interface PokemonNumberPropsInterface {
+export interface PokemonPictureCardsPropsInterface {
     id: number;
+    isLink?: boolean;
+    pokemonImagesKit?: PokemonImagesKitInterface;
+    isModalActiveKit?: IsModalActiveKitInterface;
+}
+
+export interface PokemonImagesKitInterface {
+    pokemonImages: ComparatorPokemonDataInterface;
+    setPokemonImages: React.Dispatch<React.SetStateAction<ComparatorPokemonDataInterface>>;
+}
+
+export interface IsModalActiveKitInterface {
+    isModalActive: IsModalActiveInterface;
+    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
 }
 
 export interface PokemonTypesPropsInterface {
@@ -148,4 +161,33 @@ export interface CustomPokemonInfo {
 export interface PokemonGenerationsListInterface {
     generation: string;
     numerals: string;
+}
+
+export interface ComparatorPokemonCardsPropsInterface {
+    pokemonData: ComparatorPokemonInfoInterface;
+    imgOrder: number;
+    isCompared?: boolean;
+    setIsModalActive: React.Dispatch<React.SetStateAction<IsModalActiveInterface>>;
+}
+
+export interface ComparatorPokemonDataInterface {
+    topPokemon: ComparatorPokemonInfoInterface;
+    bottomPokemon: ComparatorPokemonInfoInterface;
+}
+
+export interface ComparatorPokemonInfoInterface {
+    name: string;
+    id: number;
+    sprites: Sprites;
+    stats: Stat[];
+}
+
+export interface IsModalActiveInterface {
+    isActive: boolean;
+    activeImageNumber: number;
+}
+
+export interface ComparatorPokemonSearchModalInterface {
+    isModalActiveKit: IsModalActiveKitInterface;
+    pokemonImagesKit: PokemonImagesKitInterface;
 }

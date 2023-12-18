@@ -6,4 +6,7 @@ export function PokemonNotFound(): React.ReactElement {
     return <Container>The Pokemon you are looking for does not exist</Container>;
 }
 
-const Container = styled(ContainerPrototype)``;
+const Container = styled(ContainerPrototype)`
+    width: 100%;
+    height: 100%;
+`;
