@@ -21,20 +21,24 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     const searchRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const hasSuggestions = suggestedInput?.length > 0;
-    const { handleSub, searchedPokemonId, searchError, isSearching } = useHandleSearchSubmission(
+    const {
+        usesNavigation = props.usesNavigation ? props.usesNavigation : true,
+        hasFilter = props.hasFilter ? props.hasFilter : true
+    } = props;
+    const { handleSub, searchedPokemonIdentifier, searchError, isSearching } = useHandleSearchSubmission(
         searchInput,
         suggestedInput,
-        props.usesNavigation,
-        hasSuggestions
+        setSuggestedInput,
+        usesNavigation
     );
 
     useEffect(() => {
         if (props.setIsSearching && props.setSearchError && props.setSearchedPokemonId) {
-            props.setSearchedPokemonId(searchedPokemonId);
+            props.setSearchedPokemonId(searchedPokemonIdentifier);
             props.setIsSearching(isSearching);
             props.setSearchError(searchError);
         }
-    }, [props.setIsSearching, props.setSearchError, props.setSearchedPokemonId]);
+    }, [isSearching, searchedPokemonIdentifier, searchError]);
 
     (function handleOutsideClicks() {
         useEffect(() => {
@@ -62,7 +66,6 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         handleSub(e);
-
         console.log(searchInput, suggestedInput);
     };
 
@@ -83,12 +86,13 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
                         setSearchInput={setSearchInput}
                         suggestedInput={suggestedInput}
                         setSuggestedInput={setSuggestedInput}
+                        usesNavigation={usesNavigation}
+                        setIsSearching={props.setIsSearching}
+                        setSearchError={props.setSearchError}
+                        setSearchedPokemonIdentifier={props.setSearchedPokemonId}
                     />
                 </InputContainer>
-                <ButtonsContainer>
-                    <SearchButton>Search</SearchButton>
-                    {props.hasFilter && <FilterButton onClick={handleFilterClick}>Filter</FilterButton>}
-                </ButtonsContainer>
+                {hasFilter && <FilterButton onClick={handleFilterClick}>Filter</FilterButton>}
             </Form>
         </Container>
     );
@@ -96,6 +100,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     max-height: 4rem;
+    width: 100%;
 `;
 
 const Form = styled.form.attrs({
@@ -108,10 +113,9 @@ const Form = styled.form.attrs({
 
 const InputContainer = styled.div`
     position: relative;
-    min-width: 85%;
-    width: 85%;
-    max-width: 85%;
     height: fit-content;
+    flex: 1;
+    //margin-right: 0.1rem;
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
@@ -130,7 +134,7 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
 `;
 
 const Input = styled.input.attrs({
-    placeholder: "Search anything related to a pokemon",
+    placeholder: "Search a pokemon by name or number",
     name: "searchInput"
 })`
     width: 85%;
@@ -143,19 +147,20 @@ const Input = styled.input.attrs({
     border-right: 0.1px solid grey;
 `;
 
-const SearchButton = styled.button.attrs({ type: "submit" })`
+/* const SearchButton = styled.button.attrs({ type: "submit" })`
     width: 100%;
     height: 100%;
     max-height: 100%;
     border-radius: 10px;
-`;
-const ButtonsContainer = styled(ContainerPrototype)`
+`; */
+/* const ButtonsContainer = styled(ContainerPrototype)`
     flex-direction: column;
     max-height: 100%;
-`;
+`; */
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    width: 100%;
+    /* width: 100%; */
+    flex: 0 1 15%;
     height: 100%;
     border-radius: 10px;
 `;

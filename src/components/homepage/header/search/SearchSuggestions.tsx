@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
+import { AxiosError } from "axios";
 import styled from "styled-components";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 import { useNavigate } from "react-router-dom";
+import { getPokemonData } from "../../../../functions/api/singleApiCalls/getPokemonData";
 
 export interface SearchSuggestionsProps {
     searchInput: string;
     setSearchInput: React.Dispatch<React.SetStateAction<string>>;
     suggestedInput: string;
     setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
+    usesNavigation: boolean;
+    setSearchedPokemonIdentifier?: React.Dispatch<React.SetStateAction<string | number | null>>;
+    setSearchError?: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSearching?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactElement {
@@ -84,8 +90,30 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     };
 
     const handleClick = (suggestedName: string) => {
-        navigate(`/pokemons/name/${suggestedName}`);
+        if (props.usesNavigation) {
+            navigate(`/pokemons/name/${suggestedName}`);
+        } else {
+            (async () => {
+                if (props.setIsSearching && props.setSearchError && props.setSearchedPokemonIdentifier) {
+                    try {
+                        props.setSearchedPokemonIdentifier("");
+                        props.setIsSearching(true);
+                        const pokemonData = await getPokemonData(suggestedName);
+                        props.setSearchedPokemonIdentifier(pokemonData.id);
+                    } catch (err) {
+                        if (err instanceof AxiosError && err.response?.status === 404) {
+                            props.setSearchError(true);
+                        }
+                    } finally {
+                        props.setIsSearching(false);
+                        props.setSuggestedInput("");
+                    }
+                }
+            })();
+        }
     };
+
+    console.log(suggestionsList?.length);
 
     return props.suggestedInput ? (
         <Container>

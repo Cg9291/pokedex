@@ -164,38 +164,12 @@ function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterf
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
 
-    useEffect(() => {
-        console.log("changed");
-    }, [isSearching, searchError, searchedPokemonId]);
-
-    /* const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
-        const name = transmittedData.toString().toLowerCase();
-
-        searchError && setSearchError(false);
-        searchedPokemonId && setSearchedPokemonId(null);
-
-        try {
-            setIsSearching(true);
-            const pokemonData = await getPokemonData(name);
-            setSearchedPokemonId(pokemonData.id);
-        } catch (err) {
-            if (err instanceof AxiosError && err.response?.status === 404) {
-                setSearchError(true);
-            }
-        } finally {
-            setIsSearching(false);
-        }
-        return;
-    }; */
-
     return (
         <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Search
                 usesNavigation={false}
+                hasFilter={false}
                 setSearchedPokemonId={setSearchedPokemonId}
                 setIsSearching={setIsSearching}
                 setSearchError={setSearchError}
