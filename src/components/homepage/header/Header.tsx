@@ -13,7 +13,7 @@ export function Header(props: RandomPokemonSelectionInterface): React.ReactEleme
                 What Pokemon
                 <br /> would you like to find?
             </HeaderText>
-            <Search />
+            <Search hasFilter={true} usesNavigation={true} />
         </Container>
     );
 }

@@ -1,5 +1,6 @@
 import { Color, Evolution_chain, Flavor_text_entry } from "./pokemonSpeciesInterface";
 import { Ability, Mfe, Sprites, Stat, Type } from "./pokemonInterface";
+import { NumOrString } from "./miscTypes";
 
 export interface TypesColorsInt {
     normal: string;
@@ -25,7 +26,7 @@ export interface TypesColorsInt {
 }
 
 export interface PokemonPictureCardsPropsInterface {
-    id: number;
+    id: NumOrString;
     isLink?: boolean;
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;

@@ -9,12 +9,13 @@ import { PokemonPictureCardsPropsInterface, TypesColorsInt } from "../../../inte
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { NumOrString } from "../../../interfaces/miscTypes";
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
-    async function getData(pokemonNumber: number): Promise<void> {
+    async function getData(pokemonNumber: NumOrString): Promise<void> {
         try {
             await setLoadingStatus(true);
             const data: PokemonInterface = await getPokemonData(pokemonNumber);

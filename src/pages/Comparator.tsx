@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { AxiosError } from "axios";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
@@ -20,6 +20,7 @@ import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokem
 import { NumOrString } from "../interfaces/miscTypes";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png";
+import { Search } from "../components/homepage/header/search/Search";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -157,13 +158,17 @@ function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): R
 }
 
 function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterface): React.ReactElement {
-    const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
+    const [searchedPokemonId, setSearchedPokemonId] = useState<string | number | null>(null);
     const [searchError, setSearchError] = useState<boolean>(false);
     const [isSearching, setIsSearching] = useState<boolean>(false);
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
 
-    const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    useEffect(() => {
+        console.log("changed");
+    }, [isSearching, searchError, searchedPokemonId]);
+
+    /* const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const transmittedData = Object.fromEntries(formData.entries()).searchInput;
@@ -184,16 +189,17 @@ function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterf
             setIsSearching(false);
         }
         return;
-    };
+    }; */
 
     return (
         <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
-            <Form onSubmit={handleSearch}>
-                <Label>
-                    <Input required />
-                </Label>
-            </Form>
+            <Search
+                usesNavigation={false}
+                setSearchedPokemonId={setSearchedPokemonId}
+                setIsSearching={setIsSearching}
+                setSearchError={setSearchError}
+            />
             {isSearching && <LoadingAnimation />}
             {searchError && <PokemonNotFound />}
             {searchedPokemonId && (
