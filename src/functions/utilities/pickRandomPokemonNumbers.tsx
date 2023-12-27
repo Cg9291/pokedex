@@ -1,6 +1,7 @@
-export const pickRandomPokemonNumbers = (): number[] => {
+export const pickRandomPokemonNumbers = (comparator?: boolean): number[] => {
     const numberArray: number[] = [];
-    for (let i = 0; i < 6; i++) {
+    const arrayLengthLimit = comparator ? 2 : 6;
+    for (let i = 0; i < arrayLengthLimit; i++) {
         let num: number;
         do {
             num = Math.floor(Math.random() * (255 - 1) + 1);
