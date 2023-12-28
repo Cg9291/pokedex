@@ -143,36 +143,50 @@ export function FilteredSearchModal(): React.ReactElement {
         const [sliderMinValue, setSliderMinValue] = useState<number>(0);
         const [sliderMaxValue, setSliderMaxValue] = useState<number>(props.nameOfParentFilter === "height" ? 20 : 1000);
 
-        const handleSliderMinChange = (e: React.FormEvent<HTMLInputElement>, isSliderMax?: boolean) => {
-            isSliderMax
-                ? setSliderMaxValue(Number(e.currentTarget.value))
-                : setSliderMinValue(Number(e.currentTarget.value));
+        const handleSliderChange = (e: React.FormEvent<HTMLInputElement>, isSliderMax?: boolean) => {
+            if (isSliderMax) {
+                if (Number(e.currentTarget.value) > sliderMinValue) {
+                    setSliderMaxValue(Number(e.currentTarget.value));
+                } else {
+                    setSliderMaxValue(Number(e.currentTarget.value));
+                    setSliderMinValue(Number(e.currentTarget.value));
+                }
+            } else {
+                if (Number(e.currentTarget.value) < sliderMaxValue) {
+                    setSliderMinValue(Number(e.currentTarget.value));
+                } else {
+                    setSliderMaxValue(Number(e.currentTarget.value));
+                    setSliderMinValue(Number(e.currentTarget.value));
+                }
+            }
         };
 
         return (
             <OptionsSliderContainer>
-                <OptionsSliderLabel>
-                    <OptionsSliderInput
-                        name={`min${capitalizeWords(props.nameOfParentFilter)}`}
-                        type="range"
-                        min="0"
-                        max={props.nameOfParentFilter === "height" ? 20 : 1000}
-                        step={1}
-                        value={sliderMinValue}
-                        onChange={(e) => handleSliderMinChange(e)}
-                    />
-                </OptionsSliderLabel>
-                <OptionsSliderLabel>
-                    <OptionsSliderInput
-                        name={`max${capitalizeWords(props.nameOfParentFilter)}`}
-                        type="range"
-                        min="0"
-                        max={props.nameOfParentFilter === "height" ? 20 : 1000}
-                        step={1}
-                        value={sliderMaxValue}
-                        onChange={(e) => handleSliderMinChange(e, true)}
-                    />
-                </OptionsSliderLabel>
+                <OptionsSliderInputContainer>
+                    <OptionsSliderLabel>
+                        <OptionsSliderInput
+                            name={`min${capitalizeWords(props.nameOfParentFilter)}`}
+                            type="range"
+                            min="0"
+                            max={props.nameOfParentFilter === "height" ? 20 : 1000}
+                            step={1}
+                            value={sliderMinValue}
+                            onChange={(e) => handleSliderChange(e)}
+                        />
+                    </OptionsSliderLabel>
+                    <OptionsSliderLabel>
+                        <OptionsSliderInput
+                            name={`max${capitalizeWords(props.nameOfParentFilter)}`}
+                            type="range"
+                            min="0"
+                            max={props.nameOfParentFilter === "height" ? 20 : 1000}
+                            step={1}
+                            value={sliderMaxValue}
+                            onChange={(e) => handleSliderChange(e, true)}
+                        />
+                    </OptionsSliderLabel>
+                </OptionsSliderInputContainer>
                 <OptionsSliderValuesRow>
                     <OptionsSliderValue>
                         {props.nameOfParentFilter === "height" ? `${sliderMinValue}m` : `${sliderMinValue}kgs`}
@@ -261,41 +275,76 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     height: 2rem;
 `;
 
-const OptionsSliderLabel = styled.label`
-    max-width: 100%;
-    width: inherit;
-    height: 1em;
-    background-color: grey;
-    display: flex;
-    align-items: center;
-`;
-
 const OptionsSliderContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 0 0.1rem;
 `;
 
+const OptionsSliderInputContainer = styled.div`
+    min-height: 1em;
+    position: relative;
+`;
+
+const OptionsSliderLabel = styled.label`
+    /*     position: absolute;
+    top: 0;
+    min-width: 100%;
+    max-width: 100%;
+    width: inherit;
+    height: 1em;
+
+    -webkit-appearance: none;
+    display: flex;
+    align-items: center;
+    z-index: 0;
+    min-height: 100%;
+    background-color: grey; */
+`;
 const OptionsSliderInput = styled.input`
+    -webkit-appearance: none;
     position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
+    //height: 100%;
     pointer-events: none;
     background: none; /* get rid of white Chrome background */
     color: #000;
     font: inherit; /* fix too small font-size in both Chrome & Firefox */
     margin: 0;
     pointer-events: none; /* let clicks pass through */
+    //z-index: 1;
 
     &::-webkit-slider-runnable-track,
     & {
         -webkit-appearance: none;
+        background: blue;
+        height: 0.2em;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 1px;
+        border: 0;
     }
     &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        position: relative;
+        z-index: 2;
+        height: 1em;
+        width: 1em;
+        border-radius: 25px;
         pointer-events: auto;
+        position: relative;
+        margin-top: -0.45em;
+        cursor: pointer;
+        background-color: red;
+        //border: 1px solid black;
     }
 `;
 
 const OptionsSliderValuesRow = styled(ContainerPrototype)`
+    margin-top: 0.4em;
     justify-content: space-between;
 `;
 
