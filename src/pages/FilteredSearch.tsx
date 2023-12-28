@@ -6,6 +6,31 @@ import { FilterInfoInterface, PokemonGenerationsListInterface } from "../interfa
 import { typesColors } from "../objects/typesColors";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import { pokemonGenerationsList } from "../objects/pokemonGenerationsList";
+import { Interface } from "readline";
+
+export interface LocalTransmittedDataInterface {
+    generation?: string;
+    type?: string;
+    type2?: string;
+    height?: string;
+    weight?: string;
+}
+
+export interface InputThumbsRefsInterface {
+    min: HTMLInputElement | null;
+    max: HTMLInputElement | null;
+}
+
+export interface FocusedFilterOptionsInterface {
+    generation: string | null;
+    type: string | null;
+    type2: string | null;
+}
+
+export interface FocusedFilterOptionsKitInterface {
+    focusedFiltersOptions: FocusedFilterOptionsInterface;
+    setFocusedFiltersOptions: React.Dispatch<React.SetStateAction<FocusedFilterOptionsInterface>>;
+}
 
 export function FilteredSearchModal(): React.ReactElement {
     const [filterInfo] = useState<FilterInfoInterface>({
@@ -16,13 +41,16 @@ export function FilteredSearchModal(): React.ReactElement {
         weight: { name: "weight", style: "slider" }
     });
 
-    interface LocalTransmittedDataInterface {
-        generation?: string;
-        type?: string;
-        type2?: string;
-        height?: string;
-        weight?: string;
-    }
+    const [focusedFiltersOptions, setFocusedFiltersOptions] = useState<FocusedFilterOptionsInterface>({
+        generation: null,
+        type: null,
+        type2: null
+    });
+
+    const focusedFiltersOptionsKit: FocusedFilterOptionsKitInterface = {
+        focusedFiltersOptions: focusedFiltersOptions,
+        setFocusedFiltersOptions: setFocusedFiltersOptions
+    };
 
     const navigate = useNavigate();
 
@@ -64,11 +92,12 @@ export function FilteredSearchModal(): React.ReactElement {
                 let keyValue = 0;
                 for (const oneType in typesColors) {
                     myArr.push(
-                        <OptionsOfFilters
+                        <FiltersOption
                             key={keyValue}
                             optionValue={capitalizeWords(oneType)}
                             optionStyle={styleOfParentFilter}
-                            nameOfParentFilter={nameOfParentFilter}
+                            filtersName={nameOfParentFilter}
+                            focusedFiltersOptionsKit={focusedFiltersOptionsKit}
                         />
                     );
                     keyValue++;
@@ -76,20 +105,21 @@ export function FilteredSearchModal(): React.ReactElement {
                 return myArr;
             } else if (nameOfParentFilter === "generation") {
                 return pokemonGenerationsList.map((x: PokemonGenerationsListInterface, index: number) => (
-                    <OptionsOfFilters
+                    <FiltersOption
                         key={index}
                         optionValue={capitalizeWords(`${x.generation}`)}
                         optionStyle={styleOfParentFilter}
-                        nameOfParentFilter={nameOfParentFilter}
+                        filtersName={nameOfParentFilter}
+                        focusedFiltersOptionsKit={focusedFiltersOptionsKit}
                     />
                 ));
             }
         } else if (styleOfParentFilter === "slider") {
             return (
-                <OptionsOfFilters
+                <FiltersOption
                     optionStyle={styleOfParentFilter}
                     optionValue="Slider"
-                    nameOfParentFilter={nameOfParentFilter}
+                    filtersName={nameOfParentFilter}
                 />
             );
         }
@@ -97,73 +127,95 @@ export function FilteredSearchModal(): React.ReactElement {
 
     //JSX COMPONENTS
     function Filters(props: { styleOfFilter: string; nameOfFilter: string }): React.ReactElement {
+        //const focusedElements = { generation };
         return (
-            <ContainerOfFilters>
-                <HeadersOfFilters headerValue={capitalizeWords(props.nameOfFilter)} />
+            <FiltersContainer>
+                <FiltersHeader headerValue={capitalizeWords(props.nameOfFilter)} />
                 <OptionsContainer>{displayOptions(props.styleOfFilter, props.nameOfFilter)}</OptionsContainer>
-            </ContainerOfFilters>
+            </FiltersContainer>
         );
     }
 
-    function HeadersOfFilters(props: { headerValue: string }): React.ReactElement {
+    function FiltersHeader(props: { headerValue: string }): React.ReactElement {
         return (
-            <ContainerOfHeadersOfFilters>
-                <ValueOfHeadersOfFilters>{props.headerValue}</ValueOfHeadersOfFilters>
-            </ContainerOfHeadersOfFilters>
+            <FiltersHeadersContainer>
+                <FiltersHeadersValue>{props.headerValue}</FiltersHeadersValue>
+            </FiltersHeadersContainer>
         );
     }
 
-    function OptionsOfFilters(props: {
+    function FiltersOption(props: {
         optionValue: string;
         optionStyle: string;
-        nameOfParentFilter: string;
+        filtersName: string;
+        focusedFiltersOptionsKit?: FocusedFilterOptionsKitInterface;
     }): React.ReactElement {
+        const handleClick = () => {
+            props.focusedFiltersOptionsKit?.setFocusedFiltersOptions({
+                ...props.focusedFiltersOptionsKit.focusedFiltersOptions,
+                [props.filtersName]: props.optionValue
+            });
+        };
+
+        const isOptionFocused =
+            props.focusedFiltersOptionsKit?.focusedFiltersOptions[
+                props.filtersName as keyof FocusedFilterOptionsInterface
+            ] === props.optionValue;
+
         return props.optionStyle === "button" ? (
-            <OptionsButtonContainer>
+            <OptionsButtonContainer $isFocused={isOptionFocused ? true : false}>
                 <OptionsButtonLabel>
-                    {props.nameOfParentFilter === "generation" ? (
+                    {props.filtersName === "generation" ? (
                         <>
                             <OptionValue>{` Generation ${Number(props.optionValue)}`}</OptionValue>
-                            <ButtonInput name={props.nameOfParentFilter} value={props.optionValue} required />
+                            <ButtonInput
+                                name={props.filtersName}
+                                value={props.optionValue}
+                                checked={isOptionFocused ? true : false}
+                                onClick={handleClick}
+                                required
+                            />
                         </>
                     ) : (
                         <>
                             <OptionValue>{props.optionValue}</OptionValue>
-                            <ButtonInput name={props.nameOfParentFilter} value={props.optionValue} />
+                            <ButtonInput
+                                name={props.filtersName}
+                                value={props.optionValue}
+                                checked={isOptionFocused ? true : false}
+                                onClick={handleClick}
+                            />
                         </>
                     )}
                 </OptionsButtonLabel>
             </OptionsButtonContainer>
         ) : (
-            <Sliders nameOfParentFilter={props.nameOfParentFilter} />
+            <Sliders nameOfParentFilter={props.filtersName} />
         );
     }
 
     function Sliders(props: { nameOfParentFilter: string }): React.ReactElement {
-        interface inputThumbsRefsInterface {
-            min: HTMLInputElement | null;
-            max: HTMLInputElement | null;
-        }
         const [sliderMinValue, setSliderMinValue] = useState<number>(0);
         const [sliderMaxValue, setSliderMaxValue] = useState<number>(props.nameOfParentFilter === "height" ? 20 : 1000);
-        const inputThumbsRefs = useRef<inputThumbsRefsInterface>({ min: null, max: null });
+        const inputThumbsRefs = useRef<InputThumbsRefsInterface>({ min: null, max: null });
 
         const handleSliderChange = (e: React.FormEvent<HTMLInputElement>, isSliderMax?: boolean) => {
+            const currentSliderValue = Number(e.currentTarget.value);
             if (isSliderMax) {
-                if (Number(e.currentTarget.value) > sliderMinValue) {
-                    setSliderMaxValue(Number(e.currentTarget.value));
+                if (currentSliderValue > sliderMinValue) {
+                    setSliderMaxValue(currentSliderValue);
                 } else {
                     inputThumbsRefs.current.max?.focus();
-                    setSliderMaxValue(Number(e.currentTarget.value));
-                    setSliderMinValue(Number(e.currentTarget.value));
+                    setSliderMaxValue(currentSliderValue);
+                    setSliderMinValue(currentSliderValue);
                 }
             } else {
-                if (Number(e.currentTarget.value) < sliderMaxValue) {
-                    setSliderMinValue(Number(e.currentTarget.value));
+                if (currentSliderValue < sliderMaxValue) {
+                    setSliderMinValue(currentSliderValue);
                 } else {
                     inputThumbsRefs.current.min?.focus();
-                    setSliderMaxValue(Number(e.currentTarget.value));
-                    setSliderMinValue(Number(e.currentTarget.value));
+                    setSliderMinValue(currentSliderValue);
+                    setSliderMaxValue(currentSliderValue);
                 }
             }
         };
@@ -238,14 +290,19 @@ const Form = styled.form.attrs({
 const Title = styled.h3`
     margin: 1rem 0 0 1rem;
 `;
-const ContainerOfFilters = styled(ContainerPrototype)`
+const FiltersContainer = styled(ContainerPrototype)`
     height: 5rem;
     flex-direction: column;
     border: 0.1rem solid red;
 `;
-const ContainerOfHeadersOfFilters = styled.div``;
-const ValueOfHeadersOfFilters = styled.h5`
-    margin: 1rem 0 0 1rem;
+const FiltersHeadersContainer = styled.div`
+    min-height: 2rem
+    display: flex;
+    align-items: start;
+    background:yellow;
+`;
+const FiltersHeadersValue = styled.h5`
+    //margin: 1rem 0 0 1rem;
 `;
 
 const OptionsContainer = styled(ContainerPrototype)`
@@ -254,12 +311,14 @@ const OptionsContainer = styled(ContainerPrototype)`
     overflow-x: scroll;
 `;
 
-const OptionsButtonContainer = styled.div`
+const OptionsButtonContainer = styled.div<{ $isFocused?: boolean }>`
     width: max-content;
     height: 2rem;
     margin: 0 0.1rem;
     padding: 0 0.5rem;
-    border: 0.1rem solid transparent;
+    border-radius: ${(props) => (props.$isFocused ? "7px" : "0px")};
+    border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "none")};
+    background-color: ${(props) => (props.$isFocused ? "lightgrey" : "inherit")};
 `;
 
 const OptionsButtonLabel = styled.label`
@@ -272,6 +331,8 @@ const OptionsButtonLabel = styled.label`
 const ButtonInput = styled.input.attrs({ type: "radio" })`
     /*    height: 0;
     width: 0; */
+    opacity: 0;
+    pointer-events: none;
 `;
 
 const OptionValue = styled.h6`
