@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { useNavigate } from "react-router-dom";
@@ -140,14 +140,20 @@ export function FilteredSearchModal(): React.ReactElement {
     }
 
     function Sliders(props: { nameOfParentFilter: string }): React.ReactElement {
+        interface inputThumbsRefsInterface {
+            min: HTMLInputElement | null;
+            max: HTMLInputElement | null;
+        }
         const [sliderMinValue, setSliderMinValue] = useState<number>(0);
         const [sliderMaxValue, setSliderMaxValue] = useState<number>(props.nameOfParentFilter === "height" ? 20 : 1000);
+        const inputThumbsRefs = useRef<inputThumbsRefsInterface>({ min: null, max: null });
 
         const handleSliderChange = (e: React.FormEvent<HTMLInputElement>, isSliderMax?: boolean) => {
             if (isSliderMax) {
                 if (Number(e.currentTarget.value) > sliderMinValue) {
                     setSliderMaxValue(Number(e.currentTarget.value));
                 } else {
+                    inputThumbsRefs.current.max?.focus();
                     setSliderMaxValue(Number(e.currentTarget.value));
                     setSliderMinValue(Number(e.currentTarget.value));
                 }
@@ -155,6 +161,7 @@ export function FilteredSearchModal(): React.ReactElement {
                 if (Number(e.currentTarget.value) < sliderMaxValue) {
                     setSliderMinValue(Number(e.currentTarget.value));
                 } else {
+                    inputThumbsRefs.current.min?.focus();
                     setSliderMaxValue(Number(e.currentTarget.value));
                     setSliderMinValue(Number(e.currentTarget.value));
                 }
@@ -173,6 +180,7 @@ export function FilteredSearchModal(): React.ReactElement {
                             step={1}
                             value={sliderMinValue}
                             onChange={(e) => handleSliderChange(e)}
+                            ref={(node) => (inputThumbsRefs.current.min = node)}
                         />
                     </OptionsSliderLabel>
                     <OptionsSliderLabel>
@@ -184,6 +192,7 @@ export function FilteredSearchModal(): React.ReactElement {
                             step={1}
                             value={sliderMaxValue}
                             onChange={(e) => handleSliderChange(e, true)}
+                            ref={(node) => (inputThumbsRefs.current.max = node)}
                         />
                     </OptionsSliderLabel>
                 </OptionsSliderInputContainer>
@@ -308,19 +317,17 @@ const OptionsSliderInput = styled.input`
     left: 0;
     bottom: 0;
     width: 100%;
-    //height: 100%;
     pointer-events: none;
     background: none; /* get rid of white Chrome background */
     color: #000;
     font: inherit; /* fix too small font-size in both Chrome & Firefox */
     margin: 0;
     pointer-events: none; /* let clicks pass through */
-    //z-index: 1;
 
     &::-webkit-slider-runnable-track,
     & {
         -webkit-appearance: none;
-        background: blue;
+        background: grey;
         height: 0.2em;
         width: 100%;
         cursor: pointer;
@@ -330,7 +337,7 @@ const OptionsSliderInput = styled.input`
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         position: relative;
-        z-index: 2;
+        z-index: 1;
         height: 1em;
         width: 1em;
         border-radius: 25px;
@@ -338,13 +345,19 @@ const OptionsSliderInput = styled.input`
         position: relative;
         margin-top: -0.45em;
         cursor: pointer;
-        background-color: red;
-        //border: 1px solid black;
+        background-color: orange;
+    }
+
+    &:focus {
+        &::-webkit-slider-thumb {
+            z-index: 2;
+            //background-color: green;
+        }
     }
 `;
 
 const OptionsSliderValuesRow = styled(ContainerPrototype)`
-    margin-top: 0.4em;
+    margin-top: 0.9rem;
     justify-content: space-between;
 `;
 
