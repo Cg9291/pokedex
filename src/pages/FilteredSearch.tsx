@@ -173,6 +173,7 @@ export function FilteredSearchModal(): React.ReactElement {
                                 value={props.optionValue}
                                 checked={isOptionFocused ? true : false}
                                 onClick={handleClick}
+                                readOnly //this is necessary because the input has a checked attribute whose changes are handled not by the onchange event but the onclick event + state
                                 required
                             />
                         </>
@@ -184,6 +185,7 @@ export function FilteredSearchModal(): React.ReactElement {
                                 value={props.optionValue}
                                 checked={isOptionFocused ? true : false}
                                 onClick={handleClick}
+                                readOnly //this is necessary because the input has a checked attribute whose changes are handled not by the onchange event but the onclick event + state
                             />
                         </>
                     )}
@@ -277,6 +279,7 @@ export function FilteredSearchModal(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+    overflow: hidden;
 `;
 
 const Form = styled.form.attrs({
@@ -285,21 +288,23 @@ const Form = styled.form.attrs({
 })`
     flex-direction: inherit;
     width: 100%;
+    height: 100%;
     display: flex;
 `;
 const Title = styled.h3`
-    margin: 1rem 0 0 1rem;
+    margin: 1rem 0 1rem 1rem;
 `;
 const FiltersContainer = styled(ContainerPrototype)`
-    height: 5rem;
+    width: 100%;
+    height: 1fr;
     flex-direction: column;
-    border: 0.1rem solid red;
+    overflow-x: hidden;
+    //border: 0.1rem solid red;
 `;
 const FiltersHeadersContainer = styled.div`
-    min-height: 2rem
     display: flex;
     align-items: start;
-    background:yellow;
+    padding: 0.5rem; //review
 `;
 const FiltersHeadersValue = styled.h5`
     //margin: 1rem 0 0 1rem;
@@ -307,17 +312,20 @@ const FiltersHeadersValue = styled.h5`
 
 const OptionsContainer = styled(ContainerPrototype)`
     max-width: 100%;
-    height: 3rem;
+    height: max-content;
     overflow-x: scroll;
+    padding: 0.5rem 0.5rem 0 0.5rem;
 `;
 
 const OptionsButtonContainer = styled.div<{ $isFocused?: boolean }>`
+    display: flex;
+    align-items: center;
     width: max-content;
     height: 2rem;
-    margin: 0 0.1rem;
+    margin: 0 0.6rem 0.7rem 0;
     padding: 0 0.5rem;
-    border-radius: ${(props) => (props.$isFocused ? "7px" : "0px")};
-    border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "none")};
+    border-radius: 7px;
+    border: 0.1rem solid grey;
     background-color: ${(props) => (props.$isFocused ? "lightgrey" : "inherit")};
 `;
 
@@ -331,18 +339,25 @@ const OptionsButtonLabel = styled.label`
 const ButtonInput = styled.input.attrs({ type: "radio" })`
     /*    height: 0;
     width: 0; */
-    opacity: 0;
+    display: none;
+    /* opacity: 0; */
     pointer-events: none;
 `;
 
 const OptionValue = styled.h6`
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100%;
 `;
 
 const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
-    width: 4rem;
-    height: 2rem;
+    width: 20rem;
+    height: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 12px;
+    background-color: gold;
 `;
 
 const OptionsSliderContainer = styled.div`
