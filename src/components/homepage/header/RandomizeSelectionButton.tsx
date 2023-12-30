@@ -29,7 +29,7 @@ const Container = styled(ContainerPrototype)`
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
-    border-radius: 5%;
+    border-radius: 7px;
     padding: 0 0.5rem;
     border: none;
 `;

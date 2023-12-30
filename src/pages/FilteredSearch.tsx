@@ -6,7 +6,6 @@ import { FilterInfoInterface, PokemonGenerationsListInterface } from "../interfa
 import { typesColors } from "../objects/typesColors";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import { pokemonGenerationsList } from "../objects/pokemonGenerationsList";
-import { Interface } from "readline";
 
 export interface LocalTransmittedDataInterface {
     generation?: string;
@@ -32,7 +31,7 @@ export interface FocusedFilterOptionsKitInterface {
     setFocusedFiltersOptions: React.Dispatch<React.SetStateAction<FocusedFilterOptionsInterface>>;
 }
 
-export function FilteredSearchModal(): React.ReactElement {
+export function FilteredSearch(): React.ReactElement {
     const [filterInfo] = useState<FilterInfoInterface>({
         generation: { name: "generation", style: "button" },
         type: { name: "type", style: "button" },
@@ -305,14 +304,13 @@ const FiltersHeadersContainer = styled.div`
     display: flex;
     align-items: start;
     padding: 0.5rem; //review
+    height: 30%;
 `;
-const FiltersHeadersValue = styled.h5`
-    //margin: 1rem 0 0 1rem;
-`;
+const FiltersHeadersValue = styled.h5``;
 
 const OptionsContainer = styled(ContainerPrototype)`
     max-width: 100%;
-    height: max-content;
+    height: 1fr;
     overflow-x: scroll;
     padding: 0.5rem 0.5rem 0 0.5rem;
 `;
@@ -325,8 +323,8 @@ const OptionsButtonContainer = styled.div<{ $isFocused?: boolean }>`
     margin: 0 0.6rem 0.7rem 0;
     padding: 0 0.5rem;
     border-radius: 7px;
-    border: 0.1rem solid grey;
-    background-color: ${(props) => (props.$isFocused ? "lightgrey" : "inherit")};
+    border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "0.1rem solid transparent")};
+    background-color: ${(props) => (props.$isFocused ? "rgba(108, 122, 137, 0.23)" : "inherit")};
 `;
 
 const OptionsButtonLabel = styled.label`
@@ -358,6 +356,8 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     margin-right: auto;
     border-radius: 12px;
     background-color: gold;
+    font-size: 1.2em;
+    font-weight: 600;
 `;
 
 const OptionsSliderContainer = styled.div`

@@ -9,6 +9,7 @@ import { PokemonPictureCardsPropsInterface, TypesColorsInt } from "../../../inte
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { widthsQueries, heightsQueries } from "../../../objects/breakpoints";
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -105,6 +106,10 @@ const Container = styled(Link)<{ $mainType: string }>`
     border-radius: 25px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
+
+    @media ${heightsQueries.two} {
+        height: 17vh;
+    }
 `;
 
 const Wrapper = styled(ContainerPrototype)`
