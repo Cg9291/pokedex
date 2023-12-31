@@ -43,7 +43,8 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
             name: pokemonInfo.name,
             id: pokemonInfo.id,
             sprites: pokemonInfo.sprites,
-            stats: pokemonInfo.stats
+            stats: pokemonInfo.stats,
+            types: pokemonInfo.types
         };
         const handleClick = () => {
             if (props.isLink) {

@@ -10,7 +10,8 @@ import {
     ComparatorPokemonDataInterface,
     ComparatorPokemonInfoInterface,
     ComparatorPokemonSearchModalInterface,
-    IsModalActiveInterface
+    IsModalActiveInterface,
+    TypesColorsInt
 } from "../interfaces/miscInterfaces";
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
@@ -20,6 +21,7 @@ import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokem
 import { NumOrString } from "../interfaces/miscTypes";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png";
+import { typesColors } from "../objects/typesColors";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -36,7 +38,8 @@ export function Comparator(): React.ReactElement {
             name: data.name,
             id: data.id,
             sprites: data.sprites,
-            stats: data.stats
+            stats: data.stats,
+            types: data.types
         };
         if (imgOrder === 1) {
             await setPokemonData((oldState) => ({ ...oldState, topPokemon: pokemonInfo }));
@@ -140,9 +143,13 @@ export function Comparator(): React.ReactElement {
 }
 
 function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
-    const { name, sprites } = props.pokemonData;
+    const { name, sprites, types } = props.pokemonData;
+    console.log(types && types);
     return (
-        <ComparatorPokemonCardsContainer $isCompared={props.isCompared && props.isCompared}>
+        <ComparatorPokemonCardsContainer
+            $isCompared={props.isCompared && props.isCompared}
+            $mainType={types ? types[0].type.name : null}
+        >
             {!props.isCompared && (
                 <ChangeSelectionButton
                     onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
@@ -246,14 +253,18 @@ const CardsRow = styled(ContainerPrototype)`
     justify-content: space-evenly;
 `;
 
-const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean }>`
+const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
     height: 30%;
-    background-color: lightgrey;
+    //background-color: lightgrey;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
     width: ${({ $isCompared }) => $isCompared && ` 40%`};
     height: ${({ $isCompared }) => ($isCompared ? ` fit-content;` : `30%`)};
+    background-image: ${(props) =>
+        props.$mainType
+            ? `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},70%, white)`
+            : `lightgrey`};
 `;
 
 const PokemonName = styled.h5`

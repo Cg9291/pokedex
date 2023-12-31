@@ -180,6 +180,7 @@ export interface ComparatorPokemonInfoInterface {
     id: number;
     sprites: Sprites;
     stats: Stat[];
+    types: Type[];
 }
 
 export interface IsModalActiveInterface {
