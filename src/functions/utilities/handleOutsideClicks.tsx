@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IsModalActiveInterface } from "../../interfaces/miscInterfaces";
+import { IsModalActiveInterface } from "../../interfaces/comparatorInterfaces";
 
 export function handleOutsideClicks(
     ref: React.RefObject<HTMLDivElement>,

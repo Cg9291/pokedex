@@ -11,6 +11,8 @@ export function NavElement(props: {
 }): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
+    const isElementFocused: boolean =
+        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
 
     const focusHandler = (): void => {
         const nextState = { ...navElementsNames };
@@ -21,12 +23,8 @@ export function NavElement(props: {
                 nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused = false;
             }
         }
-
         setNavElementsNames(nextState);
     };
-
-    const isElementFocused: boolean =
-        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
 
     return (
         <Container onFocus={focusHandler}>

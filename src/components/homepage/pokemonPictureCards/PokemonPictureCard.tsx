@@ -5,15 +5,28 @@ import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { PokemonTypesElement } from "./PokemonTypesElement";
 import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
-import { PokemonPictureCardsPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 import { widthsQueries, heightsQueries } from "../../../objects/breakpoints";
+import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
+import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
+
+export interface PokemonPictureCardsPropsInterface {
+    id: number;
+    isLink?: boolean;
+    pokemonImagesKit?: PokemonImagesKitInterface;
+    isModalActiveKit?: IsModalActiveKitInterface;
+}
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
+
+    useEffect(() => {
+        getData(props.id);
+    }, [props.id]);
 
     async function getData(pokemonNumber: number): Promise<void> {
         try {
@@ -26,10 +39,6 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
             return;
         }
     }
-
-    useEffect(() => {
-        getData(props.id);
-    }, [props.id]);
 
     const renderPokemonTypes = (typesArray: Type[]): React.ReactElement[] =>
         [...typesArray]

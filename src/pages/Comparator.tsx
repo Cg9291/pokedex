@@ -1,27 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { AxiosError } from "axios";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
+import { ComparatorsPokemonSearchModal } from "../components/comparator/PokemonSearchModal";
 import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
-import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
-import { handleOutsideClicks } from "../functions/utilities/handleOutsideClicks";
-import {
-    ComparatorPokemonCardsPropsInterface,
-    ComparatorPokemonDataInterface,
-    ComparatorPokemonInfoInterface,
-    ComparatorPokemonSearchModalInterface,
-    IsModalActiveInterface,
-    TypesColorsInt
-} from "../interfaces/miscInterfaces";
+import { ComparatorPokemonInfoInterface, IsModalActiveInterface } from "../interfaces/comparatorInterfaces";
 import { comparatorDefaultPokemonInfo } from "../objects/comparatorDefaultPokemonInfo";
 import { BaseStats } from "../components/pokemonProfiles/profileNavBodies/BaseStats";
-import { PokemonNotFound } from "./PokemonNotFound";
-import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokemonNumbers";
 import { NumOrString } from "../interfaces/miscTypes";
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png";
-import { typesColors } from "../objects/typesColors";
+import { ComparatorPokemonDataInterface } from "../interfaces/comparatorInterfaces";
+import { ComparatorsPokemonCards } from "../components/comparator/ComparatorsPokemonCards";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -142,79 +132,6 @@ export function Comparator(): React.ReactElement {
     );
 }
 
-function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
-    const { name, sprites, types } = props.pokemonData;
-    console.log(types && types);
-    return (
-        <ComparatorPokemonCardsContainer
-            $isCompared={props.isCompared && props.isCompared}
-            $mainType={types ? types[0].type.name : null}
-        >
-            {!props.isCompared && (
-                <ChangeSelectionButton
-                    onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
-                >
-                    Switch
-                </ChangeSelectionButton>
-            )}
-            <PokemonImg src={sprites.front_default} />
-            {props.isCompared && <PokemonName>{name}</PokemonName>}
-        </ComparatorPokemonCardsContainer>
-    );
-}
-
-function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterface): React.ReactElement {
-    const [searchedPokemonId, setSearchedPokemonId] = useState<number | null>(null);
-    const [searchError, setSearchError] = useState<boolean>(false);
-    const [isSearching, setIsSearching] = useState<boolean>(false);
-    const modalRef = useRef<HTMLDivElement>(null);
-    handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
-
-    const handleSearch = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const transmittedData = Object.fromEntries(formData.entries()).searchInput;
-        const name = transmittedData.toString().toLowerCase();
-
-        searchError && setSearchError(false);
-        searchedPokemonId && setSearchedPokemonId(null);
-
-        try {
-            setIsSearching(true);
-            const pokemonData = await getPokemonData(name);
-            setSearchedPokemonId(pokemonData.id);
-        } catch (err) {
-            if (err instanceof AxiosError && err.response?.status === 404) {
-                setSearchError(true);
-            }
-        } finally {
-            setIsSearching(false);
-        }
-        return;
-    };
-
-    return (
-        <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
-            <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
-            <Form onSubmit={handleSearch}>
-                <Label>
-                    <Input required />
-                </Label>
-            </Form>
-            {isSearching && <LoadingAnimation />}
-            {searchError && <PokemonNotFound />}
-            {searchedPokemonId && (
-                <PokemonPictureCard
-                    id={searchedPokemonId}
-                    pokemonImagesKit={props.pokemonImagesKit}
-                    isModalActiveKit={props.isModalActiveKit}
-                    isLink={false}
-                />
-            )}
-        </ComparatorSearchModalContainer>
-    );
-}
-
 const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     padding: 0 1rem;
     flex-direction: column;
@@ -253,80 +170,6 @@ const CardsRow = styled(ContainerPrototype)`
     justify-content: space-evenly;
 `;
 
-const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
-    height: 30%;
-    //background-color: lightgrey;
-    justify-content: center;
-    border-radius: 12px;
-    align-items: center;
-    width: ${({ $isCompared }) => $isCompared && ` 40%`};
-    height: ${({ $isCompared }) => ($isCompared ? ` fit-content;` : `30%`)};
-    background-image: ${(props) =>
-        props.$mainType
-            ? `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},70%, white)`
-            : `lightgrey`};
-`;
-
-const PokemonName = styled.h5`
-    background-color: white;
-    border: 0.1rem solid grey;
-    border-radius: 50px;
-    padding: 0.5rem 0.2rem;
-`;
-
-const PokemonImg = styled.img`
-    width: 9rem;
-    aspect-ratio: 1/1;
-`;
-
-const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
-    //Will review
-    position: absolute;
-    width: fit-content;
-    aspect-ratio: 1/1;
-    margin-left: -80%;
-`;
-
-const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
-    flex-direction: column;
-    display: ${(props) => (props.$isModalActive ? "flex" : "none")};
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    top: 12vh;
-    left: 0;
-    right: 0;
-    background-color: white;
-    z-index: 1;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
-    padding: 2rem 1rem;
-`;
-
-const SearchModalHeader = styled.h2``;
-
-const Form = styled.form.attrs({
-    method: "get"
-})`
-    width: 100%;
-    display: flex;
-`;
-
-const Label = styled.label`
-    flex: 3 0 85%;
-`;
-
-const Input = styled.input.attrs({
-    placeholder: "Search a Pokemon",
-    name: "searchInput"
-})`
-    width: 100%;
-    height: 3rem;
-    border-radius: 99px;
-    margin-top: 1rem;
-    padding-left: 1rem;
-`;
-
 const CompareButton = styled.button.attrs({ type: "button" })`
     height: 3rem;
     width: 100%;
@@ -353,8 +196,4 @@ const RandomizeButtonImage = styled.img.attrs({
 })`
     width: 100%;
     height: 100%;
-`;
-
-const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
 `;
