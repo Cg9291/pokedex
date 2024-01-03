@@ -1,5 +1,5 @@
 import "./App.css";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype";
 import { RoutesStructure } from "./components/RoutesStructure";
 import React from "react";

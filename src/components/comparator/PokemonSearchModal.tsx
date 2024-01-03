@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { AxiosError } from "axios";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { LoadingSpinnerPrototype } from "../prototypes/LoadingSpinnerPrototype";
 import { PokemonPictureCard } from "../homepage/pokemonPictureCards/PokemonPictureCard";

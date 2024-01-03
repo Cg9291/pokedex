@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { PokemonTypesPropsInterface } from "../../../interfaces/miscInterfaces";
 import React from "react";
 

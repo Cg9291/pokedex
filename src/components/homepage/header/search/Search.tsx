@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import React, { useRef, useState, useEffect } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";

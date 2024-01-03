@@ -1,7 +1,7 @@
 import React from "react";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
 import compareIcon from "../../assets/icons8-compare-24.png";

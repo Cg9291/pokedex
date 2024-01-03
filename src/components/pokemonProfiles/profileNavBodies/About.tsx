@@ -1,6 +1,6 @@
 import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";

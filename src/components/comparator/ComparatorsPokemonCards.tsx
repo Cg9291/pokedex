@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { typesColors } from "../../objects/typesColors";
 import { TypesColorsInt } from "../../interfaces/miscInterfaces";

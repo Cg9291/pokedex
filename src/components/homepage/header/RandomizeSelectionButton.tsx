@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";

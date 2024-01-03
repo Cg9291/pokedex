@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPokemonGameList, PokemonGuessInfo } from "../functions/api/singleApiCalls/getPokemonGameList";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 export function PokemonGuess() {
     const [pokemonChoices, setPokemonChoices] = useState<PokemonGuessInfo[]>([]);

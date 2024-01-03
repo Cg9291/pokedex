@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { PokemonInterface } from "../interfaces/pokemonInterface";
 import { PokemonSpeciesInterface } from "../interfaces/pokemonSpeciesInterface";

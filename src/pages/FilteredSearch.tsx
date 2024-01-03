@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { Filters } from "../components/homepage/filteredSearch/filter/Filter";
 import { useNavigate } from "react-router-dom";

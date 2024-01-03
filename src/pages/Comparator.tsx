@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { ComparatorsPokemonSearchModal } from "../components/comparator/PokemonSearchModal";
 import { getPokemonData } from "../functions/api/singleApiCalls/getPokemonData";
