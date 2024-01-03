@@ -18,6 +18,10 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
     const evolutionChainUrl: string = props.ownProps.evolution_chain.url;
 
+    useEffect(() => {
+        getData(evolutionChainUrl);
+    }, []);
+
     const getData = async (url: string): Promise<void> => {
         try {
             const data: PokemonEvolutionChainInterface = await getPokemonEvolutionChainData(url);
@@ -27,10 +31,6 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
             return;
         }
     };
-
-    useEffect(() => {
-        getData(evolutionChainUrl);
-    }, []);
 
     if (evolutionChainData) {
         const fetchEvolutions = (): string[] => {

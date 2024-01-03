@@ -18,7 +18,7 @@ export function Navigation(): React.ReactElement {
         },
         { name: "Compare", icon: compareIcon, linkUrl: "/comparator" },
         {
-            name: "Wtp",
+            name: "Play",
             icon: WTPIcon,
             linkUrl: "/wtp"
         },

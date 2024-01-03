@@ -5,7 +5,7 @@ import { Homepage } from "../pages/Homepage";
 import { NoMatch } from "../pages/NoMatch";
 import { Favorites } from "../pages/Favorites";
 import { PokemonNotFound } from "../pages/PokemonNotFound";
-import { FilteredSearchModal } from "../pages/FilteredSearch";
+import { FilteredSearch } from "../pages/FilteredSearch";
 import { FilteredSearchResults } from "../pages/FilteredSearchResults";
 import { Comparator } from "../pages/Comparator";
 import { PokemonGuess } from "../pages/PokemonGuess";
@@ -18,7 +18,7 @@ export function RoutesStructure(): React.ReactElement | null {
         { path: "/pokemons/name/:name", element: <PokemonProfile /> },
         { path: "/favorites", element: <Favorites /> },
         { path: "/pokemon-not-found", element: <PokemonNotFound /> },
-        { path: "/filter/:gen", element: <FilteredSearchModal /> },
+        { path: "/filter/:gen", element: <FilteredSearch /> },
         { path: "/wtp", element: <PokemonGuess /> },
         {
             path: "/filtered-search/*",

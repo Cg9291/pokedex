@@ -11,15 +11,17 @@ import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototyp
 
 export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
-
     const displayMoves = (): React.ReactElement[] =>
         moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} key={x.move.name} />);
-
     return <Container>{displayMoves()}</Container>;
 }
 
 function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.ReactElement {
     const [pokemonType, setPokemonType] = useState<PokemonMovesInterface>();
+
+    useEffect(() => {
+        getData(props.moveUrl);
+    }, []);
 
     const getData = async (moveDataUrl: string): Promise<void> => {
         try {
@@ -31,13 +33,8 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
         return;
     };
 
-    useEffect(() => {
-        getData(props.moveUrl);
-    }, []);
-
     if (pokemonType) {
         const { type } = pokemonType;
-
         return (
             <MoveContainer>
                 <MoveNameContainer>{capitalizeWords(props.moveName)}</MoveNameContainer>

@@ -142,8 +142,8 @@ export function PokemonProfile(): React.ReactElement {
         };
 
         return (
-            <Container $mainType={types[0].type.name}>
-                <ImageContainer>
+            <Container>
+                <ImageContainer $mainType={types[0].type.name}>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>
                         {capitalizeWords(name)}
@@ -169,23 +169,24 @@ export function PokemonProfile(): React.ReactElement {
         );
     } else {
         return (
-            <Container $mainType="none">
+            <Container>
                 <LoadingAnimation />
             </Container>
         );
     }
 }
 
-const Container = styled(ContainerPrototype)<{ $mainType: string }>`
+const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
     overflow-y: hidden;
 `;
-const ImageContainer = styled(ContainerPrototype)`
+const ImageContainer = styled(ContainerPrototype)<{ $mainType: string }>`
+    background-image: ${(props) =>
+        `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},70%, white)`};
     flex-direction: column;
     align-items: center;
     justify-content: space-around;

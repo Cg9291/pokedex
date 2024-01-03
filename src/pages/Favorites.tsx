@@ -6,6 +6,7 @@ import { typesColors } from "../objects/typesColors";
 
 export function Favorites(): React.ReactElement {
     const favoritedPokemons = JSON.parse(localStorage.getItem("pokemons") || "[]");
+    const numberOfFavoritedPokemons = favoritedPokemons.length;
     const mapPictureCards = (): React.ReactElement[] =>
         favoritedPokemons.map((number: number, index: number) => (
             <PokemonPictureCard id={number} key={index} isLink={true} />
@@ -13,10 +14,14 @@ export function Favorites(): React.ReactElement {
 
     return (
         <Container>
-            <Title>Favourites</Title>
-            <SubTitle>This is a list of your favourite pokemons</SubTitle>
+            <Title>Favorites</Title>
+            <SubTitle>
+                This is a list of your favorite pokemons!
+                <br />
+                Number of favorite pokemons:{numberOfFavoritedPokemons}
+            </SubTitle>
             <FavoritesContainer>
-                {favoritedPokemons.length !== 0 ? mapPictureCards() : "No Favorite Pokemons to display"}
+                {numberOfFavoritedPokemons !== 0 ? mapPictureCards() : "No Favorite Pokemons to display"}
             </FavoritesContainer>
         </Container>
     );
@@ -34,21 +39,19 @@ export const FavoritesContainer = styled.div`
     flex-wrap: wrap;
     width: 100%;
     height: fit-content;
-    //max-height: 100%;
     padding: 1vh 1vw 90px;
     row-gap: 1rem;
     overflow: scroll;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
     color: ${typesColors.black};
     font-weight: normal;
     padding: 1rem 1rem 0.5rem;
 `;
 
-const SubTitle = styled.h2`
+const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-weight: normal;
-    font-size: 20px;
     padding: 0 1rem 1rem;
 `;
