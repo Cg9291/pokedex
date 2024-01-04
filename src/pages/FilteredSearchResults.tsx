@@ -111,11 +111,15 @@ export function FilteredSearchResults(): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1fr;
     padding: 1rem 1rem;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
     overflow-y: scroll;
+    overflow-x: none;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
