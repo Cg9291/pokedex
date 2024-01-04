@@ -31,6 +31,7 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     max-height: 100%;
     overflow-y: hidden;
+    padding: 0 1rem;
 `;
 
 export const FavoritesContainer = styled.div`
@@ -40,19 +41,20 @@ export const FavoritesContainer = styled.div`
     column-gap: 0.8rem;
     width: 100%;
     height: max-content;
-    padding: 1vh 3vw;
+    padding: 1vh 0;
     row-gap: 0.7rem;
     overflow: scroll;
 `;
 
 const Title = styled.h1`
     color: ${typesColors.black};
-    font-weight: normal;
-    padding: 1rem 1rem 0.5rem;
+    font-size: 2em;
+    font-weight: bold;
+    //padding: 1rem 1rem 0.5rem;
 `;
 
 const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-weight: normal;
-    padding: 0 1rem 1rem;
+    // padding: 0 1rem 1rem;
 `;

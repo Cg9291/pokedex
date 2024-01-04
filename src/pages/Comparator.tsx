@@ -12,6 +12,7 @@ import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png";
 import { ComparatorPokemonDataInterface } from "../interfaces/comparatorInterfaces";
 import { ComparatorsPokemonCards } from "../components/comparator/ComparatorsPokemonCards";
+import backIcon from "../assets/icons8-back-arrow-50.png";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -73,7 +74,11 @@ export function Comparator(): React.ReactElement {
 
     return (
         <Container $isActive={isModalActive.isActive}>
-            {isCompared && <BackButton onClick={() => setIsCompared(false)}>Back</BackButton>}
+            {isCompared && (
+                <BackButton onClick={() => setIsCompared(false)}>
+                    <BackIcon />
+                </BackButton>
+            )}
             <Header>
                 <HeaderTitle $isCompared={isCompared}>Comparator</HeaderTitle>
                 {!isCompared && (
@@ -160,8 +165,13 @@ const ComparatorBody = styled(ContainerPrototype)`
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
     position: absolute;
-    width: 3rem;
+    width: fit-content;
     height: 2rem;
+    background-color: transparent;
+    border: none;
+    margin-top: 0.1rem;
+    //left: 0;
+    left: 0.5rem;
 `;
 const CardsRow = styled(ContainerPrototype)`
     height: fit-content;
@@ -196,4 +206,10 @@ const RandomizeButtonImage = styled.img.attrs({
 })`
     width: 100%;
     height: 100%;
+`;
+
+const BackIcon = styled.img.attrs({ src: backIcon })`
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1/1;
 `;

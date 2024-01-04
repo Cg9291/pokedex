@@ -68,16 +68,18 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                     <Input required />
                 </Label>
             </Form>
-            {isSearching && <LoadingAnimation />}
-            {searchError && <PokemonNotFound />}
-            {searchedPokemonId && (
-                <PokemonPictureCard
-                    id={searchedPokemonId}
-                    pokemonImagesKit={props.pokemonImagesKit}
-                    isModalActiveKit={props.isModalActiveKit}
-                    isLink={false}
-                />
-            )}
+            <ResultsSection $foundPokemon={searchedPokemonId ? true : false}>
+                {isSearching && <LoadingAnimation />}
+                {searchError && <PokemonNotFound />}
+                {searchedPokemonId && (
+                    <PokemonPictureCard
+                        id={searchedPokemonId}
+                        pokemonImagesKit={props.pokemonImagesKit}
+                        isModalActiveKit={props.isModalActiveKit}
+                        isLink={false}
+                    />
+                )}
+            </ResultsSection>
         </ComparatorSearchModalContainer>
     );
 }
@@ -123,3 +125,7 @@ const Input = styled.input.attrs({
     padding-left: 1rem;
 `;
 const SearchModalHeader = styled.h2``;
+
+const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
+    padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};
+`;

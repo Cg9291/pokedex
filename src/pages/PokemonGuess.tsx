@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getPokemonGameList, PokemonGuessInfo } from "../functions/api/singleApiCalls/getPokemonGameList";
 import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
+import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 export function PokemonGuess() {
     const [pokemonChoices, setPokemonChoices] = useState<PokemonGuessInfo[]>([]);
     const [correctPokemon, setCorrectPokemon] = useState<PokemonGuessInfo>();
@@ -71,7 +72,7 @@ export function PokemonGuess() {
                             onClick={() => !isReveal && handleChoice(item.pokemonName)}
                             style={{ background: item.colour }}
                         >
-                            <h1> {item.pokemonName}</h1>
+                            <h1>{capitalizeWords(item.pokemonName)}</h1>
                         </ChoiceButton>
                     ))}
             </Choices>
@@ -81,12 +82,14 @@ export function PokemonGuess() {
 
 const Container = styled(ContainerPrototype)`
     display: grid;
-    grid-template-rows: 10vh 1fr 30vh;
+    grid-template-rows: 1fr 40vh 40vh;
     max-height: 100%;
+    padding: 0 1rem;
 `;
 
 const Title = styled.h1`
-    text-align: center;
+    //text-align: center;
+    white-space: nowrap;
 `;
 
 const ChoiceButton = styled.button`
@@ -128,12 +131,16 @@ const ImageContainer = styled(ContainerPrototype)`
 
 const PokemonImage = styled.image`
     width: 100%;
+    max-width: 100;
     min-height: 100%;
+    max-height: 100;
     border: solid black;
+    border: none;
 `;
 
-const HiddenImage = styled.svg<{ $isOpen: boolean }>`
+const HiddenImage = styled.svg.attrs({ viewBox: "0 0 100 100 " })<{ $isOpen: boolean }>`
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
     transition: filter ${(props) => (props.$isOpen ? 2 : 0)}s ease-out;
 `;

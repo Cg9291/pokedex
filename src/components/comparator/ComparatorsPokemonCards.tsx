@@ -3,6 +3,7 @@ import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { typesColors } from "../../objects/typesColors";
 import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { ComparatorPokemonCardsPropsInterface } from "../../interfaces/comparatorInterfaces";
+import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
 
 export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
     const { name, sprites, types } = props.pokemonData;
@@ -19,13 +20,13 @@ export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterf
                 </ChangeSelectionButton>
             )}
             <PokemonImg src={sprites.front_default} />
-            {props.isCompared && <PokemonName>{name}</PokemonName>}
+            {props.isCompared && <PokemonName>{capitalizeWords(name)}</PokemonName>}
         </ComparatorPokemonCardsContainer>
     );
 }
 
 const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
-    height: 30%;
+    min-height: 40%;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
@@ -51,6 +52,13 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     //Will review
     position: absolute;
     width: fit-content;
-    aspect-ratio: 1/1;
-    margin-left: -80%;
+    left: 0;
+    height: 1.8rem;
+    //aspect-ratio: 1/1;
+    margin-left: 1.2rem;
+    padding: 0 1rem;
+    //background-color: gold;
+    border: 1px solid black;
+    border-radius: 7px;
+    font-weight: 600;
 `;

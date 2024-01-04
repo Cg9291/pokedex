@@ -20,7 +20,6 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string }>`
     border-radius: 100%;
     height: 100%;
     aspect-ratio: 1/1;
-    //width: 1.5rem;
     margin: 0 0.5rem 0 0;
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};

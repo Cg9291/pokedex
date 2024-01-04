@@ -31,5 +31,5 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string }
     align-items: center;
     font-size: 0.8rem;
     font-weight: 600;
-    justify-content: ${(props) => (props.$dynamicBackground ? "space-between" : "center")};
+    justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
 `;
