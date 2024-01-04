@@ -28,7 +28,6 @@ const FiltersContainer = styled(ContainerPrototype)`
 const FiltersHeadersContainer = styled.div`
     display: flex;
     align-items: start;
-    padding: 0.5rem; //review
     height: 30%;
 `;
 

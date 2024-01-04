@@ -90,6 +90,7 @@ export function FilteredSearch(): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     overflow: hidden;
+    padding: 0 1rem;
 `;
 
 const Form = styled.form.attrs({
@@ -101,8 +102,8 @@ const Form = styled.form.attrs({
     height: 100%;
     display: flex;
 `;
-const Title = styled.h3`
-    margin: 1rem 0 1rem 1rem;
+const Title = styled.h1`
+    //margin: 1rem 0 1rem 1rem;
 `;
 
 const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
@@ -114,4 +115,5 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     background-color: gold;
     font-size: 1.2em;
     font-weight: 600;
+    margin-bottom: 1rem;
 `;
