@@ -64,6 +64,7 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
 }
 
 function StrengthsAndWeaknesses(props: { type: string }) {
+    console.log("SW", props.type);
     const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
             (x: string) => {

@@ -114,8 +114,8 @@ export const pokemonTypesIcons: PokemonTypesIcons = {
     normal: {
         icon: <Normal />,
         styling: {
-            background: "#75D0C1",
-            boxShadow: "0 0 20px #75D0C1"
+            background: "#A0A29F",
+            boxShadow: "0 0 20px #A0A29F"
         }
     },
     poison: {

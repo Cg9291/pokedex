@@ -2,15 +2,18 @@ import styled from "styled-components/macro";
 import { pokemonTypesIcons, PokemonTypesIcons } from "../assets";
 
 export function SvgIcon(props: { pokeType: string }): React.ReactElement {
-    console.log(pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling);
-    return (
-        <Container
-            $BgColor={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.background}
-            $BoxShadow={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.boxShadow}
-        >
-            {pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].icon}
-        </Container>
-    );
+    {
+        return props.pokeType !== "none" ? (
+            <Container
+                $BgColor={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.background}
+                $BoxShadow={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.boxShadow}
+            >
+                {pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].icon}
+            </Container>
+        ) : (
+            <></>
+        );
+    }
 }
 
 const Container = styled.div<{ $BgColor: string; $BoxShadow: string }>`

@@ -7,15 +7,16 @@ import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { typesColors } from "../../../objects/typesColors";
 
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
-    console.log(props.typeName.toLowerCase());
-    return (
+    return props.typeName !== "none" ? (
         <Container $dynamicBackground={props.dynamicBackground ? true : false} $pokeType={props.typeName.toLowerCase()}>
             <SvgIcon pokeType={props.typeName.toLowerCase()} />
             {capitalizeWords(props.typeName)}
         </Container>
+    ) : (
+        <Container $pokeType="none">{capitalizeWords(props.typeName)}</Container>
     );
 }
-const Container = styled.div<{ $dynamicBackground: boolean; $pokeType: string }>`
+const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string }>`
     min-width: max-content;
     height: 1.8rem;
     max-height: 100%;
@@ -30,5 +31,5 @@ const Container = styled.div<{ $dynamicBackground: boolean; $pokeType: string }>
     align-items: center;
     font-size: 0.8rem;
     font-weight: 600;
-    justify-content: space-between;
+    justify-content: ${(props) => (props.$dynamicBackground ? "space-between" : "center")};
 `;
