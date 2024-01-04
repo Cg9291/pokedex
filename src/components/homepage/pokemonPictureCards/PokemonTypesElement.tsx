@@ -1,9 +1,16 @@
 import styled from "styled-components/macro";
 import { PokemonTypesPropsInterface } from "../../../interfaces/miscInterfaces";
 import React from "react";
+import { SvgIcon } from "../../SvgIcons";
 
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
-    return <Container>{props.typeName}</Container>;
+    console.log(props.typeName);
+    return (
+        <Container>
+            <SvgIcon pokeType={props.typeName} />
+            {props.typeName}
+        </Container>
+    );
 }
 const Container = styled.div`
     width: max-content;
@@ -14,4 +21,5 @@ const Container = styled.div`
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     text-align: center;
+    display: flex;
 `;

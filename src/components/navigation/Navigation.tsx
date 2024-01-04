@@ -54,6 +54,7 @@ const Container = styled(ContainerPrototype)`
     background-color: white;
     bottom: 0;
     padding: 2.5% 0;
+    border-top: 1px solid lightgrey;
 `;
 
 const NavElementContainer = styled(Link)`

@@ -111,7 +111,7 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
 `;
 
 const Input = styled.input.attrs({
-    placeholder: "Search anything related to a pokemon",
+    placeholder: "Search any pokemon by name or number",
     name: "searchInput"
 })`
     width: 85%;
@@ -122,6 +122,7 @@ const Input = styled.input.attrs({
     border: none;
     background-color: transparent;
     border-right: 0.1px solid grey;
+    font-size: 0.8rem;
 `;
 
 const SearchButton = styled.button.attrs({ type: "submit" })`
