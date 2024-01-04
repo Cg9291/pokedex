@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { Search } from "./search/Search";
 import React from "react";
@@ -26,7 +26,6 @@ const Container = styled(ContainerPrototype)`
     padding: 0.5rem 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    position: fixed;
 `;
 
 const HeaderText = styled.h2`

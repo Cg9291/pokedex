@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { getPokemonEvolutionChainData } from "../../../functions/api/singleApiCalls/getPokemonEvolutionChainData";
 import { EvolutionComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonEvolutionChainInterface, Chain, EvolvesTo } from "../../../interfaces/pokemonEvolutionChainInterface";
@@ -18,6 +18,10 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
     const evolutionChainUrl: string = props.ownProps.evolution_chain.url;
 
+    useEffect(() => {
+        getData(evolutionChainUrl);
+    }, []);
+
     const getData = async (url: string): Promise<void> => {
         try {
             const data: PokemonEvolutionChainInterface = await getPokemonEvolutionChainData(url);
@@ -27,10 +31,6 @@ export function Evolution(props: { ownProps: EvolutionComponentProps }): React.R
             return;
         }
     };
-
-    useEffect(() => {
-        getData(evolutionChainUrl);
-    }, []);
 
     if (evolutionChainData) {
         const fetchEvolutions = (): string[] => {

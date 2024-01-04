@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
@@ -20,7 +20,7 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
 const Container = styled(ContainerPrototype)`
     width: fit-content;
-    height: 2rem;
+    height: 2.5rem;
     position: fixed;
     top: 0.5rem;
     right: 0.5rem;
@@ -29,7 +29,8 @@ const Container = styled(ContainerPrototype)`
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
-    border-radius: 5%;
+    border-radius: 7px;
     padding: 0 0.5rem;
     border: none;
+    font-weight: 600;
 `;

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import React, { useRef, useState, useEffect } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
@@ -134,7 +134,7 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
 `;
 
 const Input = styled.input.attrs({
-    placeholder: "Search a pokemon by name or number",
+    placeholder: "Search any pokemon by name or number",
     name: "searchInput"
 })`
     width: 85%;
@@ -145,6 +145,7 @@ const Input = styled.input.attrs({
     border: none;
     background-color: transparent;
     border-right: 0.1px solid grey;
+    font-size: 0.8rem;
 `;
 
 /* const SearchButton = styled.button.attrs({ type: "submit" })`

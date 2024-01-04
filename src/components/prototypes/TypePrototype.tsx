@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const TypePrototype = styled.div<{ $bgColor: string; $value?: string }>`
     margin: 0 1rem 0.5rem 0;

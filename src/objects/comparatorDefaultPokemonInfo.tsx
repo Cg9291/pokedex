@@ -302,6 +302,15 @@ export const comparatorDefaultPokemonInfo = {
                     url: "https://pokeapi.co/api/v2/stat/6/"
                 }
             }
+        ],
+        types: [
+            {
+                slot: 1,
+                type: {
+                    name: "water",
+                    url: "https://pokeapi.co/api/v2/type/11/"
+                }
+            }
         ]
     },
     bottomPokemon: {
@@ -603,6 +612,22 @@ export const comparatorDefaultPokemonInfo = {
                 stat: {
                     name: "speed",
                     url: "https://pokeapi.co/api/v2/stat/6/"
+                }
+            }
+        ],
+        types: [
+            {
+                slot: 1,
+                type: {
+                    name: "fire",
+                    url: "https://pokeapi.co/api/v2/type/10/"
+                }
+            },
+            {
+                slot: 2,
+                type: {
+                    name: "flying",
+                    url: "https://pokeapi.co/api/v2/type/3/"
                 }
             }
         ]

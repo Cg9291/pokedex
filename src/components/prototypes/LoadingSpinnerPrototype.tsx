@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export const LoadingSpinnerPrototype = styled.div`
     width: 50%;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { PokemonInterface } from "../interfaces/pokemonInterface";
 import { PokemonSpeciesInterface } from "../interfaces/pokemonSpeciesInterface";
@@ -142,8 +142,8 @@ export function PokemonProfile(): React.ReactElement {
         };
 
         return (
-            <Container $mainType={types[0].type.name}>
-                <ImageContainer>
+            <Container>
+                <ImageContainer $mainType={types[0].type.name}>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>
                         {capitalizeWords(name)}
@@ -169,26 +169,27 @@ export function PokemonProfile(): React.ReactElement {
         );
     } else {
         return (
-            <Container $mainType="none">
+            <Container>
                 <LoadingAnimation />
             </Container>
         );
     }
 }
 
-const Container = styled(ContainerPrototype)<{ $mainType: string }>`
+const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     z-index: 0;
     position: relative;
     overflow-y: hidden;
 `;
-const ImageContainer = styled(ContainerPrototype)`
+const ImageContainer = styled(ContainerPrototype)<{ $mainType: string }>`
+    background-image: ${(props) =>
+        `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},65%, white 95%)`};
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    // justify-content: space-around;
     max-height: 40%;
 `;
 
@@ -197,7 +198,7 @@ const PokemonName = styled.span``;
 
 const SvgImg = styled.svg`
     width: 100%;
-    height: 50%;
+    height: 100%;
 `;
 const PokemonImg = styled.image`
     width: 100%;
@@ -206,7 +207,6 @@ const PokemonImg = styled.image`
 `;
 
 const ProfileContainer = styled(ContainerPrototype)`
-    max-height: 60%;
     overflow-y: hidden;
     padding-bottom: 9%;
 `;
@@ -227,16 +227,16 @@ const InfoNavBar = styled(ContainerPrototype)`
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    position: absolute;
+    //position: absolute;
     background-color: inherit;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    max-height: 20rem;
-    margin-top: 10%;
+    //max-height: 20rem;
+    //margin-top: 10%;
     overflow-y: scroll;
     padding: 0 1rem;
-    background-color: rgba(0, 0, 0, 0.03);
+    //background-color: rgba(0, 0, 0, 0.03);
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

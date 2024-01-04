@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import React from "react";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
@@ -6,45 +6,55 @@ import { typesColors } from "../objects/typesColors";
 
 export function Favorites(): React.ReactElement {
     const favoritedPokemons = JSON.parse(localStorage.getItem("pokemons") || "[]");
+    const numberOfFavoritedPokemons = favoritedPokemons.length;
     const mapPictureCards = (): React.ReactElement[] =>
         favoritedPokemons.map((number: number, index: number) => (
             <PokemonPictureCard id={number} key={index} isLink={true} />
         ));
 
+    console.log(favoritedPokemons);
     return (
         <Container>
-            <Title>Favourites</Title>
-            <SubTitle>This is a list of your favourite pokemons</SubTitle>
+            <Title>Favorites</Title>
+            <SubTitle>
+                This is a list of your favorite pokemons!
+                <br />
+                Number of favorite pokemons:{numberOfFavoritedPokemons}
+            </SubTitle>
             <FavoritesContainer>
-                {favoritedPokemons.length !== 0 ? mapPictureCards() : "No Favorite Pokemons to display"}
+                {numberOfFavoritedPokemons !== 0 ? mapPictureCards() : "No Favorite Pokemons to display"}
             </FavoritesContainer>
         </Container>
     );
 }
 const Container = styled(ContainerPrototype)`
-    display: block;
+    flex-direction: column;
+    max-height: 100%;
+    overflow-y: hidden;
+    padding: 0 1rem;
 `;
 
 export const FavoritesContainer = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 0.8rem;
     width: 100%;
-    height: 100vh;
-    padding: 1vh 1vw 90px;
+    height: max-content;
+    padding: 1vh 0;
+    row-gap: 0.7rem;
     overflow: scroll;
 `;
 
-const Title = styled.h2`
+const Title = styled.h1`
     color: ${typesColors.black};
-    font-weight: normal;
-    padding: 1rem 1rem 0.5rem;
+    font-size: 2em;
+    font-weight: bold;
+    //padding: 1rem 1rem 0.5rem;
 `;
 
-const SubTitle = styled.h2`
+const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-weight: normal;
-    font-size: 20px;
-    padding: 0 1rem 1rem;
+    // padding: 0 1rem 1rem;
 `;

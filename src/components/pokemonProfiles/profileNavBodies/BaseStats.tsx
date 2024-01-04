@@ -1,6 +1,6 @@
 import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { StatsInterface } from "../../../interfaces/miscInterfaces";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { BaseStatsComponentProps } from "../../../interfaces/miscInterfaces";
