@@ -49,6 +49,7 @@ const Link = styled(LinkPrototype)`
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
     height: 10%;
+    margin-top: 0.5rem;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;

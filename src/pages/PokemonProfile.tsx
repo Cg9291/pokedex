@@ -186,10 +186,10 @@ const Container = styled(ContainerPrototype)`
 `;
 const ImageContainer = styled(ContainerPrototype)<{ $mainType: string }>`
     background-image: ${(props) =>
-        `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},70%, white)`};
+        `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},65%, white 95%)`};
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    // justify-content: space-around;
     max-height: 40%;
 `;
 
@@ -198,7 +198,7 @@ const PokemonName = styled.span``;
 
 const SvgImg = styled.svg`
     width: 100%;
-    height: 50%;
+    height: 100%;
 `;
 const PokemonImg = styled.image`
     width: 100%;
@@ -236,7 +236,7 @@ const InfoNavBody = styled(ContainerPrototype)`
     //margin-top: 10%;
     overflow-y: scroll;
     padding: 0 1rem;
-    background-color: rgba(0, 0, 0, 0.03);
+    //background-color: rgba(0, 0, 0, 0.03);
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

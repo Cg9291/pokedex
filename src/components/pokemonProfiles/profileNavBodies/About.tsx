@@ -5,16 +5,15 @@ import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";
 import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
-import { typesColors } from "../../../objects/typesColors";
-import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import { TypePrototype } from "../../prototypes/TypePrototype";
+
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
+
+import { PokemonTypesElement } from "../../homepage/pokemonPictureCards/PokemonTypesElement";
 
 export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
 
     const displayedValues = [
-        ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],
         ["weight", `${weight / 10 + "kg"}`],
         ["color", `${color.name}`],
@@ -36,10 +35,13 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
         flavor_text_entries && (
             <Container>
                 <Description>{displayEnglishDescription(flavor_text_entries)}</Description>
+                <TypeContainer>
+                    <PokemonTypesElement typeName={types[0].type.name} dynamicBackground={true} />
+                </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
                 <SWSectionContainer>
                     {" "}
-                    <StrengthsAndWeaknesses type={displayedValues[0][1]} />
+                    <StrengthsAndWeaknesses type={types[0].type.name} />
                 </SWSectionContainer>
             </Container>
         )
@@ -50,7 +52,13 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
     return (
         <VitalsContainer>
             <VitalsLabel>{capitalizeWords(props.label)}</VitalsLabel>
-            <VitalsValue>{capitalizeWords(props.value)}</VitalsValue>
+            <VitalsValue>
+                {props.label === "type" ? (
+                    <PokemonTypesElement typeName={props.value} dynamicBackground={true} />
+                ) : (
+                    capitalizeWords(props.value)
+                )}
+            </VitalsValue>
         </VitalsContainer>
     );
 }
@@ -59,14 +67,7 @@ function StrengthsAndWeaknesses(props: { type: string }) {
     const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
             (x: string) => {
-                const lowerCaseX = x.toLowerCase();
-                return (
-                    <StrengthsAndWeaknessesElement
-                        sValue={x}
-                        sColor={typesColors[lowerCaseX as keyof TypesColorsInt]}
-                        key={x}
-                    />
-                );
+                return <PokemonTypesElement typeName={x} dynamicBackground={true} key={x} />;
             }
         );
 
@@ -77,14 +78,6 @@ function StrengthsAndWeaknesses(props: { type: string }) {
             <h3>Weaknesses</h3>
             <SWElementsContainer>{displayStrengths("weaknesses")}</SWElementsContainer>
         </SWContainer>
-    );
-}
-
-function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }): React.ReactElement {
-    return (
-        <SWElement $bgColor={props.sColor} $value={props.sValue}>
-            {props.sValue}
-        </SWElement>
     );
 }
 
@@ -102,17 +95,25 @@ const Description = styled.p`
     font-weight: bold;
 `;
 
-const VitalsSectionContainer = styled.div`
+const TypeContainer = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    align-items: start;
+    justify-content: start;
+    margin-top: 0.5rem;
+`;
+
+const VitalsSectionContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    /* flex-wrap: wrap;
+    align-items: start; */
     min-height: max-content;
-    margin: 0 0 1rem 0.5rem;
+    margin: 0 0 0 0.5rem;
     padding: 1rem 0 0 0;
     //align-content: space-between;
     font-size: 0.8em;
     justify-content: space-between;
-    gap: 1rem;
+    column-gap: 1rem;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`
@@ -133,10 +134,11 @@ const VitalsLabel = styled.div`
 
 const VitalsValue = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: start;
     width: 100%;
     font-weight: bold;
-    justify-content: start;
+    height: fit-content;
+    //max-height: 2rem;
 `;
 
 const SWSectionContainer = styled.div`
@@ -156,12 +158,9 @@ const SWContainer = styled.div`
 
 const SWElementsContainer = styled.div`
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: stretch;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
     padding: 0.5rem 0 0 0;
     margin: 0 0 1rem 0;
 `;
-
-const SWElement = styled(TypePrototype)``;

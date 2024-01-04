@@ -26,6 +26,7 @@ export interface TypesColorsInt {
 
 export interface PokemonTypesPropsInterface {
     typeName: string;
+    dynamicBackground?: boolean;
 }
 
 export interface PokemonProfilesNavElementsInterface {
