@@ -20,7 +20,7 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
 const Container = styled(ContainerPrototype)`
     width: fit-content;
-    height: 2rem;
+    height: 2.5rem;
     position: fixed;
     top: 0.5rem;
     right: 0.5rem;
@@ -32,4 +32,5 @@ const Button = styled.button.attrs({ type: "button" })`
     border-radius: 7px;
     padding: 0 0.5rem;
     border: none;
+    font-weight: 600;
 `;

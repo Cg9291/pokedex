@@ -8,6 +8,7 @@ import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface
 import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { SvgIcon } from "../../SvgIcons";
 
 export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
@@ -38,7 +39,10 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
         return (
             <MoveContainer>
                 <MoveNameContainer>{capitalizeWords(props.moveName)}</MoveNameContainer>
-                <MoveTypeContainer $typeName={type.name} />
+                <MoveTypeContainer>
+                    {" "}
+                    <SvgIcon pokeType={type.name.toLowerCase()} />
+                </MoveTypeContainer>
             </MoveContainer>
         );
     } else {
@@ -67,7 +71,7 @@ const MoveNameContainer = styled.div`
     align-items: center;
 `;
 
-const MoveTypeContainer = styled.div<{ $typeName: string }>`
+const MoveTypeContainer = styled.div<{ $typeName?: string }>`
     width: 2.5rem;
     aspect-ratio: 1/1;
     border-radius: 50%;

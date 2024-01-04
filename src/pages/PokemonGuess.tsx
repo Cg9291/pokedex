@@ -80,7 +80,8 @@ export function PokemonGuess() {
 }
 
 const Container = styled(ContainerPrototype)`
-    display: block;
+    display: grid;
+    grid-template-rows: 10vh 1fr 30vh;
     max-height: 100%;
 `;
 
@@ -109,29 +110,30 @@ const ChoiceButton = styled.button`
 
 const Choices = styled.div`
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto auto;
+    grid-template-columns: 100%;
+    grid-template-rows: 25%;
     column-gap: 10px;
-    row-gap: 15px;
+    row-gap: 10px;
     text-align: center;
     padding: 0 1rem;
+    margin-bottom: 3rem;
 `;
 
 const ImageContainer = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    max-height: 40%;
+    max-height: 100%;
 `;
 
 const PokemonImage = styled.image`
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     border: solid black;
 `;
 
 const HiddenImage = styled.svg<{ $isOpen: boolean }>`
     width: 100%;
-    height: 50%;
+    height: 100%;
     transition: filter ${(props) => (props.$isOpen ? 2 : 0)}s ease-out;
 `;

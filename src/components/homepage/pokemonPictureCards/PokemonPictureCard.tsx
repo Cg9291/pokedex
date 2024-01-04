@@ -106,12 +106,12 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
 const Container = styled(Link)<{ $mainType: string }>`
     display: grid;
     grid-template-columns: repeat(4, 25%);
-    grid-template-rows: auto;
+    grid-template-rows: auto 1fr;
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
-    width: 45%;
-    height: 17vh;
+    width: 100%;
+    height: 18vh;
     padding: 0.7rem;
     border-radius: 15px;
     text-decoration: none;
@@ -138,15 +138,18 @@ const PokeName = styled.h4`
 const PokeId = styled.span`
     grid-area: id;
     color: white;
+    font-weight: 500;
+    font-size: 0.9rem;
 `;
 
 /* const SubContainer = styled(ContainerPrototype)``; */
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
-    //width: 50%;
     flex-direction: column;
     justify-content: end;
     grid-area: typesContainer;
+    align-self: center;
+    margin-bottom: 0.3rem;
 `;
 
 const PokemonImgWrapper = styled.div`

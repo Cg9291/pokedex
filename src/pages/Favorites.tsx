@@ -12,6 +12,7 @@ export function Favorites(): React.ReactElement {
             <PokemonPictureCard id={number} key={index} isLink={true} />
         ));
 
+    console.log(favoritedPokemons);
     return (
         <Container>
             <Title>Favorites</Title>
@@ -33,14 +34,14 @@ const Container = styled(ContainerPrototype)`
 `;
 
 export const FavoritesContainer = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 0.8rem;
     width: 100%;
-    height: fit-content;
-    padding: 1vh 1vw 90px;
-    row-gap: 1rem;
+    height: max-content;
+    padding: 1vh 3vw;
+    row-gap: 0.7rem;
     overflow: scroll;
 `;
 
