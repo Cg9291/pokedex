@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPokemonGameList";

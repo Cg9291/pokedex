@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { useParams } from "react-router-dom";
 import { getPokemonNameAndTypes } from "../functions/api/batchApiCalls/getPokemonNameAndTypes";
@@ -10,6 +10,14 @@ import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 
+export interface ReceivedParametersInterface {
+    type?: string;
+    type2?: string;
+    minHeight?: string;
+    maxHeight?: string;
+    minWeight?: string;
+    maxWeight?: string;
+}
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
     const params = useParams() as { "*": string };
@@ -19,14 +27,9 @@ export function FilteredSearchResults(): React.ReactElement {
         .splice(2)
         .filter((x) => x !== "");
 
-    interface ReceivedParametersInterface {
-        type?: string;
-        type2?: string;
-        minHeight?: string;
-        maxHeight?: string;
-        minWeight?: string;
-        maxWeight?: string;
-    }
+    useEffect(() => {
+        getData(Number(generationInfo));
+    }, []);
 
     const createFilterObject = (arr: string[]) => {
         if (arr) {
@@ -38,10 +41,6 @@ export function FilteredSearchResults(): React.ReactElement {
             return myFilterObject;
         }
     };
-
-    useEffect(() => {
-        getData(Number(generationInfo));
-    }, []);
 
     const getData = async (pokeGen: number): Promise<void> => {
         try {
@@ -112,10 +111,15 @@ export function FilteredSearchResults(): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1fr;
     padding: 1rem 1rem;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
+    overflow-y: scroll;
+    overflow-x: none;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

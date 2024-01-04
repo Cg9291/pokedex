@@ -1,7 +1,7 @@
 import React from "react";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import pokeBallIcon from "../../assets/icons8-pokeball-100.png";
 import homeIcon from "../../assets/icons8-home-100.png";
 import compareIcon from "../../assets/icons8-compare-24.png";
@@ -18,7 +18,7 @@ export function Navigation(): React.ReactElement {
         },
         { name: "Compare", icon: compareIcon, linkUrl: "/comparator" },
         {
-            name: "Wtp",
+            name: "Play",
             icon: WTPIcon,
             linkUrl: "/wtp"
         },
@@ -52,9 +52,9 @@ function NavElement(props: NavIconsInterface): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     height: 9%;
     background-color: white;
-    position: fixed;
     bottom: 0;
     padding: 2.5% 0;
+    border-top: 1px solid lightgrey;
 `;
 
 const NavElementContainer = styled(Link)`

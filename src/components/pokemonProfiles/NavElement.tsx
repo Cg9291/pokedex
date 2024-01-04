@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { LinkPrototype } from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
@@ -11,6 +11,8 @@ export function NavElement(props: {
 }): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
+    const isElementFocused: boolean =
+        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
 
     const focusHandler = (): void => {
         const nextState = { ...navElementsNames };
@@ -21,12 +23,8 @@ export function NavElement(props: {
                 nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused = false;
             }
         }
-
         setNavElementsNames(nextState);
     };
-
-    const isElementFocused: boolean =
-        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
 
     return (
         <Container onFocus={focusHandler}>
@@ -51,6 +49,7 @@ const Link = styled(LinkPrototype)`
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
     height: 10%;
+    margin-top: 0.5rem;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;

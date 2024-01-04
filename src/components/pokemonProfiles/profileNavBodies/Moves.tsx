@@ -8,18 +8,21 @@ import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface
 import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { SvgIcon } from "../../SvgIcons";
 
 export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
-
     const displayMoves = (): React.ReactElement[] =>
         moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} key={x.move.name} />);
-
     return <Container>{displayMoves()}</Container>;
 }
 
 function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.ReactElement {
     const [pokemonType, setPokemonType] = useState<PokemonMovesInterface>();
+
+    useEffect(() => {
+        getData(props.moveUrl);
+    }, []);
 
     const getData = async (moveDataUrl: string): Promise<void> => {
         try {
@@ -31,17 +34,15 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
         return;
     };
 
-    useEffect(() => {
-        getData(props.moveUrl);
-    }, []);
-
     if (pokemonType) {
         const { type } = pokemonType;
-
         return (
             <MoveContainer>
                 <MoveNameContainer>{capitalizeWords(props.moveName)}</MoveNameContainer>
-                <MoveTypeContainer $typeName={type.name} />
+                <MoveTypeContainer>
+                    {" "}
+                    <SvgIcon pokeType={type.name.toLowerCase()} />
+                </MoveTypeContainer>
             </MoveContainer>
         );
     } else {
@@ -70,7 +71,7 @@ const MoveNameContainer = styled.div`
     align-items: center;
 `;
 
-const MoveTypeContainer = styled.div<{ $typeName: string }>`
+const MoveTypeContainer = styled.div<{ $typeName?: string }>`
     width: 2.5rem;
     aspect-ratio: 1/1;
     border-radius: 50%;
