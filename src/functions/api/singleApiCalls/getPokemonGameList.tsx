@@ -1,5 +1,4 @@
 import axios from "axios";
-import { PokemonInterface } from "../../../interfaces/pokemonInterface";
 import { useEffect, useState } from "react";
 import { endpoints } from "../../../objects/endpoints";
 
@@ -13,19 +12,18 @@ type PokemonListResponse = {
     name: string;
     url: string;
 };
-const FIRST_GEN_COUNT = 151;
 
-export function getPokemonGameList(limitNum?: number) {
+export function getPokemonGameList(limitNum = 1025) {
     const [pokemons, setPokemons] = useState<PokemonGuessInfo[]>([]);
     const [pending, setPending] = useState(true);
 
     useEffect(() => {
         (async () => {
-            await fetchPokemons(FIRST_GEN_COUNT);
+            await fetchPokemons();
         })();
     }, []);
 
-    async function fetchPokemons(limit: number = FIRST_GEN_COUNT) {
+    async function fetchPokemons(limit: number = limitNum) {
         try {
             setPending(true);
             const res = await axios.get(endpoints.pokemonList(limit));
@@ -48,7 +46,7 @@ export function getPokemonGameList(limitNum?: number) {
             setPending(false);
         }
     }
-
+    console.log(pokemons);
     return {
         pokemons,
         pending,

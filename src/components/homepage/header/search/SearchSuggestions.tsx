@@ -6,6 +6,7 @@ import { getPokemonGameList } from "../../../../functions/api/singleApiCalls/get
 import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPokemonGameList";
 import { useNavigate } from "react-router-dom";
 import { getPokemonData } from "../../../../functions/api/singleApiCalls/getPokemonData";
+import { capitalizeWords } from "../../../../functions/utilities/capitalizeWords";
 
 export interface SearchSuggestionsProps {
     searchInput: string;
@@ -21,7 +22,9 @@ export interface SearchSuggestionsProps {
 export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactElement {
     const { pokemons } = getPokemonGameList(1021);
     const pokemonNamesList = pokemons
-        .map((x: PokemonGuessInfo) => x.pokemonName)
+        .map((x: PokemonGuessInfo) => {
+            return { name: x.pokemonName, sprite: x.pokemonSprite };
+        })
         .sort(); /* [NOTE] will create custom sort function later */
     const [suggestionsList, setSuggestionsList] = useState<React.ReactElement[]>();
     const [focusedElementIndex, setFocusedElementIndex] = useState<number>(0);
@@ -30,7 +33,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 
     useEffect(() => {
         displaySearchInputSuggestions();
-        props.setSuggestedInput(generateSuggestions()[0]);
+        props.setSuggestedInput(generateSuggestions()[0]?.name);
         setFocusedElementIndex(0);
         //console.log(pokemonNamesList.filter((x) => x.includes("-")));
     }, [props.searchInput]);
@@ -53,23 +56,32 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         const inputRegex = new RegExp(`^${props.searchInput}`);
         return props.searchInput.length === 0
             ? []
-            : pokemonNamesList.filter((x: string) => inputRegex.test(x)).map((name: string) => name);
+            : pokemonNamesList
+                  .filter((x: { name: string; sprite: string }) => inputRegex.test(x.name))
+                  .map((pokemon: { name: string; sprite: string }) => pokemon);
     };
 
     const displaySearchInputSuggestions = () => {
         let tabIndexValue = 0;
-        const displaySuggestionsList = generateSuggestions().map((name: string, idx: number) => (
-            <ListItem
-                key={name}
-                ref={(node) => {
-                    focusedElementIndex === idx ? (suggestionRef.current = node) : null;
-                }}
-                tabIndex={(tabIndexValue += 1)}
-                $isFocused={focusedElementIndex === idx ? true : false}
-            >
-                <Button onClick={() => handleClick(name)}>{name}</Button>
-            </ListItem>
-        ));
+        const displaySuggestionsList = generateSuggestions().map(
+            (pokemon: { name: string; sprite: string }, idx: number) => (
+                <ListItem
+                    key={pokemon.name}
+                    ref={(node) => {
+                        focusedElementIndex === idx ? (suggestionRef.current = node) : null;
+                    }}
+                    tabIndex={(tabIndexValue += 1)}
+                    $isFocused={focusedElementIndex === idx ? true : false}
+                >
+                    <Button onClick={() => handleClick(pokemon.name)}>
+                        <>
+                            <PokemonImg src={pokemon.sprite} />
+                            <PokemonName> {capitalizeWords(pokemon.name)}</PokemonName>
+                        </>
+                    </Button>
+                </ListItem>
+            )
+        );
         setSuggestionsList(displaySuggestionsList);
     };
 
@@ -78,13 +90,13 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
             if (suggestionsList && focusedElementIndex > 0) {
                 const index = focusedElementIndex - 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(generateSuggestions()[index]);
+                props.setSuggestedInput(generateSuggestions()[index].name);
             }
         } else if (e.key === "ArrowDown") {
             if (suggestionsList && focusedElementIndex < suggestionsList.length - 1) {
                 const index = focusedElementIndex + 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(generateSuggestions()[index]);
+                props.setSuggestedInput(generateSuggestions()[index].name);
             }
         }
     };
@@ -112,8 +124,6 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
             })();
         }
     };
-
-    console.log(suggestionsList?.length);
 
     return props.suggestedInput ? (
         <Container>
@@ -146,14 +156,27 @@ const SuggestionsList = styled.ul`
 
 const ListItem = styled.li<{ $isFocused: boolean }>`
     width: 100%;
-    height: 2rem;
+    height: 2.5rem;
     border: 0.1px solid;
     background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
+    display: flex;
     width: 100%;
     height: 100%;
     border: none;
     background-color: transparent;
+`;
+
+const PokemonImg = styled.img`
+    justify-self: start;
+    max-height: 100%;
+    max-width: 20%;
+`;
+
+const PokemonName = styled.h5`
+    justify-self: center;
+    align-self: center;
+    width: 100%;
 `;
