@@ -9,13 +9,14 @@ import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
-import { widthsQueries, heightsQueries } from "../../../objects/breakpoints";
+import { NumOrString } from "../../../interfaces/miscTypes";
+import { heightsQueries } from "../../../objects/breakpoints";
 import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
 import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 
 export interface PokemonPictureCardsPropsInterface {
-    id: number;
+    id: NumOrString;
     isLink?: boolean;
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;
@@ -29,7 +30,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
         getData(props.id);
     }, [props.id]);
 
-    async function getData(pokemonNumber: number): Promise<void> {
+    async function getData(pokemonNumber: NumOrString): Promise<void> {
         try {
             await setLoadingStatus(true);
             const data: PokemonInterface = await getPokemonData(pokemonNumber);
@@ -122,12 +123,6 @@ const Container = styled(Link)<{ $mainType: string }>`
     }
 `;
 
-/* const Wrapper = styled(ContainerPrototype)`
-    display: flex;
-    flex-direction: column;
-    border-radius: 25px;
-`; */
-
 const PokeName = styled.h4`
     min-height: fit-content;
     color: white;
@@ -142,8 +137,6 @@ const PokeId = styled.span`
     font-size: 0.9rem;
 `;
 
-/* const SubContainer = styled(ContainerPrototype)``; */
-
 const PokemonTypesContainer = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: end;
@@ -153,14 +146,9 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
 `;
 
 const PokemonImgWrapper = styled.div`
-    //width: 50%;
     grid-area: image;
 `;
 
-/* const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
-    width: 100%;
-    height: 100%;
-`; */
 const PokemonImg = styled.img`
     width: 120%;
     aspect-ratio: 1/1;

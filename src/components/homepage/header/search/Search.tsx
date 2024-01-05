@@ -5,13 +5,40 @@ import React, { useRef, useState, useEffect } from "react";
 import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
+import { useHandleSearchSubmission } from "../../../../functions/utilities/useHandleSearchSubmission";
 
-export function Search(): React.ReactElement {
+export interface SearchPropsInterface {
+    usesNavigation?: boolean;
+    hasFilter?: boolean;
+    setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
+    setSearchError?: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSearching?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function Search(props: SearchPropsInterface): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string>("");
     const [suggestedInput, setSuggestedInput] = useState<string>("");
     const searchRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const hasSuggestions = suggestedInput?.length > 0;
+    const {
+        usesNavigation = props.usesNavigation ? props.usesNavigation : true,
+        hasFilter = props.hasFilter ? props.hasFilter : true
+    } = props;
+    const { handleSub, searchedPokemonIdentifier, searchError, isSearching } = useHandleSearchSubmission(
+        searchInput,
+        suggestedInput,
+        setSuggestedInput,
+        usesNavigation
+    );
+
+    useEffect(() => {
+        if (props.setIsSearching && props.setSearchError && props.setSearchedPokemonId) {
+            props.setSearchedPokemonId(searchedPokemonIdentifier);
+            props.setIsSearching(isSearching);
+            props.setSearchError(searchError);
+        }
+    }, [isSearching, searchedPokemonIdentifier, searchError]);
 
     (function handleOutsideClicks() {
         useEffect(() => {
@@ -28,20 +55,6 @@ export function Search(): React.ReactElement {
         }, []);
     })();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        if (hasSuggestions) {
-            navigate(`/pokemons/name/${suggestedInput}`);
-        } else {
-            const formData = new FormData(e.currentTarget);
-            const transmittedData = Object.fromEntries(formData.entries());
-            const identifier = isNaN(Number(transmittedData.searchInput))
-                ? transmittedData.searchInput.toString().toLowerCase()
-                : Number(transmittedData.searchInput);
-
-            navigate(typeof identifier === "number" ? `/pokemons/id/${identifier}` : `/pokemons/name/${identifier}`);
-        }
-    };
-
     const handleFilterClick = () => {
         navigate(`/filter/:gen`);
     };
@@ -49,6 +62,11 @@ export function Search(): React.ReactElement {
     const handleChange = (e: React.ChangeEvent) => {
         const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
         setSearchInput(clearedInput);
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        handleSub(e);
+        console.log(searchInput, suggestedInput);
     };
 
     return (
@@ -68,37 +86,42 @@ export function Search(): React.ReactElement {
                         setSearchInput={setSearchInput}
                         suggestedInput={suggestedInput}
                         setSuggestedInput={setSuggestedInput}
+                        usesNavigation={usesNavigation}
+                        setIsSearching={props.setIsSearching}
+                        setSearchError={props.setSearchError}
+                        setSearchedPokemonIdentifier={props.setSearchedPokemonId}
                     />
                 </InputContainer>
-                <ButtonsContainer>
-                    <SearchButton>Search</SearchButton>
-                    <FilterButton onClick={handleFilterClick}>Filter</FilterButton>
-                </ButtonsContainer>
+                {hasFilter && <FilterButton onClick={handleFilterClick}>Filter</FilterButton>}
             </Form>
         </Container>
     );
 }
 
-const Container = styled(ContainerPrototype)``;
+const Container = styled(ContainerPrototype)`
+    max-height: 4rem;
+    width: 100%;
+`;
 
 const Form = styled.form.attrs({
     method: "get"
 })`
     width: 100%;
+    max-height: 3rem;
     display: flex;
 `;
 
 const InputContainer = styled.div`
     position: relative;
-    min-width: 85%;
-    width: 85%;
-    max-width: 85%;
     height: fit-content;
+    flex: 1;
+    //margin-right: 0.1rem;
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
     height: 3rem;
     display: flex;
+    border: 1px solid black;
     border-radius: 99px;
     z-index: 2;
     background-color: white;
@@ -125,17 +148,20 @@ const Input = styled.input.attrs({
     font-size: 0.8rem;
 `;
 
-const SearchButton = styled.button.attrs({ type: "submit" })`
+/* const SearchButton = styled.button.attrs({ type: "submit" })`
     width: 100%;
     height: 100%;
+    max-height: 100%;
     border-radius: 10px;
-`;
-const ButtonsContainer = styled(ContainerPrototype)`
+`; */
+/* const ButtonsContainer = styled(ContainerPrototype)`
     flex-direction: column;
-`;
+    max-height: 100%;
+`; */
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    width: 100%;
+    /* width: 100%; */
+    flex: 0 1 15%;
     height: 100%;
     border-radius: 10px;
 `;
