@@ -93,9 +93,11 @@ export function FilteredSearchResults(): React.ReactElement {
                     .filter((x) => checkPokemonForFilters(x))
                     .map((y, index) => <PokemonPictureCard key={index} id={y.id} isLink={true} />);
 
-            return displayMatchingPokemons().length <= 0
-                ? "No Pokemon matching these criterias have been found"
-                : displayMatchingPokemons();
+            return displayMatchingPokemons().length <= 0 ? (
+                <NotFoundContainer>No Pokemon matching these criterias have been found</NotFoundContainer>
+            ) : (
+                displayMatchingPokemons()
+            );
         }
     };
 
@@ -120,6 +122,10 @@ const Container = styled(ContainerPrototype)`
     gap: 1rem;
     overflow-y: scroll;
     overflow-x: none;
+`;
+
+const NotFoundContainer = styled.div`
+    width: 200%;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
