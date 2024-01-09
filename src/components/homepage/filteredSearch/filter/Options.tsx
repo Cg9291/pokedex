@@ -13,6 +13,7 @@ export function Options(props: {
             ...props.focusedFiltersOptionsKit.focusedFiltersOptions,
             [props.filtersName]: props.optionValue
         });
+        console.log(props.optionValue);
     };
 
     const isOptionFocused =

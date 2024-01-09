@@ -130,4 +130,5 @@ const NotFoundContainer = styled.div`
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     margin: auto;
+    width: 200%;
 `;

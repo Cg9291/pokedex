@@ -13,7 +13,7 @@ export interface myProps {
 
 export function OptionsRow(props: myProps): React.ReactElement {
     const [focusedFiltersOptions, setFocusedFiltersOptions] = useState<FocusedFilterOptionsInterface>({
-        generation: null,
+        generation: "1",
         type: null,
         type2: null
     });
