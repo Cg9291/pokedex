@@ -97,30 +97,28 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
         );
     } else {
         return (
-            <Container to="/" $mainType="none">
+            <Container to="/" $mainType="none" $isFlex={true}>
                 <LoadingAnimation />
             </Container>
         );
     }
 }
 
-const Container = styled(Link)<{ $mainType: string }>`
-    display: grid;
+const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
+    display: ${(props) => (props.$isFlex ? "flex" : "grid")};
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: auto 1fr;
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
-    width: 100%;
+    max-width: 100%;
     height: 18vh;
     padding: 0.7rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     line-height: 1;
-    @media ${heightsQueries.two} {
-        height: 17vh;
-    }
+    overflow: hidden;
 `;
 
 const PokeName = styled.h4`
@@ -155,5 +153,11 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
+    //border-bottom-color: green;
+    /*  border: 0.5rem solid grey;
+    border-bottom: 0.5rem solid red; */
+    width: auto;
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
 `;

@@ -46,7 +46,6 @@ export function getPokemonGameList(limitNum = 1025) {
             setPending(false);
         }
     }
-    console.log(pokemons);
     return {
         pokemons,
         pending,

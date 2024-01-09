@@ -35,7 +35,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         displaySearchInputSuggestions();
         props.setSuggestedInput(generateSuggestions()[0]?.name);
         setFocusedElementIndex(0);
-        //console.log(pokemonNamesList.filter((x) => x.includes("-")));
+        console.log(pokemonNamesList.filter((x) => x.name.includes("-")));
     }, [props.searchInput]);
 
     useEffect(() => {

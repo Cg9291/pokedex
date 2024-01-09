@@ -50,11 +50,9 @@ const Title = styled.h1`
     color: ${typesColors.black};
     font-size: 2em;
     font-weight: bold;
-    //padding: 1rem 1rem 0.5rem;
 `;
 
 const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-weight: normal;
-    // padding: 0 1rem 1rem;
 `;
