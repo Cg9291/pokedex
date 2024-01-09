@@ -11,13 +11,28 @@ export interface SearchPropsInterface {
     usesNavigation?: boolean;
     hasFilter?: boolean;
     setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
-    setSearchError?: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsSearching?: React.Dispatch<React.SetStateAction<boolean>>;
+    setSearchStatusTracker?: React.Dispatch<React.SetStateAction<string>>;
+}
+export interface SearchInputKitInterface {
+    searchInput: string;
+    setSearchInput: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface SuggestedInputKitInterface {
+    suggestedInput: string;
+    setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface SearchStatusKitInterface {
+    searchStatus: string;
+    setSearchStatus: React.Dispatch<React.SetStateAction<string>>;
+    //searchStatusOptions: readonly [string, string, string];
 }
 
 export function Search(props: SearchPropsInterface): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string>("");
     const [suggestedInput, setSuggestedInput] = useState<string>("");
+    const [searchStatus, setSearchStatus] = useState<string>("");
     const searchRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const hasSuggestions = suggestedInput?.length > 0;
@@ -25,20 +40,37 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
         usesNavigation = props.usesNavigation ? props.usesNavigation : true,
         hasFilter = props.hasFilter ? props.hasFilter : true
     } = props;
-    const { handleSub, searchedPokemonIdentifier, searchError, isSearching } = useHandleSearchSubmission(
+    const { handleSub, searchedPokemonIdentifier, setSearchedPokemonIdentifier } = useHandleSearchSubmission(
         searchInput,
+        setSearchInput,
         suggestedInput,
         setSuggestedInput,
-        usesNavigation
+        usesNavigation,
+        setSearchStatus
     );
 
+    const searchInputKit: SearchInputKitInterface = {
+        searchInput: searchInput.toLowerCase(),
+        setSearchInput: setSearchInput
+    };
+
+    const suggestedInputKit: SuggestedInputKitInterface = {
+        suggestedInput: suggestedInput,
+        setSuggestedInput: setSuggestedInput
+    };
+
+    const searchStatusKit = {
+        searchStatus: searchStatus,
+        setSearchStatus: setSearchStatus
+    };
+
     useEffect(() => {
-        if (props.setIsSearching && props.setSearchError && props.setSearchedPokemonId) {
+        if (props.setSearchStatusTracker && props.setSearchedPokemonId) {
             props.setSearchedPokemonId(searchedPokemonIdentifier);
-            props.setIsSearching(isSearching);
-            props.setSearchError(searchError);
+            props.setSearchStatusTracker(searchStatus);
         }
-    }, [isSearching, searchedPokemonIdentifier, searchError]);
+        return;
+    }, [searchStatus, searchedPokemonIdentifier]);
 
     (function handleOutsideClicks() {
         useEffect(() => {
@@ -82,14 +114,11 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
                         </SearchIconButton>
                     </Label>
                     <SearchSuggestions
-                        searchInput={searchInput.toLowerCase()}
-                        setSearchInput={setSearchInput}
-                        suggestedInput={suggestedInput}
-                        setSuggestedInput={setSuggestedInput}
+                        searchInputKit={searchInputKit}
+                        suggestedInputKit={suggestedInputKit}
                         usesNavigation={usesNavigation}
-                        setIsSearching={props.setIsSearching}
-                        setSearchError={props.setSearchError}
-                        setSearchedPokemonIdentifier={props.setSearchedPokemonId}
+                        searchStatusKit={searchStatusKit}
+                        setSearchedPokemonIdentifier={setSearchedPokemonIdentifier}
                     />
                 </InputContainer>
                 {hasFilter && <FilterButton onClick={handleFilterClick}>Filter</FilterButton>}

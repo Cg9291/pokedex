@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/macro";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { LoadingSpinnerPrototype } from "../prototypes/LoadingSpinnerPrototype";
@@ -31,10 +31,20 @@ export interface ComparatorPokemonDataInterface {
 
 export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModalInterface): React.ReactElement {
     const [searchedPokemonId, setSearchedPokemonId] = useState<string | number | null>(null);
-    const [searchError, setSearchError] = useState<boolean>(false);
-    const [isSearching, setIsSearching] = useState<boolean>(false);
+    const [searchStatusTracker, setSearchStatusTracker] = useState<string>("");
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
+
+    /*   const searchStatusKit = {
+        searchStatus: searchStatusTracker,
+        setSearchStatus: setSearchStatusTracker,
+        searchStatusOptions: searchStatusOptions
+    }; */
+    useEffect(() => {
+        console.log("changed", searchedPokemonId);
+    }, [searchedPokemonId, searchStatusTracker]);
+
+    const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
 
     return (
         <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
@@ -43,13 +53,12 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                 usesNavigation={false}
                 hasFilter={false}
                 setSearchedPokemonId={setSearchedPokemonId}
-                setIsSearching={setIsSearching}
-                setSearchError={setSearchError}
+                setSearchStatusTracker={setSearchStatusTracker}
             />
             <ResultsSection $foundPokemon={searchedPokemonId ? true : false}>
-                {isSearching && <LoadingAnimation />}
-                {searchError && <PokemonNotFound />}
-                {searchedPokemonId && (
+                {searchStatusTracker === searchStatusOptions[0] && <LoadingAnimation />}
+                {searchStatusTracker === searchStatusOptions[1] && <PokemonNotFound />}
+                {searchedPokemonId && searchStatusTracker === searchStatusOptions[2] && (
                     <PokemonPictureCard
                         id={searchedPokemonId}
                         pokemonImagesKit={props.pokemonImagesKit}
@@ -80,9 +89,12 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActi
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: green;
+    margin: 0 auto;
 `;
 
-const SearchModalHeader = styled.h2``;
+const SearchModalHeader = styled.h2`
+    margin-bottom: 1rem;
+`;
 
 const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
     padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};

@@ -10,7 +10,6 @@ import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
 import { NumOrString } from "../../../interfaces/miscTypes";
-import { heightsQueries } from "../../../objects/breakpoints";
 import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
 import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";

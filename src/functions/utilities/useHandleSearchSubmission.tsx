@@ -6,16 +6,20 @@ import { NumOrString } from "../../interfaces/miscTypes";
 
 export const useHandleSearchSubmission = (
     searchInput: string,
+    setSearchInput: React.Dispatch<React.SetStateAction<string>>,
     suggestedInput: string,
     setSuggestedInput: React.Dispatch<React.SetStateAction<string>>,
     usesNavigation: boolean,
+    setSearchStatus: React.Dispatch<React.SetStateAction<string>>,
     e?: React.FormEvent<HTMLFormElement>
 ) => {
     const [searchedPokemonIdentifier, setSearchedPokemonIdentifier] = useState<number | string | null>(null);
-    const [searchError, setSearchError] = useState<boolean>(false);
-    const [isSearching, setIsSearching] = useState<boolean>(false);
+    /*     const [searchError, setSearchError] = useState<boolean>(false);
+    const [isSearching, setIsSearching] = useState<boolean>(false); */
     const navigate = useNavigate();
     const hasSuggestions: boolean = suggestedInput?.length > 0;
+
+    const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
 
     useEffect(() => {
         e &&
@@ -29,16 +33,18 @@ export const useHandleSearchSubmission = (
             try {
                 e.preventDefault();
                 setSearchedPokemonIdentifier("");
-                setIsSearching(true);
+                setSuggestedInput("");
+                setSearchStatus(searchStatusOptions[0]);
                 const pokemonData = await getPokemonData(pokeIdentifier);
                 setSearchedPokemonIdentifier(pokemonData.id);
+                setSearchStatus(searchStatusOptions[2]);
             } catch (err) {
                 if (err instanceof AxiosError && err.response?.status === 404) {
-                    setSearchError(true);
+                    setSearchStatus(searchStatusOptions[1]);
                 }
             } finally {
-                setIsSearching(false);
-                setSuggestedInput("");
+                //setSearchStatus(searchStatusOptions[2]);
+                //setSuggestedInput("");
             }
         };
 
@@ -66,5 +72,5 @@ export const useHandleSearchSubmission = (
         }
     };
 
-    return { handleSub, searchedPokemonIdentifier, searchError, isSearching };
+    return { handleSub, searchedPokemonIdentifier, setSearchedPokemonIdentifier };
 };

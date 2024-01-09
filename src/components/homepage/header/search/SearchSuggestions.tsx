@@ -7,16 +7,15 @@ import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPo
 import { useNavigate } from "react-router-dom";
 import { getPokemonData } from "../../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../../functions/utilities/capitalizeWords";
+import { SearchInputKitInterface, SearchStatusKitInterface, SuggestedInputKitInterface } from "./Search";
+import { NumOrString } from "../../../../interfaces/miscTypes";
 
 export interface SearchSuggestionsProps {
-    searchInput: string;
-    setSearchInput: React.Dispatch<React.SetStateAction<string>>;
-    suggestedInput: string;
-    setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
+    searchInputKit: SearchInputKitInterface;
+    suggestedInputKit: SuggestedInputKitInterface;
     usesNavigation: boolean;
     setSearchedPokemonIdentifier?: React.Dispatch<React.SetStateAction<string | number | null>>;
-    setSearchError?: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsSearching?: React.Dispatch<React.SetStateAction<boolean>>;
+    searchStatusKit?: SearchStatusKitInterface;
 }
 
 export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactElement {
@@ -31,12 +30,14 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     const suggestionRef = useRef<HTMLLIElement | null>(null);
     const navigate = useNavigate();
 
+    const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
+
     useEffect(() => {
         displaySearchInputSuggestions();
-        props.setSuggestedInput(generateSuggestions()[0]?.name);
+        props.suggestedInputKit.setSuggestedInput(generateSuggestions()[0]?.name);
         setFocusedElementIndex(0);
-        console.log(pokemonNamesList.filter((x) => x.name.includes("-")));
-    }, [props.searchInput]);
+        /*     console.log(pokemonNamesList.filter((x) => x.name.includes("-"))); */
+    }, [props.searchInputKit?.searchInput]);
 
     useEffect(() => {
         displaySearchInputSuggestions();
@@ -53,8 +54,8 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     }, [suggestionsList]);
 
     const generateSuggestions = () => {
-        const inputRegex = new RegExp(`^${props.searchInput}`);
-        return props.searchInput.length === 0
+        const inputRegex = new RegExp(`^${props.searchInputKit?.searchInput}`);
+        return props.searchInputKit?.searchInput.length === 0
             ? []
             : pokemonNamesList
                   .filter((x: { name: string; sprite: string }) => inputRegex.test(x.name))
@@ -90,42 +91,45 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
             if (suggestionsList && focusedElementIndex > 0) {
                 const index = focusedElementIndex - 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(generateSuggestions()[index].name);
+                props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
             }
         } else if (e.key === "ArrowDown") {
             if (suggestionsList && focusedElementIndex < suggestionsList.length - 1) {
                 const index = focusedElementIndex + 1;
                 setFocusedElementIndex(index);
-                props.setSuggestedInput(generateSuggestions()[index].name);
+                props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
             }
         }
     };
 
-    const handleClick = (suggestedName: string) => {
+    const handleClick = async (suggestedName: string) => {
         if (props.usesNavigation) {
             navigate(`/pokemons/name/${suggestedName}`);
         } else {
             (async () => {
-                if (props.setIsSearching && props.setSearchError && props.setSearchedPokemonIdentifier) {
+                if (props.searchStatusKit?.setSearchStatus && props.setSearchedPokemonIdentifier) {
                     try {
                         props.setSearchedPokemonIdentifier("");
-                        props.setIsSearching(true);
+                        props.suggestedInputKit.setSuggestedInput("");
+                        props.searchStatusKit?.setSearchStatus(searchStatusOptions[0]);
                         const pokemonData = await getPokemonData(suggestedName);
                         props.setSearchedPokemonIdentifier(pokemonData.id);
+
+                        props.searchStatusKit.setSearchStatus(searchStatusOptions[2]);
                     } catch (err) {
                         if (err instanceof AxiosError && err.response?.status === 404) {
-                            props.setSearchError(true);
+                            props.searchStatusKit?.setSearchStatus(searchStatusOptions[1]);
                         }
                     } finally {
-                        props.setIsSearching(false);
-                        props.setSuggestedInput("");
+                        /*  props.searchStatusKit?.setSearchStatus(searchStatusOptions[2]); */
+                        // props.suggestedInputKit.setSuggestedInput("");
                     }
                 }
             })();
         }
     };
 
-    return props.suggestedInput ? (
+    return props.suggestedInputKit.suggestedInput?.length > 0 ? (
         <Container>
             <SuggestionsList>{suggestionsList}</SuggestionsList>
         </Container>
