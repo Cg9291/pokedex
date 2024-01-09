@@ -25,7 +25,7 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
         if (!englishDescription) {
             throw new Error("No english description found");
         }
-        return englishDescription.flavor_text;
+        return englishDescription.flavor_text.replace(String.fromCharCode(12), " ");
     };
 
     const displayVitals = (): React.ReactElement[] =>
