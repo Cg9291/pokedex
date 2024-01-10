@@ -18,6 +18,11 @@ export interface SearchInputKitInterface {
     setSearchInput: React.Dispatch<React.SetStateAction<string>>;
 }
 
+export interface FocusedSuggestionInterface {
+    focusedSuggestion: string | null;
+    setFocusedSuggestion: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
 export interface SuggestedInputKitInterface {
     suggestedInput: string;
     setSuggestedInput: React.Dispatch<React.SetStateAction<string>>;
@@ -33,6 +38,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     const [searchInput, setSearchInput] = useState<string>("");
     const [suggestedInput, setSuggestedInput] = useState<string>("");
     const [searchStatus, setSearchStatus] = useState<string>("");
+    const [focusedSuggestion, setFocusedSuggestion] = useState<string | null>(null);
     const searchRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     const hasSuggestions = suggestedInput?.length > 0;
@@ -57,6 +63,11 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     const suggestedInputKit: SuggestedInputKitInterface = {
         suggestedInput: suggestedInput,
         setSuggestedInput: setSuggestedInput
+    };
+
+    const focusedSuggestionKit: FocusedSuggestionInterface = {
+        focusedSuggestion: focusedSuggestion,
+        setFocusedSuggestion: setFocusedSuggestion
     };
 
     const searchStatusKit = {
@@ -94,6 +105,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     const handleChange = (e: React.ChangeEvent) => {
         const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
         setSearchInput(clearedInput);
+        setFocusedSuggestion(clearedInput);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,7 +118,11 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
             <Form onSubmit={handleSubmit}>
                 <InputContainer ref={searchRef}>
                     <Label $isShowingSuggestions={hasSuggestions}>
-                        <Input value={searchInput} onChange={handleChange} required />
+                        <Input
+                            value={focusedSuggestion ? focusedSuggestion : searchInput}
+                            onChange={handleChange}
+                            required
+                        />
                         <SearchIconButton $isShowingSuggestions={hasSuggestions}>
                             <ImgSvgContainer>
                                 <SearchIconImg href={SearchIcon} />
@@ -116,6 +132,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
                     <SearchSuggestions
                         searchInputKit={searchInputKit}
                         suggestedInputKit={suggestedInputKit}
+                        focusedSuggestionKit={focusedSuggestionKit}
                         usesNavigation={usesNavigation}
                         searchStatusKit={searchStatusKit}
                         setSearchedPokemonIdentifier={setSearchedPokemonIdentifier}

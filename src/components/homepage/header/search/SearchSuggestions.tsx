@@ -7,12 +7,18 @@ import { PokemonGuessInfo } from "../../../../functions/api/singleApiCalls/getPo
 import { useNavigate } from "react-router-dom";
 import { getPokemonData } from "../../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../../functions/utilities/capitalizeWords";
-import { SearchInputKitInterface, SearchStatusKitInterface, SuggestedInputKitInterface } from "./Search";
-import { NumOrString } from "../../../../interfaces/miscTypes";
+import {
+    FocusedSuggestionInterface,
+    SearchInputKitInterface,
+    SearchStatusKitInterface,
+    SuggestedInputKitInterface
+} from "./Search";
+import { noImageSrcPlaceholder } from "../../../../objects/noImageSrcPlaceholder";
 
 export interface SearchSuggestionsProps {
     searchInputKit: SearchInputKitInterface;
     suggestedInputKit: SuggestedInputKitInterface;
+    focusedSuggestionKit: FocusedSuggestionInterface;
     usesNavigation: boolean;
     setSearchedPokemonIdentifier?: React.Dispatch<React.SetStateAction<string | number | null>>;
     searchStatusKit?: SearchStatusKitInterface;
@@ -55,19 +61,33 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 
     const generateSuggestions = () => {
         const inputRegex = new RegExp(`^${props.searchInputKit?.searchInput}`);
-        return props.searchInputKit?.searchInput.length === 0
-            ? []
-            : pokemonNamesList
-                  .filter((x: { name: string; sprite: string }) => inputRegex.test(x.name))
-                  .map((pokemon: { name: string; sprite: string }) => pokemon);
+        const searchInputMirror = {
+            name: `${props.searchInputKit.searchInput}`,
+            sprite: noImageSrcPlaceholder,
+            key: "inputMirror"
+        };
+        let _suggestionsList: { name: string; sprite: string; key?: string }[] = props.searchInputKit.searchInput
+            ? [searchInputMirror]
+            : [];
+
+        const generateList =
+            props.searchInputKit?.searchInput.length === 0
+                ? []
+                : pokemonNamesList
+                      .filter((x: { name: string; sprite: string }) => inputRegex.test(x.name))
+                      .map((pokemon: { name: string; sprite: string }) => pokemon);
+
+        _suggestionsList = [..._suggestionsList, ...generateList];
+
+        return _suggestionsList;
     };
 
     const displaySearchInputSuggestions = () => {
         let tabIndexValue = 0;
         const displaySuggestionsList = generateSuggestions().map(
-            (pokemon: { name: string; sprite: string }, idx: number) => (
+            (pokemon: { name: string; sprite: string; key?: string }, idx: number) => (
                 <ListItem
-                    key={pokemon.name}
+                    key={pokemon.key ? pokemon.key : pokemon.name}
                     ref={(node) => {
                         focusedElementIndex === idx ? (suggestionRef.current = node) : null;
                     }}
@@ -87,19 +107,25 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     };
 
     const handleNav = (e: KeyboardEvent) => {
+        let index = focusedElementIndex;
         if (e.key === "ArrowUp") {
+            e.preventDefault();
             if (suggestionsList && focusedElementIndex > 0) {
-                const index = focusedElementIndex - 1;
+                index--;
                 setFocusedElementIndex(index);
                 props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
+                props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name);
             }
         } else if (e.key === "ArrowDown") {
             if (suggestionsList && focusedElementIndex < suggestionsList.length - 1) {
-                const index = focusedElementIndex + 1;
+                index++;
                 setFocusedElementIndex(index);
                 props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
+                props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name);
             }
         }
+        //console.log(generateSuggestions()[index].name);
+        /* props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name); */
     };
 
     const handleClick = async (suggestedName: string) => {
@@ -161,8 +187,12 @@ const SuggestionsList = styled.ul`
 const ListItem = styled.li<{ $isFocused: boolean }>`
     width: 100%;
     height: 2.5rem;
+    //max-height: max-content;
     border: 0.1px solid;
     background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
