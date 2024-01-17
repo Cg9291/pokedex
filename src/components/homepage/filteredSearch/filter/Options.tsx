@@ -9,9 +9,17 @@ export function Options(props: {
     focusedFiltersOptionsKit?: FocusedFilterOptionsKitInterface;
 }): React.ReactElement {
     const handleClick = () => {
+        const flexibleSelection =
+            props.optionValue ===
+                props.focusedFiltersOptionsKit?.focusedFiltersOptions[
+                    props.filtersName as keyof FocusedFilterOptionsInterface
+                ] && props.filtersName !== "generation"
+                ? null
+                : props.optionValue;
+
         props.focusedFiltersOptionsKit?.setFocusedFiltersOptions({
             ...props.focusedFiltersOptionsKit.focusedFiltersOptions,
-            [props.filtersName]: props.optionValue
+            [props.filtersName]: flexibleSelection
         });
         console.log(props.optionValue);
     };
