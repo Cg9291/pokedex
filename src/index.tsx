@@ -5,13 +5,38 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GlobalStyle } from "./components/styles/GlobalStyles";
 import { BrowserRouter } from "react-router-dom";
+import styled from "styled-components/macro";
 
+export const MobileWrapper = styled.div`
+    max-width: 375px;
+    height: 813px;
+    margin: 0 auto;
+    border-style: none;
+    border-color: inherit;
+    border-width: 0px;
+    -webkit-transform: scale(1);
+    -webkit-transform-origin: 0 0;
+    display: block;
+    background: gray;
+    border-radius: 20px;
+    overflow: hidden;
+`;
+
+export const FullWrapper = styled.div`
+    max-width: 100%;
+    height: 100%;
+    background: lightsteelblue;
+`;
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
     <React.StrictMode>
         <GlobalStyle />
         <BrowserRouter>
-            <App />
+            <FullWrapper>
+                <MobileWrapper>
+                    <App />
+                </MobileWrapper>
+            </FullWrapper>
         </BrowserRouter>
     </React.StrictMode>
 );

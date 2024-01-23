@@ -27,6 +27,7 @@ const Container = styled(ContainerPrototype)`
     max-height: 100vh;
     max-width: 100vw;
     overflow-y: hidden;
+    background: white;
 `;
 
 export default App;
