@@ -9,7 +9,7 @@ import styled from "styled-components/macro";
 
 export const MobileWrapper = styled.div`
     max-width: 375px;
-    height: 900px;
+    height: 950px;
     margin: 0 auto;
     border-style: none;
     border-color: inherit;
