@@ -161,6 +161,8 @@ const InputContainer = styled.div`
     position: relative;
     height: fit-content;
     flex: 1;
+    margin-right: 2rem;
+    //max-width: 30rem;
     //margin-right: 0.1rem;
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
@@ -209,6 +211,7 @@ const FilterButton = styled.button.attrs({ type: "button" })`
     /* width: 100%; */
     flex: 0 1 15%;
     height: 100%;
+    max-width: 6rem;
     border-radius: 10px;
 `;
 

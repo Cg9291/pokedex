@@ -53,7 +53,7 @@ const Container = styled(ContainerPrototype)`
     height: 9%;
     background-color: white;
     bottom: 0;
-    padding: 2.5% 0;
+    padding: 1vh 0;
     border-top: 1px solid lightgrey;
 `;
 
