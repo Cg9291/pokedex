@@ -106,11 +106,12 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
 const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
     display: ${(props) => (props.$isFlex ? "flex" : "grid")};
     grid-template-columns: repeat(4, 25%);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 100%;
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
     max-width: 100%;
+    max-height: 100%;
     height: 18vh;
     padding: 0.7rem;
     border-radius: 15px;
@@ -140,14 +141,20 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     grid-area: typesContainer;
     align-self: center;
     margin-bottom: 0.3rem;
+    max-height: 100%;
 `;
 
 const PokemonImgWrapper = styled.div`
     grid-area: image;
+    max-width: 100%;
+    max-height: 100%;
 `;
 
 const PokemonImg = styled.img`
-    width: 120%;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     aspect-ratio: 1/1;
 `;
 
