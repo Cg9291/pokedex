@@ -13,6 +13,7 @@ import { NumOrString } from "../../../interfaces/miscTypes";
 import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
 import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export interface PokemonPictureCardsPropsInterface {
     id: NumOrString;
@@ -113,12 +114,18 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
     max-width: 100%;
     max-height: 100%;
     height: 18vh;
+    margin: auto;
     padding: 0.7rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     line-height: 1;
     overflow: hidden;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        min-height: 80%;
+        min-width: 95%;
+        max-width: 95%;
+    }
 `;
 
 const PokeName = styled.h4`
@@ -133,6 +140,7 @@ const PokeId = styled.span`
     color: white;
     font-weight: 500;
     font-size: 0.9rem;
+    margin-left: auto;
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
@@ -159,9 +167,6 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    //border-bottom-color: green;
-    /*  border: 0.5rem solid grey;
-    border-bottom: 0.5rem solid red; */
     width: auto;
     justify-self: center;
     margin-left: auto;

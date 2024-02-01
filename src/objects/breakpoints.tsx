@@ -1,3 +1,6 @@
+import { css } from "styled-components";
+import { CSS, Interpolation, RuleSet, StyledObject, Styles } from "styled-components/dist/types";
+
 interface BreakpointsWidths {
     mobileS: string;
     mobileM: string;
@@ -28,7 +31,7 @@ interface MinWidths {
     laptopL: string;
     desktop: string;
     desktopL: string;
-    flexible: (width: string) => string;
+    //flexible: (width:string ) => typeof css<object>;
 }
 
 interface MaxWidths {
@@ -40,7 +43,7 @@ interface MaxWidths {
     laptopL: string;
     desktop: string;
     desktopL: string;
-    flexible: (width: string) => string;
+    flexible: (maxWidth: string) => string;
 }
 
 export const breakpointsWidths: BreakpointsWidths = {
@@ -68,8 +71,8 @@ export const widthsQueries: WidthsQueries = {
         laptop: `(min-width: ${breakpointsWidths.laptop})`,
         laptopL: `(min-width: ${breakpointsWidths.laptopL})`,
         desktop: `(min-width: ${breakpointsWidths.desktop})`,
-        desktopL: `(min-width: ${breakpointsWidths.desktop})`,
-        flexible: (width: string) => `(min-width):${width}`
+        desktopL: `(min-width: ${breakpointsWidths.desktop})`
+        // flexible: (width: string) => `(min-width):${width}`
     },
     maxWidths: {
         mobileS: `(max-width: ${breakpointsWidths.mobileS})`,
@@ -80,7 +83,7 @@ export const widthsQueries: WidthsQueries = {
         laptopL: `(max-width: ${breakpointsWidths.laptopL})`,
         desktop: `(max-width: ${breakpointsWidths.desktop})`,
         desktopL: `(max-width: ${breakpointsWidths.desktop})`,
-        flexible: (width: string) => `(max-width):${width}`
+        flexible: (maxWidth: string) => `(max-width: ${maxWidth})`
     }
 };
 

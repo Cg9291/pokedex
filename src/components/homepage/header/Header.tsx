@@ -4,15 +4,13 @@ import { Search } from "./search/Search";
 import React from "react";
 import { RandomizeSelectionButton } from "./RandomizeSelectionButton";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function Header(props: RandomPokemonSelectionInterface): React.ReactElement {
     return (
         <Container>
             <RandomizeSelectionButton setRandomPokemonSelection={props.setRandomPokemonSelection} />
-            <HeaderText>
-                What Pokemon
-                <br /> would you like to find?
-            </HeaderText>
+            <HeaderText>What Pokemon would you like to find?</HeaderText>
             <Search />
         </Container>
     );
@@ -26,6 +24,12 @@ const Container = styled(ContainerPrototype)`
     padding: 0.5rem 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        position: relative;
+        border-bottom-left-radius: unset;
+        border-bottom-right-radius: unset;
+        padding: 2rem 1rem 2rem 2rem;
+    }
 `;
 
 const HeaderText = styled.h2`
@@ -35,4 +39,8 @@ const HeaderText = styled.h2`
     color: white;
     text-align: start;
     padding: 0 0 1rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: xx-large;
+    }
 `;

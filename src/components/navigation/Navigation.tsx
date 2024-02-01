@@ -8,6 +8,7 @@ import compareIcon from "../../assets/icons8-compare-24.png";
 import WTPIcon from "../../assets/icons8-egg-pokemon-100.png";
 import { NavIconsInterface } from "../../interfaces/miscInterfaces";
 import { NavIconsType } from "../../interfaces/miscTypes";
+import * as breakpoints from "../../objects/breakpoints";
 
 export function Navigation(): React.ReactElement {
     const navIcons: NavIconsType = [
@@ -55,6 +56,11 @@ const Container = styled(ContainerPrototype)`
     bottom: 0;
     padding: 1vh 0;
     border-top: 1px solid lightgrey;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        bottom: unset;
+        top: 0;
+        height: 6.8%;
+    }
 `;
 
 const NavElementContainer = styled(Link)`

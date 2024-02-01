@@ -4,6 +4,7 @@ import ContainerPrototype from "./components/prototypes/ContainerPrototype";
 import { RoutesStructure } from "./components/RoutesStructure";
 import React from "react";
 import { Navigation } from "./components/navigation/Navigation";
+import * as breakpoints from "./objects/breakpoints";
 
 /*
 TODO
@@ -27,6 +28,9 @@ const Container = styled(ContainerPrototype)`
     max-height: 100vh;
     max-width: 100vw;
     overflow-y: hidden;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        flex-direction: column-reverse;
+    }
 `;
 
 export default App;

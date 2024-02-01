@@ -14,6 +14,7 @@ import {
     SuggestedInputKitInterface
 } from "./Search";
 import { noImageSrcPlaceholder } from "../../../../objects/noImageSrcPlaceholder";
+import * as breakpoints from "../../../../objects/breakpoints";
 
 export interface SearchSuggestionsProps {
     searchInputKit: SearchInputKitInterface;
@@ -124,8 +125,6 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                 props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name);
             }
         }
-        //console.log(generateSuggestions()[index].name);
-        /* props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name); */
     };
 
     const handleClick = async (suggestedName: string) => {
@@ -213,4 +212,7 @@ const PokemonName = styled.h5`
     justify-self: center;
     align-self: center;
     width: 100%;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 1rem;
+    }
 `;

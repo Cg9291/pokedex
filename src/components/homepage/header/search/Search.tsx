@@ -6,6 +6,7 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
 import { useHandleSearchSubmission } from "../../../../functions/utilities/useHandleSearchSubmission";
+import * as breakpoints from "../../../../objects/breakpoints";
 
 export interface SearchPropsInterface {
     usesNavigation?: boolean;
@@ -161,9 +162,7 @@ const InputContainer = styled.div`
     position: relative;
     height: fit-content;
     flex: 1;
-    margin-right: 2rem;
-    //max-width: 30rem;
-    //margin-right: 0.1rem;
+    margin-right: 1rem;
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
@@ -186,6 +185,7 @@ const Input = styled.input.attrs({
     name: "searchInput"
 })`
     width: 85%;
+    flex: 1 0 auto;
     height: 100%;
     z-index: 2;
     margin-top: auto;
@@ -194,18 +194,11 @@ const Input = styled.input.attrs({
     background-color: transparent;
     border-right: 0.1px solid grey;
     font-size: 0.8rem;
-`;
 
-/* const SearchButton = styled.button.attrs({ type: "submit" })`
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    border-radius: 10px;
-`; */
-/* const ButtonsContainer = styled(ContainerPrototype)`
-    flex-direction: column;
-    max-height: 100%;
-`; */
+    @media ${breakpoints.widthsQueries.maxWidths.mobileM} {
+        padding-left: 0.5rem;
+    }
+`;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
     /* width: 100%; */
@@ -224,6 +217,9 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     display: flex;
     justify-content: center;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        width: 5%;
+    }
 `;
 
 const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`

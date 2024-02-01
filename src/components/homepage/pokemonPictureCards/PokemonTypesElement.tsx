@@ -5,6 +5,7 @@ import { SvgIcon } from "../../SvgIcons";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { typesColors } from "../../../objects/typesColors";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
     return props.typeName !== "none" ? (
@@ -32,4 +33,9 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string }
     font-size: 0.8rem;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        height: 3rem;
+        font-size: 1.25rem;
+    }
 `;
