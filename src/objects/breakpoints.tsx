@@ -12,14 +12,23 @@ interface BreakpointsWidths {
 }
 
 interface BreakpointsHeights {
-    one: string;
-    two: string;
-    three: string;
+    mobileS: string;
+    mobileM: string;
+    mobileL: string;
+    tablet: string;
+    laptop: string;
+    laptopL: string;
+    desktop: string;
 }
 
 interface WidthsQueries {
     minWidths: MinWidths;
     maxWidths: MaxWidths;
+}
+
+interface HeightsQueries {
+    minHeights: MinHeights;
+    maxHeights: MaxHeights;
 }
 
 interface MinWidths {
@@ -46,7 +55,29 @@ interface MaxWidths {
     flexible: (maxWidth: string) => string;
 }
 
-export const breakpointsWidths: BreakpointsWidths = {
+interface MinHeights {
+    mobileS: string;
+    mobileM: string;
+    mobileL: string;
+    tablet: string;
+    laptop: string;
+    laptopL: string;
+    desktop: string;
+    desktopL: string;
+}
+
+interface MaxHeights {
+    mobileS: string;
+    mobileM: string;
+    mobileL: string;
+    tablet: string;
+    laptop: string;
+    laptopL: string;
+    desktop: string;
+    desktopL: string;
+}
+
+const breakpointsWidths: BreakpointsWidths = {
     mobileS: "320px",
     mobileM: "375px",
     mobileL: "425px",
@@ -56,10 +87,14 @@ export const breakpointsWidths: BreakpointsWidths = {
     desktop: "2560px"
 };
 
-export const breakpointsHeights: BreakpointsHeights = {
-    one: "667px",
-    two: "812px",
-    three: "844px"
+const breakpointsHeights: BreakpointsHeights = {
+    mobileS: "640px",
+    mobileM: "667px",
+    mobileL: "932px",
+    tablet: "1024px",
+    laptop: "768px",
+    laptopL: "900px",
+    desktop: "1440px"
 };
 
 export const widthsQueries: WidthsQueries = {
@@ -87,7 +122,27 @@ export const widthsQueries: WidthsQueries = {
     }
 };
 
-export const heightsQueries = {
-    one: `(min-height:${breakpointsHeights.one})`,
-    two: `(min-height:${breakpointsHeights.two})`
+export const heightsQuerie: HeightsQueries = {
+    minHeights: {
+        mobileS: `(min-height: ${breakpointsHeights.mobileS})`,
+        mobileM: `(min-height: ${breakpointsHeights.mobileM})`,
+        mobileL: `(min-height: ${breakpointsHeights.mobileL})`,
+        tablet: `(min-height: ${breakpointsHeights.tablet})`,
+        laptop: `(min-height: ${breakpointsHeights.laptop})`,
+        laptopL: `(min-height: ${breakpointsHeights.laptopL})`,
+        desktop: `(min-height: ${breakpointsHeights.desktop})`,
+        desktopL: `(min-height: ${breakpointsHeights.desktop})`
+        // flexible: (width: string) => `(min-width):${width}`
+    },
+    maxHeights: {
+        mobileS: `(max-height: ${breakpointsHeights.mobileS})`,
+        mobileM: `(max-height: ${breakpointsHeights.mobileM})`,
+        mobileL: `(max-height: ${breakpointsHeights.mobileL})`,
+        tablet: `(max-height: ${breakpointsHeights.tablet})`,
+        laptop: `(max-height: ${breakpointsHeights.laptop})`,
+        laptopL: `(max-height: ${breakpointsHeights.laptopL})`,
+        desktop: `(max-height: ${breakpointsHeights.desktop})`,
+        desktopL: `(max-height: ${breakpointsHeights.desktop})`
+        //flexible: (maxWidth: string) => `(max-width: ${maxWidth})`
+    }
 };

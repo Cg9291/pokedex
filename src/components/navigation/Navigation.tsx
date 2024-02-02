@@ -60,6 +60,7 @@ const Container = styled(ContainerPrototype)`
         bottom: unset;
         top: 0;
         height: 6.8%;
+        border-bottom: 1px solid black;
     }
 `;
 

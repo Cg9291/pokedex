@@ -4,6 +4,7 @@ import { typesColors } from "../../objects/typesColors";
 import { TypesColorsInt } from "../../interfaces/miscInterfaces";
 import { ComparatorPokemonCardsPropsInterface } from "../../interfaces/comparatorInterfaces";
 import { capitalizeWords } from "../../functions/utilities/capitalizeWords";
+import * as breakpoints from "../../objects/breakpoints";
 
 export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
     const { name, sprites, types } = props.pokemonData;
@@ -34,6 +35,10 @@ const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared
     height: ${({ $isCompared }) => ($isCompared ? ` fit-content;` : `30%`)};
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        position: relative;
+    }
 `;
 
 const PokemonName = styled.h5`

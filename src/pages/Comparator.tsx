@@ -13,6 +13,7 @@ import comparatorsButtonLogo from "../assets/comparatorsRandomizeButtonLogo.png"
 import { ComparatorPokemonDataInterface } from "../interfaces/comparatorInterfaces";
 import { ComparatorsPokemonCards } from "../components/comparator/ComparatorsPokemonCards";
 import backIcon from "../assets/icons8-back-arrow-50.png";
+import * as breakpoints from "../objects/breakpoints";
 
 export function Comparator(): React.ReactElement {
     const [isModalActive, setIsModalActive] = useState<IsModalActiveInterface>({
@@ -74,73 +75,90 @@ export function Comparator(): React.ReactElement {
 
     return (
         <Container $isActive={isModalActive.isActive}>
-            {isCompared && (
-                <BackButton onClick={() => setIsCompared(false)}>
-                    <BackIcon />
-                </BackButton>
-            )}
-            <Header>
-                <HeaderTitle $isCompared={isCompared}>Comparator</HeaderTitle>
-                {!isCompared && (
-                    <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
+            <Wrapper>
+                {isCompared && (
+                    <BackButton onClick={() => setIsCompared(false)}>
+                        <BackIcon />
+                    </BackButton>
                 )}
-            </Header>
-            <ComparatorBody>
-                {isCompared ? (
-                    <>
-                        <CardsRow>
+                <Header>
+                    <HeaderTitle $isCompared={isCompared}>Comparator</HeaderTitle>
+                    {!isCompared && (
+                        <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
+                    )}
+                </Header>
+                <ComparatorBody>
+                    {isCompared ? (
+                        <>
+                            <CardsRow>
+                                <ComparatorsPokemonCards
+                                    pokemonData={pokemonData.topPokemon}
+                                    imgOrder={1}
+                                    setIsModalActive={setIsModalActive}
+                                    isCompared={isCompared}
+                                />
+                                <ComparatorsPokemonCards
+                                    pokemonData={pokemonData.bottomPokemon}
+                                    imgOrder={2}
+                                    setIsModalActive={setIsModalActive}
+                                    isCompared={isCompared}
+                                />
+                            </CardsRow>
+                            <>{winner}</>
+                            <BaseStats
+                                pokemonStatsProps={pokemonData.topPokemon}
+                                secondPokemonStatsProps={pokemonData.bottomPokemon}
+                            />
+                        </>
+                    ) : (
+                        <>
                             <ComparatorsPokemonCards
                                 pokemonData={pokemonData.topPokemon}
                                 imgOrder={1}
                                 setIsModalActive={setIsModalActive}
-                                isCompared={isCompared}
                             />
+                            <RandomizeButton>
+                                <RandomizeButtonImage onClick={handleRandomize} />
+                            </RandomizeButton>
                             <ComparatorsPokemonCards
                                 pokemonData={pokemonData.bottomPokemon}
                                 imgOrder={2}
                                 setIsModalActive={setIsModalActive}
-                                isCompared={isCompared}
                             />
-                        </CardsRow>
-                        <>{winner}</>
-                        <BaseStats
-                            pokemonStatsProps={pokemonData.topPokemon}
-                            secondPokemonStatsProps={pokemonData.bottomPokemon}
-                        />
-                    </>
-                ) : (
-                    <>
-                        <ComparatorsPokemonCards
-                            pokemonData={pokemonData.topPokemon}
-                            imgOrder={1}
-                            setIsModalActive={setIsModalActive}
-                        />
-                        <RandomizeButton>
-                            <RandomizeButtonImage onClick={handleRandomize} />
-                        </RandomizeButton>
-                        <ComparatorsPokemonCards
-                            pokemonData={pokemonData.bottomPokemon}
-                            imgOrder={2}
-                            setIsModalActive={setIsModalActive}
-                        />
-                        <CompareButton onClick={handleCompare}> COMPARE!</CompareButton>
-                    </>
+                            <CompareButton onClick={handleCompare}> COMPARE!</CompareButton>
+                        </>
+                    )}
+                </ComparatorBody>
+                {isModalActive && (
+                    <ComparatorsPokemonSearchModal
+                        isModalActiveKit={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
+                        pokemonImagesKit={{ pokemonImages: pokemonData, setPokemonImages: setPokemonData }}
+                    />
                 )}
-            </ComparatorBody>
-            {isModalActive && (
-                <ComparatorsPokemonSearchModal
-                    isModalActiveKit={{ isModalActive: isModalActive, setIsModalActive: setIsModalActive }}
-                    pokemonImagesKit={{ pokemonImages: pokemonData, setPokemonImages: setPokemonData }}
-                />
-            )}
+            </Wrapper>
         </Container>
     );
 }
 
 const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
-    padding: 0 1rem;
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        padding: 0 12vw;
+        background-color: #1b252f;
+    }
+`;
+
+const Wrapper = styled(ContainerPrototype)`
+    flex-direction: column;
+    background-color: white;
+    padding: 0 1rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        position: relative;
+        padding: 0 5vw;
+    }
 `;
 
 const Header = styled(ContainerPrototype)`
