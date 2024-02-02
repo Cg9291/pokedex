@@ -26,6 +26,7 @@ import {
     isPokemonFavorited,
     removePokemonFromFavorites
 } from "../functions/utilities/useLocalStorage";
+import * as breakpoints from "../objects/breakpoints";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
@@ -143,7 +144,7 @@ export function PokemonProfile(): React.ReactElement {
 
         return (
             <Container>
-                <ImageContainer $mainType={types[0].type.name}>
+                <ImageWrapper $mainType={types[0].type.name}>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
                     <PokemonName>
                         {capitalizeWords(name)}
@@ -155,10 +156,10 @@ export function PokemonProfile(): React.ReactElement {
                             <HeartIcon favorite={isFavorite} />
                         </p>
                     </PokemonName>
-                    <SvgImg>
-                        <PokemonImg href={sprites.front_default} />
-                    </SvgImg>
-                </ImageContainer>
+                    <ImageContainer viewBox="0 0 100 100 ">
+                        <PokemonImage href={sprites.front_default} />
+                    </ImageContainer>
+                </ImageWrapper>
                 <ProfileContainer>
                     <PokemonProfileInfoContainer>
                         <InfoNavBar>{displayNavHeaders()}</InfoNavBar>
@@ -184,7 +185,7 @@ const Container = styled(ContainerPrototype)`
     position: relative;
     overflow-y: hidden;
 `;
-const ImageContainer = styled(ContainerPrototype)<{ $mainType: string }>`
+const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
     background-image: ${(props) =>
         `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},65%, white 95%)`};
     flex-direction: column;
@@ -196,11 +197,15 @@ const ImageContainer = styled(ContainerPrototype)<{ $mainType: string }>`
 const PokeNumber = styled.span``;
 const PokemonName = styled.span``;
 
-const SvgImg = styled.svg`
+const ImageContainer = styled.svg`
     width: 100%;
     height: 100%;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        //min-height: 100%;
+    }
 `;
-const PokemonImg = styled.image`
+
+const PokemonImage = styled.image`
     width: 100%;
     height: 100%;
     border: solid black;
@@ -227,18 +232,18 @@ const InfoNavBar = styled(ContainerPrototype)`
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    //position: absolute;
     background-color: inherit;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    //max-height: 20rem;
-    //margin-top: 10%;
     overflow-y: scroll;
     padding: 0 1rem;
-    //background-color: rgba(0, 0, 0, 0.03);
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-width: 50vh;
+    }
 `;

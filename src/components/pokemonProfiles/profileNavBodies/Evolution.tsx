@@ -13,6 +13,7 @@ import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 import { Link } from "react-router-dom";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
@@ -124,6 +125,9 @@ const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
     border-radius: 50%;
     width: 90%;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-width: 17vw;
+    }
 `;
 const PokemonImage = styled.image`
     width: 100%;
@@ -145,5 +149,8 @@ const PokemonType = styled(TypePrototype)`
     margin: 0;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
+    border-bottom-color: purple;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-width: 20vw;
+    }
 `;
