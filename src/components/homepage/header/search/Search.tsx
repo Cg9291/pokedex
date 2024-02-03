@@ -201,11 +201,13 @@ const Input = styled.input.attrs({
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    /* width: 100%; */
     flex: 0 1 15%;
     height: 100%;
     max-width: 6rem;
     border-radius: 10px;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 1.4rem;
+    }
 `;
 
 const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSuggestions: boolean }>`

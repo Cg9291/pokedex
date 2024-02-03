@@ -39,4 +39,8 @@ const Button = styled.button.attrs({ type: "button" })`
     padding: 0 0.5rem;
     border: none;
     font-weight: 600;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 1.4rem;
+        font-weight: unset;
+    }
 `;

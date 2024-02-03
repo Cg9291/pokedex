@@ -41,6 +41,7 @@ const HeaderText = styled.h2`
     padding: 0 0 1rem;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: xx-large;
+        font-size: 4rem;
+        margin-top: 2rem;
     }
 `;

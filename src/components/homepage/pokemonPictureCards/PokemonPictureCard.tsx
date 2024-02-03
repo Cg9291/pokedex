@@ -133,6 +133,9 @@ const PokeName = styled.h4`
     color: white;
     grid-area: name;
     place-self: start;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 2.5rem;
+    }
 `;
 
 const PokeId = styled.span`
@@ -150,6 +153,9 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     align-self: center;
     margin-bottom: 0.3rem;
     max-height: 100%;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        margin-bottom: 1.5rem;
+    }
 `;
 
 const PokemonImgWrapper = styled.div`

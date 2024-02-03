@@ -37,5 +37,6 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         height: 3rem;
         font-size: 1.25rem;
+        padding-right: 1rem;
     }
 `;

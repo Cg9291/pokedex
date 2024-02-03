@@ -12,7 +12,6 @@ export function Favorites(): React.ReactElement {
             <PokemonPictureCard id={number} key={index} isLink={true} />
         ));
 
-    console.log(favoritedPokemons);
     return (
         <Container>
             <Wrapper>
@@ -20,7 +19,7 @@ export function Favorites(): React.ReactElement {
                 <SubTitle>
                     This is a list of your favorite pokemons!
                     <br />
-                    Number of favorite pokemons:{numberOfFavoritedPokemons}
+                    Number of favorite pokemons: {numberOfFavoritedPokemons}
                 </SubTitle>
                 <FavoritesContainer>
                     {numberOfFavoritedPokemons !== 0 ? mapPictureCards() : "No Favorite Pokemons to display"}
@@ -56,7 +55,8 @@ export const FavoritesContainer = styled.div`
     overflow: scroll;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
-        padding: 1vh 3vw;
+        padding: 3vh 3vw;
+        border: 1px solid grey;
     }
 `;
 
@@ -66,7 +66,9 @@ const Title = styled.h1`
     font-weight: bold;
     @media ${breakpoints.heightsQueries.minHeights.laptop} {
         margin-left: 3rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0.2rem;
+        padding-top: 1rem;
+        font-size: 4rem;
     }
 `;
 
@@ -74,7 +76,7 @@ const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-weight: normal;
     @media ${breakpoints.heightsQueries.minHeights.laptop} {
-        margin-left: 3rem;
-        margin-bottom: 1rem;
+        margin: 0 0 2rem 3rem;
+        font-size: 2rem;
     }
 `;

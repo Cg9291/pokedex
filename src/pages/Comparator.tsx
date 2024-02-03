@@ -170,10 +170,17 @@ const Header = styled(ContainerPrototype)`
 const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
     margin: ${(props) => props.$isCompared && "auto"};
     font-size: ${(props) => props.$isCompared && "1.5em"};
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 4rem;
+    }
 `;
 
 const HeaderDescription = styled.p`
     min-height: fit-content;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 2rem;
+    }
 `;
 
 const ComparatorBody = styled(ContainerPrototype)`
