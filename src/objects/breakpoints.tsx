@@ -122,7 +122,7 @@ export const widthsQueries: WidthsQueries = {
     }
 };
 
-export const heightsQuerie: HeightsQueries = {
+export const heightsQueries: HeightsQueries = {
     minHeights: {
         mobileS: `(min-height: ${breakpointsHeights.mobileS})`,
         mobileM: `(min-height: ${breakpointsHeights.mobileM})`,
