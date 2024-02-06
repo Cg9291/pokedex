@@ -43,7 +43,7 @@ const Wrapper = styled(ContainerPrototype)`
     flex-direction: column;
     background-color: white;
 `;
-export const FavoritesContainer = styled.div`
+const FavoritesContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;

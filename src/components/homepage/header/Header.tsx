@@ -51,7 +51,7 @@ const HeaderText = styled.h2`
     padding: 0 0 1rem;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 3.5rem;
+        font-size: 3em;
         padding: unset;
         margin-top: 0;
         padding-bottom: 1rem;

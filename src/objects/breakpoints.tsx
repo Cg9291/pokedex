@@ -52,7 +52,7 @@ interface MaxWidths {
     laptopL: string;
     desktop: string;
     desktopL: string;
-    flexible: (maxWidth: string) => string;
+    flexible: (width: string) => string;
 }
 
 interface MinHeights {
@@ -64,6 +64,7 @@ interface MinHeights {
     laptopL: string;
     desktop: string;
     desktopL: string;
+    flexible: (height: string) => string;
 }
 
 interface MaxHeights {
@@ -75,6 +76,7 @@ interface MaxHeights {
     laptopL: string;
     desktop: string;
     desktopL: string;
+    flexible: (height: string) => string;
 }
 
 const breakpointsWidths: BreakpointsWidths = {
@@ -118,7 +120,7 @@ export const widthsQueries: WidthsQueries = {
         laptopL: `(max-width: ${breakpointsWidths.laptopL})`,
         desktop: `(max-width: ${breakpointsWidths.desktop})`,
         desktopL: `(max-width: ${breakpointsWidths.desktop})`,
-        flexible: (maxWidth: string) => `(max-width: ${maxWidth})`
+        flexible: (width: string) => `(max-width: ${width})`
     }
 };
 
@@ -131,8 +133,8 @@ export const heightsQueries: HeightsQueries = {
         laptop: `(min-height: ${breakpointsHeights.laptop})`,
         laptopL: `(min-height: ${breakpointsHeights.laptopL})`,
         desktop: `(min-height: ${breakpointsHeights.desktop})`,
-        desktopL: `(min-height: ${breakpointsHeights.desktop})`
-        // flexible: (width: string) => `(min-width):${width}`
+        desktopL: `(min-height: ${breakpointsHeights.desktop})`,
+        flexible: (height: string) => `(min-height:${height})`
     },
     maxHeights: {
         mobileS: `(max-height: ${breakpointsHeights.mobileS})`,
@@ -142,7 +144,8 @@ export const heightsQueries: HeightsQueries = {
         laptop: `(max-height: ${breakpointsHeights.laptop})`,
         laptopL: `(max-height: ${breakpointsHeights.laptopL})`,
         desktop: `(max-height: ${breakpointsHeights.desktop})`,
-        desktopL: `(max-height: ${breakpointsHeights.desktop})`
+        desktopL: `(max-height: ${breakpointsHeights.desktop})`,
+        flexible: (height: string) => `(max-height:${height})`
         //flexible: (maxWidth: string) => `(max-width: ${maxWidth})`
     }
 };

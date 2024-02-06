@@ -28,7 +28,6 @@ export function Homepage(): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //grid-template-columns: 1fr 1fr 1fr;
         padding: 0 12vw;
         background-color: #1b252f;
     }
@@ -55,6 +54,9 @@ const Wrapper = styled.div`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         grid-template-columns: repeat(3, 1fr);
         padding: 2rem;
+
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1365px")} {
+            grid-template-columns: 1fr 1fr;
+        }
     }
-    //row-gap: 0.8rem;
 `;

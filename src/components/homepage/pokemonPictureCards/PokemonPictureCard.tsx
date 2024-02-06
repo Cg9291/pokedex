@@ -115,12 +115,18 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
     max-height: 100%;
     height: 18vh;
     margin: auto;
-    padding: 0.7rem;
+    padding: 0.7rem 0.7rem 1rem 0.7rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     line-height: 1;
     overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        min-height: 90%;
+        min-width: 95%;
+        max-width: 95%;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-height: 80%;
         min-width: 95%;
