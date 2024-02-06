@@ -148,6 +148,13 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     max-height: 4rem;
     width: 100%;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        // margin-top: 1rem;
+        bottom: 0rem;
+        align-items: flex-end;
+        grid-area: searchBar;
+    }
 `;
 
 const Form = styled.form.attrs({
@@ -202,7 +209,7 @@ const Input = styled.input.attrs({
 
 const FilterButton = styled.button.attrs({ type: "button" })`
     flex: 0 1 15%;
-    height: 100%;
+    min-height: 100%;
     max-width: 6rem;
     border-radius: 10px;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -220,7 +227,8 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     display: flex;
     justify-content: center;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        width: 5%;
+        min-width: fit-content;
+        max-width: 5rem;
     }
 `;
 

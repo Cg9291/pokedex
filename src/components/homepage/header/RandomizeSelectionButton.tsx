@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
+import comparatorsButtonLogo from "../../../assets/comparatorsRandomizeButtonLogo.png";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
 import * as breakpoints from "../../../objects/breakpoints";
 
@@ -14,7 +15,9 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
     return (
         <Container>
-            <Button onClick={() => randomize()}>Randomize</Button>
+            <Button onClick={() => randomize()}>
+                <RandomizeButtonImage />
+            </Button>
         </Container>
     );
 }
@@ -26,21 +29,34 @@ const Container = styled(ContainerPrototype)`
     top: 0.5rem;
     right: 0.5rem;
     z-index: 1;
+    grid-area: randomizeButton;
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        position: absolute;
-        //top: 2rem;
-        right: 1.3rem;
+        position: unset;
+        top: 1.5rem;
+        right: 2rem;
     }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
-    width: 100%;
-    border-radius: 7px;
-    padding: 0 0.5rem;
+    max-width: 100%;
+    aspect-ratio: 1/1;
+    z-index: 1;
+    border-radius: 50%;
+    background-color: white;
     border: none;
-    font-weight: 600;
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 1.4rem;
-        font-weight: unset;
+    &:hover {
+        cursor: pointer;
     }
+    @media ${breakpoints.widthsQueries.minWidths.flexible("1212px")} {
+        min-width: 4rem;
+        min-height: 4rem;
+    }
+`;
+
+export const RandomizeButtonImage = styled.img.attrs({
+    src: comparatorsButtonLogo
+})`
+    width: 100%;
+    height: 100%;
 `;

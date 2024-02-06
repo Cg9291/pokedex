@@ -26,9 +26,19 @@ const Container = styled(ContainerPrototype)`
     border-bottom-right-radius: 25px;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
+        display: grid;
+        grid-template-rows: auto fit-content;
+        grid-template-columns: 1fr min-content;
+        grid-template-areas:
+            "headerText randomizeButton"
+            "searchBar searchBar";
         border-bottom-left-radius: unset;
         border-bottom-right-radius: unset;
-        padding: 2rem 1rem 2rem 2rem;
+        padding: 1rem 2rem;
+        justify-content: flex-end;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.flexible("1720px")} {
+        align-items: flex-start;
     }
 `;
 
@@ -41,7 +51,22 @@ const HeaderText = styled.h2`
     padding: 0 0 1rem;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 4rem;
-        margin-top: 2rem;
+        font-size: 3.5rem;
+        padding: unset;
+        margin-top: 0;
+        padding-bottom: 1rem;
+        //max-height: 80%;
+        overflow: hidden;
+        grid-area: headerText;
+        line-height: 3.5rem;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.flexible("1212px")} {
+        padding-bottom: 0;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.flexible("1720px")} {
+        min-width: 100%;
+        min-height: 100%;
     }
 `;

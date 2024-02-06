@@ -40,7 +40,7 @@ interface MinWidths {
     laptopL: string;
     desktop: string;
     desktopL: string;
-    //flexible: (width:string ) => typeof css<object>;
+    flexible: (width: string) => string;
 }
 
 interface MaxWidths {
@@ -106,8 +106,8 @@ export const widthsQueries: WidthsQueries = {
         laptop: `(min-width: ${breakpointsWidths.laptop})`,
         laptopL: `(min-width: ${breakpointsWidths.laptopL})`,
         desktop: `(min-width: ${breakpointsWidths.desktop})`,
-        desktopL: `(min-width: ${breakpointsWidths.desktop})`
-        // flexible: (width: string) => `(min-width):${width}`
+        desktopL: `(min-width: ${breakpointsWidths.desktop})`,
+        flexible: (width: string) => `(min-width:${width})`
     },
     maxWidths: {
         mobileS: `(max-width: ${breakpointsWidths.mobileS})`,

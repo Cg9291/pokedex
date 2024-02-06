@@ -216,7 +216,7 @@ const CompareButton = styled.button.attrs({ type: "button" })`
     margin-top: 1rem;
 `;
 
-const RandomizeButton = styled.button.attrs({ type: "button" })`
+export const RandomizeButton = styled.button.attrs({ type: "button" })`
     width: 3rem;
     aspect-ratio: 1/1;
     margin: -0.9rem 0;
@@ -224,9 +224,12 @@ const RandomizeButton = styled.button.attrs({ type: "button" })`
     border-radius: 50%;
     background-color: white;
     border: none;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
-const RandomizeButtonImage = styled.img.attrs({
+export const RandomizeButtonImage = styled.img.attrs({
     src: comparatorsButtonLogo
 })`
     width: 100%;
