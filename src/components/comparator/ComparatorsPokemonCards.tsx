@@ -29,17 +29,20 @@ export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterf
 }
 
 const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
-    min-height: 40%;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
-    width: ${({ $isCompared }) => $isCompared && ` 40%`};
-    height: ${({ $isCompared }) => ($isCompared ? ` fit-content;` : `30%`)};
+    width: ${({ $isCompared }) => $isCompared && ` 48%`};
+
+    height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
+        overflow: hidden;
+        width: ${({ $isCompared }) => $isCompared && ` 49%`};
+        overflow: hidden;
     }
 `;
 
@@ -48,11 +51,26 @@ const PokemonName = styled.h5`
     border: 0.1rem solid grey;
     border-radius: 50px;
     padding: 0.5rem 0.2rem;
+    margin-right: 0.3rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        padding: 1rem;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        box-sizing: border-box;
+        padding: 1rem 2rem;
+        flex: 0 0 auto;
+    }
 `;
 
 const PokemonImgContainer = styled.svg`
     max-width: 100%;
     max-height: 100%;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        //flex: 1 0 auto;
+    }
 `;
 
 const PokemonImg = styled.image.attrs({ x: "12.5%", y: "12.5%", width: "75%", height: "75%" })``;

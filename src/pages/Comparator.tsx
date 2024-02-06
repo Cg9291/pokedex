@@ -104,7 +104,7 @@ export function Comparator(): React.ReactElement {
                                     isCompared={isCompared}
                                 />
                             </CardsRow>
-                            <>{winner}</>
+                            <Result>{winner}</Result>
                             <BaseStats
                                 pokemonStatsProps={pokemonData.topPokemon}
                                 secondPokemonStatsProps={pokemonData.bottomPokemon}
@@ -143,7 +143,8 @@ export function Comparator(): React.ReactElement {
 const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
-
+    overflow: hidden;
+    // padding-bottom: 1rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -154,6 +155,7 @@ const Wrapper = styled(ContainerPrototype)`
     flex-direction: column;
     background-color: white;
     padding: 0 1rem;
+    max-height: 100%;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
@@ -169,23 +171,33 @@ const Header = styled(ContainerPrototype)`
 
 const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
     margin: ${(props) => props.$isCompared && "auto"};
-    font-size: ${(props) => props.$isCompared && "1.5em"};
+    font-size: ${(props) => props.$isCompared && "2.5em"};
 
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        font-size: ${(props) => props.$isCompared && "3.2em"};
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: ${(props) => props.$isCompared && "3.5em"};
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 4rem;
+        font-size: ${(props) => props.$isCompared && "5em"};
     }
 `;
 
 const HeaderDescription = styled.p`
     min-height: fit-content;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //font-size: 2rem;
+        font-size: 1.6rem;
     }
 `;
 
 const ComparatorBody = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    max-height: 100%;
+    overflow: hidden;
 `;
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
@@ -194,15 +206,54 @@ const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boole
     height: 2rem;
     background-color: transparent;
     border: none;
-    margin-top: 0.1rem;
-    //left: 0;
+    top: 0.5rem;
     left: 0.5rem;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        top: 0.5rem;
+        height: 2.4rem;
+    }
 `;
 const CardsRow = styled(ContainerPrototype)`
     height: fit-content;
     min-height: fit-content;
     max-height: fit-content;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        margin-bottom: 1rem;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-height: max-content;
+        max-width: 100%;
+        overflow-x: none;
+    }
+`;
+
+const Result = styled.p`
+    min-height: 1rem;
+    font-size: 1.3em;
+    font-weight: bolder;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    max-width: 100%;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        min-height: 3rem;
+        font-size: 1.5em;
+        font-weight: bolder;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.mobileL} {
+        font-size: 1.8em;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        min-height: 3rem;
+        font-size: 2em;
+        font-weight: bolder;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        min-height: 3rem;
+        font-size: 2.5em;
+        font-weight: bolder;
+    }
 `;
 
 const CompareButton = styled.button.attrs({ type: "button" })`

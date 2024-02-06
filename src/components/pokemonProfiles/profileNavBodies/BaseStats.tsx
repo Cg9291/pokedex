@@ -72,7 +72,7 @@ function Stat(props: LocalStat): React.ReactElement {
     return (
         <StatContainer>
             <StatName>{capitalizeWords(props.name)}</StatName>
-            <StatValue>{props.baseStatValue}</StatValue>
+            <StatValue $isLeftSide={true}>{props.baseStatValue}</StatValue>
             <StatBar $isTotal={props.isTotal} $isComparison={props.isComparison}>
                 {props.isComparison && props.baseStatValue2 ? (
                     <StatBarComparisonOverlayContainer>
@@ -96,7 +96,7 @@ function Stat(props: LocalStat): React.ReactElement {
     );
 }
 
-const Container = styled(ContainerPrototype)`
+const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     flex-direction: column;
     padding: 1rem 0 1rem;
     overflow-y: hidden;
@@ -109,20 +109,22 @@ const StatContainer = styled.div`
     justify-content: stretch;
 `;
 const StatName = styled(ContainerPrototype)`
-    min-width: 35%;
+    min-width: 25%;
+    max-width: 40%;
+    align-items: center;
 `;
-const StatValue = styled(ContainerPrototype)`
-    justify-content: end;
+const StatValue = styled(ContainerPrototype)<{ $isLeftSide?: boolean }>`
+    justify-content: ${(props) => (props.$isLeftSide ? "flex-start" : "flex-end")};
     min-width: 1%;
-    padding-right: 0.8rem;
+    align-items: center;
 `;
 const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};
-    min-width: ${(props) => (props.$isComparison ? "40%" : "50%")};
-    height: 30%;
+    min-width: ${(props) => (props.$isComparison ? "55%" : "50%")};
+    height: 40%;
     background-color: grey;
     border-radius: 99px;
-    margin-top: 0.3rem;
+    align-self: center;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`
