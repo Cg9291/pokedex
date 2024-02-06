@@ -20,7 +20,9 @@ export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterf
                     Switch
                 </ChangeSelectionButton>
             )}
-            <PokemonImg src={sprites.front_default} />
+            <PokemonImgContainer viewBox="0 0 100 100">
+                <PokemonImg href={sprites.front_default} />
+            </PokemonImgContainer>
             {props.isCompared && <PokemonName>{capitalizeWords(name)}</PokemonName>}
         </ComparatorPokemonCardsContainer>
     );
@@ -48,10 +50,12 @@ const PokemonName = styled.h5`
     padding: 0.5rem 0.2rem;
 `;
 
-const PokemonImg = styled.img`
-    width: 9rem;
-    aspect-ratio: 1/1;
+const PokemonImgContainer = styled.svg`
+    max-width: 100%;
+    max-height: 100%;
 `;
+
+const PokemonImg = styled.image.attrs({ x: "12.5%", y: "12.5%", width: "75%", height: "75%" })``;
 
 const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     //Will review

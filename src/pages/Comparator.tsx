@@ -179,7 +179,7 @@ const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
 const HeaderDescription = styled.p`
     min-height: fit-content;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 2rem;
+        //font-size: 2rem;
     }
 `;
 
