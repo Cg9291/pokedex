@@ -33,7 +33,7 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         })
         .sort(); /* [NOTE] will create custom sort function later */
     const [suggestionsList, setSuggestionsList] = useState<React.ReactElement[]>();
-    const [focusedElementIndex, setFocusedElementIndex] = useState<number>(0);
+    const [focusedElementIndex, setFocusedElementIndex] = useState<number>(-1);
     const suggestionRef = useRef<HTMLLIElement | null>(null);
     const navigate = useNavigate();
 
@@ -42,8 +42,6 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     useEffect(() => {
         displaySearchInputSuggestions();
         props.suggestedInputKit.setSuggestedInput(generateSuggestions()[0]?.name);
-        setFocusedElementIndex(0);
-        /*     console.log(pokemonNamesList.filter((x) => x.name.includes("-"))); */
     }, [props.searchInputKit?.searchInput]);
 
     useEffect(() => {
@@ -96,10 +94,10 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                     $isFocused={focusedElementIndex === idx ? true : false}
                 >
                     <Button onClick={() => handleClick(pokemon.name)}>
-                        <>
-                            <PokemonImg src={pokemon.sprite} />
+                        <Wrapper>
                             <PokemonName> {capitalizeWords(pokemon.name)}</PokemonName>
-                        </>
+                            <PokemonImg src={pokemon.sprite} />
+                        </Wrapper>
                     </Button>
                 </ListItem>
             )
@@ -175,7 +173,7 @@ const Container = styled(ContainerPrototype)`
     border: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    padding: 0.5rem 0;
+    //padding: 0.5rem 0;
 `;
 
 const SuggestionsList = styled.ul`
@@ -186,12 +184,15 @@ const SuggestionsList = styled.ul`
 const ListItem = styled.li<{ $isFocused: boolean }>`
     width: 100%;
     height: 2.5rem;
-    //max-height: max-content;
+
     border: 0.1px solid;
     background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
     overflow-y: hidden;
     display: flex;
     align-items: center;
+    &:hover {
+        background-color: lightgray;
+    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
@@ -202,17 +203,30 @@ const Button = styled.button.attrs({ type: "button" })`
     background-color: transparent;
 `;
 
-const PokemonImg = styled.img`
-    justify-self: start;
+const Wrapper = styled.div`
+    display: grid;
+    max-width: 100%;
     max-height: 100%;
-    max-width: 20%;
+    min-width: 100%;
+    min-height: 100%;
+    grid-template-columns: 55% 45%;
+    grid-template-rows: 100%;
 `;
 
 const PokemonName = styled.h5`
     justify-self: center;
     align-self: center;
     width: 100%;
+    text-align: left;
+    padding-left: 0.3rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 1rem;
+        padding-left: 0.4rem;
     }
+`;
+
+const PokemonImg = styled.img`
+    justify-self: end;
+    max-height: 100%;
+    max-width: 100%;
 `;
