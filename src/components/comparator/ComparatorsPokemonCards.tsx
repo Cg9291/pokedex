@@ -69,7 +69,7 @@ const PokemonImgContainer = styled.svg`
     max-height: 100%;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //flex: 1 0 auto;
+        max-height: 35vh;
     }
 `;
 

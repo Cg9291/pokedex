@@ -42,6 +42,11 @@ const Container = styled(ContainerPrototype)`
 const Wrapper = styled(ContainerPrototype)`
     flex-direction: column;
     background-color: white;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        position: relative;
+        padding: 0 5vw;
+    }
 `;
 const FavoritesContainer = styled.div`
     display: grid;
@@ -53,30 +58,47 @@ const FavoritesContainer = styled.div`
     padding: 1vh 0;
     row-gap: 0.7rem;
     overflow: scroll;
+    //background-color: lightgray;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
         padding: 3vh 3vw;
-        border: 1px solid grey;
+        //border: 1px solid grey;
     }
 `;
 
 const Title = styled.h1`
     color: ${typesColors.black};
-    font-size: 2em;
+    font-size: 3em;
     font-weight: bold;
-    @media ${breakpoints.heightsQueries.minHeights.laptop} {
-        margin-left: 3rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        margin-left: 0.7rem;
         margin-bottom: 0.2rem;
         padding-top: 1rem;
-        font-size: 4rem;
+        //font-size: 3em;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        margin-left: unset;
+        margin-bottom: 0.2rem;
+        padding-top: 0;
+        font-size: 5em;
     }
 `;
 
 const SubTitle = styled.h4`
     color: ${typesColors.black};
+    font-size: 1.1em;
+    margin-bottom: 0.1rem;
     font-weight: normal;
-    @media ${breakpoints.heightsQueries.minHeights.laptop} {
-        margin: 0 0 2rem 3rem;
-        font-size: 2rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        margin-left: 0.7rem;
+        margin-bottom: 0.2rem;
+        //padding-top: 1rem;
+        font-size: 1.4em;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        margin: 0;
+        font-size: 1.6em;
     }
 `;

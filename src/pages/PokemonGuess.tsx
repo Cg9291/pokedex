@@ -85,6 +85,7 @@ export function PokemonGuess() {
 }
 
 const Container = styled(ContainerPrototype)`
+    overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -102,12 +103,22 @@ const Wrapper = styled(ContainerPrototype)`
 `;
 
 const Title = styled.h1`
-    //text-align: center;
-    white-space: nowrap;
+    text-align: center;
+    font-size: 3em;
+    line-height: 3rem;
+    //white-space: nowrap;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileL} {
+        font-size: 3em;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 4em;
+        line-height: 4rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         margin-top: 1rem;
         text-align: center;
-        font-size: 4rem;
+        font-size: 4.5em;
     }
 `;
 

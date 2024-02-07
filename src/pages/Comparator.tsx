@@ -166,29 +166,36 @@ const Wrapper = styled(ContainerPrototype)`
 const Header = styled(ContainerPrototype)`
     height: max-content;
     flex-direction: column;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        margin-bottom: 1.5rem;
+    }
 `;
 
 const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
     margin: ${(props) => props.$isCompared && "auto"};
-    font-size: ${(props) => props.$isCompared && "2.5em"};
+    font-size: ${(props) => (props.$isCompared ? "2.5em" : "3em")};
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: ${(props) => props.$isCompared && "3.2em"};
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: ${(props) => props.$isCompared && "3.5em"};
+        font-size: ${(props) => (props.$isCompared ? "3.5em" : "3em")};
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: ${(props) => props.$isCompared && "5em"};
+        font-size: 5em;
     }
 `;
 
 const HeaderDescription = styled.p`
     min-height: fit-content;
+    font-size: 1.1em;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.4em;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 1.6rem;
+        font-size: 1.6em;
     }
 `;
 
