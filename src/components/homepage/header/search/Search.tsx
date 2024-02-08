@@ -147,13 +147,14 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     max-height: 4rem;
-    width: 100%;
+    min-width: 100%;
+    align-items: end;
+    grid-area: searchBar;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         // margin-top: 1rem;
         bottom: 0rem;
         align-items: flex-end;
-        grid-area: searchBar;
     }
 `;
 
@@ -169,7 +170,11 @@ const InputContainer = styled.div`
     position: relative;
     height: fit-content;
     flex: 1;
-    margin-right: 1rem;
+    margin-right: 0.2rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        margin-right: 1rem;
+    }
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
@@ -209,10 +214,14 @@ const Input = styled.input.attrs({
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    flex: 0 1 15%;
+    flex: 0 1 17%;
     min-height: 100%;
     max-width: 6rem;
     border-radius: 10px;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        flex: 0 1 15%;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 1.4rem;
     }
@@ -227,13 +236,16 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     display: flex;
     justify-content: center;
+    padding: 0.3rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-width: fit-content;
         max-width: 5rem;
+        padding: unset;
     }
 `;
 
 const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`
+    align-self: center;
     display: flex;
     justify-content: center;
     max-height: 100%;

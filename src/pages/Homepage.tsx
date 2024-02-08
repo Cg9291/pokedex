@@ -10,7 +10,9 @@ export function Homepage(): React.ReactElement {
     const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
 
     const mapPictureCards = (): React.ReactElement[] =>
-        randomPokemonSelection.map((number, index) => <PokemonPictureCard id={number} isLink={true} key={index} />);
+        randomPokemonSelection.map((number, index) => (
+            <PokemonPictureCard id={number} isLink={true} whereUsed="homepage" key={index} />
+        ));
 
     return (
         <Container>
@@ -39,6 +41,12 @@ export const MainContainer = styled.div`
     height: 100%;
     padding: 1vh 3vw;
     justify-content: center;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+            padding: 2vh 3vw;
+        }
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0;
     }
@@ -49,8 +57,15 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     column-gap: 0.8rem;
+    row-gap: 0.3rem;
     background-color: white;
     min-width: 100%;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+            row-gap: 2vh;
+        }
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         grid-template-columns: repeat(3, 1fr);
         padding: 2rem;

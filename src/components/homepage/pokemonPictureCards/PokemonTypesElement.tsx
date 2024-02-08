@@ -10,7 +10,7 @@ import * as breakpoints from "../../../objects/breakpoints";
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
     return props.typeName !== "none" ? (
         <Container $dynamicBackground={props.dynamicBackground ? true : false} $pokeType={props.typeName.toLowerCase()}>
-            <SvgIcon pokeType={props.typeName.toLowerCase()} />
+            <SvgIcon pokeType={props.typeName.toLowerCase()} whereUsed={props.whereUsed} />
             {capitalizeWords(props.typeName)}
         </Container>
     ) : (
@@ -30,9 +30,13 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string }
     text-align: center;
     display: flex;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        font-size: 0.8rem;
+    }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         height: 3rem;

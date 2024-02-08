@@ -9,11 +9,10 @@ export const GlobalStyle = styled.createGlobalStyle`
         box-sizing: border-box;
     }
     body {
-        height: 100vh;
-        width: 100vw;
+        height: 100dvh;
+        width: 100dvw;
         padding: 0;
         margin: 0;
-        //border:1px solid yellow;
         overflow-x: hidden;
     }
     #root {

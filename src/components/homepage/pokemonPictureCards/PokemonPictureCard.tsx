@@ -20,6 +20,7 @@ export interface PokemonPictureCardsPropsInterface {
     isLink?: boolean;
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;
+    whereUsed?: string;
 }
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
@@ -46,7 +47,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
         [...typesArray]
             .reverse()
             .map((x: Type, index: number) => (
-                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
+                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} whereUsed={props.whereUsed} key={index} />
             ));
 
     if (pokemonInfo && !loadingStatus) {
@@ -82,6 +83,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
                 to={props.isLink ? `/pokemons/id/${pokemonInfo.id}` : ""}
                 onClick={handleClick}
                 $mainType={pokemonInfo.types[0].type.name}
+                $whereUsed={props.whereUsed}
             >
                 <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
                 <PokeId>{displayFormattedId(pokeInfoObject.id)}</PokeId>
@@ -104,7 +106,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
     }
 }
 
-const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
+const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?: string }>`
     display: ${(props) => (props.$isFlex ? "flex" : "grid")};
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: auto 100%;
@@ -113,7 +115,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
         "typesContainer typesContainer image image";
     max-width: 100%;
     max-height: 100%;
-    height: 18vh;
+    width: 100%;
+    height: 100%;
     margin: auto;
     padding: 0.7rem 0.7rem 1rem 0.7rem;
     border-radius: 15px;
@@ -121,6 +124,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     line-height: 1;
     overflow: hidden;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+    }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         min-height: 90%;
@@ -179,8 +184,12 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    width: auto;
-    justify-self: center;
+    align-self: center;
     margin-left: auto;
     margin-right: auto;
+    width: unset; //from prototype
+    height: 100%;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        //width: 65%;
+    }
 `;

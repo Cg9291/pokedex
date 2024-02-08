@@ -15,30 +15,27 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
     return (
         <Container>
-            <Button onClick={() => randomize()}>
-                <RandomizeButtonImage />
-            </Button>
+            <Button onClick={() => randomize()}>{/* <RandomizeButtonImage /> */}</Button>
         </Container>
     );
 }
 
-const Container = styled(ContainerPrototype)`
-    width: fit-content;
-    height: 2.5rem;
-    position: fixed;
-    top: 0.5rem;
-    right: 0.5rem;
+const Container = styled.div`
+    max-width: 100%;
+    aspect-ratio: 1/1;
     z-index: 1;
     grid-area: randomizeButton;
+    align-self: start;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        position: unset;
+        //position: unset;
         top: 1.5rem;
         right: 2rem;
     }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
+    width: 100%;
     max-width: 100%;
     aspect-ratio: 1/1;
     z-index: 1;

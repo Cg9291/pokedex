@@ -17,21 +17,30 @@ export function Header(props: RandomPokemonSelectionInterface): React.ReactEleme
 }
 
 const Container = styled(ContainerPrototype)`
+    display: grid;
+    grid-template-rows: auto min-content;
+    grid-template-columns: 1fr 10vw;
+    grid-template-areas:
+        "headerText randomizeButton"
+        "searchBar searchBar";
     max-height: 13rem;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 100%;
+    align-items: end;
     background-color: darkred;
     padding: 0.5rem 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        grid-template-rows: auto min-content;
+        @media ${breakpoints.heightsQueries.minHeights.mobileM} {
+            max-height: 16rem;
+        }
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
-        display: grid;
-        grid-template-rows: auto fit-content;
-        grid-template-columns: 1fr min-content;
-        grid-template-areas:
-            "headerText randomizeButton"
-            "searchBar searchBar";
+
         border-bottom-left-radius: unset;
         border-bottom-right-radius: unset;
         padding: 1rem 2rem;
@@ -44,14 +53,24 @@ const Container = styled(ContainerPrototype)`
 
 const HeaderText = styled.h2`
     height: fit-content;
-    margin-top: 3.7rem;
-    max-width: 85%;
+    max-width: 99%;
     color: white;
     text-align: start;
-    padding: 0 0 1rem;
+    margin-bottom: 0.5rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        max-width: 95%;
+        font-size: 1.8rem;
+        margin-top: 3rem;
+        margin-bottom: 0.5rem;
+        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+            max-width: 100%;
+            font-size: 1.9rem;
+        }
+    }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 3em;
+        font-size: 3rem;
         padding: unset;
         margin-top: 0;
         padding-bottom: 1rem;
