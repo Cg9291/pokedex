@@ -74,8 +74,8 @@ export function Comparator(): React.ReactElement {
     };
 
     return (
-        <Container $isActive={isModalActive.isActive}>
-            <Wrapper>
+        <Container>
+            <Wrapper $isActive={isModalActive.isActive}>
                 {isCompared && (
                     <BackButton onClick={() => setIsCompared(false)}>
                         <BackIcon />
@@ -140,9 +140,9 @@ export function Comparator(): React.ReactElement {
     );
 }
 
-const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
+const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.4)` : "inherit")};
+    background-color: white;
     overflow: hidden;
     // padding-bottom: 1rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -151,10 +151,11 @@ const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     }
 `;
 
-const Wrapper = styled(ContainerPrototype)`
+const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
-    background-color: white;
-    padding: 0 1rem;
+    background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
+
+    padding: 0 1rem 1rem;
     max-height: 100%;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {

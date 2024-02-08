@@ -116,7 +116,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     max-width: 100%;
     max-height: 100%;
     width: 100%;
-    height: 100%;
+    height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
     margin: auto;
     padding: 0.7rem 0.7rem 1rem 0.7rem;
     border-radius: 15px;

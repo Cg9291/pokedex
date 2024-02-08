@@ -197,7 +197,8 @@ const Container = styled(ContainerPrototype)`
     width: 100%;
     max-width: 100%;
     z-index: 0;
-    border: none;
+    //padding-bottom: 1px;
+    //border-bottom: 1px solid black;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 `;
@@ -242,6 +243,10 @@ const PokemonName = styled.h5`
     width: 100%;
     text-align: left;
     padding-left: 0.3rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 1rem;
         padding-left: 0.4rem;

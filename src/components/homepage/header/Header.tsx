@@ -38,6 +38,10 @@ const Container = styled(ContainerPrototype)`
         }
     }
 
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-template-columns: 1fr 5vw;
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
 
@@ -69,6 +73,9 @@ const HeaderText = styled.h2`
         }
     }
 
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 3rem;
         padding: unset;

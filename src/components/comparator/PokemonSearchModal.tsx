@@ -65,6 +65,7 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                         pokemonImagesKit={props.pokemonImagesKit}
                         isModalActiveKit={props.isModalActiveKit}
                         isLink={false}
+                        whereUsed="searchmodal"
                     />
                 )}
             </ResultsSection>
@@ -86,14 +87,27 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActi
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     padding: 2rem 1rem;
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+    //padding-bottom: 7rem;
+    //background-color: lightgray;
+    //border-top: 1px solid grey;
 `;
 
 const SearchModalHeader = styled.h2`
-    margin-bottom: 1rem;
+    text-align: center;
+    //margin-bottom: 1rem;
 `;
 
 const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
+    display: flex;
+    align-items: center;
     padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};
+    background-color: rgba(122, 122, 122, 0.1);
+    padding-bottom: 1rem;
+    flex: 40%;
+    border-radius: 1rem;
+    margin: 1rem 0 4rem;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;

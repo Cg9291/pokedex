@@ -240,7 +240,7 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-width: fit-content;
         max-width: 5rem;
-        padding: unset;
+        //padding: unset;
     }
 `;
 
