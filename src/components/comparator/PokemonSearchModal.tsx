@@ -8,6 +8,7 @@ import { handleOutsideClicks } from "../../functions/utilities/handleOutsideClic
 import { IsModalActiveInterface } from "../../interfaces/comparatorInterfaces";
 import { ComparatorPokemonInfoInterface } from "../../interfaces/comparatorInterfaces";
 import { Search } from "../homepage/header/search/Search";
+import * as breakpoints from "../../objects/breakpoints";
 
 export interface ComparatorPokemonSearchModalInterface {
     isModalActiveKit: IsModalActiveKitInterface;
@@ -87,15 +88,18 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActi
     padding: 2rem 1rem;
 `;
 
-const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
-    margin: 0 auto;
-`;
-
 const SearchModalHeader = styled.h2`
     margin-bottom: 1rem;
 `;
 
 const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
     padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: yellow;
+    margin: 0 auto;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-width: 50vh;
+        max-height: 50vh;
+    }
 `;

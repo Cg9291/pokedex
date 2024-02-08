@@ -184,6 +184,7 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
+    border-bottom:${(props) => props.$isShowingSuggestions && "none"}
     padding: 0.5rem 0;
 `;
 

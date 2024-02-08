@@ -25,6 +25,11 @@ export interface SearchSuggestionsProps {
     searchStatusKit?: SearchStatusKitInterface;
 }
 
+export interface FocusedElementTracker {
+    value: number;
+    isArrowNavigation: boolean;
+}
+
 export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactElement {
     const { pokemons } = getPokemonGameList(1021);
     const pokemonNamesList = pokemons
@@ -33,7 +38,10 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         })
         .sort(); /* [NOTE] will create custom sort function later */
     const [suggestionsList, setSuggestionsList] = useState<React.ReactElement[]>();
-    const [focusedElementIndex, setFocusedElementIndex] = useState<number>(-1);
+    const [focusedElementIndex, setFocusedElementIndex] = useState<FocusedElementTracker>({
+        value: -1,
+        isArrowNavigation: false
+    });
     const suggestionRef = useRef<HTMLLIElement | null>(null);
     const navigate = useNavigate();
 
@@ -42,15 +50,17 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     useEffect(() => {
         displaySearchInputSuggestions();
         props.suggestedInputKit.setSuggestedInput(generateSuggestions()[0]?.name);
+        setFocusedElementIndex({ value: -1, isArrowNavigation: true });
     }, [props.searchInputKit?.searchInput]);
 
     useEffect(() => {
         displaySearchInputSuggestions();
-        suggestionRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "nearest"
-        });
+        focusedElementIndex.isArrowNavigation &&
+            suggestionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest"
+            });
     }, [focusedElementIndex]);
 
     useEffect(() => {
@@ -88,10 +98,14 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                 <ListItem
                     key={pokemon.key ? pokemon.key : pokemon.name}
                     ref={(node) => {
-                        focusedElementIndex === idx ? (suggestionRef.current = node) : null;
+                        focusedElementIndex.value === idx ? (suggestionRef.current = node) : null;
                     }}
                     tabIndex={(tabIndexValue += 1)}
-                    $isFocused={focusedElementIndex === idx ? true : false}
+                    $isFocused={focusedElementIndex.value === idx ? true : false}
+                    onMouseOver={() => handleMouseOver(idx)}
+                    onMouseMove={() => {
+                        setFocusedElementIndex({ value: idx, isArrowNavigation: false });
+                    }}
                 >
                     <Button onClick={() => handleClick(pokemon.name)}>
                         <Wrapper>
@@ -106,19 +120,25 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
     };
 
     const handleNav = (e: KeyboardEvent) => {
-        let index = focusedElementIndex;
+        let index = focusedElementIndex.value;
         if (e.key === "ArrowUp") {
             e.preventDefault();
-            if (suggestionsList && focusedElementIndex > 0) {
+            if (suggestionsList && focusedElementIndex.value > 0) {
                 index--;
-                setFocusedElementIndex(index);
+                setFocusedElementIndex({
+                    value: index,
+                    isArrowNavigation: true
+                });
                 props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
                 props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name);
             }
         } else if (e.key === "ArrowDown") {
-            if (suggestionsList && focusedElementIndex < suggestionsList.length - 1) {
+            if (suggestionsList && focusedElementIndex.value < suggestionsList.length - 1) {
                 index++;
-                setFocusedElementIndex(index);
+                setFocusedElementIndex({
+                    value: index,
+                    isArrowNavigation: true
+                });
                 props.suggestedInputKit.setSuggestedInput(generateSuggestions()[index].name);
                 props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[index].name);
             }
@@ -152,6 +172,14 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
         }
     };
 
+    const handleMouseOver = (idx: number) => {
+        if (!focusedElementIndex.isArrowNavigation) {
+            setFocusedElementIndex({ value: idx, isArrowNavigation: false });
+            props.suggestedInputKit.setSuggestedInput(generateSuggestions()[idx].name);
+            props.focusedSuggestionKit.setFocusedSuggestion(generateSuggestions()[idx].name);
+        }
+    };
+
     return props.suggestedInputKit.suggestedInput?.length > 0 ? (
         <Container>
             <SuggestionsList>{suggestionsList}</SuggestionsList>
@@ -169,11 +197,9 @@ const Container = styled(ContainerPrototype)`
     width: 100%;
     max-width: 100%;
     z-index: 0;
-    box-shadow: 0 2px 2px 1px grey;
     border: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    //padding: 0.5rem 0;
 `;
 
 const SuggestionsList = styled.ul`
@@ -190,9 +216,6 @@ const ListItem = styled.li<{ $isFocused: boolean }>`
     overflow-y: hidden;
     display: flex;
     align-items: center;
-    &:hover {
-        background-color: lightgray;
-    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
