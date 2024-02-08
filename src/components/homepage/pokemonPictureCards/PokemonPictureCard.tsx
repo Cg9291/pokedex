@@ -100,7 +100,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
     } else {
         return (
             <Container to="/" $mainType="none" $isFlex={true}>
-                <LoadingAnimation />
+                <LoadingAnimation $whereUsed="searchmodal" />
             </Container>
         );
     }
@@ -183,13 +183,12 @@ const PokemonImg = styled.img`
     aspect-ratio: 1/1;
 `;
 
-const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+const LoadingAnimation = styled(LoadingSpinnerPrototype)<{ $whereUsed?: string }>`
     align-self: center;
     margin-left: auto;
     margin-right: auto;
     width: unset; //from prototype
-    height: 100%;
+    height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        //width: 65%;
     }
 `;
