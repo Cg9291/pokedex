@@ -205,7 +205,10 @@ const ComparatorBody = styled(ContainerPrototype)`
     align-items: center;
     justify-content: space-evenly;
     max-height: 100%;
+    //min-height: 100%;
     overflow: hidden;
+    //flex:1 0 aut;
+    flex-grow: 1;
 `;
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
@@ -276,7 +279,8 @@ const CompareButton = styled.button.attrs({ type: "button" })`
 `;
 
 export const RandomizeButton = styled.button.attrs({ type: "button" })`
-    width: 3rem;
+    min-width: 3rem;
+    max-width: 3rem;
     aspect-ratio: 1/1;
     margin: -0.9rem 0;
     z-index: 1;

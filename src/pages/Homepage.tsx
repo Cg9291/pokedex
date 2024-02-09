@@ -55,11 +55,13 @@ export const MainContainer = styled.div`
 const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: repeat(3, 1fr);
     column-gap: 0.8rem;
     row-gap: 0.3rem;
     background-color: white;
     min-width: 100%;
+    min-height: 100%;
+    //max-height: 100%;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {

@@ -34,7 +34,8 @@ const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared
     align-items: center;
     width: ${({ $isCompared }) => $isCompared && ` 48%`};
 
-    height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
+    min-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
+    max-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
