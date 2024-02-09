@@ -13,6 +13,7 @@ export interface SearchPropsInterface {
     hasFilter?: boolean;
     setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
     setSearchStatusTracker?: React.Dispatch<React.SetStateAction<string>>;
+    whereUsed?: string;
 }
 export interface SearchInputKitInterface {
     searchInput: string;
@@ -117,7 +118,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <InputContainer ref={searchRef}>
+                <InputContainer ref={searchRef} $whereUsed="searchmodal">
                     <Label $isShowingSuggestions={hasSuggestions}>
                         <Input
                             value={focusedSuggestion ? focusedSuggestion : searchInput}
@@ -166,14 +167,14 @@ const Form = styled.form.attrs({
     display: flex;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ $whereUsed?: string }>`
     position: relative;
     height: fit-content;
     flex: 1;
-    margin-right: 0.2rem;
+    margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "0.2rem")};
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        margin-right: 1rem;
+        margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "1rem")};
     }
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`

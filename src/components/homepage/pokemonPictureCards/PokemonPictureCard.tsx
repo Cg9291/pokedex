@@ -125,6 +125,11 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     line-height: 1;
     overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        height: ${(props) => (props.$whereUsed === "searchmodal" ? "45%" : "100%")};
+        width: ${(props) => (props.$whereUsed === "searchmodal" ? "100%" : "100%")};
+        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+            height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
+        }
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {

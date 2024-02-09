@@ -96,18 +96,26 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActi
 
 const SearchModalHeader = styled.h2`
     text-align: center;
-    //margin-bottom: 1rem;
+    font-size: 2.2rem;
 `;
 
 const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
     display: flex;
     align-items: center;
-    padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};
+    padding: ${(props) => (props.$foundPokemon ? "1rem" : "1rem 0 0")};
     background-color: rgba(122, 122, 122, 0.1);
     padding-bottom: 1rem;
     flex: 40%;
     border-radius: 1rem;
     margin: 1rem 0 4rem;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        margin: 1rem 0 5rem;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
+        margin: 1rem 0 5.5rem;
+    }
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;

@@ -93,9 +93,9 @@ const breakpointsHeights: BreakpointsHeights = {
     mobileS: "640px",
     mobileM: "667px",
     mobileL: "932px",
-    tablet: "1024px",
     laptop: "768px",
     laptopL: "900px",
+    tablet: "1024px",
     desktop: "1440px"
 };
 

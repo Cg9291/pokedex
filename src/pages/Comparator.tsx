@@ -282,13 +282,30 @@ export const RandomizeButton = styled.button.attrs({ type: "button" })`
     min-width: 3rem;
     max-width: 3rem;
     aspect-ratio: 1/1;
-    margin: -0.9rem 0;
+    margin: -1.7rem 0;
     z-index: 1;
     border-radius: 50%;
     background-color: white;
     border: none;
     &:hover {
         cursor: pointer;
+    }
+
+    @media ${breakpoints.heightsQueries.minHeights.mobileM} {
+        min-width: 4rem;
+        max-width: 4rem;
+        margin: -2.2rem 0;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        margin: -2.5rem 0;
+    }
+
+    @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
+        margin: -2.9rem 0;
+    }
+
+    @media ${breakpoints.heightsQueries.minHeights.mobileL} {
+        margin: -3.2rem 0;
     }
 `;
 
