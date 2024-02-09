@@ -9,7 +9,7 @@ export function Favorites(): React.ReactElement {
     const numberOfFavoritedPokemons = favoritedPokemons.length;
     const mapPictureCards = (): React.ReactElement[] =>
         favoritedPokemons.map((number: number, index: number) => (
-            <PokemonPictureCard id={number} key={index} isLink={true} />
+            <PokemonPictureCard id={number} key={index} isLink={true} whereUsed="favorites" />
         ));
 
     return (
@@ -32,7 +32,11 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     max-height: 100%;
     overflow-y: hidden;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+        padding: 0 1rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -59,6 +63,10 @@ const FavoritesContainer = styled.div`
     row-gap: 0.7rem;
     overflow: scroll;
     //background-color: lightgray;
+    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+        //border: 1px solid grey;
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
         padding: 3vh 3vw;

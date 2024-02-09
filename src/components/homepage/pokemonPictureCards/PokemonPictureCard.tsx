@@ -116,19 +116,30 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     max-width: 100%;
     max-height: 100%;
     width: 100%;
-    height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
+    height: ${(props) =>
+        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "15vh" : "100%"};
     margin: auto;
-    padding: 0.7rem 0.7rem 1rem 0.7rem;
+    padding: 0.4rem 0.4rem 0.6rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     line-height: 1;
     overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+        padding: 0.7rem 0.7rem 1rem 0.7rem;
+        min-height: ${(props) => (props.$whereUsed === "favorites" ? "30vw" : "100%")};
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        height: ${(props) => (props.$whereUsed === "searchmodal" ? "45%" : "100%")};
+        min-height: ${(props) =>
+            props.$whereUsed === "searchmodal" ? "45%" : props.$whereUsed === "favorites" ? "30vw" : "100%"};
         width: ${(props) => (props.$whereUsed === "searchmodal" ? "100%" : "100%")};
+
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-            height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
+            //padding: 0.4rem 0.4rem 0.6rem;
+            min-height: ${(props) =>
+                props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "30vw" : "100%"};
         }
     }
 
@@ -149,6 +160,10 @@ const PokeName = styled.h4`
     color: white;
     grid-area: name;
     place-self: start;
+    font-size: 0.8rem;
+    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+        font-size: unset;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 2.5rem;
     }
@@ -158,8 +173,12 @@ const PokeId = styled.span`
     grid-area: id;
     color: white;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     margin-left: auto;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+        font-size: 0.9rem;
+    }
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
@@ -193,6 +212,9 @@ const LoadingAnimation = styled(LoadingSpinnerPrototype)<{ $whereUsed?: string }
     margin-left: auto;
     margin-right: auto;
     width: unset; //from prototype
-    min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
-    max-height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
+    min-height: ${(props) =>
+        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
+    max-height: ${(props) =>
+        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
+    //border-bottom-color: cyan;
 `;

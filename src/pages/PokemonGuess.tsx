@@ -85,6 +85,8 @@ export function PokemonGuess() {
 }
 
 const Container = styled(ContainerPrototype)`
+    max-width: 100%;
+    max-height: 100%;
     overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
@@ -103,22 +105,24 @@ const Wrapper = styled(ContainerPrototype)`
 `;
 
 const Title = styled.h1`
+    font-size: 2.8rem;
     text-align: center;
-    font-size: 3em;
     line-height: 3rem;
-    //white-space: nowrap;
 
+    @media ${breakpoints.widthsQueries.minWidths.flexible("292px")} {
+        font-size: 3rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.mobileL} {
-        font-size: 3em;
+        font-size: 3rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 4em;
+        font-size: 4rem;
         line-height: 4rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         margin-top: 1rem;
         text-align: center;
-        font-size: 4.5em;
+        font-size: 4.5rem;
     }
 `;
 
@@ -150,6 +154,7 @@ const Choices = styled.div`
     text-align: center;
     padding: 0 1rem;
     margin-bottom: 3rem;
+    overflow: hidden;
 `;
 
 const ImageContainer = styled(ContainerPrototype)`
