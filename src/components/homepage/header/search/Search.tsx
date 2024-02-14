@@ -118,7 +118,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <InputContainer ref={searchRef} $whereUsed="searchmodal">
+                <InputContainer ref={searchRef} $whereUsed={props.whereUsed}>
                     <Label $isShowingSuggestions={hasSuggestions}>
                         <Input
                             value={focusedSuggestion ? focusedSuggestion : searchInput}

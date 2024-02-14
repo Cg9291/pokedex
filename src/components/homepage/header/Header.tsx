@@ -33,7 +33,7 @@ const Container = styled(ContainerPrototype)`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         grid-template-rows: auto min-content;
-        @media ${breakpoints.heightsQueries.minHeights.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.laptop} {
             max-height: 16rem;
         }
     }
