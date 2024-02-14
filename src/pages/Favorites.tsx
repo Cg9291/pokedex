@@ -55,14 +55,13 @@ const Wrapper = styled(ContainerPrototype)`
 const FavoritesContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    grid-auto-rows: 15vh;
     column-gap: 0.8rem;
     width: 100%;
     height: max-content;
     padding: 1vh 0;
-    row-gap: 0.7rem;
+    row-gap: 1vh;
     overflow: scroll;
-    //background-color: lightgray;
     @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         //border: 1px solid grey;
     }
@@ -70,7 +69,6 @@ const FavoritesContainer = styled.div`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
         padding: 3vh 3vw;
-        //border: 1px solid grey;
     }
 `;
 

@@ -116,8 +116,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     max-width: 100%;
     max-height: 100%;
     width: 100%;
-    height: ${(props) =>
-        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "15vh" : "100%"};
+    height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
     margin: auto;
     padding: 0.4rem 0.4rem 0.6rem;
     border-radius: 15px;
@@ -128,12 +127,11 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
 
     @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         padding: 0.7rem 0.7rem 1rem 0.7rem;
-        min-height: ${(props) => (props.$whereUsed === "favorites" ? "30vw" : "100%")};
+        min-height: ${(props) => (props.$whereUsed === "favorites" ? "100%" : "100%")};
     }
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        min-height: ${(props) =>
-            props.$whereUsed === "searchmodal" ? "45%" : props.$whereUsed === "favorites" ? "30vw" : "100%"};
+        min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "45%" : "100%")};
         width: ${(props) => (props.$whereUsed === "searchmodal" ? "100%" : "100%")};
 
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
