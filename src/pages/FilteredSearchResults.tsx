@@ -102,7 +102,7 @@ export function FilteredSearchResults(): React.ReactElement {
     };
 
     if (myState) {
-        return <Container>{applyFilter()}</Container>;
+        return <Container $isMyStateAvailable={true}>{applyFilter()}</Container>;
     } else {
         return (
             <Container>
@@ -112,9 +112,10 @@ export function FilteredSearchResults(): React.ReactElement {
     }
 }
 
-const Container = styled(ContainerPrototype)`
-    display: grid;
+const Container = styled(ContainerPrototype)<{ $isMyStateAvailable?: boolean }>`
+    display: ${(props) => (props.$isMyStateAvailable ? "grid" : "flex")};
     grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 15vh;
     column-gap: 1fr;
     padding: 1rem 1rem;
     flex-wrap: wrap;
@@ -130,5 +131,6 @@ const NotFoundContainer = styled.div`
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     margin: auto;
-    width: 200%;
+    width: 100%;
+    align-self: center;
 `;

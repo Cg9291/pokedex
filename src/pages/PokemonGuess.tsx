@@ -96,7 +96,7 @@ const Container = styled(ContainerPrototype)`
 
 const Wrapper = styled(ContainerPrototype)`
     display: grid;
-    grid-template-rows: 1fr 40vh 40vh;
+    grid-template-rows: 20vh 35vh 1fr;
     max-height: 100%;
     padding: 0 1rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -107,7 +107,7 @@ const Wrapper = styled(ContainerPrototype)`
 const Title = styled.h1`
     font-size: 2.8rem;
     text-align: center;
-    line-height: 3rem;
+    //line-height: 3rem;
 
     @media ${breakpoints.widthsQueries.minWidths.flexible("292px")} {
         font-size: 3rem;
@@ -127,6 +127,7 @@ const Title = styled.h1`
 `;
 
 const ChoiceButton = styled.button`
+    max-height: 100%;
     border-radius: 8px;
     border-width: 0;
     color: #333333;
@@ -146,14 +147,15 @@ const ChoiceButton = styled.button`
 `;
 
 const Choices = styled.div`
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 25%;
     column-gap: 10px;
     row-gap: 10px;
     text-align: center;
-    padding: 0 1rem;
-    margin-bottom: 3rem;
+    padding: 0 1rem 1rem;
+    //margin-bottom: 1rem;
     overflow: hidden;
 `;
 
