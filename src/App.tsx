@@ -28,6 +28,7 @@ const Container = styled(ContainerPrototype)`
     max-height: 100vh;
     max-width: 100vw;
     overflow-y: hidden;
+    //justify-content: flex-start;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         flex-direction: column-reverse;
     }

@@ -142,9 +142,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        min-height: 90%;
-        min-width: 95%;
-        max-width: 95%;
+        grid-template-rows: repeat(2, auto);
+        padding-bottom: 0.6rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-height: 80%;
@@ -162,6 +161,10 @@ const PokeName = styled.h4`
     @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         font-size: unset;
     }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 2.5rem;
     }
@@ -177,6 +180,9 @@ const PokeId = styled.span`
     @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         font-size: 0.9rem;
     }
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.4rem;
+    }
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
@@ -186,6 +192,12 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     align-self: center;
     margin-bottom: 0.3rem;
     max-height: 100%;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2rem;
+        margin-bottom: 0;
+        //justify-content: space-evenly;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         margin-bottom: 1.5rem;
     }
@@ -193,6 +205,7 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
 
 const PokemonImgWrapper = styled.div`
     grid-area: image;
+    min-height: 0;
     max-width: 100%;
     max-height: 100%;
 `;

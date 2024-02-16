@@ -165,6 +165,13 @@ const Form = styled.form.attrs({
     width: 100%;
     max-height: 3rem;
     display: flex;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 `;
 
 const InputContainer = styled.div<{ $whereUsed?: string }>`
@@ -175,6 +182,12 @@ const InputContainer = styled.div<{ $whereUsed?: string }>`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "1rem")};
+    }
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
     }
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
@@ -192,6 +205,12 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom:${(props) => props.$isShowingSuggestions && "none"}
     padding: 0.5rem 0;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+            @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+        }
 `;
 
 const Input = styled.input.attrs({
@@ -212,6 +231,15 @@ const Input = styled.input.attrs({
     @media ${breakpoints.widthsQueries.maxWidths.mobileM} {
         padding-left: 0.5rem;
     }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.3rem;
+
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
@@ -222,6 +250,14 @@ const FilterButton = styled.button.attrs({ type: "button" })`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         flex: 0 1 15%;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.5rem;
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 1.4rem;

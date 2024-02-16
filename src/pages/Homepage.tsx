@@ -29,6 +29,11 @@ export function Homepage(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        overflow: hidden;
+        flex: 0 0 1fr;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -46,6 +51,11 @@ export const MainContainer = styled.div`
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             padding: 2vh 3vw;
         }
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        overflow: hidden;
+        flex: 0 1 auto;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0;
@@ -67,6 +77,11 @@ const Wrapper = styled.div`
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             row-gap: 2vh;
         }
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        //max-height: 20vh;
+        column-gap: 2vh;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         grid-template-columns: repeat(3, 1fr);

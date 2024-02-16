@@ -40,6 +40,12 @@ const Container = styled(ContainerPrototype)`
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-template-columns: 1fr 5vw;
+
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: unset;
+            flex: 0 0 20rem;
+            grid-template-rows: auto 4rem;
+        }
     }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {

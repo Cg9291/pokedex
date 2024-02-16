@@ -56,6 +56,10 @@ const Container = styled(ContainerPrototype)`
     bottom: 0;
     padding: 1vh 0;
     border-top: 1px solid lightgrey;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        flex: 1 0 auto;
+        font-size: 1.5rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         bottom: unset;
         top: 0;
