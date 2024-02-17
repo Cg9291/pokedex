@@ -39,6 +39,11 @@ const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        min-height: 0;
+        flex: ${({ $isCompared }) => ($isCompared ? ` 0 0 100%` : `0 0 40%`)};
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
         overflow: hidden;
@@ -82,11 +87,15 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     width: fit-content;
     left: 0;
     height: 1.8rem;
-    //aspect-ratio: 1/1;
     margin-left: 1.2rem;
     padding: 0 1rem;
-    //background-color: gold;
     border: 1px solid black;
     border-radius: 7px;
     font-weight: 600;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        height: 3.2rem;
+        font-size: 1.3rem;
+        left: 0.5rem;
+    }
 `;

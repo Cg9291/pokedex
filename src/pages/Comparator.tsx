@@ -144,7 +144,11 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     background-color: white;
     overflow: hidden;
-    // padding-bottom: 1rem;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        max-height: 100%;
+        height: 100%;
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -154,10 +158,15 @@ const Container = styled(ContainerPrototype)`
 const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
-
     padding: 0 1rem 1rem;
     max-height: 100%;
+    overflow: hidden;
 
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        height: 100%;
+
+        //border: solid yellow;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
         padding: 0 5vw;
@@ -169,6 +178,7 @@ const Header = styled(ContainerPrototype)`
     flex-direction: column;
     margin-bottom: 0.5rem;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        flex: 0 0 auto;
         margin-bottom: 1.5rem;
     }
 `;
@@ -182,7 +192,7 @@ const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: ${(props) => (props.$isCompared ? "3.5em" : "3em")};
+        font-size: ${(props) => (props.$isCompared ? "3.5em" : "4rem")};
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 5em;
@@ -193,7 +203,7 @@ const HeaderDescription = styled.p`
     min-height: fit-content;
     font-size: 1.1em;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 1.4em;
+        font-size: 1.4rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 1.6em;
@@ -209,6 +219,11 @@ const ComparatorBody = styled(ContainerPrototype)`
     overflow: hidden;
     //flex:1 0 aut;
     flex-grow: 1;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        flex: 0 1 100%;
+        justify-content: space-evenly;
+        //border: 1rem solid red;
+    }
 `;
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
@@ -274,8 +289,12 @@ const CompareButton = styled.button.attrs({ type: "button" })`
     border-radius: 15px;
     border: none;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     margin-top: 1rem;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        margin-top: 0;
+        font-size: 1.5rem;
+    }
 `;
 
 export const RandomizeButton = styled.button.attrs({ type: "button" })`
