@@ -66,6 +66,11 @@ const FavoritesContainer = styled.div`
         //border: 1px solid grey;
     }
 
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-auto-rows: 20vh;
+        //border: 1px solid grey;
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
         padding: 3vh 3vw;
@@ -80,8 +85,8 @@ const Title = styled.h1`
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-left: 0.7rem;
         margin-bottom: 0.2rem;
-        padding-top: 1rem;
-        //font-size: 3em;
+        //padding-top: 1rem;
+        font-size: 4rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         margin-left: unset;

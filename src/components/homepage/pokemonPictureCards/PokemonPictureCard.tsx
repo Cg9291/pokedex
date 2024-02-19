@@ -144,6 +144,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-template-rows: repeat(2, auto);
         padding-bottom: 0.6rem;
+        min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-height: 80%;
