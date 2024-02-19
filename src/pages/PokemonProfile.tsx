@@ -110,18 +110,6 @@ export function PokemonProfile(): React.ReactElement {
         );
     };
 
-    const favoriteHandler = (id: number) => {
-        if (isPokemonFavorited(id)) {
-            removePokemonFromFavorites(id);
-            setIsFavorite(false);
-        } else {
-            addPokemonToFavorites(id);
-            setIsFavorite(true);
-        }
-
-        console.log("is this pokemon in favs? ", isPokemonFavorited(id));
-    };
-
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
@@ -146,16 +134,8 @@ export function PokemonProfile(): React.ReactElement {
             <Container>
                 <ImageWrapper $mainType={types[0].type.name}>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
-                    <PokemonName>
-                        {capitalizeWords(name)}
-                        <p
-                            onClick={() => {
-                                favoriteHandler(id);
-                            }}
-                        >
-                            <HeartIcon favorite={isFavorite} />
-                        </p>
-                    </PokemonName>
+                    <PokemonName>{capitalizeWords(name)}</PokemonName>
+                    <HeartIcon id={id} />
                     <ImageContainer viewBox="0 0 100 100 ">
                         <PokemonImage href={sprites.front_default} />
                     </ImageContainer>
@@ -186,20 +166,36 @@ const Container = styled(ContainerPrototype)`
     overflow-y: hidden;
 `;
 const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
+    display: grid;
+    grid-template-columns: 3rem 1fr 3rem;
+    grid-template-rows: 2rem auto 1fr;
+    grid-template-areas:
+        ". pokenumber status"
+        ". pokename ."
+        "pokeimage pokeimage pokeimage";
     background-image: ${(props) =>
         `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},65%, white 95%)`};
     flex-direction: column;
     align-items: center;
-    // justify-content: space-around;
     max-height: 40%;
 `;
 
-const PokeNumber = styled.span``;
-const PokemonName = styled.span``;
+const PokeNumber = styled.span`
+    grid-area: pokenumber;
+    margin-right: auto;
+    margin-left: auto;
+    align-self: end;
+`;
+const PokemonName = styled.span`
+    grid-area: pokename;
+    margin: auto;
+    font-size: 1.5rem;
+`;
 
 const ImageContainer = styled.svg`
     width: 100%;
     height: 100%;
+    grid-area: pokeimage;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         //min-height: 100%;
     }
