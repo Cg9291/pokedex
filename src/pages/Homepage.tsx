@@ -29,6 +29,9 @@ export function Homepage(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+    flex: 0 0 1fr;
+    //min-height: auto;
+    overflow: hidden;
 
     @media (orientation: landscape) {
         overflow-y: scroll;
@@ -48,8 +51,10 @@ export const MainContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 1vh 3vw;
+    padding: 2vw;
     justify-content: center;
+    flex: 1 0 content;
+    //overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
@@ -70,12 +75,9 @@ const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, 1fr);
-    column-gap: 0.8rem;
-    row-gap: 0.3rem;
+    gap: 2vw;
     background-color: white;
-    min-width: 100%;
-    min-height: 100%;
-    //max-height: 100%;
+    //overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {

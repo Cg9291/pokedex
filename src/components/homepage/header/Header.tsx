@@ -23,8 +23,7 @@ const Container = styled(ContainerPrototype)`
     grid-template-areas:
         "headerText randomizeButton"
         "searchBar searchBar";
-    max-height: 13rem;
-    max-width: 100%;
+    flex: 0 1 12rem;
     align-items: end;
     background-color: darkred;
     padding: 0.5rem 0.5rem;

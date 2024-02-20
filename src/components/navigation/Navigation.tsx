@@ -42,7 +42,6 @@ function NavElement(props: NavIconsInterface): React.ReactElement {
     return (
         <NavElementContainer to={props.linkUrl}>
             <SvgImg>
-                {/* <SvgPath d={props.pathInfo}></SvgPath> */}
                 <NavImg href={props.icon}></NavImg>
             </SvgImg>
             <NavElementName>{props.name}</NavElementName>
@@ -51,11 +50,12 @@ function NavElement(props: NavIconsInterface): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    height: 9%;
     background-color: white;
     bottom: 0;
-    padding: 1vh 0;
+    padding: 0.5vh 0;
     border-top: 1px solid lightgrey;
+    flex: 0 0 8vh;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
@@ -83,24 +83,25 @@ const NavElementContainer = styled(Link)`
     color: black;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    //justify-content: space-around;
     overflow-y: hidden;
 `;
 
-const NavElementName = styled.span`
-    font-size: 0.7rem;
-    height: 100%;
-    flex: 0 0 50%;
-`;
-
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
-    min-height: 60%;
     height: 100%;
-    flex: 0 0 50%;
+    flex: 0 0 60%;
 `;
 
 const NavImg = styled.image.attrs({})`
     width: 100%;
     height: 100%;
     aspect-ratio: 1/1;
+`;
+const NavElementName = styled.span`
+    display: flex;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+    height: 100%;
+    flex: 0 0 40%;
+    align-items: center;
 `;

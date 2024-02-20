@@ -27,7 +27,7 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; 
     min-width: max-content;
     height: 1.8rem;
     max-height: 100%;
-    margin-bottom: 0.3rem;
+    //margin-bottom: 0.3rem;
     padding: ${(props) => (props.$whereUsed === "favorites" ? "0.3rem " : "0.3rem 0.4rem")};
     border-radius: 99px;
     background-color: ${(props) =>
