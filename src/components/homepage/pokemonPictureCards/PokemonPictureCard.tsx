@@ -21,6 +21,7 @@ export interface PokemonPictureCardsPropsInterface {
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;
     whereUsed?: string;
+    setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
@@ -69,11 +70,13 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
                         ...pokemonImages,
                         topPokemon: pokeInfoObject
                     });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
                 } else if (isModalActive.activeImageNumber === 2) {
                     setPokemonImages({
                         ...pokemonImages,
                         bottomPokemon: pokeInfoObject
                     });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
                 }
                 setIsModalActive({ isActive: false, activeImageNumber: 0 });
             }

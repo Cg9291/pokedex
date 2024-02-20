@@ -27,7 +27,7 @@ export function NavElement(props: {
     };
 
     return (
-        <Container onFocus={focusHandler}>
+        <Container onFocus={focusHandler} onClick={focusHandler}>
             <Link>{props.value}</Link>
             <SelectionUnderlineBar $visibility={isElementFocused ? "visible" : "hidden"} />
         </Container>

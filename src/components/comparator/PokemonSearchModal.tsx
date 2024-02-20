@@ -36,14 +36,9 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
 
-    /*   const searchStatusKit = {
-        searchStatus: searchStatusTracker,
-        setSearchStatus: setSearchStatusTracker,
-        searchStatusOptions: searchStatusOptions
-    }; */
-    useEffect(() => {
+    /*  useEffect(() => {
         console.log("changed", searchedPokemonId);
-    }, [searchedPokemonId, searchStatusTracker]);
+    }, [searchedPokemonId, searchStatusTracker]); */
 
     const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
 
@@ -53,6 +48,8 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
             <Search
                 usesNavigation={false}
                 hasFilter={false}
+                searchedPokemonId={searchedPokemonId}
+                isModalActiveKit={props.isModalActiveKit}
                 setSearchedPokemonId={setSearchedPokemonId}
                 setSearchStatusTracker={setSearchStatusTracker}
             />
@@ -66,6 +63,7 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                         isModalActiveKit={props.isModalActiveKit}
                         isLink={false}
                         whereUsed="searchmodal"
+                        setSearchedPokemonId={setSearchedPokemonId}
                     />
                 )}
             </ResultsSection>

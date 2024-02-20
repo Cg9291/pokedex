@@ -6,11 +6,14 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
 import { useHandleSearchSubmission } from "../../../../functions/utilities/useHandleSearchSubmission";
+import { IsModalActiveKitInterface } from "../../../comparator/PokemonSearchModal";
 import * as breakpoints from "../../../../objects/breakpoints";
 
 export interface SearchPropsInterface {
     usesNavigation?: boolean;
     hasFilter?: boolean;
+    isModalActiveKit?: IsModalActiveKitInterface;
+    searchedPokemonId?: string | number | null;
     setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
     setSearchStatusTracker?: React.Dispatch<React.SetStateAction<string>>;
     whereUsed?: string;
@@ -33,7 +36,6 @@ export interface SuggestedInputKitInterface {
 export interface SearchStatusKitInterface {
     searchStatus: string;
     setSearchStatus: React.Dispatch<React.SetStateAction<string>>;
-    //searchStatusOptions: readonly [string, string, string];
 }
 
 export function Search(props: SearchPropsInterface): React.ReactElement {
@@ -85,6 +87,13 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
         return;
     }, [searchStatus, searchedPokemonIdentifier]);
 
+    useEffect(() => {
+        if (!props.searchedPokemonId) {
+            setSearchInput("");
+            setFocusedSuggestion("");
+        }
+    }, [props.isModalActiveKit?.isModalActive.isActive]);
+
     (function handleOutsideClicks() {
         useEffect(() => {
             const detectOutsideClicks = (e: MouseEvent) => {
@@ -105,9 +114,9 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     };
 
     const handleChange = (e: React.ChangeEvent) => {
-        const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
-        setSearchInput(clearedInput);
-        setFocusedSuggestion(clearedInput);
+        const sanitizedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
+        setSearchInput(sanitizedInput);
+        setFocusedSuggestion(sanitizedInput);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
