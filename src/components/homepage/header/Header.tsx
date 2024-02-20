@@ -33,6 +33,14 @@ const Container = styled(ContainerPrototype)`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         grid-template-rows: auto min-content;
+
+        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
+            max-height: 5rem;
+            align-items: start;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: 45% 45%;
+            row-gap: 10%;
+        }
         @media ${breakpoints.heightsQueries.minHeights.laptop} {
             max-height: 16rem;
         }
@@ -73,6 +81,11 @@ const HeaderText = styled.h2`
         font-size: 1.8rem;
         margin-top: 3rem;
         margin-bottom: 0.5rem;
+        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 1.5rem;
+        }
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             max-width: 100%;
             font-size: 1.9rem;

@@ -156,13 +156,12 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    max-height: 4rem;
+    height: 100%;
     min-width: 100%;
     align-items: end;
     grid-area: searchBar;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        // margin-top: 1rem;
         bottom: 0rem;
         align-items: flex-end;
     }
@@ -172,7 +171,7 @@ const Form = styled.form.attrs({
     method: "get"
 })`
     width: 100%;
-    max-height: 3rem;
+    height: 100%;
     display: flex;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
@@ -185,7 +184,7 @@ const Form = styled.form.attrs({
 
 const InputContainer = styled.div<{ $whereUsed?: string }>`
     position: relative;
-    height: fit-content;
+    height: 100%;
     flex: 1;
     margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "0.2rem")};
 
@@ -201,7 +200,7 @@ const InputContainer = styled.div<{ $whereUsed?: string }>`
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
-    height: 3rem;
+    height:100%;
     display: flex;
     border: 1px solid black;
     border-radius: 99px;
@@ -230,7 +229,7 @@ const Input = styled.input.attrs({
     flex: 1 0 auto;
     height: 100%;
     z-index: 2;
-    margin-top: auto;
+    margin-top: 0;
     padding-left: 1rem;
     border: none;
     background-color: transparent;
@@ -253,7 +252,7 @@ const Input = styled.input.attrs({
 
 const FilterButton = styled.button.attrs({ type: "button" })`
     flex: 0 1 17%;
-    min-height: 100%;
+    height: 100%;
     max-width: 6rem;
     border-radius: 10px;
 
@@ -286,7 +285,6 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-width: fit-content;
         max-width: 5rem;
-        //padding: unset;
     }
 `;
 
@@ -294,7 +292,7 @@ const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`
     align-self: center;
     display: flex;
     justify-content: center;
-    max-height: 100%;
+    height: 100%;
     max-width: 100%;
 `;
 

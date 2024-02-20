@@ -56,6 +56,13 @@ const Container = styled(ContainerPrototype)`
     bottom: 0;
     padding: 1vh 0;
     border-top: 1px solid lightgrey;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
+            height: 12vh;
+        }
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         flex: 1 0 auto;
         font-size: 1.5rem;
@@ -71,23 +78,25 @@ const Container = styled(ContainerPrototype)`
 const NavElementContainer = styled(Link)`
     display: flex;
     width: 100%;
+    height: 100%;
     text-decoration: none;
     color: black;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     overflow-y: hidden;
 `;
 
 const NavElementName = styled.span`
-    display: flex;
-    align-items: center;
-    font-size: 0.8em;
-    height: fit-content;
+    font-size: 0.7rem;
+    height: 100%;
+    flex: 0 0 50%;
 `;
 
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 24 24" })`
     min-height: 60%;
+    height: 100%;
+    flex: 0 0 50%;
 `;
 
 const NavImg = styled.image.attrs({})`

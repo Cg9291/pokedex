@@ -30,6 +30,10 @@ export function Homepage(): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
 
+    @media (orientation: landscape) {
+        overflow-y: scroll;
+    }
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         overflow: hidden;
         flex: 0 0 1fr;

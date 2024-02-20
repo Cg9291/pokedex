@@ -29,6 +29,9 @@ const Container = styled(ContainerPrototype)`
     max-width: 100vw;
     overflow-y: hidden;
     //justify-content: flex-start;
+    @media (orientation: landscape) {
+        overflow-y: scroll;
+    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         flex-direction: column-reverse;
     }

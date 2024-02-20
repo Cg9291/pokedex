@@ -21,7 +21,8 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 }
 
 const Container = styled.div`
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     aspect-ratio: 1/1;
     z-index: 1;
     grid-area: randomizeButton;
@@ -44,6 +45,13 @@ const Button = styled.button.attrs({ type: "button" })`
     border: none;
     &:hover {
         cursor: pointer;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
+            //max-height: 1rem;
+            //min-width: 1rem;
+        }
     }
     @media ${breakpoints.widthsQueries.minWidths.flexible("1212px")} {
         min-width: 4rem;
