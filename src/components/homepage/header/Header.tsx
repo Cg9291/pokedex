@@ -31,17 +31,10 @@ const Container = styled(ContainerPrototype)`
     border-bottom-right-radius: 25px;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        grid-template-rows: auto min-content;
+        flex: 0 0 12rem;
+        gap: 0.1em;
 
-        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
-            max-height: 5rem;
-            align-items: start;
-            grid-template-columns: 1fr auto;
-            grid-template-rows: 45% 45%;
-            row-gap: 10%;
-        }
         @media ${breakpoints.heightsQueries.minHeights.laptop} {
-            max-height: 16rem;
         }
     }
 
@@ -66,6 +59,15 @@ const Container = styled(ContainerPrototype)`
     @media ${breakpoints.widthsQueries.minWidths.flexible("1720px")} {
         align-items: flex-start;
     }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        flex-basis: 16rem;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
+        flex-basis: 17.5rem;
+        grid-template-rows: auto 20%;
+    }
 `;
 
 const HeaderText = styled.h2`
@@ -78,13 +80,9 @@ const HeaderText = styled.h2`
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         max-width: 95%;
         font-size: 1.8rem;
-        margin-top: 3rem;
-        margin-bottom: 0.5rem;
-        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
-            margin: 0;
-            font-size: 1.5rem;
-            line-height: 1.5rem;
-        }
+        line-height: 2.1rem;
+        margin-bottom: 0.3rem;
+
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             max-width: 100%;
             font-size: 1.9rem;
@@ -112,5 +110,14 @@ const HeaderText = styled.h2`
     @media ${breakpoints.widthsQueries.minWidths.flexible("1720px")} {
         min-width: 100%;
         min-height: 100%;
+    }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        font-size: 1.8rem;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
+        font-size: 1.9rem;
+        margin-bottom: 0.5rem;
     }
 `;

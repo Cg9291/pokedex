@@ -83,7 +83,6 @@ const NavElementContainer = styled(Link)`
     color: black;
     flex-direction: column;
     align-items: center;
-    //justify-content: space-around;
     overflow-y: hidden;
 `;
 
@@ -104,4 +103,8 @@ const NavElementName = styled.span`
     height: 100%;
     flex: 0 0 40%;
     align-items: center;
+
+    @media ${breakpoints.heightsQueries.minHeights.flexible("896px")} {
+        font-size: 0.95rem;
+    }
 `;

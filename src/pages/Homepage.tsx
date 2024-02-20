@@ -30,13 +30,11 @@ export function Homepage(): React.ReactElement {
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     flex: 0 0 1fr;
-    //min-height: auto;
     overflow: hidden;
 
     @media (orientation: landscape) {
         overflow-y: scroll;
     }
-
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         overflow: hidden;
         flex: 0 0 1fr;
@@ -54,14 +52,10 @@ export const MainContainer = styled.div`
     padding: 2vw;
     justify-content: center;
     flex: 1 0 content;
-    //overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-            padding: 2vh 3vw;
-        }
+        flex: 1 0 content;
     }
-
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         overflow: hidden;
         flex: 0 1 auto;
@@ -69,32 +63,44 @@ export const MainContainer = styled.div`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0;
     }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        padding: 3vw;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
+        padding: 4vw;
+    }
 `;
 
 const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(3, 1fr);
     gap: 2vw;
     background-color: white;
-    //overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             row-gap: 2vh;
         }
     }
-
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        //max-height: 20vh;
         column-gap: 2vh;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         grid-template-columns: repeat(3, 1fr);
         padding: 2rem;
-
         @media ${breakpoints.heightsQueries.minHeights.flexible("1365px")} {
             grid-template-columns: 1fr 1fr;
         }
+    }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        gap: 3vw;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
+        gap: 4vw;
     }
 `;

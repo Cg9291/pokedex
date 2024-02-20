@@ -40,8 +40,6 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; 
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-    }
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 0.8rem;
     }
@@ -56,4 +54,13 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; 
         font-size: 1.25rem;
         padding-right: 1rem;
     }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${
+        breakpoints.widthsQueries.maxWidths.mobileM
+    } {
+        font-size: 0.66rem;
+    }
+
+    /
 `;

@@ -116,7 +116,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
-    height: 100%;
+    //min-width: 100%;
     width: 100%;
     height: ${(props) =>
         props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
@@ -130,7 +130,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "45%" : "100%")};
         width: ${(props) => (props.$whereUsed === "searchmodal" ? "100%" : "100%")};
-
+        padding: 0.6rem;
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             min-height: ${(props) =>
                 props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "30vw" : "100%"};
@@ -146,6 +146,11 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
         min-height: 80%;
         min-width: 95%;
         max-width: 95%;
+    }
+
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        padding: 0.5rem;
     }
 `;
 
@@ -164,6 +169,12 @@ const PokeName = styled.h4`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 2.5rem;
     }
+    //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        font-size: 1.2rem;
+        //line-height: 1.2rem;
+        align-self: baseline;
+    }
 `;
 
 const PokeId = styled.span`
@@ -177,8 +188,18 @@ const PokeId = styled.span`
     @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         font-size: 0.9rem;
     }
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        line-height: 0.9rem;
+    }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.4rem;
+    }
+
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+        font-size: 1rem;
+        //line-height: 1rem;
+        align-self: baseline;
     }
 `;
 
