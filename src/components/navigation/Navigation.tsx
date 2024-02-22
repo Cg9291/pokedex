@@ -63,7 +63,6 @@ const Container = styled(ContainerPrototype)`
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        flex: 1 0 auto;
         font-size: 1.5rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -105,5 +104,11 @@ const NavElementName = styled.span`
 
     @media ${breakpoints.heightsQueries.minHeights.flexible("896px")} {
         font-size: 0.95rem;
+    }
+
+    //MIXED MEDIA QUERIES
+    @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 1.3rem;
+        line-height: 1.3rem;
     }
 `;

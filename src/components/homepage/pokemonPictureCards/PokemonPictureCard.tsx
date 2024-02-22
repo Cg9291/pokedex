@@ -175,6 +175,12 @@ const PokeName = styled.h4`
         //line-height: 1.2rem;
         align-self: baseline;
     }
+
+    //MIXED MEDIA QUERIES
+    @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
 `;
 
 const PokeId = styled.span`
@@ -200,6 +206,12 @@ const PokeId = styled.span`
         font-size: 1rem;
         //line-height: 1rem;
         align-self: baseline;
+    }
+
+    //MIXED MEDIA QUERIES
+    @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
     }
 `;
 

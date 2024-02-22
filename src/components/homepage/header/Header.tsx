@@ -68,6 +68,9 @@ const Container = styled(ContainerPrototype)`
         flex-basis: 17.5rem;
         grid-template-rows: auto 20%;
     }
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        grid-template-rows: auto 28%;
+    }
 `;
 
 const HeaderText = styled.h2`
@@ -119,5 +122,11 @@ const HeaderText = styled.h2`
     @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
         font-size: 1.9rem;
         margin-bottom: 0.5rem;
+    }
+
+    //MIXED MEDIA QUERIES
+    @media ${breakpoints.widthsQueries.minWidths.tablet} and ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 4rem;
+        line-height: 4rem;
     }
 `;

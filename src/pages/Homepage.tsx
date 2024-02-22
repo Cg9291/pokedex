@@ -57,10 +57,7 @@ export const MainContainer = styled.div`
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         //flex: 1 0 content;
     }
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        overflow: hidden;
-        flex: 0 1 auto;
-    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0;
     }
@@ -71,6 +68,9 @@ export const MainContainer = styled.div`
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
         padding: 4vw;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        padding: 2vw;
     }
 `;
 
@@ -90,7 +90,7 @@ const Wrapper = styled.div`
         }
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        column-gap: 2vh;
+        column-gap: 1vw;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         grid-template-columns: repeat(3, 1fr);
@@ -106,5 +106,8 @@ const Wrapper = styled.div`
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
         gap: 4vw;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        gap: 2vw;
     }
 `;
