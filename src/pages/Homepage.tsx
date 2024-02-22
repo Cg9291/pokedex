@@ -29,7 +29,7 @@ export function Homepage(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    flex: 0 0 1fr;
+    flex: 1 0 0;
     overflow: hidden;
 
     @media (orientation: landscape) {

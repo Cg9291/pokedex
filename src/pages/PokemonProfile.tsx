@@ -159,11 +159,8 @@ export function PokemonProfile(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 0;
-    position: relative;
-    overflow-y: hidden;
+    flex: 1 0 0;
+    overflow: hidden;
 `;
 const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
     display: grid;
@@ -197,7 +194,6 @@ const ImageContainer = styled.svg`
     height: 100%;
     grid-area: pokeimage;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //min-height: 100%;
     }
 `;
 
@@ -207,37 +203,28 @@ const PokemonImage = styled.image`
     border: solid black;
 `;
 
-const ProfileContainer = styled(ContainerPrototype)`
-    overflow-y: hidden;
-    padding-bottom: 9%;
-`;
+const ProfileContainer = styled(ContainerPrototype)``;
 
 const PokemonProfileInfoContainer = styled(ContainerPrototype)`
     flex-direction: column;
-    z-index: 1;
-    height: 62%;
-    top: 38%;
-    background-color: white;
-    position: absolute;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
-    height: 10%;
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    background-color: inherit;
+    flex: 0 0 10%;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
     overflow-y: scroll;
     padding: 0 1rem;
+    flex: 1 0 0;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;
+    margin: auto;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-width: 50vh;

@@ -72,96 +72,100 @@ function StrengthsAndWeaknesses(props: { type: string }) {
             }
         );
 
+    function StrengthOrWeakness(props: { isStrength: boolean }) {
+        return (
+            <SWContainer>
+                <h3>{props.isStrength ? "Strengths" : "Weaknesses"}</h3>
+                <SWElementsContainer>
+                    {displayStrengths(`${props.isStrength ? "strengths" : "weaknesses"}`)}
+                </SWElementsContainer>
+            </SWContainer>
+        );
+    }
+
     return (
-        <SWContainer>
-            <h3>Strengths</h3>
-            <SWElementsContainer>{displayStrengths("strengths")}</SWElementsContainer>
-            <h3>Weaknesses</h3>
-            <SWElementsContainer>{displayStrengths("weaknesses")}</SWElementsContainer>
-        </SWContainer>
+        <>
+            <StrengthOrWeakness isStrength={true} />
+            <StrengthOrWeakness isStrength={false} />
+        </>
     );
 }
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem 1rem;
-    height: min-content;
+    padding: 1rem;
+    row-gap: 1rem;
+    overflow-y: scroll;
+    margin-bottom: 5rem;
 `;
 
 const Description = styled.p`
-    padding: 0 0;
-    font-size: 0.8em;
+    padding: 0;
+    font-size: 1em;
     font-style: italic;
     font-weight: bold;
+    flex: 0 0 content;
+    text-align: center;
 `;
 
 const TypeContainer = styled.div`
     display: flex;
     justify-content: start;
-    margin-top: 0.5rem;
+    justify-content: center;
+    flex: 0 0 content;
 `;
 
 const VitalsSectionContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
-    /* flex-wrap: wrap;
-    align-items: start; */
-    min-height: max-content;
-    margin: 0 0 0 0.5rem;
-    padding: 1rem 0 0 0;
-    //align-content: space-between;
-    font-size: 0.8em;
-    justify-content: space-between;
+    font-size: 1em;
     column-gap: 1rem;
+    flex: 0 0 content;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    min-height: 10%;
     height: max-content;
-    flex: 0 0 20%;
+    flex: 0 0 1fr;
+    row-gap: 0.2rem;
 `;
 
 const VitalsLabel = styled.div`
     display: flex;
-    justify-content: start;
+    justify-content: center;
     width: 100%;
-    margin-bottom: 0.5rem;
+    flex: 0 0 content;
 `;
 
 const VitalsValue = styled.div`
     display: flex;
-    justify-content: start;
+    justify-content: center;
     width: 100%;
     font-weight: bold;
-    height: fit-content;
-    //max-height: 2rem;
+    flex: 0 0 content;
 `;
 
 const SWSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    height: auto;
-    margin-top: 1rem;
-`;
-
-const SWContainer = styled.div`
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 0.5rem;
     h3 {
         margin-left: 0.2rem;
     }
 `;
 
-const SWElementsContainer = styled.div`
-    width: 100%;
+const SWElementsContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
-    padding: 0.5rem 0 0 0;
-    margin: 0 0 1rem 0;
+`;
+
+const SWContainer = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 0.2rem;
 `;
