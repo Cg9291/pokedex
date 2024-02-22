@@ -59,7 +59,6 @@ const Container = styled(ContainerPrototype)`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
-            height: 12vh;
         }
     }
 

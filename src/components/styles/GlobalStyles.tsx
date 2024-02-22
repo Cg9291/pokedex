@@ -8,16 +8,16 @@ export const GlobalStyle = styled.createGlobalStyle`
         outline: 0;
         box-sizing: border-box;
     }
+    html {
+        width: 100%;
+        height: 100%;
+    }
     body {
-        height: 100dvh;
-        width: 100dvw;
-        padding: 0;
-        margin: 0;
-        overflow-x: hidden;
+        width: 100%;
+        height: 100%;
     }
     #root {
         height: 100%;
         width: 100%;
-        margin: 0;
     }
 `;

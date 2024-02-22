@@ -51,10 +51,11 @@ export const MainContainer = styled.div`
     height: 100%;
     padding: 2vw;
     justify-content: center;
-    flex: 1 0 content;
+    flex: 0 1 auto;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        flex: 1 0 content;
+        //flex: 1 0 content;
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         overflow: hidden;
@@ -75,10 +76,13 @@ export const MainContainer = styled.div`
 
 const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 2vw;
     background-color: white;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
