@@ -137,13 +137,13 @@ const VitalsLabel = styled.div`
     justify-content: center;
     width: 100%;
     flex: 0 0 content;
+    font-weight: bold;
 `;
 
 const VitalsValue = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    font-weight: bold;
     flex: 0 0 content;
 `;
 
