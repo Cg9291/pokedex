@@ -85,8 +85,7 @@ export function PokemonGuess() {
 }
 
 const Container = styled(ContainerPrototype)`
-    max-width: 100%;
-    max-height: 100%;
+    flex: 1 1 0;
     overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
@@ -95,9 +94,7 @@ const Container = styled(ContainerPrototype)`
 `;
 
 const Wrapper = styled(ContainerPrototype)`
-    display: grid;
-    grid-template-rows: 20vh 35vh 1fr;
-    max-height: 100%;
+    flex-direction: column;
     padding: 0 1rem;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         background-color: white;
@@ -105,16 +102,11 @@ const Wrapper = styled(ContainerPrototype)`
 `;
 
 const Title = styled.h1`
-    font-size: 2.8rem;
+    font-size: 3rem;
     text-align: center;
-    //line-height: 3rem;
+    flex: 0 0 content;
+    line-height: 3rem;
 
-    @media ${breakpoints.widthsQueries.minWidths.flexible("292px")} {
-        font-size: 3rem;
-    }
-    @media ${breakpoints.widthsQueries.minWidths.mobileL} {
-        font-size: 3rem;
-    }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 4rem;
         line-height: 4rem;
@@ -127,27 +119,29 @@ const Title = styled.h1`
 `;
 
 const ChoiceButton = styled.button`
-    max-height: 100%;
     border-radius: 8px;
     border-width: 0;
     color: #333333;
     display: inline-block;
-    font-size: 14px;
+    white-space: break-spaces;
+    font-size: 1em;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 1em;
     list-style: none;
     margin: 0;
-    padding: 10px 12px;
+    padding: 0.6rem;
     text-align: center;
     transition: all 200ms;
     vertical-align: baseline;
-    white-space: nowrap;
+    //white-space: nowrap;
     user-select: none;
     touch-action: manipulation;
+    width: 100%;
+    height: 100%;
+    flex: 1 0 content;
 `;
 
-const Choices = styled.div`
-    box-sizing: border-box;
+const Choices = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 25%;
@@ -157,27 +151,26 @@ const Choices = styled.div`
     padding: 0 1rem 1rem;
     //margin-bottom: 1rem;
     overflow: hidden;
+    flex: 1 0 content;
 `;
 
 const ImageContainer = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    max-height: 100%;
+    //justify-content: space-around;
+    flex: 0 1 content;
+    overflow: hidden;
 `;
 
 const PokemonImage = styled.image`
     width: 100%;
-    max-width: 100;
-    min-height: 100%;
-    max-height: 100;
+    height: 100%;
     border: solid black;
     border: none;
 `;
 
 const HiddenImage = styled.svg.attrs({ viewBox: "0 0 100 100 " })<{ $isOpen: boolean }>`
     width: 100%;
-    min-height: 100%;
-    max-height: 100%;
+    height: 100%;
     transition: filter ${(props) => (props.$isOpen ? 2 : 0)}s ease-out;
 `;
