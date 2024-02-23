@@ -123,12 +123,12 @@ const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?:
     background-color: grey;
     border-radius: 99px;
     align-self: center;
-    flex: 0 1 50%;
+    flex: 0 1 40%;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`
-    /*  width: ${(props) =>
-        props.$isTotal ? `calc(${(props.$value / 1530) * 100}%)` : `calc(${(props.$value / 255) * 100}%)`}; */
+    width: ${(props) =>
+        props.$isTotal ? `calc(${(props.$value / 1530) * 100}%)` : `calc(${(props.$value / 255) * 100}%)`};
     background-color: red;
     border-radius: 99px;
 `;

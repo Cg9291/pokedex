@@ -213,7 +213,7 @@ const InfoNavBar = styled(ContainerPrototype)`
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    flex: 0 0 10%;
+    flex: 0 0 15%;
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`

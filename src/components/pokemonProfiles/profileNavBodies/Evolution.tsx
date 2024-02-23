@@ -116,14 +116,23 @@ const PokemonContainer = styled(Link)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1 0 0;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 0;
     text-decoration: none;
     color: black;
+    row-gap: 1rem;
+    overflow: hidden;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
     border-radius: 50%;
     width: 100%;
+    height: 100%;
+    flex: 0 1 content;
+    aspect-ratio: 1/1;
+    max-width: fit-content;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-width: 17vw;
     }
@@ -133,16 +142,18 @@ const PokemonImage = styled.image`
     height: 100%;
 `;
 
-const PokemonIdentifiers = styled.div`
-    display: flex;
-    margin: 1rem 0;
+const PokemonIdentifiers = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 0 0 content;
+    align-items: center;
+    overflow: hidden;
 `;
 const PokemonName = styled.span`
-    font-size: 0.9em;
+    font-size: 1em;
 `;
 const PokemonNumber = styled.span`
     margin-left: 0.3rem;
-    font-size: 0.7em;
+    font-size: 0.8em;
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
@@ -150,6 +161,6 @@ const PokemonType = styled(TypePrototype)`
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: purple;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        max-width: 20vw;
+        //max-width: 20vw;
     }
 `;

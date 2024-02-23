@@ -36,20 +36,25 @@ export function NavElement(props: {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    width: 1fr;
-    height: 100%;
+    flex: 1 0 content;
     justify-content: center;
     align-items: center;
+    row-gap: 10%;
 `;
 
 const Link = styled(LinkPrototype)`
     color: black;
+    flex: 0 1 content;
+    //overflow: hidden;
+    text-align: center;
 `;
 
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
-    height: 10%;
-    margin-top: 0.5rem;
+    height: 100%;
+    flex: 0 1 15%;
+    border-radius: 12px;
+    //overflow: hidden;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;
