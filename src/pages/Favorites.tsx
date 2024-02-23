@@ -30,13 +30,10 @@ export function Favorites(): React.ReactElement {
 }
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    max-height: 100%;
-    overflow-y: hidden;
-    padding: 0 0.5rem;
+    flex: 1 0 0;
+    overflow: hidden;
+    padding: 0 1rem;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-        padding: 0 1rem;
-    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -45,26 +42,25 @@ const Container = styled(ContainerPrototype)`
 
 const Wrapper = styled(ContainerPrototype)`
     flex-direction: column;
+    flex: 1 0 0;
     background-color: white;
-
+    overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
         padding: 0 5vw;
     }
 `;
-const FavoritesContainer = styled.div`
+const FavoritesContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 15vh;
-    column-gap: 0.8rem;
-    width: 100%;
-    height: max-content;
-    padding: 1vh 0;
-    row-gap: 1vh;
+    grid-auto-rows: max-content;
+    gap: 2.5vw;
+    margin: 1vh 0;
+    padding: 2vh;
     overflow: scroll;
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-        //border: 1px solid grey;
-    }
+    flex: 1 0 0;
+    background-color: lightgrey;
+    border-radius: 8px;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-auto-rows: 20vh;
@@ -81,6 +77,8 @@ const Title = styled.h1`
     color: ${typesColors.black};
     font-size: 3em;
     font-weight: bold;
+    flex: 0 0 content;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-left: 0.7rem;
@@ -99,8 +97,10 @@ const Title = styled.h1`
 const SubTitle = styled.h4`
     color: ${typesColors.black};
     font-size: 1.1em;
-    margin-bottom: 0.1rem;
+    //margin-bottom: 0.1rem;
     font-weight: normal;
+    flex: 0 0 content;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-left: 0.7rem;

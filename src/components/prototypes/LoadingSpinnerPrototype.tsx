@@ -2,6 +2,7 @@ import styled from "styled-components/macro";
 
 export const LoadingSpinnerPrototype = styled.div`
     width: 50%;
+    margin: auto;
     border: 0.5rem solid grey;
     border-bottom-color: red;
     border-radius: 50%;

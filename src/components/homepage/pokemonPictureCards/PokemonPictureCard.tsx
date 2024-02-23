@@ -248,12 +248,6 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)<{ $whereUsed?: string }>`
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: unset; //from prototype
-    min-height: ${(props) =>
-        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
     max-height: ${(props) =>
         props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
 `;
