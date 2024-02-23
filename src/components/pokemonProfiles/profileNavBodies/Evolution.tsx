@@ -108,23 +108,22 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
 const Container = styled(ContainerPrototype)`
     align-items: center;
     justify-content: center;
-    height: 100%;
     padding: 1rem 0;
+    column-gap: 0.5rem;
 `;
 
 const PokemonContainer = styled(Link)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 33.33%;
+    flex: 1 0 0;
     text-decoration: none;
     color: black;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
     border-radius: 50%;
-    width: 90%;
+    width: 100%;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-width: 17vw;
     }
