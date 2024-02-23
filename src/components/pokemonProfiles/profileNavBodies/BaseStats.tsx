@@ -98,47 +98,42 @@ function Stat(props: LocalStat): React.ReactElement {
 
 const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     flex-direction: column;
-    padding: 1rem 0 1rem;
+    padding: 1rem 0;
     overflow-y: hidden;
 `;
 
-const StatContainer = styled.div`
-    width: 100%;
-    min-height: 2.8rem;
-    display: flex;
+const StatContainer = styled(ContainerPrototype)`
     justify-content: stretch;
+    flex: 1 0 0;
+    column-gap: 1rem;
 `;
 const StatName = styled(ContainerPrototype)`
-    min-width: 25%;
-    max-width: 40%;
+    flex: 1 0 content;
     align-items: center;
 `;
 const StatValue = styled(ContainerPrototype)<{ $isLeftSide?: boolean }>`
     justify-content: ${(props) => (props.$isLeftSide ? "flex-start" : "flex-end")};
-    min-width: 1%;
+    flex: 0 1 content;
     align-items: center;
 `;
 const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};
-    min-width: ${(props) => (props.$isComparison ? "55%" : "50%")};
+    //min-width: ${(props) => (props.$isComparison ? "55%" : "50%")};
     height: 40%;
     background-color: grey;
     border-radius: 99px;
     align-self: center;
+    flex: 0 1 50%;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`
-    width: ${(props) =>
-        props.$isTotal ? `calc(${(props.$value / 1530) * 100}%)` : `calc(${(props.$value / 255) * 100}%)`};
-    height: 100%;
+    /*  width: ${(props) =>
+        props.$isTotal ? `calc(${(props.$value / 1530) * 100}%)` : `calc(${(props.$value / 255) * 100}%)`}; */
     background-color: red;
     border-radius: 99px;
 `;
 
-const StatBarComparisonOverlayContainer = styled.div`
-    display: flex;
-    min-width: 100%;
-    height: 100%;
+const StatBarComparisonOverlayContainer = styled(ContainerPrototype)`
     border-radius: 99px;
 `;
 

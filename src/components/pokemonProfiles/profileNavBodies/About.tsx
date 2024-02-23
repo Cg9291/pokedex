@@ -96,7 +96,6 @@ const Container = styled(ContainerPrototype)`
     justify-content: flex-start;
     padding: 1rem;
     row-gap: 1rem;
-    overflow-y: scroll;
     margin-bottom: 5rem;
 `;
 
