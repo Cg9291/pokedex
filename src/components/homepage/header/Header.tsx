@@ -18,7 +18,7 @@ export function Header(props: RandomPokemonSelectionInterface): React.ReactEleme
 
 const Container = styled(ContainerPrototype)`
     display: grid;
-    grid-template-rows: auto 7vh;
+    grid-template-rows: 1fr 7vh;
     grid-template-columns: 1fr 10vw;
     grid-template-areas:
         "headerText randomizeButton"
@@ -26,17 +26,10 @@ const Container = styled(ContainerPrototype)`
     flex: 0 1 12rem;
     align-items: end;
     background-color: darkred;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        flex: 0 0 12rem;
-        gap: 0.1em;
-
-        @media ${breakpoints.heightsQueries.minHeights.laptop} {
-        }
-    }
+    row-gap: 0.5rem;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-template-columns: 1fr 5vw;
@@ -61,6 +54,9 @@ const Container = styled(ContainerPrototype)`
     }
 
     //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.mobileM} {
+        flex-shrink: 0;
+    }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         flex-basis: 16rem;
     }
@@ -74,17 +70,15 @@ const Container = styled(ContainerPrototype)`
 `;
 
 const HeaderText = styled.h2`
-    height: fit-content;
-    max-width: 99%;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
     color: white;
-    text-align: start;
-    margin-bottom: 0.5rem;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        max-width: 95%;
         font-size: 1.8rem;
-        line-height: 2.1rem;
-        margin-bottom: 0.3rem;
+        //line-height: 2.1rem;
 
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             max-width: 100%;

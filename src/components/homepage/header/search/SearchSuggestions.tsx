@@ -192,13 +192,11 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
 const Container = styled(ContainerPrototype)`
     background-color: white;
     position: absolute;
-    max-height: 50vh;
+    max-height: 40vh;
     height: fit-content;
     width: 100%;
     max-width: 100%;
     z-index: 0;
-    //padding-bottom: 1px;
-    //border-bottom: 1px solid black;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 `;
@@ -211,7 +209,6 @@ const SuggestionsList = styled.ul`
 const ListItem = styled.li<{ $isFocused: boolean }>`
     width: 100%;
     height: 2.5rem;
-
     border: 0.1px solid;
     background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
     overflow-y: hidden;

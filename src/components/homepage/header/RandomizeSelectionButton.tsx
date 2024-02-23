@@ -20,16 +20,14 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
     );
 }
 
-const Container = styled.div`
-    width: 100%;
-    height: 100%;
+const Container = styled(ContainerPrototype)`
     aspect-ratio: 1/1;
-    z-index: 1;
+    //z-index: 1;
     grid-area: randomizeButton;
     align-self: start;
+    align-items: flex-start;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //position: unset;
         top: 1.5rem;
         right: 2rem;
     }
@@ -37,9 +35,8 @@ const Container = styled.div`
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
-    max-width: 100%;
+    flex: 1 0 0;
     aspect-ratio: 1/1;
-    z-index: 1;
     border-radius: 50%;
     background-color: white;
     border: none;

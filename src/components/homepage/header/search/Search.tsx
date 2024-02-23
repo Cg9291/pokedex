@@ -156,9 +156,6 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    height: 100%;
-    min-width: 100%;
-    align-items: end;
     grid-area: searchBar;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -255,6 +252,7 @@ const FilterButton = styled.button.attrs({ type: "button" })`
     height: 100%;
     max-width: 6rem;
     border-radius: 10px;
+    color: black;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         flex: 0 1 15%;
