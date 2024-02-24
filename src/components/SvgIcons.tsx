@@ -19,26 +19,24 @@ export function SvgIcon(props: { pokeType: string; whereUsed?: string }): React.
 }
 
 const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?: string }>`
-    //display: ${(props) => (props.$whereUsed === "favorites" ? " none" : "block")};
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100%;
+    width: 100%;
     height: 100%;
+    flex: 0 1 0;
     aspect-ratio: 1/1;
-    margin: ${(props) =>
-        props.$whereUsed === "homepage" || props.$whereUsed === "favorites" ? " 0 0.1rem 0 0" : "0 0.5rem 0 0"};
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};
-
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-        //display: initial;
-    }
-
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        margin: 0 0.5rem 0 0;
-    }
+    //padding: 1rem;
+    //overflow: hidden;
 
     svg {
-        height: 60%;
-        width: 60%;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1/1;
         margin: 20%;
+        //box-sizing: border-box;
     }
 `;

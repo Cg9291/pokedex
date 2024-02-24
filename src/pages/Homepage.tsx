@@ -32,13 +32,6 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     overflow: hidden;
 
-    @media (orientation: landscape) {
-        overflow-y: scroll;
-    }
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        overflow: hidden;
-        flex: 0 0 1fr;
-    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
@@ -51,26 +44,11 @@ export const MainContainer = styled.div`
     height: 100%;
     padding: 2vw;
     justify-content: center;
-    flex: 0 1 auto;
+    flex: 1 1 0;
     overflow: hidden;
-
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        //flex: 1 0 content;
-    }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0;
-    }
-
-    //HEIGHTS MEDIA QUERIES
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        padding: 3vw;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
-        padding: 4vw;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.tablet} {
-        padding: 2vw;
     }
 `;
 
@@ -84,11 +62,6 @@ const Wrapper = styled.div`
     height: 100%;
     overflow: hidden;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-            row-gap: 2vh;
-        }
-    }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         column-gap: 1vw;
     }
@@ -101,12 +74,7 @@ const Wrapper = styled.div`
     }
 
     //HEIGHTS MEDIA QUERIES
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        gap: 3vw;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
-        gap: 4vw;
-    }
+
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
         gap: 2vw;
     }

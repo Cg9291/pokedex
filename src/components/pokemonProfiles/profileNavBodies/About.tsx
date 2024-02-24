@@ -97,6 +97,7 @@ const Container = styled(ContainerPrototype)`
     padding: 1rem;
     row-gap: 1rem;
     margin-bottom: 5rem;
+    flex: 0 1 content;
 `;
 
 const Description = styled.p`
@@ -104,15 +105,15 @@ const Description = styled.p`
     font-size: 1em;
     font-style: italic;
     font-weight: bold;
-    flex: 0 0 content;
+    flex: 1 0 0;
     text-align: center;
 `;
 
 const TypeContainer = styled.div`
     display: flex;
-    justify-content: start;
     justify-content: center;
     flex: 0 0 content;
+    //overflow: hidden;
 `;
 
 const VitalsSectionContainer = styled.div`

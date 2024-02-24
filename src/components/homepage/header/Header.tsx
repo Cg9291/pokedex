@@ -23,7 +23,7 @@ const Container = styled(ContainerPrototype)`
     grid-template-areas:
         "headerText randomizeButton"
         "searchBar searchBar";
-    flex: 0 1 12rem;
+    flex: 0 1 40vh;
     align-items: end;
     background-color: darkred;
     padding: 0.5rem;
@@ -32,13 +32,7 @@ const Container = styled(ContainerPrototype)`
     row-gap: 0.5rem;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        grid-template-columns: 1fr 5vw;
-
-        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
-            max-height: unset;
-            flex: 0 0 20rem;
-            grid-template-rows: auto 4rem;
-        }
+        grid-template-columns: 1fr 7vw;
     }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -57,13 +51,13 @@ const Container = styled(ContainerPrototype)`
     @media ${breakpoints.heightsQueries.minHeights.mobileM} {
         flex-shrink: 0;
     }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+    /*    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         flex-basis: 16rem;
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
         flex-basis: 17.5rem;
         grid-template-rows: auto 20%;
-    }
+    } */
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
         grid-template-rows: auto 28%;
     }

@@ -112,7 +112,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
 const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?: string }>`
     display: ${(props) => (props.$isFlex ? "flex" : "grid")};
     grid-template-columns: repeat(4, 25%);
-    grid-template-rows: auto auto;
+    grid-template-rows: min-content 1fr;
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
@@ -121,7 +121,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     height: ${(props) =>
         props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
     margin: auto;
-    padding: 0.4rem;
+    padding: 0.3rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
@@ -149,6 +149,13 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     }
 
     //HEIGHTS MEDIA QUERIES
+    /* @media ${breakpoints.heightsQueries.minHeights.mobileS} {
+
+    } */
+
+    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
+        padding: 0.4rem;
+    }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         padding: 0.5rem;
     }
@@ -157,12 +164,10 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
 const PokeName = styled.h4`
     color: white;
     grid-area: name;
-    place-self: start;
+    place-self: start start;
     font-size: 0.8rem;
     line-height: 0.8rem;
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-        font-size: unset;
-    }
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 2rem;
     }
@@ -170,6 +175,10 @@ const PokeName = styled.h4`
         font-size: 2.5rem;
     }
     //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
+        font-size: 0.8rem;
+        line-height: 0.8rem;
+    }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         font-size: 1.2rem;
         //line-height: 1.2rem;
@@ -187,13 +196,13 @@ const PokeId = styled.span`
     grid-area: id;
     color: white;
     font-weight: 500;
-    font-size: 0.8rem;
-    line-height: 0.8rem;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
     margin-left: auto;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileS} {
+    /*   @media ${breakpoints.widthsQueries.minWidths.mobileS} {
         font-size: 0.9rem;
-    }
+    } */
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         line-height: 0.9rem;
@@ -219,7 +228,7 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-end;
     gap: 0.3rem;
-    padding-top: auto;
+    padding-top: 8%;
     grid-area: typesContainer;
     align-self: center;
 
@@ -248,6 +257,6 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)<{ $whereUsed?: string }>`
-    max-height: ${(props) =>
-        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
+    width: 40%;
+    max-height: 100%;
 `;

@@ -6,6 +6,7 @@ import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { typesColors } from "../../../objects/typesColors";
 import * as breakpoints from "../../../objects/breakpoints";
+import ContainerPrototype from "../../prototypes/ContainerPrototype";
 
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
     return props.typeName !== "none" ? (
@@ -15,30 +16,28 @@ export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.Re
             $whereUsed={props.whereUsed}
         >
             <SvgIcon pokeType={props.typeName.toLowerCase()} whereUsed={props.whereUsed} />
-            {capitalizeWords(props.typeName)}
+            <PokemonTypeText>{capitalizeWords(props.typeName)}</PokemonTypeText>
         </Container>
     ) : (
         <Container $pokeType="none" $whereUsed={props.whereUsed}>
-            {capitalizeWords(props.typeName)}
+            <PokemonTypeText> {capitalizeWords(props.typeName)}</PokemonTypeText>
         </Container>
     );
 }
-const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
-    min-width: max-content;
-    height: 1.8rem;
-    max-height: 100%;
-    //margin-bottom: 0.3rem;
-    padding: ${(props) => (props.$whereUsed === "favorites" ? "0.3rem " : "0.3rem 0.4rem")};
+const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
+    flex:1 0 0;
+    padding: ${(props) => (props.$whereUsed === "favorites" || props.$whereUsed === "homepage" ? "5% " : "2%")};
     border-radius: 99px;
     background-color: ${(props) =>
         props.$dynamicBackground ? typesColors[props.$pokeType as keyof TypesColorsInt] : "rgba(0, 0, 0, 0.2)"};
     color: white;
     text-align: center;
-    display: flex;
     align-items: center;
     font-size: 0.6rem;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
+    overflow:hidden;
+    max-height:${(props) => (props.$whereUsed === "favorites" || props.$whereUsed === "homepage" ? "50% " : "100%")};
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 0.8rem;
@@ -56,6 +55,9 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; 
     }
 
     //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
+        padding: 0.4rem;
+    }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${
         breakpoints.widthsQueries.maxWidths.mobileM
     } {
@@ -63,4 +65,13 @@ const Container = styled.div<{ $dynamicBackground?: boolean; $pokeType: string; 
     }
 
     /
+`;
+
+const PokemonTypeText = styled.p`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1 0 0;
+    align-items: center;
 `;

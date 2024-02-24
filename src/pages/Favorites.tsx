@@ -54,13 +54,14 @@ const FavoritesContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
-    gap: 2.5vw;
+    gap: 2.5vh;
     margin: 1vh 0;
     padding: 2vh;
     overflow: scroll;
     flex: 1 0 0;
-    background-color: lightgrey;
-    border-radius: 8px;
+    //background-color: rgba(0, 0, 0, 0.03);
+    //border-radius: 8px;
+    //border: 1px solid rgba(0, 0, 0, 0.3);
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-auto-rows: 20vh;
