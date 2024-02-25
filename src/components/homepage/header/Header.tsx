@@ -51,15 +51,8 @@ const Container = styled(ContainerPrototype)`
     @media ${breakpoints.heightsQueries.minHeights.mobileM} {
         flex-shrink: 0;
     }
-    /*    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        flex-basis: 16rem;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("812px")} {
-        flex-basis: 17.5rem;
-        grid-template-rows: auto 20%;
-    } */
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
-        grid-template-rows: auto 28%;
+        flex: 0 1 30vh;
     }
 `;
 
@@ -72,7 +65,6 @@ const HeaderText = styled.h2`
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 1.8rem;
-        //line-height: 2.1rem;
 
         @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
             max-width: 100%;
@@ -88,7 +80,6 @@ const HeaderText = styled.h2`
         padding: unset;
         margin-top: 0;
         padding-bottom: 1rem;
-        //max-height: 80%;
         overflow: hidden;
         grid-area: headerText;
         line-height: 3.5rem;

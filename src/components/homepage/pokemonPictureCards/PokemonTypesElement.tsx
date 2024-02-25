@@ -43,7 +43,6 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
         font-size: 0.8rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        flex: 0 0 3rem;
         font-size: 1.25rem;
         padding-right: 0.8rem;
     }

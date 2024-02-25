@@ -152,6 +152,13 @@ const Choices = styled(ContainerPrototype)`
     //margin-bottom: 1rem;
     overflow: hidden;
     flex: 1 0 content;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        flex: 1 0 38vh;
+        gap: 1rem;
+        padding: 1rem;
+    }
 `;
 
 const ImageContainer = styled(ContainerPrototype)`

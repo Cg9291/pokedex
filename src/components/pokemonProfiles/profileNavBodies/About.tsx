@@ -105,7 +105,7 @@ const Description = styled.p`
     font-size: 1em;
     font-style: italic;
     font-weight: bold;
-    flex: 1 0 0;
+    flex: 0 0 content;
     text-align: center;
 `;
 
