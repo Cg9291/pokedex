@@ -112,19 +112,21 @@ export function Comparator(): React.ReactElement {
                         </>
                     ) : (
                         <>
-                            <ComparatorsPokemonCards
-                                pokemonData={pokemonData.topPokemon}
-                                imgOrder={1}
-                                setIsModalActive={setIsModalActive}
-                            />
-                            <RandomizeButton>
-                                <RandomizeButtonImage onClick={handleRandomize} />
-                            </RandomizeButton>
-                            <ComparatorsPokemonCards
-                                pokemonData={pokemonData.bottomPokemon}
-                                imgOrder={2}
-                                setIsModalActive={setIsModalActive}
-                            />
+                            <CardsWrapper>
+                                <ComparatorsPokemonCards
+                                    pokemonData={pokemonData.topPokemon}
+                                    imgOrder={1}
+                                    setIsModalActive={setIsModalActive}
+                                />
+                                <RandomizeButton>
+                                    <RandomizeButtonImage onClick={handleRandomize} />
+                                </RandomizeButton>
+                                <ComparatorsPokemonCards
+                                    pokemonData={pokemonData.bottomPokemon}
+                                    imgOrder={2}
+                                    setIsModalActive={setIsModalActive}
+                                />
+                            </CardsWrapper>
                             <CompareButton onClick={handleCompare}> COMPARE!</CompareButton>
                         </>
                     )}
@@ -142,6 +144,7 @@ export function Comparator(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+    flex: 1 0 0;
     background-color: white;
     overflow: hidden;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
@@ -159,13 +162,11 @@ const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
     padding: 0 1rem 1rem;
-    max-height: 100%;
     overflow: hidden;
+    row-gap: 0.5rem;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        height: 100%;
-
-        //border: solid yellow;
+        //height: 100%;
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
@@ -174,9 +175,8 @@ const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
 `;
 
 const Header = styled(ContainerPrototype)`
-    height: max-content;
     flex-direction: column;
-    margin-bottom: 0.5rem;
+    flex: 0 0 content;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         flex: 0 0 auto;
         margin-bottom: 1.5rem;
@@ -184,6 +184,7 @@ const Header = styled(ContainerPrototype)`
 `;
 
 const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
+    flex: 0 0 content;
     margin: ${(props) => props.$isCompared && "auto"};
     font-size: ${(props) => (props.$isCompared ? "2.5em" : "3em")};
 
@@ -200,7 +201,7 @@ const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
 `;
 
 const HeaderDescription = styled.p`
-    min-height: fit-content;
+    flex: 0 0 content;
     font-size: 1.1em;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.4rem;
@@ -214,16 +215,23 @@ const ComparatorBody = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    max-height: 100%;
-    //min-height: 100%;
     overflow: hidden;
-    //flex:1 0 aut;
-    flex-grow: 1;
+    flex: 1 0 0;
+    row-gap: 2%;
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         flex: 0 1 100%;
         justify-content: space-evenly;
         //border: 1rem solid red;
     }
+`;
+
+const CardsWrapper = styled(ContainerPrototype)`
+    position: relative; //necessary for absolute centering or randomize button
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 0;
+    row-gap: 2%;
 `;
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
@@ -283,25 +291,34 @@ const Result = styled.p`
 `;
 
 const CompareButton = styled.button.attrs({ type: "button" })`
-    height: 3rem;
+    height: 100%;
     width: 100%;
     background-color: gold;
-    border-radius: 15px;
+    border-radius: 8px;
     border: none;
     font-weight: 600;
     font-size: 1.2rem;
-    margin-top: 1rem;
+    flex: 0 1 12%;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-top: 0;
         font-size: 1.5rem;
     }
+
+    @media ${breakpoints.heightsQueries.minHeights.flexible("600px")} {
+        flex: 0 1 10%;
+    }
+    @media ${breakpoints.heightsQueries.minHeights.laptop} {
+        flex: 0 1 9%;
+    }
 `;
 
 export const RandomizeButton = styled.button.attrs({ type: "button" })`
-    min-width: 3rem;
-    max-width: 3rem;
-    aspect-ratio: 1/1;
-    margin: -1.7rem 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 15%;
+    aspect-ratio: 1/1 !important;
     z-index: 1;
     border-radius: 50%;
     background-color: white;
@@ -311,20 +328,20 @@ export const RandomizeButton = styled.button.attrs({ type: "button" })`
     }
 
     @media ${breakpoints.heightsQueries.minHeights.mobileM} {
-        min-width: 4rem;
-        max-width: 4rem;
-        margin: -2.2rem 0;
+        /*  min-width: 4rem;
+        max-width: 4rem; */
+        //margin: -2.2rem 0;
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        margin: -2.5rem 0;
+        //margin: -2.5rem 0;
     }
 
     @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
-        margin: -2.9rem 0;
+        //margin: -2.9rem 0;
     }
 
     @media ${breakpoints.heightsQueries.minHeights.mobileL} {
-        margin: -3.2rem 0;
+        //margin: -3.2rem 0;
     }
 `;
 

@@ -9,10 +9,7 @@ import * as breakpoints from "../../objects/breakpoints";
 export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterface): React.ReactElement {
     const { name, sprites, types } = props.pokemonData;
     return (
-        <ComparatorPokemonCardsContainer
-            $isCompared={props.isCompared && props.isCompared}
-            $mainType={types ? types[0].type.name : null}
-        >
+        <Container $isCompared={props.isCompared && props.isCompared} $mainType={types ? types[0].type.name : null}>
             {!props.isCompared && (
                 <ChangeSelectionButton
                     onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
@@ -24,18 +21,20 @@ export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterf
                 <PokemonImg href={sprites.front_default} />
             </PokemonImgContainer>
             {props.isCompared && <PokemonName>{capitalizeWords(name)}</PokemonName>}
-        </ComparatorPokemonCardsContainer>
+        </Container>
     );
 }
 
-const ComparatorPokemonCardsContainer = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
+const Container = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType: string | null }>`
+    flex: 1 0 0;
     justify-content: center;
     border-radius: 12px;
     align-items: center;
     width: ${({ $isCompared }) => $isCompared && ` 48%`};
+    overflow: hidden;
 
-    min-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
-    max-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
+    /*   min-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
+    max-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)}; */
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
@@ -71,28 +70,35 @@ const PokemonName = styled.h5`
 `;
 
 const PokemonImgContainer = styled.svg`
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    flex: 1 1 0;
+    max-height: 13rem; //to stop image quality from getting too bad when getting bigger
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-height: 35vh;
     }
 `;
 
-const PokemonImg = styled.image.attrs({ x: "12.5%", y: "12.5%", width: "75%", height: "75%" })``;
+const PokemonImg = styled.image.attrs({
+    x: "0",
+    //y: "12.5%",
+    width: "100",
+    height: "100"
+})``;
 
 const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
-    //Will review
-    position: absolute;
     width: fit-content;
     left: 0;
     height: 1.8rem;
-    margin-left: 1.2rem;
+
     padding: 0 1rem;
     border: 1px solid black;
     border-radius: 7px;
     font-weight: 600;
-
+    flex: 0 0 10%;
+    margin-left: 6%;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         height: 3.2rem;
         font-size: 1.3rem;
