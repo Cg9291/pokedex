@@ -162,8 +162,8 @@ const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
     padding: 0 1rem 1rem;
-    overflow: hidden;
     row-gap: 0.5rem;
+    align-items: center;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         //height: 100%;

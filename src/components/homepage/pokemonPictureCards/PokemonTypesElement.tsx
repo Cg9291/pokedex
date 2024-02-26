@@ -26,7 +26,7 @@ export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.Re
 }
 const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
     flex:1 0 0;
-    padding: ${(props) => (props.$whereUsed === "favorites" || props.$whereUsed === "homepage" ? "5% " : "2%")};
+    padding: 5%;
     border-radius: 99px;
     background-color: ${(props) =>
         props.$dynamicBackground ? typesColors[props.$pokeType as keyof TypesColorsInt] : "rgba(0, 0, 0, 0.2)"};
@@ -37,7 +37,7 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
     overflow:hidden;
-    max-height:${(props) => (props.$whereUsed === "favorites" || props.$whereUsed === "homepage" ? "50% " : "100%")};
+    max-height:50%;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 0.8rem;

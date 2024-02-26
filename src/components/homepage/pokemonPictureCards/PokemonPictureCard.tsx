@@ -116,10 +116,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
-    //min-width: 100%;
     width: 100%;
-    height: ${(props) =>
-        props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "100%" : "100%"};
+    height: 100%;
     margin: auto;
     padding: 0.3rem;
     border-radius: 15px;
@@ -128,13 +126,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "45%" : "100%")};
-        width: ${(props) => (props.$whereUsed === "searchmodal" ? "100%" : "100%")};
         padding: 0.6rem;
-        @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-            min-height: ${(props) =>
-                props.$whereUsed === "searchmodal" ? "30%" : props.$whereUsed === "favorites" ? "30vw" : "100%"};
-        }
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
@@ -231,6 +223,7 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     padding-top: 8%;
     grid-area: typesContainer;
     align-self: center;
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 2rem;

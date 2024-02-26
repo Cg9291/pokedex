@@ -43,7 +43,7 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
     const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
 
     return (
-        <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
+        <Container $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Search
                 usesNavigation={false}
@@ -67,19 +67,21 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                     />
                 )}
             </ResultsSection>
-        </ComparatorSearchModalContainer>
+        </Container>
     );
 }
 
-const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
-    flex-direction: column;
-    display: ${(props) => (props.$isModalActive ? "flex" : "none")};
+const Container = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 12% 50%;
+    grid-template-areas:
+        "header"
+        "searchBar"
+        "results";
+    display: ${(props) => (props.$isModalActive ? "grid" : "none")};
     position: fixed;
-    width: 100%;
-    height: 100vh;
     top: 12vh;
-    left: 0;
-    right: 0;
     background-color: white;
     z-index: 1;
     border-top-right-radius: 20px;
@@ -87,33 +89,31 @@ const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActi
     padding: 2rem 1rem;
     border-top-left-radius: 3rem;
     border-top-right-radius: 3rem;
-    //padding-bottom: 7rem;
-    //background-color: lightgray;
-    //border-top: 1px solid grey;
 `;
 
 const SearchModalHeader = styled.h2`
     text-align: center;
     font-size: 2.2rem;
+    grid-area: header;
 `;
 
 const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
     display: flex;
     align-items: center;
-    padding: ${(props) => (props.$foundPokemon ? "1rem" : "1rem 0 0")};
+    padding: ${(props) => (props.$foundPokemon ? "8vh 16vw" : "1rem 0 0")};
     background-color: rgba(122, 122, 122, 0.1);
-    padding-bottom: 1rem;
-    flex: 40%;
     border-radius: 1rem;
-    margin: 1rem 0 4rem;
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
+    margin: 1rem 0;
+    grid-area: results;
+    box-sizing: border-box;
+    overflow-y: hidden;
+
+    /*  @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         margin: 1rem 0 5rem;
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
         margin: 1rem 0 5.5rem;
-    }
+    } */
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;

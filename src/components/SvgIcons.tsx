@@ -29,14 +29,11 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?
     aspect-ratio: 1/1;
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};
-    //padding: 1rem;
-    //overflow: hidden;
 
     svg {
         width: 100%;
         height: 100%;
-        aspect-ratio: 1/1;
-        margin: 20%;
-        //box-sizing: border-box;
+        box-sizing: border-box;
+        //overflow: hidden;
     }
 `;

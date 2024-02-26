@@ -112,7 +112,7 @@ const Description = styled.p`
 const TypeContainer = styled.div`
     display: flex;
     justify-content: center;
-    flex: 0 0 content;
+    flex: 0 0 8vh;
     //overflow: hidden;
 `;
 
