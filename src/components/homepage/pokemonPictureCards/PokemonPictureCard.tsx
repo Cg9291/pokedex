@@ -217,13 +217,16 @@ const PokeId = styled.span`
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.3rem;
-    padding-top: 8%;
+    display: grid;
+    grid-auto-rows: 46%;
+    gap: 8%;
     grid-area: typesContainer;
     align-self: center;
     overflow: hidden;
+    max-height: 80%;
+    align-self: flex-end;
+    overflow: hidden;
+    align-content: flex-end;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 2rem;

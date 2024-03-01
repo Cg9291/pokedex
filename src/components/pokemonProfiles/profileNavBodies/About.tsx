@@ -36,7 +36,11 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
             <Container>
                 <Description>{displayEnglishDescription(flavor_text_entries)}</Description>
                 <TypeContainer>
-                    <PokemonTypesElement typeName={types[0].type.name} dynamicBackground={true} />
+                    <PokemonTypesElement
+                        typeName={types[0].type.name}
+                        dynamicBackground={true}
+                        whereUsed="aboutSection"
+                    />
                 </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
                 <SWSectionContainer>
@@ -109,10 +113,9 @@ const Description = styled.p`
     text-align: center;
 `;
 
-const TypeContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    flex: 0 0 8vh;
+const TypeContainer = styled(ContainerPrototype)`
+    //justify-content: center;
+    flex: 0 0 6vh;
     //overflow: hidden;
 `;
 
@@ -152,7 +155,7 @@ const SWSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 0 0 content;
-    row-gap: 0.5rem;
+    row-gap: 1rem;
     h3 {
         margin-left: 0.2rem;
     }
@@ -161,7 +164,9 @@ const SWSectionContainer = styled.div`
 const SWElementsContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 6vh;
     gap: 0.5rem;
+    min-height: 6vh;
 `;
 
 const SWContainer = styled(ContainerPrototype)`

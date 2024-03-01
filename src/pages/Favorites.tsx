@@ -54,9 +54,9 @@ const FavoritesContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
-    gap: 2.5vh;
-    margin: 1vh 0;
-    padding: 2vh;
+    gap: 2vh;
+    //margin: 1vh 0;
+    padding: 2vh 0;
     overflow: scroll;
     flex: 1 0 0;
     //background-color: rgba(0, 0, 0, 0.03);

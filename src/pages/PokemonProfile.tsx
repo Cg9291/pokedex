@@ -143,7 +143,10 @@ export function PokemonProfile(): React.ReactElement {
                 <ProfileContainer>
                     <PokemonProfileInfoContainer>
                         <InfoNavBar>{displayNavHeaders()}</InfoNavBar>
-                        <InfoNavBody>{displayNavBody()}</InfoNavBody>
+                        <InfoNavBody>
+                            {displayNavBody()}
+                            <WhiteSpace />
+                        </InfoNavBody>
                     </PokemonProfileInfoContainer>
                 </ProfileContainer>
             </Container>
@@ -217,9 +220,14 @@ const InfoNavBar = styled(ContainerPrototype)`
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
+    flex-direction: column;
     overflow-y: scroll;
     padding: 0 1rem;
     flex: 1 0 0;
+`;
+
+const WhiteSpace = styled(ContainerPrototype)`
+    min-height: 100px;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
