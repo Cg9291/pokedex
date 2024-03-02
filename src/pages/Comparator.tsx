@@ -147,6 +147,7 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     background-color: white;
     overflow: hidden;
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         max-height: 100%;
         height: 100%;
@@ -248,11 +249,9 @@ const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boole
     }
 `;
 const CardsRow = styled(ContainerPrototype)`
-    height: fit-content;
-    min-height: fit-content;
-    max-height: fit-content;
+    flex: 0 0 25%;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    gap: 5%;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-bottom: 1rem;
     }
@@ -264,19 +263,16 @@ const CardsRow = styled(ContainerPrototype)`
 `;
 
 const Result = styled.p`
-    min-height: 1rem;
-    font-size: 1.3em;
+    font-size: 1.8em;
     font-weight: bolder;
-    margin-bottom: 1rem;
     white-space: nowrap;
-    max-width: 100%;
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        min-height: 3rem;
+        /*   min-height: 3rem;
         font-size: 1.5em;
-        font-weight: bolder;
+        font-weight: bolder; */
     }
     @media ${breakpoints.widthsQueries.minWidths.mobileL} {
-        font-size: 1.8em;
+        /*   font-size: 1.8em; */
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         min-height: 3rem;
@@ -299,6 +295,7 @@ const CompareButton = styled.button.attrs({ type: "button" })`
     font-weight: 600;
     font-size: 1.2rem;
     flex: 0 1 12%;
+    color: inherit;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         margin-top: 0;
         font-size: 1.5rem;

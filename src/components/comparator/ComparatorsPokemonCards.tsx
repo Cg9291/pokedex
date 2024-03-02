@@ -11,11 +11,13 @@ export function ComparatorsPokemonCards(props: ComparatorPokemonCardsPropsInterf
     return (
         <Container $isCompared={props.isCompared && props.isCompared} $mainType={types ? types[0].type.name : null}>
             {!props.isCompared && (
-                <ChangeSelectionButton
-                    onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
-                >
-                    Switch
-                </ChangeSelectionButton>
+                <ButtonContainer>
+                    <ChangeSelectionButton
+                        onClick={() => props.setIsModalActive({ isActive: true, activeImageNumber: props.imgOrder })}
+                    >
+                        Switch
+                    </ChangeSelectionButton>
+                </ButtonContainer>
             )}
             <PokemonImgContainer viewBox="0 0 100 100">
                 <PokemonImg href={sprites.front_default} />
@@ -32,9 +34,6 @@ const Container = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType:
     align-items: center;
     width: ${({ $isCompared }) => $isCompared && ` 48%`};
     overflow: hidden;
-
-    /*   min-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)};
-    max-height: ${({ $isCompared }) => ($isCompared ? ` 100%` : `40%`)}; */
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
@@ -82,23 +81,25 @@ const PokemonImgContainer = styled.svg`
 `;
 
 const PokemonImg = styled.image.attrs({
-    x: "0",
-    //y: "12.5%",
     width: "100",
     height: "100"
 })``;
 
-const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
-    width: fit-content;
-    left: 0;
-    height: 1.8rem;
+const ButtonContainer = styled(ContainerPrototype)`
+    flex: 0 0 50%;
+    justify-content: center;
+    align-items: center;
+`;
 
+const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     padding: 0 1rem;
     border: 1px solid black;
     border-radius: 7px;
     font-weight: 600;
-    flex: 0 0 10%;
-    margin-left: 6%;
+    flex: 0 1 75%;
+    aspect-ratio: 2.5/1;
+    color: inherit;
+
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         height: 3.2rem;
         font-size: 1.3rem;
