@@ -105,6 +105,9 @@ const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison
 const StatContainer = styled(ContainerPrototype)`
     flex: 1 0 0;
     column-gap: 1%;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.3em;
+    }
 `;
 const StatName = styled(ContainerPrototype)`
     flex: 1 0 30%;

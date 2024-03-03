@@ -37,11 +37,6 @@ const Container = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType:
     background-color: ${(props) =>
         props.$mainType ? typesColors[props.$mainType as keyof TypesColorsInt] : `lightgrey`};
 
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        min-height: 0;
-        flex: ${({ $isCompared }) => ($isCompared ? ` 0 0 100%` : `0 0 40%`)};
-    }
-
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         position: relative;
         overflow: hidden;
@@ -50,12 +45,13 @@ const Container = styled(ContainerPrototype)<{ $isCompared?: boolean; $mainType:
     }
 `;
 
-const PokemonName = styled.h5`
+const PokemonName = styled.p`
     background-color: white;
     border: 0.1rem solid grey;
     border-radius: 50px;
     padding: 0.5rem 0.2rem;
     margin-right: 0.3rem;
+    font-weight: bold;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         padding: 1rem;
@@ -99,6 +95,7 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     flex: 0 1 75%;
     aspect-ratio: 2.5/1;
     color: inherit;
+    font-size: 1em;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         height: 3.2rem;

@@ -178,10 +178,6 @@ const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
 const Header = styled(ContainerPrototype)`
     flex-direction: column;
     flex: 0 0 content;
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        flex: 0 0 auto;
-        margin-bottom: 1.5rem;
-    }
 `;
 
 const HeaderTitle = styled.h1<{ $isCompared?: boolean }>`
@@ -221,18 +217,22 @@ const ComparatorBody = styled(ContainerPrototype)`
     row-gap: 2%;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        flex: 0 1 100%;
+        //flex: 0 1 100%;
         justify-content: space-evenly;
         //border: 1rem solid red;
+        //min-height: 100%;
     }
 `;
 
 const CardsWrapper = styled(ContainerPrototype)`
-    position: relative; //necessary for absolute centering or randomize button
+    position: relative; //necessary for absolute centering of randomize button
     flex-direction: column;
     align-items: center;
     flex: 1 1 0;
     row-gap: 2%;
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        //padding: 5% 0;
+    }
 `;
 
 const BackButton = styled.button.attrs({ type: "button" })<{ $isCompared?: boolean }>`
@@ -252,9 +252,7 @@ const CardsRow = styled(ContainerPrototype)`
     flex: 0 0 25%;
     justify-content: space-between;
     gap: 5%;
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        margin-bottom: 1rem;
-    }
+
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-height: max-content;
         max-width: 100%;
@@ -266,19 +264,6 @@ const Result = styled.p`
     font-size: 1.8em;
     font-weight: bolder;
     white-space: nowrap;
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        /*   min-height: 3rem;
-        font-size: 1.5em;
-        font-weight: bolder; */
-    }
-    @media ${breakpoints.widthsQueries.minWidths.mobileL} {
-        /*   font-size: 1.8em; */
-    }
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        min-height: 3rem;
-        font-size: 2em;
-        font-weight: bolder;
-    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         min-height: 3rem;
         font-size: 2.5em;
@@ -296,14 +281,6 @@ const CompareButton = styled.button.attrs({ type: "button" })`
     font-size: 1.2rem;
     flex: 0 1 12%;
     color: inherit;
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        margin-top: 0;
-        font-size: 1.5rem;
-    }
-
-    @media ${breakpoints.heightsQueries.minHeights.flexible("600px")} {
-        flex: 0 1 10%;
-    }
     @media ${breakpoints.heightsQueries.minHeights.laptop} {
         flex: 0 1 9%;
     }
@@ -322,23 +299,6 @@ export const RandomizeButton = styled.button.attrs({ type: "button" })`
     border: none;
     &:hover {
         cursor: pointer;
-    }
-
-    @media ${breakpoints.heightsQueries.minHeights.mobileM} {
-        /*  min-width: 4rem;
-        max-width: 4rem; */
-        //margin: -2.2rem 0;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        //margin: -2.5rem 0;
-    }
-
-    @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
-        //margin: -2.9rem 0;
-    }
-
-    @media ${breakpoints.heightsQueries.minHeights.mobileL} {
-        //margin: -3.2rem 0;
     }
 `;
 
