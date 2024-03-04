@@ -31,6 +31,10 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     flex: 1 0 0;
     overflow: hidden;
+    @media (orientation: landscape) {
+        flex-basis: content;
+        padding-bottom: 11vh;
+    }
 `;
 
 export const MainContainer = styled.div`
@@ -41,6 +45,10 @@ export const MainContainer = styled.div`
     justify-content: center;
     flex: 1 1 0;
     overflow: hidden;
+
+    @media (orientation: landscape) {
+        overflow: initial;
+    }
 `;
 
 const Wrapper = styled.div`
@@ -54,6 +62,13 @@ const Wrapper = styled.div`
     overflow: hidden;
 
     //HEIGHTS MEDIA QUERIES
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        gap: 2vw;
+    }
+
+    @media (orientation: landscape) {
+        grid-template-rows: repeat(3, 36vh);
+    }
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
         gap: 2vw;
     }

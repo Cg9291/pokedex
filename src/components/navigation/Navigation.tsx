@@ -71,6 +71,12 @@ const Container = styled(ContainerPrototype)`
         height: 6.8%;
         border-bottom: 1px solid black;
     }
+
+    @media (orientation: landscape) {
+        position: fixed;
+        height: 11vh;
+        z-index: 10;
+    }
 `;
 
 const NavElementContainer = styled(Link)`
@@ -110,5 +116,10 @@ const NavElementName = styled.span`
     @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
         font-size: 1.3rem;
         line-height: 1.3rem;
+    }
+
+    @media (orientation: landscape) {
+        font-size: 0.6em;
+        line-height: 0.6rem;
     }
 `;

@@ -55,6 +55,11 @@ const Container = styled(ContainerPrototype)`
         flex: 0 1 30vh;
         row-gap: 5%;
     }
+
+    @media (orientation: landscape) {
+        grid-template-rows: 1fr 14vh;
+        grid-template-columns: 1fr 5vw;
+    }
 `;
 
 const HeaderText = styled.h2`

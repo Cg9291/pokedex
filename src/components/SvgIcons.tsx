@@ -31,10 +31,13 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?
     box-shadow: ${(props) => props.$BoxShadow};
     padding: 1vw;
 
+    @media (orientation: landscape) {
+        padding: 2.4%;
+    }
+
     svg {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        //overflow: hidden;
     }
 `;
