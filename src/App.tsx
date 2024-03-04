@@ -31,9 +31,9 @@ const Container = styled(ContainerPrototype)`
     @media (orientation: landscape) {
         overflow-y: scroll;
     }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+    /*  @media ${breakpoints.widthsQueries.minWidths.laptop} {
         flex-direction: column-reverse;
-    }
+    } */
 `;
 
 export default App;

@@ -245,6 +245,10 @@ const Input = styled.input.attrs({
             height: 100%;
         }
     }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 2rem;
+    }
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`

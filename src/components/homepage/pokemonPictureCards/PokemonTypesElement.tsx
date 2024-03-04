@@ -25,8 +25,8 @@ export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.Re
     );
 }
 const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
-    flex:1 0 0;
-    padding:${(props) => (props.$whereUsed === "aboutSection" ? "1%" : "5%")};
+    flex: 1 0 0;
+    padding: ${(props) => (props.$whereUsed === "aboutSection" ? "1%" : "5%")};
     border-radius: 99px;
     background-color: ${(props) =>
         props.$dynamicBackground ? typesColors[props.$pokeType as keyof TypesColorsInt] : "rgba(0, 0, 0, 0.2)"};
@@ -36,8 +36,7 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     font-size: 0.6rem;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
-    overflow:hidden;
-
+    overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 0.8rem;
@@ -48,22 +47,16 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        height: 3rem;
-        font-size: 1.25rem;
-        padding-right: 1rem;
     }
 
     //HEIGHTS MEDIA QUERIES
     @media ${breakpoints.heightsQueries.minHeights.mobileS} {
         padding: 0.4rem;
     }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${
-        breakpoints.widthsQueries.maxWidths.mobileM
-    } {
+    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${breakpoints.widthsQueries.maxWidths
+            .mobileM} {
         font-size: 0.66rem;
     }
-
-    /
 `;
 
 const PokemonTypeText = styled.p`

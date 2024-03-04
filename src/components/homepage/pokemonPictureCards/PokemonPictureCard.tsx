@@ -135,9 +135,9 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
         min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        min-height: 80%;
+        /* min-height: 80%;
         min-width: 95%;
-        max-width: 95%;
+        max-width: 95%; */
     }
 
     //HEIGHTS MEDIA QUERIES
@@ -160,9 +160,6 @@ const PokeName = styled.h4`
     font-size: 0.8rem;
     line-height: 0.8rem;
 
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 2rem;
-    }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         font-size: 2.5rem;
     }
@@ -179,7 +176,11 @@ const PokeName = styled.h4`
 
     //MIXED MEDIA QUERIES
     @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
-        font-size: 2rem;
+        font-size: 2em;
+        line-height: 2rem;
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 2.2em;
         line-height: 2rem;
     }
 `;
@@ -191,10 +192,6 @@ const PokeId = styled.span`
     font-size: 0.7rem;
     line-height: 0.7rem;
     margin-left: auto;
-
-    /*   @media ${breakpoints.widthsQueries.minWidths.mobileS} {
-        font-size: 0.9rem;
-    } */
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         line-height: 0.9rem;
@@ -214,6 +211,11 @@ const PokeId = styled.span`
         font-size: 1.5rem;
         line-height: 1.5rem;
     }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 2em;
+        line-height: 2rem;
+    }
 `;
 
 const PokemonTypesContainer = styled(ContainerPrototype)`
@@ -231,9 +233,6 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 2rem;
         margin-bottom: 0;
-    }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        margin-bottom: 1.5rem;
     }
 `;
 
