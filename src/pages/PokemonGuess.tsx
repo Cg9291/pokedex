@@ -87,10 +87,10 @@ export function PokemonGuess() {
 const Container = styled(ContainerPrototype)`
     flex: 1 1 0;
     overflow: hidden;
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+    /*  @media ${breakpoints.widthsQueries.minWidths.laptop} {
         padding: 0 12vw;
         background-color: #1b252f;
-    }
+    } */
 `;
 
 const Wrapper = styled(ContainerPrototype)`

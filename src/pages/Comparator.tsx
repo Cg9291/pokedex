@@ -147,16 +147,6 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     background-color: white;
     overflow: hidden;
-
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        max-height: 100%;
-        height: 100%;
-    }
-
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        padding: 0 12vw;
-        background-color: #1b252f;
-    }
 `;
 
 const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
@@ -165,14 +155,6 @@ const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     padding: 0 1rem 1rem;
     row-gap: 0.5rem;
     align-items: center;
-
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        //height: 100%;
-    }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        position: relative;
-        padding: 0 5vw;
-    }
 `;
 
 const Header = styled(ContainerPrototype)`
@@ -201,10 +183,11 @@ const HeaderDescription = styled.p`
     flex: 0 0 content;
     font-size: 1.1em;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 1.4rem;
+        font-size: 1.4em;
     }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 1.6em;
+    @media ${breakpoints.heightsQueries.minHeights.flexible("1366px")} {
+        font-size: 2em;
+        line-height: 0.94em;
     }
 `;
 

@@ -69,10 +69,9 @@ const PokemonImgContainer = styled.svg`
     height: 100%;
     overflow: hidden;
     flex: 1 1 0;
-    max-height: 13rem; //to stop image quality from getting too bad when getting bigger
 
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        max-height: 35vh;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        max-height: 75%; //to stop image quality from getting too bad when getting bigger
     }
 `;
 
@@ -97,9 +96,9 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     color: inherit;
     font-size: 1em;
 
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        height: 3.2rem;
-        font-size: 1.3rem;
-        left: 0.5rem;
+    @media ${breakpoints.heightsQueries.minHeights.tablet} {
+        //height: 3.2rem;
+        font-size: 1.3em;
+        max-height: 20%;
     }
 `;

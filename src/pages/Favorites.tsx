@@ -33,11 +33,6 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     overflow: hidden;
     padding: 0 1rem;
-
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        padding: 0 12vw;
-        background-color: #1b252f;
-    }
 `;
 
 const Wrapper = styled(ContainerPrototype)`
@@ -55,17 +50,12 @@ const FavoritesContainer = styled(ContainerPrototype)`
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
     gap: 2vh;
-    //margin: 1vh 0;
     padding: 2vh 0;
-    overflow: scroll;
+    overflow-y: scroll;
     flex: 1 0 0;
-    //background-color: rgba(0, 0, 0, 0.03);
-    //border-radius: 8px;
-    //border: 1px solid rgba(0, 0, 0, 0.3);
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-auto-rows: 20vh;
-        //border: 1px solid grey;
     }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
