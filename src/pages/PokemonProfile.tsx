@@ -164,6 +164,10 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     flex: 1 0 0;
     overflow: hidden;
+
+    @media (orientation: landscape) {
+        overflow: scroll;
+    }
 `;
 const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
     display: grid;
@@ -224,6 +228,9 @@ const InfoNavBody = styled(ContainerPrototype)`
     overflow-y: scroll;
     padding: 0 1rem;
     flex: 1 0 0;
+    @media (orientation: landscape) {
+        overflow: initial;
+    }
 `;
 
 const WhiteSpace = styled(ContainerPrototype)`

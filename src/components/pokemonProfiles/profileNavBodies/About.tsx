@@ -115,8 +115,8 @@ const Description = styled.p`
 
 const TypeContainer = styled(ContainerPrototype)`
     //justify-content: center;
-    flex: 0 0 6vh;
-    //overflow: hidden;
+    flex: 0 0 8vh;
+    overflow: hidden;
 `;
 
 const VitalsSectionContainer = styled.div`
@@ -167,6 +167,10 @@ const SWElementsContainer = styled(ContainerPrototype)`
     grid-auto-rows: 6vh;
     gap: 0.5rem;
     min-height: 6vh;
+    overflow-y: hidden;
+    @media (orientation: landscape) {
+        grid-auto-rows: 8vh;
+    }
 `;
 
 const SWContainer = styled(ContainerPrototype)`

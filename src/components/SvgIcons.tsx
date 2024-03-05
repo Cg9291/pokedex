@@ -32,7 +32,7 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?
     padding: 1vw;
 
     @media (orientation: landscape) {
-        padding: 2.4%;
+        padding: 1vh;
     }
 
     svg {

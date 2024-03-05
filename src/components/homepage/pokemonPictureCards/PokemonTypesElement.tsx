@@ -57,6 +57,10 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
             .mobileM} {
         font-size: 0.66rem;
     }
+
+    @media (orientation: landscape) {
+        padding-block: 1vh;
+    }
 `;
 
 const PokemonTypeText = styled.p`
