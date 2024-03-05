@@ -91,6 +91,10 @@ const Container = styled(ContainerPrototype)`
         padding: 0 12vw;
         background-color: #1b252f;
     } */
+    @media (orientation: landscape) {
+        flex: 1 0 150vh;
+        padding-bottom: 11vh;
+    }
 `;
 
 const Wrapper = styled(ContainerPrototype)`

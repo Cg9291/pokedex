@@ -147,6 +147,11 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     background-color: white;
     overflow: hidden;
+
+    @media (orientation: landscape) {
+        flex: 1 0 150vh;
+        padding-bottom: 11vh;
+    }
 `;
 
 const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
@@ -282,6 +287,10 @@ export const RandomizeButton = styled.button.attrs({ type: "button" })`
     border: none;
     &:hover {
         cursor: pointer;
+    }
+
+    @media (orientation: landscape) {
+        height: 20%;
     }
 `;
 

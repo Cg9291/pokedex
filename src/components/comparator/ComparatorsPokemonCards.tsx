@@ -101,4 +101,8 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
         font-size: 1.3em;
         max-height: 20%;
     }
+
+    @media (orientation: landscape) {
+        flex: 0 0 45%;
+    }
 `;

@@ -33,6 +33,9 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     overflow: hidden;
     padding: 0 1rem;
+    @media (orientation: landscape) {
+        padding-bottom: 11vh;
+    }
 `;
 
 const Wrapper = styled(ContainerPrototype)`
@@ -61,6 +64,10 @@ const FavoritesContainer = styled(ContainerPrototype)`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
         padding: 3vh 3vw;
+    }
+
+    @media (orientation: landscape) {
+        grid-auto-rows: 35vh;
     }
 `;
 
