@@ -61,9 +61,13 @@ const FavoritesContainer = styled(ContainerPrototype)`
         grid-auto-rows: 20vh;
     }
 
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+    /* @media ${breakpoints.widthsQueries.minWidths.laptop} {
         column-gap: 3rem;
-        padding: 3vh 3vw;
+        //padding: 3vh 3vw;
+    } */
+
+    @media ${breakpoints.heightsQueries.minHeights.laptopL} {
+        grid-auto-rows: 1fr;
     }
 
     @media (orientation: landscape) {

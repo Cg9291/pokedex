@@ -90,6 +90,9 @@ const Container = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
     border-top-right-radius: 3rem;
     height: 85%;
     bottom: 0;
+    @media (orientation: landscape) {
+        z-index: 15;
+    }
 `;
 
 const SearchModalHeader = styled.h2`
@@ -107,6 +110,10 @@ const ResultsSection = styled(ContainerPrototype)<{ $foundPokemon?: boolean }>`
     box-sizing: border-box;
     overflow-y: hidden;
     align-self: center;
+
+    @media (orientation: landscape) {
+        padding-inline: 20vw;
+    }
     /* @media ${breakpoints.heightsQueries.minHeights.mobileS} {
         padding: ${(props) => (props.$foundPokemon ? "18vh 10vw" : "1rem 0 0")};
     } */
