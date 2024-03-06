@@ -72,23 +72,24 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
 }
 
 const Container = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
-    display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: min-content 12% 50%;
+    grid-template-rows: min-content 12% 4% 1fr;
     grid-template-areas:
         "header"
         "searchBar"
+        "emptyRow"
         "results";
     display: ${(props) => (props.$isModalActive ? "grid" : "none")};
-    position: fixed;
-    top: 12vh;
+    position: absolute;
     background-color: white;
     z-index: 1;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    padding: 2rem 1rem;
+    padding: 1rem;
     border-top-left-radius: 3rem;
     border-top-right-radius: 3rem;
+    height: 85%;
+    bottom: 0;
 `;
 
 const SearchModalHeader = styled.h2`
@@ -97,16 +98,18 @@ const SearchModalHeader = styled.h2`
     grid-area: header;
 `;
 
-const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
-    display: flex;
+const ResultsSection = styled(ContainerPrototype)<{ $foundPokemon?: boolean }>`
     align-items: center;
-    padding: ${(props) => (props.$foundPokemon ? "8vh 16vw" : "1rem 0 0")};
+    padding: 10vh 10vw;
     background-color: rgba(122, 122, 122, 0.1);
     border-radius: 1rem;
-    margin: 1rem 0;
     grid-area: results;
     box-sizing: border-box;
     overflow-y: hidden;
+    align-self: center;
+    /* @media ${breakpoints.heightsQueries.minHeights.mobileS} {
+        padding: ${(props) => (props.$foundPokemon ? "18vh 10vw" : "1rem 0 0")};
+    } */
 
     /*  @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         margin: 1rem 0 5rem;

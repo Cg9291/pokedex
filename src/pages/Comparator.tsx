@@ -74,7 +74,7 @@ export function Comparator(): React.ReactElement {
     };
 
     return (
-        <Container>
+        <Container $isActive={isModalActive.isActive}>
             <Wrapper $isActive={isModalActive.isActive}>
                 {isCompared && (
                     <BackButton onClick={() => setIsCompared(false)}>
@@ -142,12 +142,11 @@ export function Comparator(): React.ReactElement {
     );
 }
 
-const Container = styled(ContainerPrototype)`
+const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     flex: 1 0 0;
     background-color: white;
     overflow: hidden;
-
     @media (orientation: landscape) {
         flex: 1 0 150vh;
         padding-bottom: 11vh;
@@ -157,9 +156,10 @@ const Container = styled(ContainerPrototype)`
 const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
-    padding: 0 1rem 1rem;
+    padding: ${(props) => (props.$isActive ? `0 1rem` : "0 1rem 1rem")};
     row-gap: 0.5rem;
     align-items: center;
+    flex-basis: ${(props) => (props.$isActive ? `100vh` : "initial")};
 `;
 
 const Header = styled(ContainerPrototype)`

@@ -143,10 +143,7 @@ export function PokemonProfile(): React.ReactElement {
                 <ProfileContainer>
                     <PokemonProfileInfoContainer>
                         <InfoNavBar>{displayNavHeaders()}</InfoNavBar>
-                        <InfoNavBody>
-                            {displayNavBody()}
-                            <WhiteSpace />
-                        </InfoNavBody>
+                        <InfoNavBody>{displayNavBody()}</InfoNavBody>
                     </PokemonProfileInfoContainer>
                 </ProfileContainer>
             </Container>
@@ -214,6 +211,9 @@ const ProfileContainer = styled(ContainerPrototype)``;
 
 const PokemonProfileInfoContainer = styled(ContainerPrototype)`
     flex-direction: column;
+    @media (orientation: landscape) {
+        padding-bottom: 14vh;
+    }
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
@@ -231,10 +231,6 @@ const InfoNavBody = styled(ContainerPrototype)`
     @media (orientation: landscape) {
         overflow: initial;
     }
-`;
-
-const WhiteSpace = styled(ContainerPrototype)`
-    min-height: 100px;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`

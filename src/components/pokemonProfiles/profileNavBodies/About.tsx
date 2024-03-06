@@ -100,8 +100,12 @@ const Container = styled(ContainerPrototype)`
     justify-content: flex-start;
     padding: 1rem;
     row-gap: 1rem;
-    margin-bottom: 5rem;
-    flex: 0 1 content;
+    //margin-bottom: 5rem;
+    flex: 1 0 content;
+
+    @media (orientation: landscape) {
+        padding-bottom: 14vh;
+    }
 `;
 
 const Description = styled.p`
