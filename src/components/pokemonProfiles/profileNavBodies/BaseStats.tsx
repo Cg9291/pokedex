@@ -100,6 +100,9 @@ function Stat(props: LocalStat): React.ReactElement {
 const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     flex-direction: column;
     overflow-y: hidden;
+    @media (orientation: landscape) {
+        overflow: initial;
+    }
 `;
 
 const StatContainer = styled(ContainerPrototype)`
@@ -107,6 +110,9 @@ const StatContainer = styled(ContainerPrototype)`
     column-gap: 1%;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.3em;
+    }
+    @media (orientation: landscape) {
+        flex: 0 0 25%;
     }
 `;
 const StatName = styled(ContainerPrototype)`

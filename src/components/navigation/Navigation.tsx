@@ -65,12 +65,12 @@ const Container = styled(ContainerPrototype)`
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.5rem;
     }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+    /*     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         bottom: unset;
         top: 0;
         height: 6.8%;
         border-bottom: 1px solid black;
-    }
+    } */
 
     @media (orientation: landscape) {
         position: fixed;

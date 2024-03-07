@@ -207,7 +207,9 @@ const PokemonImage = styled.image`
     border: solid black;
 `;
 
-const ProfileContainer = styled(ContainerPrototype)``;
+const ProfileContainer = styled(ContainerPrototype)`
+    flex: 1 0 0;
+`; //review..might be unecessary
 
 const PokemonProfileInfoContainer = styled(ContainerPrototype)`
     flex-direction: column;
@@ -230,6 +232,7 @@ const InfoNavBody = styled(ContainerPrototype)`
     flex: 1 0 0;
     @media (orientation: landscape) {
         overflow: initial;
+        min-height: 100%;
     }
 `;
 

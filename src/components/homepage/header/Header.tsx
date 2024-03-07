@@ -58,7 +58,7 @@ const Container = styled(ContainerPrototype)`
 
     @media (orientation: landscape) {
         grid-template-rows: 1fr 14vh;
-        grid-template-columns: 1fr 5vw;
+        grid-template-columns: 1fr 9vw;
     }
 `;
 
@@ -112,5 +112,11 @@ const HeaderText = styled.h2`
     @media ${breakpoints.widthsQueries.minWidths.tablet} and ${breakpoints.heightsQueries.minHeights.tablet} {
         font-size: 4rem;
         line-height: 4rem;
+    }
+
+    @media (orientation: landscape) {
+        @media ${breakpoints.widthsQueries.minWidths.laptop} {
+            font-size: 3em;
+        }
     }
 `;
