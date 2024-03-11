@@ -110,6 +110,9 @@ const Container = styled(ContainerPrototype)`
     justify-content: center;
     padding: 1rem 0;
     column-gap: 0.5rem;
+    @media (orientation: landscape) {
+        padding: 0;
+    }
 `;
 
 const PokemonContainer = styled(Link)`
@@ -159,8 +162,9 @@ const PokemonType = styled(TypePrototype)`
     margin: 0;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: purple;
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        //max-width: 20vw;
+    border-bottom-color: red;
+    @media (orientation: landscape) {
+        width: unset;
+        height: 90%;
     }
 `;

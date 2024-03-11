@@ -163,7 +163,7 @@ const Container = styled(ContainerPrototype)`
     overflow: hidden;
 
     @media (orientation: landscape) {
-        overflow: scroll;
+        overflow: initial;
     }
 `;
 const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`

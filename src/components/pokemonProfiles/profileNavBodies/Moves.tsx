@@ -64,6 +64,9 @@ const MoveContainer = styled(ContainerPrototype)`
     padding: 3% 0;
     flex: 0 0 20%;
     overflow: hidden;
+    @media (orientation: landscape) {
+        padding-block: 1%;
+    }
 `;
 
 const MoveNameContainer = styled(ContainerPrototype)`
@@ -78,7 +81,9 @@ const MoveTypeContainer = styled(ContainerPrototype)<{ $typeName?: string }>`
     flex: 0 0 10%;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    flex: 0 1 content;
+    flex: 0 0 content;
+    width: unset;
+    height: 100%;
     border-width: 0.25rem;
     border-bottom-color: yellow;
 `;
