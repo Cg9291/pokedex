@@ -78,9 +78,9 @@ export function FilteredSearch(): React.ReactElement {
 
     return (
         <Container>
+            <Title>Filters</Title>
             <Form onSubmit={handleSubmit}>
-                <Title>Filters</Title>
-                {displayFilters()}
+                <FiltersContainer>{displayFilters()}</FiltersContainer>
                 <SubmitButton />
             </Form>
         </Container>
@@ -89,31 +89,43 @@ export function FilteredSearch(): React.ReactElement {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
+    flex: 1 0 0;
     overflow: hidden;
     padding: 0 1rem;
+`;
+const Title = styled.h1`
+    border-bottom: 1px solid black;
 `;
 
 const Form = styled.form.attrs({
     method: "get",
     encType: "multipart/form-data"
 })`
-    flex-direction: inherit;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    display: flex;
+    flex: 1 0 0;
+    overflow: hidden;
+    gap: 2vh;
+    padding-bottom: 2vh;
 `;
-const Title = styled.h1`
-    //margin: 1rem 0 1rem 1rem;
+
+const FiltersContainer = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 1 0 0;
 `;
 
 const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
-    width: 20rem;
-    height: 20rem;
+    width: 100%;
+    height: 100%;
+    flex: 0 0 10%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 12px;
     background-color: gold;
     font-size: 1.2em;
     font-weight: 600;
-    margin-bottom: 1rem;
+    border-color: transparent;
+    color: white;
 `;

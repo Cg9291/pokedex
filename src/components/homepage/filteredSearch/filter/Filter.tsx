@@ -6,35 +6,32 @@ import { OptionsRow } from "./OptionsRow";
 
 export function Filters(props: { styleOfFilter: string; nameOfFilter: string }): React.ReactElement {
     return (
-        <FiltersContainer>
+        <Container>
             <FiltersHeadersContainer>
                 <FiltersHeadersValue>{capitalizeWords(props.nameOfFilter)}</FiltersHeadersValue>
             </FiltersHeadersContainer>
             <OptionsContainer>
                 <OptionsRow styleOfParentFilter={props.styleOfFilter} nameOfParentFilter={props.nameOfFilter} />
             </OptionsContainer>
-        </FiltersContainer>
+        </Container>
     );
 }
 
-const FiltersContainer = styled(ContainerPrototype)`
-    width: 100%;
-    height: 1fr;
+const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    overflow-x: hidden;
-    //border: 0.1rem solid red;
+    overflow: hidden;
+    flex: 1 1 0;
 `;
 
-const FiltersHeadersContainer = styled.div`
-    display: flex;
-    align-items: start;
-    height: 30%;
+const FiltersHeadersContainer = styled(ContainerPrototype)`
+    align-items: center;
+    flex: 0 0 40%;
 `;
 
 const OptionsContainer = styled(ContainerPrototype)`
-    max-width: 100%;
-    height: 1fr;
     overflow-x: scroll;
-    padding: 0.5rem 0.5rem 0 0.5rem;
+    align-items: flex-start;
+    flex: 1 0 0;
+    //padding-block: 1vh;
 `;
-const FiltersHeadersValue = styled.h5``;
+const FiltersHeadersValue = styled.h4``;
