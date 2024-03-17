@@ -109,11 +109,18 @@ const Form = styled.form.attrs({
     overflow: hidden;
     gap: 2vh;
     padding-bottom: 2vh;
+    @media (orientation: landscape) {
+        overflow-y: scroll;
+        padding-bottom: 15vh;
+    }
 `;
 
 const FiltersContainer = styled(ContainerPrototype)`
     flex-direction: column;
     flex: 1 0 0;
+    @media (orientation: landscape) {
+        flex: 0 0 content;
+    }
 `;
 
 const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
@@ -128,4 +135,7 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     font-weight: 600;
     border-color: transparent;
     color: white;
+    @media (orientation: landscape) {
+        flex: 0 0 20%;
+    }
 `;

@@ -21,6 +21,9 @@ const Container = styled(ContainerPrototype)`
     flex-direction: column;
     overflow: hidden;
     flex: 1 1 0;
+    @media (orientation: landscape) {
+        flex: 0 0 33vh;
+    }
 `;
 
 const FiltersHeadersContainer = styled(ContainerPrototype)`

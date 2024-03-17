@@ -288,6 +288,10 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
         min-width: fit-content;
         max-width: 5rem;
     }
+    @media (orientation: landscape) {
+        //max-width: 1rem;
+        //flex: 0 1 5rem;
+    }
 `;
 
 const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`
