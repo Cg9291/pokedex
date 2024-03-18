@@ -35,6 +35,7 @@ const OptionsContainer = styled(ContainerPrototype)`
     overflow-x: scroll;
     align-items: flex-start;
     flex: 1 0 0;
+    column-gap: 2vw;
     //padding-block: 1vh;
 `;
 const FiltersHeadersValue = styled.h4``;

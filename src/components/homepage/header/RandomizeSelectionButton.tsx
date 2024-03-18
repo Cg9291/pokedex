@@ -15,17 +15,20 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
     return (
         <Container>
-            <Button onClick={() => randomize()}>{/* <RandomizeButtonImage /> */}</Button>
+            <Button onClick={() => randomize()}>
+                <RandomizeButtonImage />
+            </Button>
         </Container>
     );
 }
 
 const Container = styled(ContainerPrototype)`
-    aspect-ratio: 1/1;
+    //aspect-ratio: 1/1;
     //z-index: 1;
     grid-area: randomizeButton;
     align-self: start;
     align-items: flex-start;
+    flex-direction: column;
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         top: 1.5rem;
@@ -35,7 +38,7 @@ const Container = styled(ContainerPrototype)`
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
-    flex: 1 0 0;
+    flex: 0 0 auto;
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: white;
@@ -61,4 +64,5 @@ export const RandomizeButtonImage = styled.img.attrs({
 })`
     width: 100%;
     height: 100%;
+    //aspect-ratio: 1/1;
 `;
