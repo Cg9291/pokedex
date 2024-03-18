@@ -95,8 +95,7 @@ const SliderInput = styled.input`
     margin: 0;
     pointer-events: none; /* let clicks pass through */
 
-    &::-webkit-slider-runnable-track,
-    & {
+    &::-webkit-slider-runnable-track {
         -webkit-appearance: none;
         background: grey;
         height: 0.2em;
@@ -110,7 +109,8 @@ const SliderInput = styled.input`
         position: relative;
         z-index: 1;
         height: 1em;
-        width: 1em;
+        //width: 1em;
+        aspect-ratio: 1/1;
         border-radius: 25px;
         pointer-events: auto;
         position: relative;

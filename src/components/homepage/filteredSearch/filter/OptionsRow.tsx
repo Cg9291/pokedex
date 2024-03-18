@@ -7,8 +7,8 @@ import { PokemonGenerationsListInterface } from "../../../../interfaces/miscInte
 import { FocusedFilterOptionsInterface, FocusedFilterOptionsKitInterface } from "../../../../pages/FilteredSearch";
 
 export interface myProps {
-    styleOfParentFilter: string;
-    nameOfParentFilter: string;
+    styleOfFilter: string;
+    nameOfFilter: string;
 }
 
 export function OptionsRow(props: myProps): React.ReactElement {
@@ -17,7 +17,7 @@ export function OptionsRow(props: myProps): React.ReactElement {
         type: null,
         type2: null
     });
-    const { styleOfParentFilter, nameOfParentFilter } = props;
+    const { styleOfFilter: styleOfParentFilter, nameOfFilter: nameOfParentFilter } = props;
     const focusedFiltersOptionsKit: FocusedFilterOptionsKitInterface = {
         focusedFiltersOptions: focusedFiltersOptions,
         setFocusedFiltersOptions: setFocusedFiltersOptions

@@ -66,6 +66,7 @@ const ButtonContainer = styled(ContainerPrototype)<{ $isFocused?: boolean }>`
     //border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "0.1rem solid transparent")};
     background-color: ${(props) => (props.$isFocused ? "black" : "rgba(108, 122, 137, 0.23)")};
     color: ${(props) => (props.$isFocused ? "white" : "black")};
+    height: 85%;
 `;
 
 const OptionsButtonLabel = styled.label`
