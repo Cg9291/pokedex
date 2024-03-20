@@ -1,8 +1,9 @@
+import React from "react";
 import "./App.css";
 import styled from "styled-components/macro";
 import ContainerPrototype from "./components/prototypes/ContainerPrototype";
+import { useMatch } from "react-router-dom";
 import { RoutesStructure } from "./components/RoutesStructure";
-import React from "react";
 import { Navigation } from "./components/navigation/Navigation";
 import * as breakpoints from "./objects/breakpoints";
 
@@ -14,26 +15,43 @@ TODO
 */
 
 function App(): React.ReactElement {
+    const match = useMatch("/filter/:gen");
     return (
-        <Container>
+        <Container $isRouteFilter={!!match}>
             <RoutesStructure />
             <Navigation />
         </Container>
     );
 }
 
-const Container = styled(ContainerPrototype)`
+const Container = styled(ContainerPrototype)<{ $isRouteFilter: boolean }>`
     background-color: white;
     flex-direction: column;
     max-height: 100vh;
     overflow-y: hidden;
-    //justify-content: flex-start;
     @media (orientation: landscape) {
-        overflow-y: scroll;
+        overflow-y: ${(props) => (props.$isRouteFilter ? "hidden" : "scroll")};
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+            //width: 5%;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     }
-    /*  @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        flex-direction: column-reverse;
-    } */
 `;
 
 export default App;
