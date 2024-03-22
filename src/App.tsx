@@ -30,26 +30,28 @@ const Container = styled(ContainerPrototype)<{ $isRouteFilter: boolean }>`
     max-height: 100vh;
     overflow-y: hidden;
     @media (orientation: landscape) {
-        overflow-y: ${(props) => (props.$isRouteFilter ? "hidden" : "scroll")};
-        &::-webkit-scrollbar {
-            height: 4px;
-        }
+        overflow-y: scroll; /* ${(props) => (props.$isRouteFilter ? "hidden" : "scroll")}; */
 
-        /* Track */
-        &::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
+        @media ${breakpoints.widthsQueries.minWidths.flexible("1180px")} {
+            &::-webkit-scrollbar {
+                height: 4px;
+            }
 
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-            //width: 5%;
-        }
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
 
-        /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
         }
     }
 `;

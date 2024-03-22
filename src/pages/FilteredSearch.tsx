@@ -4,6 +4,7 @@ import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { Filters } from "../components/homepage/filteredSearch/filter/Filter";
 import { useNavigate } from "react-router-dom";
 import { FilterInfoInterface } from "../interfaces/miscInterfaces";
+import * as breakpoints from "../objects/breakpoints";
 
 export interface LocalTransmittedDataInterface {
     generation?: string;
@@ -92,9 +93,26 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 0;
     overflow: hidden;
     padding: 0 1rem;
+    @media (orientation: landscape) {
+        flex: 0 0 content;
+        //padding-bottom: 11vh;
+    }
 `;
 const Title = styled.h1`
     border-bottom: 1px solid black;
+    @media (orientation: landscape) {
+        position: fixed;
+        top: 0;
+        z-index: 10;
+        background-color: white;
+        width: auto;
+        margin: 0 1rem;
+        left: 0;
+        right: 0;
+        @media ${breakpoints.widthsQueries.minWidths.flexible("1180px")} {
+            margin: 0 2rem 0 1rem;
+        }
+    }
 `;
 
 const Form = styled.form.attrs({
@@ -110,27 +128,32 @@ const Form = styled.form.attrs({
     gap: 2vh;
     padding-bottom: 2vh;
     @media (orientation: landscape) {
-        overflow-y: scroll;
+        //overflow-y: hidden;
+        margin-top: 44px;
         padding-bottom: 15vh;
-        &::-webkit-scrollbar {
-            width: 10px;
-        }
+        flex: 0 0 content;
+
+        /*  @media ${breakpoints.widthsQueries.minWidths.flexible("1180px")} {
+            &::-webkit-scrollbar {
+                width: 10px;
+            } */
 
         /* Track */
-        &::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
+        /*    &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            } */
 
         /* Handle */
-        &::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
+        /*    &::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
+            } */
 
         /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+        /*    &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+        }*/
     }
 `;
 
@@ -155,6 +178,6 @@ const SubmitButtonContainer = styled.button.attrs({ type: "submit" })`
     border-color: transparent;
     color: white;
     @media (orientation: landscape) {
-        flex: 0 0 20%;
+        flex: 0 0 20vh;
     }
 `;
