@@ -9,6 +9,7 @@ import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTy
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
 import { PokemonTypesElement } from "../../homepage/pokemonPictureCards/PokemonTypesElement";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
 export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
@@ -39,7 +40,7 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
                     <PokemonTypesElement
                         typeName={types[0].type.name}
                         dynamicBackground={true}
-                        whereUsed="aboutSection"
+                        whereUsed={whereUsedValues.aboutSection}
                     />
                 </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>

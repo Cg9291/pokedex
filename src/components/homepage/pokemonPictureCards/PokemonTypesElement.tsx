@@ -7,6 +7,7 @@ import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { typesColors } from "../../../objects/typesColors";
 import * as breakpoints from "../../../objects/breakpoints";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
 export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.ReactElement {
     return props.typeName !== "none" ? (
@@ -26,7 +27,7 @@ export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.Re
 }
 const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
     flex: 1 0 0;
-    padding: ${(props) => (props.$whereUsed === "aboutSection" ? "1%" : "5%")};
+    padding: ${(props) => (props.$whereUsed === whereUsedValues.aboutSection ? "1%" : "5%")};
     border-radius: 99px;
     background-color: ${(props) =>
         props.$dynamicBackground ? typesColors[props.$pokeType as keyof TypesColorsInt] : "rgba(0, 0, 0, 0.2)"};

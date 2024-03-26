@@ -8,6 +8,7 @@ import { punctuationRegex } from "../../../../regularExpressions/punctuationRege
 import { useHandleSearchSubmission } from "../../../../functions/utilities/useHandleSearchSubmission";
 import { IsModalActiveKitInterface } from "../../../comparator/PokemonSearchModal";
 import * as breakpoints from "../../../../objects/breakpoints";
+import { whereUsedValues } from "../../../../objects/whereUsedValues";
 
 export interface SearchPropsInterface {
     usesNavigation?: boolean;
@@ -183,10 +184,10 @@ const InputContainer = styled.div<{ $whereUsed?: string }>`
     position: relative;
     height: 100%;
     flex: 1;
-    margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "0.2rem")};
+    margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "0.2rem")};
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        margin-right: ${(props) => (props.$whereUsed === "searchmodal" ? "0" : "1rem")};
+        margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "1rem")};
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {

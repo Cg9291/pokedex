@@ -4,12 +4,13 @@ import React from "react";
 import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/PokemonPictureCard";
 import { typesColors } from "../objects/typesColors";
 import * as breakpoints from "../objects/breakpoints";
+import { whereUsedValues } from "../objects/whereUsedValues";
 export function Favorites(): React.ReactElement {
     const favoritedPokemons = JSON.parse(localStorage.getItem("pokemons") || "[]");
     const numberOfFavoritedPokemons = favoritedPokemons.length;
     const mapPictureCards = (): React.ReactElement[] =>
         favoritedPokemons.map((number: number, index: number) => (
-            <PokemonPictureCard id={number} key={index} isLink={true} whereUsed="favorites" />
+            <PokemonPictureCard id={number} key={index} isLink={true} whereUsed={whereUsedValues.favorites} />
         ));
 
     return (
@@ -66,9 +67,9 @@ const FavoritesContainer = styled(ContainerPrototype)`
         //padding: 3vh 3vw;
     } */
 
-    @media ${breakpoints.heightsQueries.minHeights.laptopL} {
+    /* @media ${breakpoints.heightsQueries.minHeights.laptopL} {
         grid-auto-rows: 1fr;
-    }
+    } */
 
     @media (orientation: landscape) {
         grid-auto-rows: 35vh;

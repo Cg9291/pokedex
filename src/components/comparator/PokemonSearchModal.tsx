@@ -9,6 +9,7 @@ import { IsModalActiveInterface } from "../../interfaces/comparatorInterfaces";
 import { ComparatorPokemonInfoInterface } from "../../interfaces/comparatorInterfaces";
 import { Search } from "../homepage/header/search/Search";
 import * as breakpoints from "../../objects/breakpoints";
+import { whereUsedValues } from "../../objects/whereUsedValues";
 
 export interface ComparatorPokemonSearchModalInterface {
     isModalActiveKit: IsModalActiveKitInterface;
@@ -62,7 +63,7 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                         pokemonImagesKit={props.pokemonImagesKit}
                         isModalActiveKit={props.isModalActiveKit}
                         isLink={false}
-                        whereUsed="searchmodal"
+                        whereUsed={whereUsedValues.searchModal}
                         setSearchedPokemonId={setSearchedPokemonId}
                     />
                 )}

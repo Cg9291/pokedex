@@ -5,13 +5,14 @@ import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/P
 import React, { useState } from "react";
 import { pickRandomPokemonNumbers } from "../functions/utilities/pickRandomPokemonNumbers";
 import * as breakpoints from "../objects/breakpoints";
+import { whereUsedValues } from "../objects/whereUsedValues";
 
 export function Homepage(): React.ReactElement {
     const [randomPokemonSelection, setRandomPokemonSelection] = useState<number[]>(pickRandomPokemonNumbers());
 
     const mapPictureCards = (): React.ReactElement[] =>
         randomPokemonSelection.map((number, index) => (
-            <PokemonPictureCard id={number} isLink={true} whereUsed="homepage" key={index} />
+            <PokemonPictureCard id={number} isLink={true} whereUsed={whereUsedValues.homepage} key={index} />
         ));
 
     return (

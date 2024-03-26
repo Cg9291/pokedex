@@ -14,6 +14,7 @@ import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
 import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 import * as breakpoints from "../../../objects/breakpoints";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
 export interface PokemonPictureCardsPropsInterface {
     id: NumOrString;
@@ -132,7 +133,7 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-template-rows: repeat(2, auto);
         padding-bottom: 0.6rem;
-        min-height: ${(props) => (props.$whereUsed === "searchmodal" ? "30%" : "100%")};
+        min-height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "30%" : "100%")};
     }
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         /* min-height: 80%;
