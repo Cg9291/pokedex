@@ -171,6 +171,7 @@ const Form = styled.form.attrs({
     width: 100%;
     height: 100%;
     display: flex;
+    column-gap: 2%;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
@@ -183,11 +184,11 @@ const Form = styled.form.attrs({
 const InputContainer = styled.div<{ $whereUsed?: string }>`
     position: relative;
     height: 100%;
-    flex: 1;
-    margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "0.2rem")};
+    flex: 1 0 0;
+    //margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "0.2rem")};
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "1rem")};
+        //margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "1rem")};
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
@@ -253,14 +254,14 @@ const Input = styled.input.attrs({
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    flex: 0 1 17%;
+    flex: 0 0 5%;
     height: 100%;
     max-width: 6rem;
     border-radius: 10px;
     color: black;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        flex: 0 1 15%;
+        flex: 0 0 15%;
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {

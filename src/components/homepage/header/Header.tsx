@@ -18,7 +18,7 @@ export function Header(props: RandomPokemonSelectionInterface): React.ReactEleme
 
 const Container = styled(ContainerPrototype)`
     display: grid;
-    grid-template-rows: 1fr 7vh;
+    grid-template-rows: 1fr 10vh;
     grid-template-columns: 1fr 10vw;
     grid-template-areas:
         "headerText randomizeButton"

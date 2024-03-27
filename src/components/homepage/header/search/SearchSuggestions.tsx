@@ -101,7 +101,9 @@ export function SearchSuggestions(props: SearchSuggestionsProps): React.ReactEle
                         focusedElementIndex.value === idx ? (suggestionRef.current = node) : null;
                     }}
                     tabIndex={(tabIndexValue += 1)}
-                    $isFocused={focusedElementIndex.value === idx ? true : false}
+                    $isFocused={focusedElementIndex.value === idx}
+                    $isFirst={idx === 0}
+                    $isLast={idx === generateSuggestions().length - 1}
                     onMouseOver={() => handleMouseOver(idx)}
                     onMouseMove={() => {
                         setFocusedElementIndex({ value: idx, isArrowNavigation: false });
@@ -197,23 +199,31 @@ const Container = styled(ContainerPrototype)`
     width: 100%;
     max-width: 100%;
     z-index: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border: 1px solid black;
 `;
 
 const SuggestionsList = styled.ul`
     width: 100%;
     overflow-y: scroll;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
 `;
 
-const ListItem = styled.li<{ $isFocused: boolean }>`
+const ListItem = styled.li<{ $isFocused: boolean; $isFirst: boolean; $isLast: boolean }>`
     width: 100%;
-    height: 2.5rem;
-    border: 0.1px solid;
+    height: 8vh;
+    border-top: ${(props) => (props.$isFirst ? "none" : "1px solid black")};
     background-color: ${(props) => (props.$isFocused ? "lightgray" : "white")};
     overflow-y: hidden;
     display: flex;
     align-items: center;
+    border-bottom-left-radius: ${(props) => props.$isLast && "24px"};
+    border-bottom-right-radius: ${(props) => props.$isLast && "24px"};
+    @media (orientation: landscape) {
+        height: 10vh;
+    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
