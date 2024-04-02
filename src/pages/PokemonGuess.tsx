@@ -75,7 +75,7 @@ export function PokemonGuess() {
                                 onClick={() => !isReveal && handleChoice(item.pokemonName)}
                                 style={{ background: item.colour }}
                             >
-                                <h1>{capitalizeWords(item.pokemonName)}</h1>
+                                <p>{capitalizeWords(item.pokemonName)}</p>
                             </ChoiceButton>
                         ))}
                 </Choices>
@@ -109,7 +109,7 @@ const Title = styled.h1`
     font-size: 3rem;
     text-align: center;
     flex: 0 0 content;
-    line-height: 3rem;
+    //line-height: 3rem;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 4rem;
@@ -122,6 +122,25 @@ const Title = styled.h1`
     }
 `;
 
+const Choices = styled(ContainerPrototype)`
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(4, 1fr);
+    column-gap: 10px;
+    row-gap: 0.2rem;
+    text-align: center;
+    padding: 0 1rem 1rem;
+    overflow: hidden;
+    flex: 0 0 40%;
+    overflow-y: hidden;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        flex: 1 0 38vh;
+        gap: 1rem;
+        padding: 1rem;
+    }
+`;
 const ChoiceButton = styled.button`
     border-radius: 8px;
     border-width: 0;
@@ -133,7 +152,7 @@ const ChoiceButton = styled.button`
     line-height: 1em;
     list-style: none;
     margin: 0;
-    padding: 0.6rem;
+    //padding: 0.6rem;
     text-align: center;
     transition: all 200ms;
     vertical-align: baseline;
@@ -143,25 +162,11 @@ const ChoiceButton = styled.button`
     width: 100%;
     height: 100%;
     flex: 1 0 content;
-`;
-
-const Choices = styled(ContainerPrototype)`
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 25%;
-    column-gap: 10px;
-    row-gap: 10px;
-    text-align: center;
-    padding: 0 1rem 1rem;
-    //margin-bottom: 1rem;
-    overflow: hidden;
-    flex: 1 0 content;
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        flex: 1 0 38vh;
-        gap: 1rem;
-        padding: 1rem;
+    p {
+        font-size: 1em;
+        font-weight: bold;
+        line-height: 1em;
+        overflow-wrap: break-word;
     }
 `;
 

@@ -23,7 +23,7 @@ const Container = styled(ContainerPrototype)`
     grid-template-areas:
         "headerText randomizeButton"
         "searchBar searchBar";
-    flex: 0 1 40vh;
+    flex: 0 1 35vh;
     align-items: end;
     background-color: darkred;
     padding: 0.5rem;
@@ -50,6 +50,7 @@ const Container = styled(ContainerPrototype)`
     //HEIGHTS MEDIA QUERIES
     @media ${breakpoints.heightsQueries.minHeights.mobileM} {
         flex-shrink: 0;
+        grid-template-rows: 1fr 7vh;
     }
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
         flex: 0 1 30vh;

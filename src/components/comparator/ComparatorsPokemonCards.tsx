@@ -84,6 +84,7 @@ const ButtonContainer = styled(ContainerPrototype)`
     flex: 0 0 50%;
     justify-content: center;
     align-items: center;
+    padding-left: 4vw;
 `;
 
 const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
@@ -91,13 +92,12 @@ const ChangeSelectionButton = styled.button.attrs({ type: "button" })`
     border: 1px solid black;
     border-radius: 7px;
     font-weight: 600;
-    flex: 0 1 75%;
-    aspect-ratio: 2.5/1;
+    flex: 0 0 100%;
+    aspect-ratio: 3/1;
     color: inherit;
     font-size: 1em;
 
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
-        //height: 3.2rem;
         font-size: 1.3em;
         max-height: 20%;
     }

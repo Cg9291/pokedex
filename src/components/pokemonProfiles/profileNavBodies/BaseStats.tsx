@@ -140,6 +140,7 @@ const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?:
     border-radius: 99px;
     align-self: center;
     flex: 0 1 40%;
+    overflow: hidden;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`

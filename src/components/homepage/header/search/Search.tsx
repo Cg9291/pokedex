@@ -199,7 +199,7 @@ const InputContainer = styled.div<{ $whereUsed?: string }>`
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
-    height:100%;
+    height: 100%;
     display: flex;
     border: 1px solid black;
     border-radius: 99px;
@@ -210,14 +210,14 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
-    border-bottom:${(props) => props.$isShowingSuggestions && "none"}
+    border-bottom: ${(props) => props.$isShowingSuggestions && "none"};
     padding: 0.5rem 0;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-            @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
             max-height: 100%;
             height: 100%;
         }
-        }
+    }
 `;
 
 const Input = styled.input.attrs({
@@ -254,14 +254,14 @@ const Input = styled.input.attrs({
 `;
 
 const FilterButton = styled.button.attrs({ type: "button" })`
-    flex: 0 0 5%;
+    flex: 0 0 20%;
     height: 100%;
     max-width: 6rem;
     border-radius: 10px;
     color: black;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        flex: 0 0 15%;
+        //flex: 0 0 15%;
     }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {

@@ -104,7 +104,7 @@ const SearchModalHeader = styled.h2`
 
 const ResultsSection = styled(ContainerPrototype)<{ $foundPokemon?: boolean }>`
     align-items: center;
-    padding: 10vh 10vw;
+    padding: 0 5vw;
     background-color: rgba(122, 122, 122, 0.1);
     border-radius: 1rem;
     grid-area: results;
