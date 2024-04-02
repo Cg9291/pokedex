@@ -131,11 +131,9 @@ const PokemonContainer = styled(Link)`
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
     border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    flex: 0 1 content;
+    max-width: 50vw;
+    max-height: 50vw;
     aspect-ratio: 1/1;
-    max-width: fit-content;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         max-width: 17vw;
     }
@@ -164,7 +162,7 @@ const PokemonType = styled(TypePrototype)`
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: red;
     @media (orientation: landscape) {
-        width: unset;
+        width: initial;
         height: 90%;
     }
 `;

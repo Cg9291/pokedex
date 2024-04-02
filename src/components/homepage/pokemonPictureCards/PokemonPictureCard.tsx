@@ -104,7 +104,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
     } else {
         return (
             <Container to="/" $mainType="none" $isFlex={true}>
-                <LoadingAnimation $whereUsed={props.whereUsed} />
+                <LoadingAnimation />
             </Container>
         );
     }
@@ -252,7 +252,9 @@ const PokemonImg = styled.img`
     aspect-ratio: 1/1;
 `;
 
-const LoadingAnimation = styled(LoadingSpinnerPrototype)<{ $whereUsed?: string }>`
-    width: 40%;
-    max-height: 100%;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    @media (orientation: landscape) {
+        width: initial;
+        height: 100%;
+    }
 `;

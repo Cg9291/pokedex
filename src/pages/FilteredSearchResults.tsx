@@ -123,6 +123,11 @@ const Container = styled(ContainerPrototype)<{ $isMyStateAvailable?: boolean }>`
     gap: 1rem;
     overflow-y: scroll;
     overflow-x: none;
+    @media (orientation: landscape) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 33vh;
+        margin-bottom: 10vh;
+    }
 `;
 
 const NotFoundContainer = styled.div`
@@ -130,7 +135,10 @@ const NotFoundContainer = styled.div`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    margin: auto;
+    border-bottom-color: blue;
     width: 100%;
-    align-self: center;
+    @media (orientation: landscape) {
+        width: initial;
+        height: 70vh;
+    }
 `;
