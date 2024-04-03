@@ -223,6 +223,10 @@ const InfoNavBar = styled(ContainerPrototype)`
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     flex: 0 0 15%;
+
+    @media (orientation: landscape) {
+        flex-basis: 25%;
+    }
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`

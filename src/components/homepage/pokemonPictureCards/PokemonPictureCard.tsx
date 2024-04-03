@@ -119,6 +119,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
         "typesContainer typesContainer image image";
     width: 100%;
     height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "initial" : "100%")};
+    aspect-ratio: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "2 / 1"};
+    max-height: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "80%"};
     margin: auto;
     padding: 0.3rem;
     border-radius: 15px;

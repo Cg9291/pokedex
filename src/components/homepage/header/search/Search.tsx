@@ -205,13 +205,13 @@ const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     border-radius: 99px;
     z-index: 2;
     background-color: white;
-    padding-right: 0.5rem;
+    //padding-right: 0.5rem;
     border-top-left-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom: ${(props) => props.$isShowingSuggestions && "none"};
-    padding: 0.5rem 0;
+    padding: /* 0.5rem */ 0;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
             max-height: 100%;
