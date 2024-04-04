@@ -111,7 +111,7 @@ const Container = styled(ContainerPrototype)`
     padding: 1rem 0;
     column-gap: 0.5rem;
     @media (orientation: landscape) {
-        padding: 0;
+        //padding: 0.5vh 0 0 0;
     }
 `;
 
@@ -134,8 +134,9 @@ const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     max-width: 50vw;
     max-height: 50vw;
     aspect-ratio: 1/1;
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        max-width: 17vw;
+
+    @media (orientation: landscape) {
+        max-height: 40vw;
     }
 `;
 const PokemonImage = styled.image`

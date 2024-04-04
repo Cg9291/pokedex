@@ -66,6 +66,7 @@ const MoveContainer = styled(ContainerPrototype)`
     overflow: hidden;
     @media (orientation: landscape) {
         padding-block: 1%;
+        flex: 0 0 15vh;
     }
 `;
 
@@ -86,4 +87,5 @@ const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     height: 100%;
     border-width: 0.25rem;
     border-bottom-color: yellow;
+    //justify-self: flex-end;
 `;

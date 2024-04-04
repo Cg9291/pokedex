@@ -112,7 +112,7 @@ const StatContainer = styled(ContainerPrototype)`
         font-size: 1.3em;
     }
     @media (orientation: landscape) {
-        flex: 0 0 25%;
+        flex: 0 0 15vh;
     }
 `;
 const StatName = styled(ContainerPrototype)`

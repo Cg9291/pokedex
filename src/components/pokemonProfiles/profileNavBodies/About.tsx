@@ -105,7 +105,7 @@ const Container = styled(ContainerPrototype)`
     flex: 1 0 content;
 
     @media (orientation: landscape) {
-        padding-bottom: 14vh;
+        //padding-bottom: 14vh;
     }
 `;
 

@@ -164,6 +164,7 @@ const Container = styled(ContainerPrototype)`
 
     @media (orientation: landscape) {
         overflow: initial;
+        flex: 0 0 content;
     }
 `;
 const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
@@ -179,6 +180,9 @@ const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
     flex-direction: column;
     align-items: center;
     max-height: 40%;
+    @media (orientation: landscape) {
+        max-height: 70vh;
+    }
 `;
 
 const PokeNumber = styled.span`
@@ -209,12 +213,17 @@ const PokemonImage = styled.image`
 
 const ProfileContainer = styled(ContainerPrototype)`
     flex: 1 0 0;
+    @media (orientation: landscape) {
+        overflow: initial;
+        flex: 0 0 content;
+    }
 `; //review..might be unecessary
 
 const PokemonProfileInfoContainer = styled(ContainerPrototype)`
     flex-direction: column;
     @media (orientation: landscape) {
         padding-bottom: 14vh;
+        //height: max-content;
     }
 `;
 
@@ -225,7 +234,8 @@ const InfoNavBar = styled(ContainerPrototype)`
     flex: 0 0 15%;
 
     @media (orientation: landscape) {
-        flex-basis: 25%;
+        //flex-basis: 25%;
+        flex: 0 0 12vh;
     }
 `;
 
@@ -236,7 +246,8 @@ const InfoNavBody = styled(ContainerPrototype)`
     flex: 1 0 0;
     @media (orientation: landscape) {
         overflow: initial;
-        min-height: 100%;
+        flex: 0 0 content;
+        //min-height: 100%;
     }
 `;
 
@@ -248,6 +259,6 @@ const LoadingAnimation = styled(LoadingSpinnerPrototype)`
 
     @media (orientation: landscape) {
         width: initial;
-        height: 70%;
+        height: 70vh;
     }
 `;
