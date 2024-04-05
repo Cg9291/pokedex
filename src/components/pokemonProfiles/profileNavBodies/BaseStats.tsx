@@ -101,7 +101,7 @@ const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison
     flex-direction: column;
     overflow-y: hidden;
     @media (orientation: landscape) {
-        overflow: initial;
+        flex: 0 0 content;
     }
 `;
 

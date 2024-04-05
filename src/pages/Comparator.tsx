@@ -74,7 +74,7 @@ export function Comparator(): React.ReactElement {
     };
 
     return (
-        <Container $isActive={isModalActive.isActive}>
+        <Container $isActive={isModalActive.isActive} $isCompared={isCompared}>
             <Wrapper $isActive={isModalActive.isActive}>
                 {isCompared && (
                     <BackButton onClick={() => setIsCompared(false)}>
@@ -87,7 +87,7 @@ export function Comparator(): React.ReactElement {
                         <HeaderDescription>Select the two Pokemon that you would like to compare.</HeaderDescription>
                     )}
                 </Header>
-                <ComparatorBody>
+                <ComparatorBody $isCompared={isCompared}>
                     {isCompared ? (
                         <>
                             <CardsRow>
@@ -142,13 +142,13 @@ export function Comparator(): React.ReactElement {
     );
 }
 
-const Container = styled(ContainerPrototype)<{ $isActive?: boolean }>`
+const Container = styled(ContainerPrototype)<{ $isActive?: boolean; $isCompared: boolean }>`
     flex-direction: column;
     flex: 1 0 0;
     background-color: white;
     overflow: hidden;
     @media (orientation: landscape) {
-        flex: 1 0 150vh;
+        flex: ${(props) => (props.$isCompared ? "0 0 content" : "1 0 150vh")};
         padding-bottom: 11vh;
     }
 `;
@@ -196,7 +196,7 @@ const HeaderDescription = styled.p`
     }
 `;
 
-const ComparatorBody = styled(ContainerPrototype)`
+const ComparatorBody = styled(ContainerPrototype)<{ $isCompared: boolean }>`
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
@@ -209,6 +209,11 @@ const ComparatorBody = styled(ContainerPrototype)`
         justify-content: space-evenly;
         //border: 1rem solid red;
         //min-height: 100%;
+    }
+
+    @media (orientation: landscape) {
+        flex: ${(props) => props.$isCompared && "0 0 content"};
+        row-gap: 1vh;
     }
 `;
 
@@ -245,6 +250,10 @@ const CardsRow = styled(ContainerPrototype)`
         max-height: max-content;
         max-width: 100%;
         overflow-x: none;
+    }
+    @media (orientation: landscape) {
+        flex: 0 0 40vh;
+        overflow-y: hidden;
     }
 `;
 
