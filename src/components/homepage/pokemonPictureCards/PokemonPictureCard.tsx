@@ -89,10 +89,12 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
                 $mainType={pokemonInfo.types[0].type.name}
                 $whereUsed={props.whereUsed}
             >
-                <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
-                <PokeId>{displayFormattedId(pokeInfoObject.id)}</PokeId>
+                <PokeName $whereUsed={props.whereUsed}>{capitalizeWords(pokemonInfo.name)}</PokeName>
+                <PokeId $whereUsed={props.whereUsed}>{displayFormattedId(pokeInfoObject.id)}</PokeId>
 
-                <PokemonTypesContainer>{renderPokemonTypes(pokemonInfo.types)}</PokemonTypesContainer>
+                <PokemonTypesContainer $whereUsed={props.whereUsed}>
+                    {renderPokemonTypes(pokemonInfo.types)}
+                </PokemonTypesContainer>
                 <PokemonImgWrapper>
                     <PokemonImg
                         src={pokemonInfo.sprites.front_default}
@@ -137,16 +139,8 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
         padding-bottom: 0.6rem;
         min-height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "30%" : "100%")};
     }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        /* min-height: 80%;
-        min-width: 95%;
-        max-width: 95%; */
-    }
 
     //HEIGHTS MEDIA QUERIES
-    /* @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-
-    } */
 
     @media ${breakpoints.heightsQueries.minHeights.mobileS} {
         padding: 0.4rem;
@@ -154,9 +148,13 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
         padding: 0.5rem;
     }
+
+    @media (orientation: landscape) {
+        padding: 0.35rem;
+    }
 `;
 
-const PokeName = styled.h4`
+const PokeName = styled.h4<{ $whereUsed?: string }>`
     color: white;
     grid-area: name;
     place-self: start start;
@@ -186,9 +184,13 @@ const PokeName = styled.h4`
         font-size: 2.2em;
         line-height: 2rem;
     }
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "2vw"};
+    }
 `;
 
-const PokeId = styled.span`
+const PokeId = styled.span<{ $whereUsed?: string }>`
     grid-area: id;
     color: white;
     font-weight: 500;
@@ -219,9 +221,13 @@ const PokeId = styled.span`
         font-size: 2em;
         line-height: 2rem;
     }
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.6vw"};
+    }
 `;
 
-const PokemonTypesContainer = styled(ContainerPrototype)`
+const PokemonTypesContainer = styled(ContainerPrototype)<{ $whereUsed?: string }>`
     display: grid;
     grid-auto-rows: 46%;
     gap: 8%;
@@ -236,6 +242,11 @@ const PokemonTypesContainer = styled(ContainerPrototype)`
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 2rem;
         margin-bottom: 0;
+    }
+
+    @media (orientation: landscape) {
+        max-height: initial;
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.5vw"};
     }
 `;
 

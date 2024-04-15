@@ -2,5 +2,6 @@ export const whereUsedValues = {
     searchModal: "searchModal",
     aboutSection: "aboutSection",
     favorites: "favorites",
-    homepage: "homepage"
+    homepage: "homepage",
+    filter: "filter"
 };

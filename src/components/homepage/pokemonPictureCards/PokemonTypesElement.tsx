@@ -60,7 +60,8 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     }
 
     @media (orientation: landscape) {
-        padding-block: 1vh;
+        padding: 0 5% 0 0;
+        font-size: inherit;
     }
 `;
 
