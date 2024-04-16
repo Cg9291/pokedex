@@ -245,7 +245,7 @@ const PokemonTypesContainer = styled(ContainerPrototype)<{ $whereUsed?: string }
     }
 
     @media (orientation: landscape) {
-        max-height: initial;
+        max-height: ${(props) => (props.$whereUsed === whereUsedValues.filter ? "initial" : "90%")};
         font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.5vw"};
     }
 `;

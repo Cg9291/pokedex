@@ -146,6 +146,7 @@ export function PokemonProfile(): React.ReactElement {
                         <InfoNavBody>{displayNavBody()}</InfoNavBody>
                     </PokemonProfileInfoContainer>
                 </ProfileContainer>
+                {/*  <LoadingAnimation /> */}
             </Container>
         );
     } else {

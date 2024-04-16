@@ -36,17 +36,6 @@ const Container = styled(ContainerPrototype)`
         padding: 2vw; //review!!
     }
 
-    /*     @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        position: relative;
-        border-bottom-left-radius: unset;
-        border-bottom-right-radius: unset;
-        padding: 1rem 2rem;
-        justify-content: flex-end;
-    } */
-    /*  @media ${breakpoints.widthsQueries.minWidths.flexible("1720px")} {
-        align-items: flex-start;
-    } */
-
     //HEIGHTS MEDIA QUERIES
     @media ${breakpoints.heightsQueries.minHeights.mobileM} {
         flex-shrink: 0;
@@ -60,6 +49,10 @@ const Container = styled(ContainerPrototype)`
     @media (orientation: landscape) {
         grid-template-rows: 1fr 14vh;
         grid-template-columns: 1fr 9vw;
+
+        @media ${breakpoints.widthsQueries.minWidths.tablet} {
+            grid-template-rows: 1fr 10vh;
+        }
     }
 `;
 

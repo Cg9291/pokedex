@@ -95,6 +95,10 @@ const Title = styled.h1`
         padding-top: 0;
         font-size: 5em;
     }
+
+    @media (orientation: landscape) {
+        margin-left: 0;
+    }
 `;
 
 const SubTitle = styled.h4`
@@ -114,5 +118,9 @@ const SubTitle = styled.h4`
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
         margin: 0;
         font-size: 1.6em;
+    }
+
+    @media (orientation: landscape) {
+        margin-left: 0;
     }
 `;

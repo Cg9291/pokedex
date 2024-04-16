@@ -115,16 +115,6 @@ const ResultsSection = styled(ContainerPrototype)<{ $foundPokemon?: boolean }>`
     @media (orientation: landscape) {
         padding-inline: 20vw;
     }
-    /* @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-        padding: ${(props) => (props.$foundPokemon ? "18vh 10vw" : "1rem 0 0")};
-    } */
-
-    /*  @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        margin: 1rem 0 5rem;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("800px")} {
-        margin: 1rem 0 5.5rem;
-    } */
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;
