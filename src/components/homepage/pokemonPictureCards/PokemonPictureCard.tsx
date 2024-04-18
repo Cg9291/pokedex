@@ -266,8 +266,6 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    @media (orientation: landscape) {
-        width: initial;
-        height: 100%;
-    }
+    width: initial;
+    height: 100%;
 `;

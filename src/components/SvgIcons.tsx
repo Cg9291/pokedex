@@ -23,17 +23,11 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    width: 100%;
     height: 100%;
-    flex: 0 1 0;
     aspect-ratio: 1/1;
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};
-    padding: 1vw;
-
-    @media (orientation: landscape) {
-        padding: 1vh;
-    }
+    padding: 2%;
 
     svg {
         width: 100%;
