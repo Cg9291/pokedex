@@ -267,5 +267,5 @@ const PokemonImg = styled.img`
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     width: initial;
-    height: 100%;
+    height: 90%;
 `;

@@ -156,10 +156,13 @@ const Container = styled(ContainerPrototype)<{ $isActive?: boolean; $isCompared:
 const Wrapper = styled(ContainerPrototype)<{ $isActive?: boolean }>`
     flex-direction: column;
     background-color: ${(props) => (props.$isActive ? `rgba(0, 0, 0, 0.8)` : "inherit")};
-    padding: ${(props) => (props.$isActive ? `0 1rem` : "0 1rem 1rem")};
+    padding: ${(props) => (props.$isActive ? `0 1rem` : "1vh")};
     row-gap: 0.5rem;
     align-items: center;
     flex-basis: ${(props) => (props.$isActive ? `100vh` : "initial")};
+    @media (orientation: landscape) {
+        padding: ${(props) => (props.$isActive ? `0 1rem` : "2vh")};
+    }
 `;
 
 const Header = styled(ContainerPrototype)`
@@ -202,7 +205,7 @@ const ComparatorBody = styled(ContainerPrototype)<{ $isCompared: boolean }>`
     justify-content: space-evenly;
     overflow: hidden;
     flex: 1 0 0;
-    row-gap: 2%;
+    row-gap: 1vh;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         //flex: 0 1 100%;
@@ -213,7 +216,7 @@ const ComparatorBody = styled(ContainerPrototype)<{ $isCompared: boolean }>`
 
     @media (orientation: landscape) {
         flex: ${(props) => props.$isCompared && "0 0 content"};
-        row-gap: 1vh;
+        row-gap: 2vh;
     }
 `;
 
@@ -222,9 +225,12 @@ const CardsWrapper = styled(ContainerPrototype)`
     flex-direction: column;
     align-items: center;
     flex: 1 1 0;
-    row-gap: 2%;
+    row-gap: 1vh;
     @media ${breakpoints.heightsQueries.minHeights.tablet} {
         //padding: 5% 0;
+    }
+    @media (orientation: landscape) {
+        row-gap: 2vh;
     }
 `;
 

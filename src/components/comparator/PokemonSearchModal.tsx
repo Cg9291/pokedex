@@ -74,7 +74,7 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
 
 const Container = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
     grid-template-columns: 1fr;
-    grid-template-rows: min-content 12% 4% 1fr;
+    grid-template-rows: min-content 12% 1rem 1fr; //flex basis of empty row should equal that of padding
     grid-template-areas:
         "header"
         "searchBar"
