@@ -40,7 +40,7 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
                     <PokemonTypesElement
                         typeName={types[0].type.name}
                         dynamicBackground={true}
-                        whereUsed={whereUsedValues.aboutSection}
+                        whereUsed={whereUsedValues.aboutSection.maintype}
                     />
                 </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
@@ -70,10 +70,17 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
 
 function StrengthsAndWeaknesses(props: { type: string }) {
     console.log("SW", props.type);
-    const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
+    const displayStrengthsAndWeaknesses = (strengthsOrWeaknesses: string): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
             (x: string) => {
-                return <PokemonTypesElement typeName={x} dynamicBackground={true} key={x} />;
+                return (
+                    <PokemonTypesElement
+                        typeName={x}
+                        dynamicBackground={true}
+                        whereUsed={whereUsedValues.aboutSection.strengthsAndWeaknesses}
+                        key={x}
+                    />
+                );
             }
         );
 
@@ -82,7 +89,7 @@ function StrengthsAndWeaknesses(props: { type: string }) {
             <SWContainer>
                 <h3>{props.isStrength ? "Strengths" : "Weaknesses"}</h3>
                 <SWElementsContainer>
-                    {displayStrengths(`${props.isStrength ? "strengths" : "weaknesses"}`)}
+                    {displayStrengthsAndWeaknesses(`${props.isStrength ? "strengths" : "weaknesses"}`)}
                 </SWElementsContainer>
             </SWContainer>
         );

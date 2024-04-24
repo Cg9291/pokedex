@@ -250,6 +250,7 @@ const PokemonName = styled.h5`
     width: 100%;
     text-align: left;
     padding-left: 0.3rem;
+    font-size: 0.8rem;
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1rem;

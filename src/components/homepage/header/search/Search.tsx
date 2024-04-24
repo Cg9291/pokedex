@@ -229,15 +229,11 @@ const Input = styled.input.attrs({
     height: 100%;
     z-index: 2;
     margin-top: 0;
-    padding-left: 1rem;
+    padding-left: 2vw;
     border: none;
     background-color: transparent;
     border-right: 0.1px solid grey;
     font-size: 0.8rem;
-
-    @media ${breakpoints.widthsQueries.maxWidths.mobileM} {
-        padding-left: 0.5rem;
-    }
 
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.3rem;

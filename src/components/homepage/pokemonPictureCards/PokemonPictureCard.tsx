@@ -130,10 +130,6 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
     overflow: hidden;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        padding: 0.6rem;
-    }
-
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         grid-template-rows: repeat(2, auto);
         padding-bottom: 0.6rem;
@@ -141,13 +137,6 @@ const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?:
     }
 
     //HEIGHTS MEDIA QUERIES
-
-    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-        padding: 0.4rem;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        padding: 0.5rem;
-    }
 
     @media (orientation: landscape) {
         padding: 0.35rem;
@@ -158,32 +147,7 @@ const PokeName = styled.h4<{ $whereUsed?: string }>`
     color: white;
     grid-area: name;
     place-self: start start;
-    font-size: 0.8rem;
-    line-height: 0.8rem;
-
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        font-size: 2.5rem;
-    }
-    //HEIGHTS MEDIA QUERIES
-    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-        font-size: 0.8rem;
-        line-height: 0.8rem;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        font-size: 1.2rem;
-        //line-height: 1.2rem;
-        align-self: baseline;
-    }
-
-    //MIXED MEDIA QUERIES
-    @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
-        font-size: 2em;
-        line-height: 2rem;
-    }
-    @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
-        font-size: 2.2em;
-        line-height: 2rem;
-    }
+    font-size: 4vw;
 
     @media (orientation: landscape) {
         font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "2vw"};
@@ -194,21 +158,11 @@ const PokeId = styled.span<{ $whereUsed?: string }>`
     grid-area: id;
     color: white;
     font-weight: 500;
-    font-size: 0.7rem;
-    line-height: 0.7rem;
+    font-size: 4vw;
     margin-left: auto;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        line-height: 0.9rem;
-    }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.4rem;
-    }
-
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} {
-        font-size: 1rem;
-        //line-height: 1rem;
-        align-self: baseline;
     }
 
     //MIXED MEDIA QUERIES

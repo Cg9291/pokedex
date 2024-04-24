@@ -52,7 +52,7 @@ const Wrapper = styled(ContainerPrototype)`
 const FavoritesContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: max-content;
+    grid-auto-rows: calc(100vw / 4);
     gap: 2vh;
     padding: 2vh 0;
     overflow-y: scroll;

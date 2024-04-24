@@ -54,23 +54,24 @@ export const MainContainer = styled.div`
 
 const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(
+        2,
+        calc((100vw - 4vw) / 2 - 1vw)
+    ); //viewwidth - total inline padding / number of columns - half gap
+    grid-template-rows: repeat(3, calc((100% - 4vw) / 3));
     gap: 2vw;
     background-color: white;
     width: 100%;
     height: 100%;
     overflow: hidden;
 
-    //HEIGHTS MEDIA QUERIES
-    @media ${breakpoints.heightsQueries.minHeights.tablet} {
-        gap: 2vw;
+    @media (max-aspect-ratio: 0.55) {
+        grid-template-rows: repeat(4, calc((100% - 6vw) / 4));
     }
+
+    //HEIGHTS MEDIA QUERIES
 
     @media (orientation: landscape) {
         grid-template-rows: repeat(3, 36vh);
-    }
-    @media ${breakpoints.heightsQueries.minHeights.tablet} {
-        gap: 2vw;
     }
 `;

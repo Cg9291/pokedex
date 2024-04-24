@@ -27,7 +27,7 @@ const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?
     aspect-ratio: 1/1;
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};
-    padding: 2%;
+    padding: 0;
 
     svg {
         width: 100%;

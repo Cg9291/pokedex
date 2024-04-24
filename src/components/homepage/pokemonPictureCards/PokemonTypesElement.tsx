@@ -27,24 +27,30 @@ export function PokemonTypesElement(props: PokemonTypesPropsInterface): React.Re
 }
 const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $pokeType: string; $whereUsed?: string }>`
     flex: 1 0 0;
-    padding: ${(props) => (props.$whereUsed === whereUsedValues.aboutSection ? "1%" : "5%")};
+    padding: ${(props) =>
+        props.$whereUsed === whereUsedValues.aboutSection.maintype
+            ? "1%"
+            : props.$whereUsed === whereUsedValues.homepage
+            ? "3%"
+            : "5%"};
     border-radius: 99px;
     background-color: ${(props) =>
         props.$dynamicBackground ? typesColors[props.$pokeType as keyof TypesColorsInt] : "rgba(0, 0, 0, 0.2)"};
     color: white;
     text-align: center;
     align-items: center;
-    font-size: 0.6rem;
+    font-size: 3vw;
+    line-height: 3vw;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
     overflow: hidden;
 
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        font-size: 0.8rem;
+        //font-size: 0.8rem;
     }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.25rem;
-        padding-right: 0.8rem;
+        //padding-right: 0.8rem;
     }
 
     @media ${breakpoints.widthsQueries.minWidths.laptop} {
@@ -52,15 +58,15 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
 
     //HEIGHTS MEDIA QUERIES
     @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-        padding: 0.4rem;
+        //padding: 0.4rem;
     }
     @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${breakpoints.widthsQueries.maxWidths
             .mobileM} {
-        font-size: 0.66rem;
+        //font-size: 0.66rem;
     }
 
     @media (orientation: landscape) {
-        padding: 5%;
+        //padding: 5%;
         font-size: inherit;
     }
 `;

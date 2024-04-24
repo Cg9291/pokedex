@@ -1,6 +1,6 @@
 export const whereUsedValues = {
     searchModal: "searchModal",
-    aboutSection: "aboutSection",
+    aboutSection: { maintype: "maintype", strengthsAndWeaknesses: "strengths and weaknesses" },
     favorites: "favorites",
     homepage: "homepage",
     filter: "filter"
