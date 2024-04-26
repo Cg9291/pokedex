@@ -108,8 +108,10 @@ const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison
 const StatContainer = styled(ContainerPrototype)`
     flex: 1 0 0;
     column-gap: 1%;
+    font-size: 3.8vw;
+    font-weight: 400;
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 1.3em;
+        /* font-size: 1.3em; */
     }
     @media (orientation: landscape) {
         flex: 0 0 15vh;
@@ -118,19 +120,19 @@ const StatContainer = styled(ContainerPrototype)`
 const StatName = styled(ContainerPrototype)`
     flex: 1 0 30%;
     align-items: center;
-    font-size: 0.8em;
+    /* font-size: 0.8em;
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 1em;
-    }
+    } */
 `;
 const StatValue = styled(ContainerPrototype)<{ $isLeftSide?: boolean }>`
     justify-content: ${(props) => (props.$isLeftSide ? "center" : "center")};
     flex: 0 0 10%;
     align-items: center;
-    font-size: 0.8em;
+    /*   font-size: 0.8em;
     @media ${breakpoints.widthsQueries.minWidths.mobileM} {
         font-size: 1em;
-    }
+    } */
 `;
 const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};

@@ -45,16 +45,16 @@ const Container = styled(ContainerPrototype)`
 const Link = styled(LinkPrototype)`
     color: black;
     flex: 0 1 content;
-    //overflow: hidden;
     text-align: center;
+    font-size: 5vw;
+    font-weight: 500;
 `;
 
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
     height: 100%;
-    flex: 0 1 15%;
+    flex: 0 0 15%;
     border-radius: 12px;
-    //overflow: hidden;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;

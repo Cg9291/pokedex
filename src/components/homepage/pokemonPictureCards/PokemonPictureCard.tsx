@@ -161,12 +161,8 @@ const PokeId = styled.span<{ $whereUsed?: string }>`
     font-size: 4vw;
     margin-left: auto;
 
-    @media ${breakpoints.widthsQueries.minWidths.tablet} {
-        font-size: 1.4rem;
-    }
-
     //MIXED MEDIA QUERIES
-    @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+    /*  @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
         font-size: 1.5rem;
         line-height: 1.5rem;
     }
@@ -174,6 +170,11 @@ const PokeId = styled.span<{ $whereUsed?: string }>`
     @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
         font-size: 2em;
         line-height: 2rem;
+    } */
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3.5vw;
+        text-align: end;
     }
 
     @media (orientation: landscape) {

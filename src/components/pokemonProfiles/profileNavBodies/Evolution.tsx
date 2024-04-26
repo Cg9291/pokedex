@@ -125,7 +125,7 @@ const PokemonContainer = styled(Link)`
     flex: 1 1 0;
     text-decoration: none;
     color: black;
-    row-gap: 1rem;
+    row-gap: 1vh;
     overflow: hidden;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
@@ -151,14 +151,16 @@ const PokemonIdentifiers = styled(ContainerPrototype)`
     overflow: hidden;
 `;
 const PokemonName = styled.span`
-    font-size: 1em;
+    font-size: 5vw;
+    font-weight: 500;
 `;
 const PokemonNumber = styled.span`
-    margin-left: 0.3rem;
-    font-size: 0.8em;
+    //margin-left: 0.3rem;
+    font-size: 3.8vw;
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
+    font-size: 5vw;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: red;
