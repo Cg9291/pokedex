@@ -4,6 +4,7 @@ import styled from "styled-components/macro";
 import { StatsInterface } from "../../../interfaces/miscInterfaces";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { BaseStatsComponentProps } from "../../../interfaces/miscInterfaces";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export interface StatsOverlayPropsInt {
     $value: number;
@@ -72,7 +73,7 @@ function Stat(props: LocalStat): React.ReactElement {
     return (
         <StatContainer>
             <StatName>{capitalizeWords(props.name)}</StatName>
-            <StatValue>{props.baseStatValue}</StatValue>
+            <StatValue $isLeftSide={true}>{props.baseStatValue}</StatValue>
             <StatBar $isTotal={props.isTotal} $isComparison={props.isComparison}>
                 {props.isComparison && props.baseStatValue2 ? (
                     <StatBarComparisonOverlayContainer>
@@ -96,47 +97,62 @@ function Stat(props: LocalStat): React.ReactElement {
     );
 }
 
-const Container = styled(ContainerPrototype)`
+const Container = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     flex-direction: column;
-    padding: 1rem 0 1rem;
     overflow-y: hidden;
+    @media (orientation: landscape) {
+        flex: 0 0 content;
+    }
 `;
 
-const StatContainer = styled.div`
-    width: 100%;
-    min-height: 2.8rem;
-    display: flex;
-    justify-content: stretch;
+const StatContainer = styled(ContainerPrototype)`
+    flex: 1 0 0;
+    column-gap: 1%;
+    font-size: 3.8vw;
+    font-weight: 400;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        /* font-size: 1.3em; */
+    }
+    @media (orientation: landscape) {
+        flex: 0 0 15vh;
+    }
 `;
 const StatName = styled(ContainerPrototype)`
-    min-width: 35%;
+    flex: 1 0 30%;
+    align-items: center;
+    /* font-size: 0.8em;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        font-size: 1em;
+    } */
 `;
-const StatValue = styled(ContainerPrototype)`
-    justify-content: end;
-    min-width: 1%;
-    padding-right: 0.8rem;
+const StatValue = styled(ContainerPrototype)<{ $isLeftSide?: boolean }>`
+    justify-content: ${(props) => (props.$isLeftSide ? "center" : "center")};
+    flex: 0 0 10%;
+    align-items: center;
+    /*   font-size: 0.8em;
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        font-size: 1em;
+    } */
 `;
 const StatBar = styled(ContainerPrototype)<{ $isTotal?: boolean; $isComparison?: boolean }>`
     visibility: ${(props) => (props.$isTotal ? "hidden" : "visible")};
-    min-width: ${(props) => (props.$isComparison ? "40%" : "50%")};
-    height: 30%;
+    //min-width: ${(props) => (props.$isComparison ? "55%" : "50%")};
+    height: 40%;
     background-color: grey;
     border-radius: 99px;
-    margin-top: 0.3rem;
+    align-self: center;
+    flex: 0 1 40%;
+    overflow: hidden;
 `;
 
 const StatBarOverlay = styled(ContainerPrototype)<StatsOverlayPropsInt>`
     width: ${(props) =>
         props.$isTotal ? `calc(${(props.$value / 1530) * 100}%)` : `calc(${(props.$value / 255) * 100}%)`};
-    height: 100%;
     background-color: red;
     border-radius: 99px;
 `;
 
-const StatBarComparisonOverlayContainer = styled.div`
-    display: flex;
-    min-width: 100%;
-    height: 100%;
+const StatBarComparisonOverlayContainer = styled(ContainerPrototype)`
     border-radius: 99px;
 `;
 

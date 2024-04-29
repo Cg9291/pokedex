@@ -6,12 +6,18 @@ import { SearchSuggestions } from "./SearchSuggestions";
 import SearchIcon from "../../../../assets/icons8-search-100.png";
 import { punctuationRegex } from "../../../../regularExpressions/punctuationRegex";
 import { useHandleSearchSubmission } from "../../../../functions/utilities/useHandleSearchSubmission";
+import { IsModalActiveKitInterface } from "../../../comparator/PokemonSearchModal";
+import * as breakpoints from "../../../../objects/breakpoints";
+import { whereUsedValues } from "../../../../objects/whereUsedValues";
 
 export interface SearchPropsInterface {
     usesNavigation?: boolean;
     hasFilter?: boolean;
+    isModalActiveKit?: IsModalActiveKitInterface;
+    searchedPokemonId?: string | number | null;
     setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
     setSearchStatusTracker?: React.Dispatch<React.SetStateAction<string>>;
+    whereUsed?: string;
 }
 export interface SearchInputKitInterface {
     searchInput: string;
@@ -31,7 +37,6 @@ export interface SuggestedInputKitInterface {
 export interface SearchStatusKitInterface {
     searchStatus: string;
     setSearchStatus: React.Dispatch<React.SetStateAction<string>>;
-    //searchStatusOptions: readonly [string, string, string];
 }
 
 export function Search(props: SearchPropsInterface): React.ReactElement {
@@ -83,6 +88,13 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
         return;
     }, [searchStatus, searchedPokemonIdentifier]);
 
+    useEffect(() => {
+        if (!props.searchedPokemonId) {
+            setSearchInput("");
+            setFocusedSuggestion("");
+        }
+    }, [props.isModalActiveKit?.isModalActive.isActive]);
+
     (function handleOutsideClicks() {
         useEffect(() => {
             const detectOutsideClicks = (e: MouseEvent) => {
@@ -103,9 +115,9 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     };
 
     const handleChange = (e: React.ChangeEvent) => {
-        const clearedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
-        setSearchInput(clearedInput);
-        setFocusedSuggestion(clearedInput);
+        const sanitizedInput = (e.target as HTMLInputElement).value.replace(punctuationRegex, "");
+        setSearchInput(sanitizedInput);
+        setFocusedSuggestion(sanitizedInput);
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -116,7 +128,7 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <InputContainer ref={searchRef}>
+                <InputContainer ref={searchRef} $whereUsed={props.whereUsed}>
                     <Label $isShowingSuggestions={hasSuggestions}>
                         <Input
                             value={focusedSuggestion ? focusedSuggestion : searchInput}
@@ -145,38 +157,67 @@ export function Search(props: SearchPropsInterface): React.ReactElement {
 }
 
 const Container = styled(ContainerPrototype)`
-    max-height: 4rem;
-    width: 100%;
+    grid-area: searchBar;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        bottom: 0rem;
+        align-items: flex-end;
+    }
 `;
 
 const Form = styled.form.attrs({
     method: "get"
 })`
     width: 100%;
-    max-height: 3rem;
+    height: 100%;
     display: flex;
+    column-gap: 2%;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ $whereUsed?: string }>`
     position: relative;
-    height: fit-content;
-    flex: 1;
-    //margin-right: 0.1rem;
+    height: 100%;
+    flex: 1 0 0;
+    //margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "0.2rem")};
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        //margin-right: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "0" : "1rem")};
+    }
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 `;
 const Label = styled.label<{ $isShowingSuggestions: boolean }>`
     width: 100%;
-    height: 3rem;
+    height: 100%;
     display: flex;
     border: 1px solid black;
     border-radius: 99px;
     z-index: 2;
     background-color: white;
-    padding-right: 0.5rem;
+    //padding-right: 0.5rem;
     border-top-left-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-top-right-radius: ${(props) => (props.$isShowingSuggestions ? "24px" : "99px")};
     border-bottom-left-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
-    padding: 0.5rem 0;
+    border-bottom: ${(props) => props.$isShowingSuggestions && "none"};
+    padding: /* 0.5rem */ 0;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
 `;
 
 const Input = styled.input.attrs({
@@ -184,32 +225,51 @@ const Input = styled.input.attrs({
     name: "searchInput"
 })`
     width: 85%;
+    flex: 1 0 auto;
     height: 100%;
     z-index: 2;
-    margin-top: auto;
-    padding-left: 1rem;
+    margin-top: 0;
+    padding-left: 2vw;
     border: none;
     background-color: transparent;
     border-right: 0.1px solid grey;
     font-size: 0.8rem;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.3rem;
+
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 2rem;
+    }
 `;
 
-/* const SearchButton = styled.button.attrs({ type: "submit" })`
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    border-radius: 10px;
-`; */
-/* const ButtonsContainer = styled(ContainerPrototype)`
-    flex-direction: column;
-    max-height: 100%;
-`; */
-
 const FilterButton = styled.button.attrs({ type: "button" })`
-    /* width: 100%; */
-    flex: 0 1 15%;
+    flex: 0 0 20%;
     height: 100%;
+    max-width: 6rem;
     border-radius: 10px;
+    color: black;
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        //flex: 0 0 15%;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 1.5rem;
+        @media ${breakpoints.heightsQueries.minHeights.flexible("1100px")} {
+            max-height: 100%;
+            height: 100%;
+        }
+    }
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        font-size: 1.4rem;
+    }
 `;
 
 const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSuggestions: boolean }>`
@@ -221,12 +281,22 @@ const SearchIconButton = styled.button.attrs({ type: "submit" })<{ $isShowingSug
     border-bottom-right-radius: ${(props) => (props.$isShowingSuggestions ? "0" : "99px")};
     display: flex;
     justify-content: center;
+    padding: 0.3rem;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        min-width: fit-content;
+        max-width: 5rem;
+    }
+    @media (orientation: landscape) {
+        //max-width: 1rem;
+        //flex: 0 1 5rem;
+    }
 `;
 
 const ImgSvgContainer = styled.svg.attrs({ viewBox: "0 0 24 24" })`
+    align-self: center;
     display: flex;
     justify-content: center;
-    max-height: 100%;
+    height: 100%;
     max-width: 100%;
 `;
 

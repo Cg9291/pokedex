@@ -27,7 +27,7 @@ export function NavElement(props: {
     };
 
     return (
-        <Container onFocus={focusHandler}>
+        <Container onFocus={focusHandler} onClick={focusHandler}>
             <Link>{props.value}</Link>
             <SelectionUnderlineBar $visibility={isElementFocused ? "visible" : "hidden"} />
         </Container>
@@ -36,20 +36,25 @@ export function NavElement(props: {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    width: 1fr;
-    height: 100%;
+    flex: 1 0 content;
     justify-content: center;
     align-items: center;
+    row-gap: 10%;
 `;
 
 const Link = styled(LinkPrototype)`
     color: black;
+    flex: 0 1 content;
+    text-align: center;
+    font-size: 5vw;
+    font-weight: 500;
 `;
 
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
-    height: 10%;
-    margin-top: 0.5rem;
+    height: 100%;
+    flex: 0 0 15%;
+    border-radius: 12px;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;

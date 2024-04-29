@@ -8,6 +8,8 @@ import { handleOutsideClicks } from "../../functions/utilities/handleOutsideClic
 import { IsModalActiveInterface } from "../../interfaces/comparatorInterfaces";
 import { ComparatorPokemonInfoInterface } from "../../interfaces/comparatorInterfaces";
 import { Search } from "../homepage/header/search/Search";
+import * as breakpoints from "../../objects/breakpoints";
+import { whereUsedValues } from "../../objects/whereUsedValues";
 
 export interface ComparatorPokemonSearchModalInterface {
     isModalActiveKit: IsModalActiveKitInterface;
@@ -35,23 +37,20 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
     const modalRef = useRef<HTMLDivElement>(null);
     handleOutsideClicks(modalRef, props.isModalActiveKit.setIsModalActive);
 
-    /*   const searchStatusKit = {
-        searchStatus: searchStatusTracker,
-        setSearchStatus: setSearchStatusTracker,
-        searchStatusOptions: searchStatusOptions
-    }; */
-    useEffect(() => {
+    /*  useEffect(() => {
         console.log("changed", searchedPokemonId);
-    }, [searchedPokemonId, searchStatusTracker]);
+    }, [searchedPokemonId, searchStatusTracker]); */
 
     const searchStatusOptions: readonly [string, string, string] = ["searching", "searchError", "found"];
 
     return (
-        <ComparatorSearchModalContainer $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
+        <Container $isModalActive={props.isModalActiveKit.isModalActive.isActive} ref={modalRef}>
             <SearchModalHeader>Choose a Pokemon</SearchModalHeader>
             <Search
                 usesNavigation={false}
                 hasFilter={false}
+                searchedPokemonId={searchedPokemonId}
+                isModalActiveKit={props.isModalActiveKit}
                 setSearchedPokemonId={setSearchedPokemonId}
                 setSearchStatusTracker={setSearchStatusTracker}
             />
@@ -64,38 +63,64 @@ export function ComparatorsPokemonSearchModal(props: ComparatorPokemonSearchModa
                         pokemonImagesKit={props.pokemonImagesKit}
                         isModalActiveKit={props.isModalActiveKit}
                         isLink={false}
+                        whereUsed={whereUsedValues.searchModal}
+                        setSearchedPokemonId={setSearchedPokemonId}
                     />
                 )}
             </ResultsSection>
-        </ComparatorSearchModalContainer>
+        </Container>
     );
 }
 
-const ComparatorSearchModalContainer = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
-    flex-direction: column;
-    display: ${(props) => (props.$isModalActive ? "flex" : "none")};
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    top: 12vh;
-    left: 0;
-    right: 0;
+const Container = styled(ContainerPrototype)<{ $isModalActive: boolean }>`
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 12% 1rem 1fr; //flex basis of empty row should equal that of padding
+    grid-template-areas:
+        "header"
+        "searchBar"
+        "emptyRow"
+        "results";
+    display: ${(props) => (props.$isModalActive ? "grid" : "none")};
+    position: absolute;
     background-color: white;
     z-index: 1;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    padding: 2rem 1rem;
-`;
-
-const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
-    margin: 0 auto;
+    padding: 1rem;
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+    height: 85%;
+    bottom: 0;
+    @media (orientation: landscape) {
+        z-index: 15;
+    }
 `;
 
 const SearchModalHeader = styled.h2`
-    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2.2rem;
+    grid-area: header;
 `;
 
-const ResultsSection = styled.div<{ $foundPokemon?: boolean }>`
-    padding: ${(props) => (props.$foundPokemon ? "1rem 25% 0" : "1rem 0 0")};
+const ResultsSection = styled(ContainerPrototype)<{ $foundPokemon?: boolean }>`
+    align-items: center;
+    padding: 0 5vw;
+    background-color: rgba(122, 122, 122, 0.1);
+    border-radius: 1rem;
+    grid-area: results;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    align-self: center;
+
+    @media (orientation: landscape) {
+        padding-inline: 20vw;
+    }
+`;
+const LoadingAnimation = styled(LoadingSpinnerPrototype)`
+    border-bottom-color: yellow;
+    margin: 0 auto;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        max-width: 50vh;
+        max-height: 50vh;
+    }
 `;

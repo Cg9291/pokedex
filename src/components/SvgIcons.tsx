@@ -1,12 +1,14 @@
 import styled from "styled-components/macro";
 import { pokemonTypesIcons, PokemonTypesIcons } from "../assets";
+import * as breakpoints from "../objects/breakpoints";
 
-export function SvgIcon(props: { pokeType: string }): React.ReactElement {
+export function SvgIcon(props: { pokeType: string; whereUsed?: string }): React.ReactElement {
     {
         return props.pokeType !== "none" ? (
             <Container
                 $BgColor={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.background}
                 $BoxShadow={pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].styling.boxShadow}
+                $whereUsed={props.whereUsed}
             >
                 {pokemonTypesIcons[props.pokeType as keyof PokemonTypesIcons].icon}
             </Container>
@@ -16,17 +18,20 @@ export function SvgIcon(props: { pokeType: string }): React.ReactElement {
     }
 }
 
-const Container = styled.div<{ $BgColor: string; $BoxShadow: string }>`
+const Container = styled.div<{ $BgColor: string; $BoxShadow: string; $whereUsed?: string }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 100%;
     height: 100%;
     aspect-ratio: 1/1;
-    margin: 0 0.5rem 0 0;
     background: ${(props) => props.$BgColor};
     box-shadow: ${(props) => props.$BoxShadow};
+    padding: 0;
 
     svg {
-        height: 60%;
-        width: 60%;
-        margin: 20%;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
     }
 `;

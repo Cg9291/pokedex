@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Mfe } from "../../../interfaces/pokemonInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { getPokemonMovesTypesData } from "../../../functions/api/singleApiCalls/getPokemonMovesTypesData";
@@ -56,30 +56,37 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    height: 100%;
 `;
 
-const MoveContainer = styled.div`
-    display: flex;
+const MoveContainer = styled(ContainerPrototype)`
     justify-content: space-between;
     border-bottom: 0.1rem solid grey;
-    padding: 0.8rem 0;
+    padding: 3%;
+    flex: 0 0 20%;
+    overflow: hidden;
+    @media (orientation: landscape) {
+        padding: 1%;
+        flex: 0 0 15vh;
+    }
 `;
 
-const MoveNameContainer = styled.div`
-    display: flex;
+const MoveNameContainer = styled(ContainerPrototype)`
     align-items: center;
+    flex: 0 0 content;
 `;
 
-const MoveTypeContainer = styled.div<{ $typeName?: string }>`
-    width: 2.5rem;
+const MoveTypeContainer = styled(ContainerPrototype)<{ $typeName?: string }>`
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: ${(props) => typesColors[props.$typeName as keyof TypesColorsInt]};
-    margin-right: 1rem;
+    flex: 0 0 10%;
+    justify-content: flex-end;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    max-width: 2.5rem;
-    border: 0.5rem solid grey;
+    flex: 0 0 content;
+    width: unset;
+    height: 100%;
+    border-width: 0.25rem;
     border-bottom-color: yellow;
+    //justify-self: flex-end;
 `;

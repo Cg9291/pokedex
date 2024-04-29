@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { pickRandomPokemonNumbers } from "../../../functions/utilities/pickRandomPokemonNumbers";
+import comparatorsButtonLogo from "../../../assets/comparatorsRandomizeButtonLogo.png";
 import { RandomPokemonSelectionInterface } from "../../../interfaces/miscInterfaces";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface): React.ReactElement {
     const { setRandomPokemonSelection } = props;
@@ -13,24 +15,54 @@ export function RandomizeSelectionButton(props: RandomPokemonSelectionInterface)
 
     return (
         <Container>
-            <Button onClick={() => randomize()}>Randomize</Button>
+            <Button onClick={() => randomize()}>
+                <RandomizeButtonImage />
+            </Button>
         </Container>
     );
 }
 
 const Container = styled(ContainerPrototype)`
-    width: fit-content;
-    height: 2.5rem;
-    position: fixed;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 1;
+    //aspect-ratio: 1/1;
+    //z-index: 1;
+    grid-area: randomizeButton;
+    align-self: start;
+    align-items: flex-start;
+    flex-direction: column;
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+        top: 1.5rem;
+        right: 2rem;
+    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
     width: 100%;
-    border-radius: 7px;
-    padding: 0 0.5rem;
+    flex: 0 0 auto;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: white;
     border: none;
-    font-weight: 600;
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
+        @media ${breakpoints.heightsQueries.minHeights.flexible("360px")} {
+            //max-height: 1rem;
+            //min-width: 1rem;
+        }
+    }
+    @media ${breakpoints.widthsQueries.minWidths.flexible("1212px")} {
+        min-width: 4rem;
+        min-height: 4rem;
+    }
+`;
+
+export const RandomizeButtonImage = styled.img.attrs({
+    src: comparatorsButtonLogo
+})`
+    width: 100%;
+    height: 100%;
+    //aspect-ratio: 1/1;
 `;

@@ -9,6 +9,7 @@ import { PokemonPictureCard } from "../components/homepage/pokemonPictureCards/P
 import { capitalizeWords } from "../functions/utilities/capitalizeWords";
 import { CustomPokemonInfo } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
+import { whereUsedValues } from "../objects/whereUsedValues";
 
 export interface ReceivedParametersInterface {
     type?: string;
@@ -91,7 +92,9 @@ export function FilteredSearchResults(): React.ReactElement {
             const displayMatchingPokemons = () =>
                 myState
                     .filter((x) => checkPokemonForFilters(x))
-                    .map((y, index) => <PokemonPictureCard key={index} id={y.id} isLink={true} />);
+                    .map((y, index) => (
+                        <PokemonPictureCard key={index} id={y.id} isLink={true} whereUsed={whereUsedValues.filter} />
+                    ));
 
             return displayMatchingPokemons().length <= 0 ? (
                 <NotFoundContainer>No Pokemon matching these criterias have been found</NotFoundContainer>
@@ -102,7 +105,7 @@ export function FilteredSearchResults(): React.ReactElement {
     };
 
     if (myState) {
-        return <Container>{applyFilter()}</Container>;
+        return <Container $isMyStateAvailable={true}>{applyFilter()}</Container>;
     } else {
         return (
             <Container>
@@ -112,16 +115,23 @@ export function FilteredSearchResults(): React.ReactElement {
     }
 }
 
-const Container = styled(ContainerPrototype)`
-    display: grid;
+const Container = styled(ContainerPrototype)<{ $isMyStateAvailable?: boolean }>`
+    display: ${(props) => (props.$isMyStateAvailable ? "grid" : "flex")};
     grid-template-columns: 1fr 1fr;
-    column-gap: 1fr;
+    grid-auto-rows: 15vh;
+    //column-gap: 1fr;
     padding: 1rem 1rem;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
     overflow-y: scroll;
     overflow-x: none;
+    @media (orientation: landscape) {
+        gap: 2vw;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 11.75vw;
+        margin-bottom: 10vh;
+    }
 `;
 
 const NotFoundContainer = styled.div`
@@ -129,6 +139,10 @@ const NotFoundContainer = styled.div`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    margin: auto;
-    width: 200%;
+    border-bottom-color: blue;
+    width: 100%;
+    @media (orientation: landscape) {
+        width: initial;
+        height: 70vh;
+    }
 `;

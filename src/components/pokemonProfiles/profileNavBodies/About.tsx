@@ -9,6 +9,7 @@ import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTy
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
 import { PokemonTypesElement } from "../../homepage/pokemonPictureCards/PokemonTypesElement";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
 export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
@@ -36,7 +37,11 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
             <Container>
                 <Description>{displayEnglishDescription(flavor_text_entries)}</Description>
                 <TypeContainer>
-                    <PokemonTypesElement typeName={types[0].type.name} dynamicBackground={true} />
+                    <PokemonTypesElement
+                        typeName={types[0].type.name}
+                        dynamicBackground={true}
+                        whereUsed={whereUsedValues.aboutSection.maintype}
+                    />
                 </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
                 <SWSectionContainer>
@@ -65,103 +70,123 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
 
 function StrengthsAndWeaknesses(props: { type: string }) {
     console.log("SW", props.type);
-    const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
+    const displayStrengthsAndWeaknesses = (strengthsOrWeaknesses: string): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
             (x: string) => {
-                return <PokemonTypesElement typeName={x} dynamicBackground={true} key={x} />;
+                return (
+                    <PokemonTypesElement
+                        typeName={x}
+                        dynamicBackground={true}
+                        whereUsed={whereUsedValues.aboutSection.strengthsAndWeaknesses}
+                        key={x}
+                    />
+                );
             }
         );
 
+    function StrengthOrWeakness(props: { isStrength: boolean }) {
+        return (
+            <SWContainer>
+                <h3>{props.isStrength ? "Strengths" : "Weaknesses"}</h3>
+                <SWElementsContainer>
+                    {displayStrengthsAndWeaknesses(`${props.isStrength ? "strengths" : "weaknesses"}`)}
+                </SWElementsContainer>
+            </SWContainer>
+        );
+    }
+
     return (
-        <SWContainer>
-            <h3>Strengths</h3>
-            <SWElementsContainer>{displayStrengths("strengths")}</SWElementsContainer>
-            <h3>Weaknesses</h3>
-            <SWElementsContainer>{displayStrengths("weaknesses")}</SWElementsContainer>
-        </SWContainer>
+        <>
+            <StrengthOrWeakness isStrength={true} />
+            <StrengthOrWeakness isStrength={false} />
+        </>
     );
 }
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem 1rem;
-    height: min-content;
+    padding: 1rem;
+    row-gap: 1rem;
+    //margin-bottom: 5rem;
+    flex: 1 0 content;
+
+    @media (orientation: landscape) {
+        //padding-bottom: 14vh;
+    }
 `;
 
 const Description = styled.p`
-    padding: 0 0;
-    font-size: 0.8em;
+    padding: 0;
+    font-size: 1em;
     font-style: italic;
     font-weight: bold;
+    flex: 0 0 content;
+    text-align: center;
 `;
 
-const TypeContainer = styled.div`
-    display: flex;
-    justify-content: start;
-    margin-top: 0.5rem;
+const TypeContainer = styled(ContainerPrototype)`
+    //justify-content: center;
+    flex: 0 0 8vh;
+    overflow: hidden;
 `;
 
 const VitalsSectionContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
-    /* flex-wrap: wrap;
-    align-items: start; */
-    min-height: max-content;
-    margin: 0 0 0 0.5rem;
-    padding: 1rem 0 0 0;
-    //align-content: space-between;
-    font-size: 0.8em;
-    justify-content: space-between;
+    font-size: 1em;
     column-gap: 1rem;
+    flex: 0 0 content;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    min-height: 10%;
     height: max-content;
-    flex: 0 0 20%;
+    flex: 0 0 1fr;
+    row-gap: 0.2rem;
 `;
 
 const VitalsLabel = styled.div`
     display: flex;
-    justify-content: start;
+    justify-content: center;
     width: 100%;
-    margin-bottom: 0.5rem;
+    flex: 0 0 content;
+    font-weight: bold;
 `;
 
 const VitalsValue = styled.div`
     display: flex;
-    justify-content: start;
+    justify-content: center;
     width: 100%;
-    font-weight: bold;
-    height: fit-content;
-    //max-height: 2rem;
+    flex: 0 0 content;
 `;
 
 const SWSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    height: auto;
-    margin-top: 1rem;
-`;
-
-const SWContainer = styled.div`
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 1rem;
     h3 {
         margin-left: 0.2rem;
     }
 `;
 
-const SWElementsContainer = styled.div`
-    width: 100%;
+const SWElementsContainer = styled(ContainerPrototype)`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 6vh;
     gap: 0.5rem;
-    padding: 0.5rem 0 0 0;
-    margin: 0 0 1rem 0;
+    min-height: 6vh;
+    overflow-y: hidden;
+    @media (orientation: landscape) {
+        grid-auto-rows: 8vh;
+    }
+`;
+
+const SWContainer = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 0.2rem;
 `;

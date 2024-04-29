@@ -13,6 +13,7 @@ import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
 import { Link } from "react-router-dom";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function Evolution(props: { ownProps: EvolutionComponentProps }): React.ReactElement {
     const [evolutionChainData, setEvolutionChainData] = useState<PokemonEvolutionChainInterface>();
@@ -107,43 +108,64 @@ function PokemonEvolutionStage(props: { pokemonEvolutionName: string }): React.R
 const Container = styled(ContainerPrototype)`
     align-items: center;
     justify-content: center;
-    height: 100%;
     padding: 1rem 0;
+    column-gap: 0.5rem;
+    @media (orientation: landscape) {
+        //padding: 0.5vh 0 0 0;
+    }
 `;
 
 const PokemonContainer = styled(Link)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 33.33%;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 0;
     text-decoration: none;
     color: black;
+    row-gap: 1vh;
+    overflow: hidden;
 `;
 const SvgImg = styled.svg.attrs({ viewBox: "0 0 25 25" })<{ $bgColor: string }>`
     border: solid ${(props) => props.$bgColor};
     border-radius: 50%;
-    width: 90%;
+    max-width: 50vw;
+    max-height: 50vw;
+    aspect-ratio: 1/1;
+
+    @media (orientation: landscape) {
+        max-height: 40vw;
+    }
 `;
 const PokemonImage = styled.image`
     width: 100%;
     height: 100%;
 `;
 
-const PokemonIdentifiers = styled.div`
-    display: flex;
-    margin: 1rem 0;
+const PokemonIdentifiers = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 0 0 content;
+    align-items: center;
+    overflow: hidden;
 `;
 const PokemonName = styled.span`
-    font-size: 0.9em;
+    font-size: 5vw;
+    font-weight: 500;
 `;
 const PokemonNumber = styled.span`
-    margin-left: 0.3rem;
-    font-size: 0.7em;
+    //margin-left: 0.3rem;
+    font-size: 3.8vw;
 `;
 const PokemonType = styled(TypePrototype)`
     margin: 0;
+    font-size: 5vw;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
+    border-bottom-color: red;
+    @media (orientation: landscape) {
+        width: initial;
+        height: 90%;
+    }
 `;

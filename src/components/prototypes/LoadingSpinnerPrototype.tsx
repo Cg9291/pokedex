@@ -2,8 +2,9 @@ import styled from "styled-components/macro";
 
 export const LoadingSpinnerPrototype = styled.div`
     width: 50%;
-    border: 1rem solid grey;
-    border-bottom: 1rem solid red;
+    margin: auto;
+    border: 0.5rem solid grey;
+    border-bottom-color: red;
     border-radius: 50%;
     aspect-ratio: 1/1;
     animation: 2s linear infinite spinner;

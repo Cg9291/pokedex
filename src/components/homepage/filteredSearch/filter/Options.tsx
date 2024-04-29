@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 import { Slider } from "./Slider";
 import { FocusedFilterOptionsInterface, FocusedFilterOptionsKitInterface } from "../../../../pages/FilteredSearch";
+import ContainerPrototype from "../../../prototypes/ContainerPrototype";
 
 export function Options(props: {
     optionValue: string;
@@ -22,7 +23,7 @@ export function Options(props: {
         ] === props.optionValue;
 
     return props.optionStyle === "button" ? (
-        <OptionsButtonContainer $isFocused={isOptionFocused ? true : false}>
+        <ButtonContainer $isFocused={isOptionFocused ? true : false}>
             <OptionsButtonLabel>
                 {props.filtersName === "generation" ? (
                     <>
@@ -49,22 +50,23 @@ export function Options(props: {
                     </>
                 )}
             </OptionsButtonLabel>
-        </OptionsButtonContainer>
+        </ButtonContainer>
     ) : (
         <Slider nameOfParentFilter={props.filtersName} />
     );
 }
 
-const OptionsButtonContainer = styled.div<{ $isFocused?: boolean }>`
-    display: flex;
+const ButtonContainer = styled(ContainerPrototype)<{ $isFocused?: boolean }>`
+    justify-content: center;
     align-items: center;
-    width: max-content;
-    height: 2rem;
-    margin: 0 0.6rem 0.7rem 0;
-    padding: 0 0.5rem;
+    aspect-ratio: 2/1;
+    //margin: 0 0.6rem 0.7rem 0;
+    //padding: 0 0.5rem;
     border-radius: 7px;
-    border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "0.1rem solid transparent")};
-    background-color: ${(props) => (props.$isFocused ? "rgba(108, 122, 137, 0.23)" : "inherit")};
+    //border: ${(props) => (props.$isFocused ? "0.1rem solid grey" : "0.1rem solid transparent")};
+    background-color: ${(props) => (props.$isFocused ? "black" : "rgba(108, 122, 137, 0.23)")};
+    color: ${(props) => (props.$isFocused ? "white" : "black")};
+    height: 85%;
 `;
 
 const OptionsButtonLabel = styled.label`
@@ -85,6 +87,7 @@ const ButtonInput = styled.input.attrs({ type: "radio" })`
 const OptionValue = styled.h6`
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
 `;

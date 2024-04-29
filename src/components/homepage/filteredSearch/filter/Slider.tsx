@@ -31,10 +31,10 @@ export function Slider(props: { nameOfParentFilter: string }): React.ReactElemen
     };
 
     return (
-        <OptionsSliderContainer>
-            <OptionsSliderInputContainer>
-                <OptionsSliderLabel>
-                    <OptionsSliderInput
+        <SliderContainer>
+            <SliderInputContainer>
+                <SliderLabel>
+                    <SliderInput
                         name={`min${capitalizeWords(props.nameOfParentFilter)}`}
                         type="range"
                         min="0"
@@ -44,9 +44,9 @@ export function Slider(props: { nameOfParentFilter: string }): React.ReactElemen
                         onChange={(e) => handleSliderChange(e)}
                         ref={(node) => (inputThumbsRefs.current.min = node)}
                     />
-                </OptionsSliderLabel>
-                <OptionsSliderLabel>
-                    <OptionsSliderInput
+                </SliderLabel>
+                <SliderLabel>
+                    <SliderInput
                         name={`max${capitalizeWords(props.nameOfParentFilter)}`}
                         type="range"
                         min="0"
@@ -56,38 +56,37 @@ export function Slider(props: { nameOfParentFilter: string }): React.ReactElemen
                         onChange={(e) => handleSliderChange(e, true)}
                         ref={(node) => (inputThumbsRefs.current.max = node)}
                     />
-                </OptionsSliderLabel>
-            </OptionsSliderInputContainer>
-            <OptionsSliderValuesRow>
-                <OptionsSliderValue>
+                </SliderLabel>
+            </SliderInputContainer>
+            <ValuesRow>
+                <SliderValue>
                     {props.nameOfParentFilter === "height" ? `${sliderMinValue}m` : `${sliderMinValue}kgs`}
-                </OptionsSliderValue>
-                <OptionsSliderValue>
+                </SliderValue>
+                <SliderValue>
                     {props.nameOfParentFilter === "height" ? `${sliderMaxValue}m` : `${sliderMaxValue}kgs`}
-                </OptionsSliderValue>
-            </OptionsSliderValuesRow>
-        </OptionsSliderContainer>
+                </SliderValue>
+            </ValuesRow>
+        </SliderContainer>
     );
 }
 
-const OptionsSliderContainer = styled.div`
-    display: flex;
+const SliderContainer = styled(ContainerPrototype)`
     flex-direction: column;
-    width: 100%;
     padding: 0 0.1rem;
+    overflow-y: hidden;
 `;
 
-const OptionsSliderInputContainer = styled.div`
-    min-height: 1em;
+const SliderInputContainer = styled(ContainerPrototype)`
+    //min-height: 1em;
     position: relative;
 `;
 
-const OptionsSliderLabel = styled.label``;
-const OptionsSliderInput = styled.input`
+const SliderLabel = styled.label``;
+const SliderInput = styled.input`
     -webkit-appearance: none;
     position: absolute;
     left: 0;
-    bottom: 0;
+    top: 50%;
     width: 100%;
     pointer-events: none;
     background: none; /* get rid of white Chrome background */
@@ -96,8 +95,7 @@ const OptionsSliderInput = styled.input`
     margin: 0;
     pointer-events: none; /* let clicks pass through */
 
-    &::-webkit-slider-runnable-track,
-    & {
+    &::-webkit-slider-runnable-track {
         -webkit-appearance: none;
         background: grey;
         height: 0.2em;
@@ -111,7 +109,8 @@ const OptionsSliderInput = styled.input`
         position: relative;
         z-index: 1;
         height: 1em;
-        width: 1em;
+        //width: 1em;
+        aspect-ratio: 1/1;
         border-radius: 25px;
         pointer-events: auto;
         position: relative;
@@ -128,11 +127,11 @@ const OptionsSliderInput = styled.input`
     }
 `;
 
-const OptionsSliderValuesRow = styled(ContainerPrototype)`
-    margin-top: 0.9rem;
+const ValuesRow = styled(ContainerPrototype)`
+    //margin-top: 0.9rem;
     justify-content: space-between;
 `;
 
-const OptionsSliderValue = styled.div`
+const SliderValue = styled.div`
     align-self: flex-start;
 `;

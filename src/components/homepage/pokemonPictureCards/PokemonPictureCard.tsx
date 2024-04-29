@@ -13,12 +13,16 @@ import { NumOrString } from "../../../interfaces/miscTypes";
 import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
 import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
 import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
+import * as breakpoints from "../../../objects/breakpoints";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
 export interface PokemonPictureCardsPropsInterface {
     id: NumOrString;
     isLink?: boolean;
     pokemonImagesKit?: PokemonImagesKitInterface;
     isModalActiveKit?: IsModalActiveKitInterface;
+    whereUsed?: string;
+    setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
 
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
@@ -45,7 +49,7 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
         [...typesArray]
             .reverse()
             .map((x: Type, index: number) => (
-                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
+                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} whereUsed={props.whereUsed} key={index} />
             ));
 
     if (pokemonInfo && !loadingStatus) {
@@ -67,11 +71,13 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
                         ...pokemonImages,
                         topPokemon: pokeInfoObject
                     });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
                 } else if (isModalActive.activeImageNumber === 2) {
                     setPokemonImages({
                         ...pokemonImages,
                         bottomPokemon: pokeInfoObject
                     });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
                 }
                 setIsModalActive({ isActive: false, activeImageNumber: 0 });
             }
@@ -81,11 +87,14 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
                 to={props.isLink ? `/pokemons/id/${pokemonInfo.id}` : ""}
                 onClick={handleClick}
                 $mainType={pokemonInfo.types[0].type.name}
+                $whereUsed={props.whereUsed}
             >
-                <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
-                <PokeId>{displayFormattedId(pokeInfoObject.id)}</PokeId>
+                <PokeName $whereUsed={props.whereUsed}>{capitalizeWords(pokemonInfo.name)}</PokeName>
+                <PokeId $whereUsed={props.whereUsed}>{displayFormattedId(pokeInfoObject.id)}</PokeId>
 
-                <PokemonTypesContainer>{renderPokemonTypes(pokemonInfo.types)}</PokemonTypesContainer>
+                <PokemonTypesContainer $whereUsed={props.whereUsed}>
+                    {renderPokemonTypes(pokemonInfo.types)}
+                </PokemonTypesContainer>
                 <PokemonImgWrapper>
                     <PokemonImg
                         src={pokemonInfo.sprites.front_default}
@@ -103,51 +112,104 @@ export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): Re
     }
 }
 
-const Container = styled(Link)<{ $mainType: string; $isFlex?: true }>`
+const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?: string }>`
     display: ${(props) => (props.$isFlex ? "flex" : "grid")};
     grid-template-columns: repeat(4, 25%);
-    grid-template-rows: auto 100%;
+    grid-template-rows: min-content 1fr;
     grid-template-areas:
         "name name name id"
         "typesContainer typesContainer image image";
-    max-width: 100%;
-    max-height: 100%;
-    height: 18vh;
-    padding: 0.7rem;
+    width: 100%;
+    height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "initial" : "100%")};
+    aspect-ratio: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "2 / 1"};
+    max-height: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "80%"};
+    margin: auto;
+    padding: 0.3rem;
     border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
-    line-height: 1;
     overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-template-rows: repeat(2, auto);
+        padding-bottom: 0.6rem;
+        min-height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "30%" : "100%")};
+    }
+
+    //HEIGHTS MEDIA QUERIES
+
+    @media (orientation: landscape) {
+        padding: 0.35rem;
+    }
 `;
 
-const PokeName = styled.h4`
-    min-height: fit-content;
+const PokeName = styled.h4<{ $whereUsed?: string }>`
     color: white;
     grid-area: name;
-    place-self: start;
+    place-self: start start;
+    font-size: 4vw;
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "2vw"};
+    }
 `;
 
-const PokeId = styled.span`
+const PokeId = styled.span<{ $whereUsed?: string }>`
     grid-area: id;
     color: white;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 4vw;
+    margin-left: auto;
+
+    //MIXED MEDIA QUERIES
+    /*  @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 2em;
+        line-height: 2rem;
+    } */
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3.5vw;
+        text-align: end;
+    }
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.6vw"};
+    }
 `;
 
-const PokemonTypesContainer = styled(ContainerPrototype)`
-    flex-direction: column;
-    justify-content: end;
+const PokemonTypesContainer = styled(ContainerPrototype)<{ $whereUsed?: string }>`
+    display: grid;
+    grid-auto-rows: 46%;
+    gap: 8%;
     grid-area: typesContainer;
     align-self: center;
-    margin-bottom: 0.3rem;
-    max-height: 100%;
+    overflow: hidden;
+    max-height: 80%;
+    align-self: flex-end;
+    overflow: hidden;
+    align-content: flex-end;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+
+    @media (orientation: landscape) {
+        max-height: ${(props) => (props.$whereUsed === whereUsedValues.filter ? "initial" : "90%")};
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.5vw"};
+    }
 `;
 
 const PokemonImgWrapper = styled.div`
     grid-area: image;
-    max-width: 100%;
-    max-height: 100%;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
 `;
 
 const PokemonImg = styled.img`
@@ -159,11 +221,6 @@ const PokemonImg = styled.img`
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    //border-bottom-color: green;
-    /*  border: 0.5rem solid grey;
-    border-bottom: 0.5rem solid red; */
-    width: auto;
-    justify-self: center;
-    margin-left: auto;
-    margin-right: auto;
+    width: initial;
+    height: 90%;
 `;
