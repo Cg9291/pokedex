@@ -11,7 +11,7 @@ interface HeartType {
     id: number;
 }
 export function HeartIcon(props: HeartType) {
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(isPokemonFavorited(props.id));
     const favoriteHandler = (id: number) => {
         if (isPokemonFavorited(id)) {
             removePokemonFromFavorites(id);
