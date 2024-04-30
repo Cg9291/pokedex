@@ -69,6 +69,7 @@ const Wrapper = styled.div`
     //HEIGHTS MEDIA QUERIES
 
     @media (orientation: landscape) {
-        grid-template-rows: repeat(3, 36vh);
+        grid-template-rows: repeat(4, 36vh);
+        grid-template-columns: repeat(2, 1fr);
     }
 `;

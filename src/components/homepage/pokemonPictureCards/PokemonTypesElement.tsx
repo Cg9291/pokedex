@@ -39,7 +39,12 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     color: white;
     text-align: center;
     align-items: center;
-    font-size: 3vw;
+    font-size: ${(props) =>
+        props.$whereUsed === whereUsedValues.aboutSection.maintype
+            ? "6vw"
+            : props.$whereUsed === whereUsedValues.aboutSection.strengthsAndWeaknesses
+            ? "3.8vw"
+            : "3vw"};
     line-height: 3vw;
     font-weight: 600;
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
@@ -67,7 +72,7 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
 
     @media (orientation: landscape) {
         //padding: 5%;
-        font-size: inherit;
+        //font-size: inherit;
     }
 `;
 
