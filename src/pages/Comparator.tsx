@@ -264,7 +264,7 @@ const CardsRow = styled(ContainerPrototype)`
 `;
 
 const Result = styled.p`
-    font-size: 1.8em;
+    font-size: 7vw;
     font-weight: bolder;
     white-space: nowrap;
     @media ${breakpoints.widthsQueries.minWidths.laptop} {

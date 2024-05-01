@@ -22,16 +22,16 @@ import { profileTabsPropsInterface } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { HeartIcon } from "../assets/heartIcon";
 import {
-    addPokemonToFavorites,
-    isPokemonFavorited,
-    removePokemonFromFavorites
+    /* addPokemonToFavorites, */
+    isPokemonFavorited
+    /* removePokemonFromFavorites */
 } from "../functions/utilities/useLocalStorage";
 import * as breakpoints from "../objects/breakpoints";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
-    const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const [, /* isFavorite */ setIsFavorite] = useState<boolean>(false);
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true },
         "Base Stats": {

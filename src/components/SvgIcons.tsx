@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { pokemonTypesIcons, PokemonTypesIcons } from "../assets";
-import * as breakpoints from "../objects/breakpoints";
+/* import * as breakpoints from "../objects/breakpoints"; */
 import { whereUsedValues } from "../objects/whereUsedValues";
 
 export function SvgIcon(props: { pokeType: string; whereUsed?: string }): React.ReactElement {
