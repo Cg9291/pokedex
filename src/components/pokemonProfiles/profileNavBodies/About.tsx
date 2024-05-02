@@ -10,6 +10,7 @@ import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
 
 import { PokemonTypesElement } from "../../homepage/pokemonPictureCards/PokemonTypesElement";
 import { whereUsedValues } from "../../../objects/whereUsedValues";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
@@ -87,7 +88,7 @@ function StrengthsAndWeaknesses(props: { type: string }) {
     function StrengthOrWeakness(props: { isStrength: boolean }) {
         return (
             <SWContainer>
-                <h3>{props.isStrength ? "Strengths" : "Weaknesses"}</h3>
+                <SWHeader>{props.isStrength ? "Strengths" : "Weaknesses"}</SWHeader>
                 <SWElementsContainer>
                     {displayStrengthsAndWeaknesses(`${props.isStrength ? "strengths" : "weaknesses"}`)}
                 </SWElementsContainer>
@@ -108,7 +109,6 @@ const Container = styled(ContainerPrototype)`
     justify-content: flex-start;
     padding: 1rem;
     row-gap: 1rem;
-    //margin-bottom: 5rem;
     flex: 1 0 content;
 
     @media (orientation: landscape) {
@@ -118,17 +118,38 @@ const Container = styled(ContainerPrototype)`
 
 const Description = styled.p`
     padding: 0;
-    font-size: 1em;
+    font-size: 4.5vw;
     font-style: italic;
     font-weight: bold;
     flex: 0 0 content;
     text-align: center;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3vw;
+    }
+
+    @media (orientation: landscape) {
+        font-size: 5vh;
+        @media ${breakpoints.widthsQueries.minWidths.laptop} {
+            font-size: 3vh;
+        }
+    }
 `;
 
 const TypeContainer = styled(ContainerPrototype)`
-    //justify-content: center;
-    flex: 0 0 8vh;
+    flex: 0 0 6vh;
     overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        flex: 0 0 6vh;
+    }
+
+    @media (orientation: landscape) {
+        flex: 1 0 15vh;
+        @media ${breakpoints.widthsQueries.minWidths.laptop} {
+            flex: 1 0 10vh;
+        }
+    }
 `;
 
 const VitalsSectionContainer = styled.div`
@@ -144,7 +165,7 @@ const VitalsContainer = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: start;
     height: max-content;
-    flex: 0 0 1fr;
+    flex: 1 0 0;
     row-gap: 0.2rem;
 `;
 
@@ -154,6 +175,9 @@ const VitalsLabel = styled.div`
     width: 100%;
     flex: 0 0 content;
     font-weight: bold;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2.8vw;
+    }
 `;
 
 const VitalsValue = styled.div`
@@ -161,6 +185,9 @@ const VitalsValue = styled.div`
     justify-content: center;
     width: 100%;
     flex: 0 0 content;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2.6vw;
+    }
 `;
 
 const SWSectionContainer = styled.div`
@@ -170,6 +197,18 @@ const SWSectionContainer = styled.div`
     row-gap: 1rem;
     h3 {
         margin-left: 0.2rem;
+    }
+`;
+
+const SWHeader = styled.h3`
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 4vw;
+    }
+
+    @media (orientation: landscape) {
+        @media ${breakpoints.widthsQueries.minWidths.tablet} {
+            font-size: 5vh;
+        }
     }
 `;
 

@@ -50,30 +50,25 @@ const Container = styled(ContainerPrototype)<{ $dynamicBackground?: boolean; $po
     justify-content: ${(props) => (props.$pokeType === "none" ? "center" : "space-between")};
     overflow: hidden;
 
-    @media ${breakpoints.widthsQueries.minWidths.mobileM} {
-        //font-size: 0.8rem;
-    }
     @media ${breakpoints.widthsQueries.minWidths.tablet} {
         font-size: 1.25rem;
-        //padding-right: 0.8rem;
-    }
-
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
     }
 
     //HEIGHTS MEDIA QUERIES
-    @media ${breakpoints.heightsQueries.minHeights.mobileS} {
-        //padding: 0.4rem;
-    }
-    @media ${breakpoints.heightsQueries.minHeights.flexible("700px")} and ${breakpoints.widthsQueries.maxWidths
-            .mobileM} {
-        //font-size: 0.66rem;
-    }
 
     @media (orientation: landscape) {
-        //padding: 5%;
-        //font-size: inherit;
+        font-size: ${(props) =>
+            props.$whereUsed === whereUsedValues.aboutSection.maintype
+                ? "5.5vh"
+                : props.$whereUsed === whereUsedValues.aboutSection.strengthsAndWeaknesses
+                ? "4.5vh"
+                : "4.5vh"};
+        padding: 1vh;
     }
+
+    /* @media ${breakpoints.widthsQueries.minWidths.laptop}{
+
+    } */
 `;
 
 const PokemonTypeText = styled.p`

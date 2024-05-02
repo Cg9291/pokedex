@@ -64,9 +64,11 @@ const MoveContainer = styled(ContainerPrototype)`
     padding: 3%;
     flex: 0 0 20%;
     overflow: hidden;
+    font-size: 5vw;
     @media (orientation: landscape) {
         padding: 1%;
         flex: 0 0 15vh;
+        font-size: 5.2vh;
     }
 `;
 
@@ -81,6 +83,7 @@ const MoveTypeContainer = styled(ContainerPrototype)<{ $typeName?: string }>`
     background-color: ${(props) => typesColors[props.$typeName as keyof TypesColorsInt]};
     flex: 0 0 10%;
     justify-content: flex-end;
+    align-items: center;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     flex: 0 0 content;
