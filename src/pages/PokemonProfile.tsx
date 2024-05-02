@@ -254,12 +254,11 @@ const InfoNavBody = styled(ContainerPrototype)`
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;
-    @media ${breakpoints.widthsQueries.minWidths.laptop} {
-        max-width: 50vh;
-    }
-
     @media (orientation: landscape) {
         width: initial;
         height: 70vh;
+        position: absolute;
+        top: 12.5%;
+        left: 25%;
     }
 `;

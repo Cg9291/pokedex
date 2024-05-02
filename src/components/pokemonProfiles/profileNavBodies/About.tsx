@@ -131,7 +131,7 @@ const Description = styled.p`
     @media (orientation: landscape) {
         font-size: 5vh;
         @media ${breakpoints.widthsQueries.minWidths.laptop} {
-            font-size: 3vh;
+            font-size: 4vh;
         }
     }
 `;
