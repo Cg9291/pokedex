@@ -5,7 +5,7 @@ It also allows users to add pokemons to a list of favorites, for quick access.
 Each pokemon also has its own profile, in which more information can be found.
 Finally, the project also includes a pokemon guessing minigame ("who's that pokemon?").
 
-Link to the project [https://cg-pokedex.netlify.app/](https://github.com/facebook/create-react-app).
+Link to the project [https://cg-pokedex.netlify.app/](https://cg-pokedex.netlify.app/).
 
 ## How it's made
 
