@@ -1,16 +1,34 @@
 import { typesColors } from "../objects/typesColors";
+import {
+    addPokemonToFavorites,
+    isPokemonFavorited,
+    removePokemonFromFavorites
+} from "../functions/utilities/useLocalStorage";
+import { useState } from "react";
+import styled from "styled-components";
 
 interface HeartType {
-    favorite: boolean;
+    id: number;
 }
 export function HeartIcon(props: HeartType) {
+    const [isFavorite, setIsFavorite] = useState(isPokemonFavorited(props.id));
+    const favoriteHandler = (id: number) => {
+        if (isPokemonFavorited(id)) {
+            removePokemonFromFavorites(id);
+            setIsFavorite(false);
+        } else {
+            addPokemonToFavorites(id);
+            setIsFavorite(true);
+        }
+    };
     return (
-        <svg
-            width="20px"
-            height="20px"
+        <Container
             viewBox="0 0 24 24"
-            fill={props.favorite ? typesColors.fighting : "none"}
+            fill={isFavorite ? typesColors.fighting : "none"}
             xmlns="http://www.w3.org/2000/svg"
+            onClick={() => {
+                favoriteHandler(props.id);
+            }}
         >
             <path
                 fillRule="evenodd"
@@ -21,6 +39,16 @@ export function HeartIcon(props: HeartType) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
             />
-        </svg>
+        </Container>
     );
 }
+
+const Container = styled.svg`
+    width: 1.8rem;
+    height: 1.8rem;
+    grid-area: status;
+    justify-self: end;
+    align-self: start;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+`;

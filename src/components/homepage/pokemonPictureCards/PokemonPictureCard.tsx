@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
 import { PokemonTypesElement } from "./PokemonTypesElement";
 import { getPokemonData } from "../../../functions/api/singleApiCalls/getPokemonData";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
-import { PokemonNumberPropsInterface, TypesColorsInt } from "../../../interfaces/miscInterfaces";
+import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { PokemonInterface, Type } from "../../../interfaces/pokemonInterface";
 import { typesColors } from "../../../objects/typesColors";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { NumOrString } from "../../../interfaces/miscTypes";
+import { IsModalActiveKitInterface } from "../../comparator/PokemonSearchModal";
+import { PokemonImagesKitInterface } from "../../comparator/PokemonSearchModal";
+import { displayFormattedId } from "../../../functions/utilities/displayFormattedId";
+import * as breakpoints from "../../../objects/breakpoints";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
 
-export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.ReactElement {
+export interface PokemonPictureCardsPropsInterface {
+    id: NumOrString;
+    isLink?: boolean;
+    pokemonImagesKit?: PokemonImagesKitInterface;
+    isModalActiveKit?: IsModalActiveKitInterface;
+    whereUsed?: string;
+    setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
+}
+export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
 
-    async function getData(pokemonNumber: number): Promise<void> {
+    useEffect(() => {
+        getData(props.id);
+    }, [props.id]);
+
+    async function getData(pokemonNumber: NumOrString): Promise<void> {
         try {
             await setLoadingStatus(true);
             const data: PokemonInterface = await getPokemonData(pokemonNumber);
@@ -26,89 +44,185 @@ export function PokemonPictureCard(props: PokemonNumberPropsInterface): React.Re
         }
     }
 
-    useEffect(() => {
-        getData(props.id);
-    }, [props.id]);
-
     const renderPokemonTypes = (typesArray: Type[]): React.ReactElement[] =>
         [...typesArray]
             .reverse()
             .map((x: Type, index: number) => (
-                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} key={index} />
+                <PokemonTypesElement typeName={capitalizeWords(x.type.name)} whereUsed={props.whereUsed} key={index} />
             ));
 
-    if (pokemonInfo && loadingStatus === false) {
+    if (pokemonInfo && !loadingStatus) {
+        const pokeInfoObject = {
+            name: pokemonInfo.name,
+            id: pokemonInfo.id,
+            sprites: pokemonInfo.sprites,
+            stats: pokemonInfo.stats,
+            types: pokemonInfo.types
+        };
+        const handleClick = () => {
+            if (props.isLink) {
+                return;
+            } else if (props.pokemonImagesKit && props.isModalActiveKit) {
+                const { pokemonImages, setPokemonImages } = props.pokemonImagesKit;
+                const { isModalActive, setIsModalActive } = props.isModalActiveKit;
+                if (isModalActive.activeImageNumber === 1) {
+                    setPokemonImages({
+                        ...pokemonImages,
+                        topPokemon: pokeInfoObject
+                    });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
+                } else if (isModalActive.activeImageNumber === 2) {
+                    setPokemonImages({
+                        ...pokemonImages,
+                        bottomPokemon: pokeInfoObject
+                    });
+                    props.setSearchedPokemonId && props.setSearchedPokemonId(null);
+                }
+                setIsModalActive({ isActive: false, activeImageNumber: 0 });
+            }
+        };
         return (
-            <Container to={`/pokemons/id/${pokemonInfo.id}`} $mainType={pokemonInfo.types[0].type.name}>
-                <Wrapper>
-                    <PokeName>{capitalizeWords(pokemonInfo.name)}</PokeName>
-                    <SubContainer>
-                        <PokemonTypesContainer>{renderPokemonTypes(pokemonInfo.types)}</PokemonTypesContainer>
-                        <PokemonImgWrapper>
-                            <SvgImg>
-                                <PokemonImg
-                                    href={pokemonInfo.sprites.front_default}
-                                    /* 	alt="a pokemon image" */
-                                />
-                            </SvgImg>
-                        </PokemonImgWrapper>
-                    </SubContainer>
-                </Wrapper>
+            <Container
+                to={props.isLink ? `/pokemons/id/${pokemonInfo.id}` : ""}
+                onClick={handleClick}
+                $mainType={pokemonInfo.types[0].type.name}
+                $whereUsed={props.whereUsed}
+            >
+                <PokeName $whereUsed={props.whereUsed}>{capitalizeWords(pokemonInfo.name)}</PokeName>
+                <PokeId $whereUsed={props.whereUsed}>{displayFormattedId(pokeInfoObject.id)}</PokeId>
+
+                <PokemonTypesContainer $whereUsed={props.whereUsed}>
+                    {renderPokemonTypes(pokemonInfo.types)}
+                </PokemonTypesContainer>
+                <PokemonImgWrapper>
+                    <PokemonImg
+                        src={pokemonInfo.sprites.front_default}
+                        /* 	alt="a pokemon image" */
+                    />
+                </PokemonImgWrapper>
             </Container>
         );
     } else {
         return (
-            <Container to="/" $mainType="none">
+            <Container to="/" $mainType="none" $isFlex={true}>
                 <LoadingAnimation />
             </Container>
         );
     }
 }
 
-const Container = styled(Link)<{ $mainType: string }>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    height: 19vh;
-    padding: 0.5rem;
-    border-radius: 25px;
+const Container = styled(Link)<{ $mainType: string; $isFlex?: true; $whereUsed?: string }>`
+    display: ${(props) => (props.$isFlex ? "flex" : "grid")};
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: min-content 1fr;
+    grid-template-areas:
+        "name name name id"
+        "typesContainer typesContainer image image";
+    width: 100%;
+    height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "initial" : "100%")};
+    aspect-ratio: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "2 / 1"};
+    max-height: ${(props) => props.$whereUsed === whereUsedValues.searchModal && "80%"};
+    margin: auto;
+    padding: 0.3rem;
+    border-radius: 15px;
     text-decoration: none;
     background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
+    overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        grid-template-rows: repeat(2, auto);
+        padding-bottom: 0.6rem;
+        min-height: ${(props) => (props.$whereUsed === whereUsedValues.searchModal ? "30%" : "100%")};
+    }
+
+    //HEIGHTS MEDIA QUERIES
+
+    @media (orientation: landscape) {
+        padding: 0.35rem;
+    }
 `;
 
-const Wrapper = styled(ContainerPrototype)`
-    display: flex;
-    flex-direction: column;
-    border-radius: 25px;
-`;
-
-const PokeName = styled.h3`
-    height: 20%;
+const PokeName = styled.h4<{ $whereUsed?: string }>`
     color: white;
+    grid-area: name;
+    place-self: start start;
+    font-size: 4vw;
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "2vw"};
+    }
 `;
 
-const SubContainer = styled(ContainerPrototype)``;
+const PokeId = styled.span<{ $whereUsed?: string }>`
+    grid-area: id;
+    color: white;
+    font-weight: 500;
+    font-size: 4vw;
+    margin-left: auto;
 
-const PokemonTypesContainer = styled(ContainerPrototype)`
-    width: 50%;
-    flex-direction: column;
-    justify-content: end;
+    //MIXED MEDIA QUERIES
+    /*  @media ${breakpoints.widthsQueries.minWidths.tablet}, ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    @media ${breakpoints.widthsQueries.minWidths.laptop} and ${breakpoints.heightsQueries.minHeights.tablet} {
+        font-size: 2em;
+        line-height: 2rem;
+    } */
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3.5vw;
+        text-align: end;
+    }
+
+    @media (orientation: landscape) {
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.6vw"};
+    }
+`;
+
+const PokemonTypesContainer = styled(ContainerPrototype)<{ $whereUsed?: string }>`
+    display: grid;
+    grid-auto-rows: 46%;
+    gap: 8%;
+    grid-area: typesContainer;
+    align-self: center;
+    overflow: hidden;
+    max-height: 80%;
+    align-self: flex-end;
+    overflow: hidden;
+    align-content: flex-end;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+
+    @media (orientation: landscape) {
+        max-height: ${(props) => (props.$whereUsed === whereUsedValues.filter ? "initial" : "90%")};
+        font-size: ${(props) => props.$whereUsed === whereUsedValues.filter && "1.5vw"};
+        @media ${breakpoints.heightsQueries.minHeights.laptop} {
+            max-height: ${(props) => (props.$whereUsed === whereUsedValues.filter ? "initial" : "70%")};
+        }
+    }
 `;
 
 const PokemonImgWrapper = styled.div`
-    width: 50%;
+    grid-area: image;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
 `;
 
-const SvgImg = styled.svg.attrs({ viewBox: "50 50 200 200" })`
-    width: 100%;
-    height: 100%;
-`;
-const PokemonImg = styled.image`
-    width: 20rem;
+const PokemonImg = styled.img`
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     aspect-ratio: 1/1;
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    border-bottom-color: green;
+    width: initial;
+    height: 90%;
 `;

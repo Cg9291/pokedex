@@ -24,12 +24,10 @@ export interface TypesColorsInt {
     white: string;
 }
 
-export interface PokemonNumberPropsInterface {
-    id: number;
-}
-
 export interface PokemonTypesPropsInterface {
     typeName: string;
+    dynamicBackground?: boolean;
+    whereUsed?: string;
 }
 
 export interface PokemonProfilesNavElementsInterface {

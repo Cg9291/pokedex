@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../prototypes/ContainerPrototype";
 import { LinkPrototype } from "../prototypes/LinkPrototype";
 import { PokemonProfilesNavElementsInterface } from "../../interfaces/miscInterfaces";
@@ -11,6 +11,8 @@ export function NavElement(props: {
 }): React.ReactElement {
     const navElementsNames = props.navElementsNames;
     const setNavElementsNames = props.setNavElementsNames;
+    const isElementFocused: boolean =
+        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
 
     const focusHandler = (): void => {
         const nextState = { ...navElementsNames };
@@ -21,15 +23,11 @@ export function NavElement(props: {
                 nextState[obj as keyof PokemonProfilesNavElementsInterface].isFocused = false;
             }
         }
-
         setNavElementsNames(nextState);
     };
 
-    const isElementFocused: boolean =
-        navElementsNames[props.value as keyof PokemonProfilesNavElementsInterface].isFocused === true;
-
     return (
-        <Container onFocus={focusHandler}>
+        <Container onFocus={focusHandler} onClick={focusHandler}>
             <Link>{props.value}</Link>
             <SelectionUnderlineBar $visibility={isElementFocused ? "visible" : "hidden"} />
         </Container>
@@ -38,19 +36,25 @@ export function NavElement(props: {
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    width: 1fr;
-    height: 100%;
+    flex: 1 0 content;
     justify-content: center;
     align-items: center;
+    row-gap: 10%;
 `;
 
 const Link = styled(LinkPrototype)`
     color: black;
+    flex: 0 1 content;
+    text-align: center;
+    font-size: 5vw;
+    font-weight: 500;
 `;
 
 const SelectionUnderlineBar = styled.div<{ $visibility: string }>`
     width: 100%;
-    height: 10%;
+    height: 100%;
+    flex: 0 0 15%;
+    border-radius: 12px;
     background-color: red;
     visibility: ${(props) => props.$visibility};
 `;

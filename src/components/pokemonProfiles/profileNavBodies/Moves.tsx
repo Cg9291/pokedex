@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Mfe } from "../../../interfaces/pokemonInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { getPokemonMovesTypesData } from "../../../functions/api/singleApiCalls/getPokemonMovesTypesData";
@@ -8,18 +8,21 @@ import { PokemonMovesInterface } from "../../../interfaces/pokemonMovesInterface
 import { typesColors } from "../../../objects/typesColors";
 import { MovesComponentProps, TypesColorsInt } from "../../../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../../prototypes/LoadingSpinnerPrototype";
+import { SvgIcon } from "../../SvgIcons";
 
 export function Moves(props: { ownProps: MovesComponentProps }): React.ReactElement {
     const { moves } = props.ownProps;
-
     const displayMoves = (): React.ReactElement[] =>
         moves.map((x: Mfe) => <IntanceOfMove moveName={x.move.name} moveUrl={x.move.url} key={x.move.name} />);
-
     return <Container>{displayMoves()}</Container>;
 }
 
 function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.ReactElement {
     const [pokemonType, setPokemonType] = useState<PokemonMovesInterface>();
+
+    useEffect(() => {
+        getData(props.moveUrl);
+    }, []);
 
     const getData = async (moveDataUrl: string): Promise<void> => {
         try {
@@ -31,17 +34,15 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
         return;
     };
 
-    useEffect(() => {
-        getData(props.moveUrl);
-    }, []);
-
     if (pokemonType) {
         const { type } = pokemonType;
-
         return (
             <MoveContainer>
                 <MoveNameContainer>{capitalizeWords(props.moveName)}</MoveNameContainer>
-                <MoveTypeContainer $typeName={type.name} />
+                <MoveTypeContainer>
+                    {" "}
+                    <SvgIcon pokeType={type.name.toLowerCase()} />
+                </MoveTypeContainer>
             </MoveContainer>
         );
     } else {
@@ -55,30 +56,40 @@ function IntanceOfMove(props: { moveName: string; moveUrl: string }): React.Reac
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    height: 100%;
 `;
 
-const MoveContainer = styled.div`
-    display: flex;
+const MoveContainer = styled(ContainerPrototype)`
     justify-content: space-between;
     border-bottom: 0.1rem solid grey;
-    padding: 0.8rem 0;
+    padding: 3%;
+    flex: 0 0 20%;
+    overflow: hidden;
+    font-size: 5vw;
+    @media (orientation: landscape) {
+        padding: 1%;
+        flex: 0 0 15vh;
+        font-size: 5.2vh;
+    }
 `;
 
-const MoveNameContainer = styled.div`
-    display: flex;
+const MoveNameContainer = styled(ContainerPrototype)`
     align-items: center;
+    flex: 0 0 content;
 `;
 
-const MoveTypeContainer = styled.div<{ $typeName: string }>`
-    width: 2.5rem;
+const MoveTypeContainer = styled(ContainerPrototype)<{ $typeName?: string }>`
     aspect-ratio: 1/1;
     border-radius: 50%;
     background-color: ${(props) => typesColors[props.$typeName as keyof TypesColorsInt]};
-    margin-right: 1rem;
+    flex: 0 0 10%;
+    justify-content: flex-end;
+    align-items: center;
 `;
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
-    max-width: 2.5rem;
-    border: 0.5rem solid grey;
+    flex: 0 0 content;
+    width: unset;
+    height: 100%;
+    border-width: 0.25rem;
     border-bottom-color: yellow;
+    //justify-self: flex-end;
 `;

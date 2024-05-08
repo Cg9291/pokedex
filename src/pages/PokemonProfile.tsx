@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import ContainerPrototype from "../components/prototypes/ContainerPrototype";
 import { PokemonInterface } from "../interfaces/pokemonInterface";
 import { PokemonSpeciesInterface } from "../interfaces/pokemonSpeciesInterface";
@@ -22,15 +22,16 @@ import { profileTabsPropsInterface } from "../interfaces/miscInterfaces";
 import { LoadingSpinnerPrototype } from "../components/prototypes/LoadingSpinnerPrototype";
 import { HeartIcon } from "../assets/heartIcon";
 import {
-    addPokemonToFavorites,
-    isPokemonFavorited,
-    removePokemonFromFavorites
+    /* addPokemonToFavorites, */
+    isPokemonFavorited
+    /* removePokemonFromFavorites */
 } from "../functions/utilities/useLocalStorage";
+import * as breakpoints from "../objects/breakpoints";
 
 export function PokemonProfile(): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState<PokemonSpeciesInterface>();
-    const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const [, /* isFavorite */ setIsFavorite] = useState<boolean>(false);
     const [navElementsNames, setNavElementsNames] = useState<PokemonProfilesNavElementsInterface>({
         About: { isFocused: true },
         "Base Stats": {
@@ -78,7 +79,7 @@ export function PokemonProfile(): React.ReactElement {
                 About: { isFocused: true, element: <About ownProps={tabProps.AboutProps} /> },
                 "Base Stats": {
                     isFocused: false,
-                    element: <BaseStats ownProps={tabProps.BaseStatsProps} />
+                    element: <BaseStats pokemonStatsProps={tabProps.BaseStatsProps} />
                 },
                 Evolution: { isFocused: false, element: <Evolution ownProps={tabProps.EvolutionProps} /> },
                 Moves: { isFocused: false, element: <Moves ownProps={tabProps.MovesProps} /> }
@@ -109,16 +110,6 @@ export function PokemonProfile(): React.ReactElement {
         );
     };
 
-    const favoriteHandler = (id: number) => {
-        if (isPokemonFavorited(id)) {
-            removePokemonFromFavorites(id);
-            setIsFavorite(false);
-        } else {
-            addPokemonToFavorites(id);
-            setIsFavorite(true);
-        }
-    };
-
     if (pokemonInfo && pokemonSpeciesInfo) {
         const { id, name, sprites, height, weight, abilities, stats, types, moves } = pokemonInfo;
         const { color, evolution_chain, flavor_text_entries } = pokemonSpeciesInfo;
@@ -140,103 +131,134 @@ export function PokemonProfile(): React.ReactElement {
         };
 
         return (
-            <Container $mainType={types[0].type.name}>
-                <ImageContainer>
+            <Container>
+                <ImageWrapper $mainType={types[0].type.name}>
                     <PokeNumber>{displayFormattedId(id)}</PokeNumber>
-                    <PokemonName>
-                        {capitalizeWords(name)}
-                        <p
-                            onClick={() => {
-                                favoriteHandler(id);
-                            }}
-                        >
-                            <HeartIcon favorite={isFavorite} />
-                        </p>
-                    </PokemonName>
-                    <SvgImg>
-                        <PokemonImg href={sprites.front_default} />
-                    </SvgImg>
-                </ImageContainer>
+                    <PokemonName>{capitalizeWords(name)}</PokemonName>
+                    <HeartIcon id={id} />
+                    <ImageContainer viewBox="0 0 100 100 ">
+                        <PokemonImage href={sprites.front_default} />
+                    </ImageContainer>
+                </ImageWrapper>
                 <ProfileContainer>
                     <PokemonProfileInfoContainer>
                         <InfoNavBar>{displayNavHeaders()}</InfoNavBar>
                         <InfoNavBody>{displayNavBody()}</InfoNavBody>
                     </PokemonProfileInfoContainer>
                 </ProfileContainer>
+                {/*  <LoadingAnimation /> */}
             </Container>
         );
     } else {
         return (
-            <Container $mainType="none">
+            <Container>
                 <LoadingAnimation />
             </Container>
         );
     }
 }
 
-const Container = styled(ContainerPrototype)<{ $mainType: string }>`
+const Container = styled(ContainerPrototype)`
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: ${(props) => typesColors[props.$mainType as keyof TypesColorsInt]};
-    z-index: 0;
-    position: relative;
-    overflow-y: hidden;
+    flex: 1 0 0;
+    overflow: hidden;
+
+    @media (orientation: landscape) {
+        overflow: initial;
+        flex: 0 0 content;
+    }
 `;
-const ImageContainer = styled(ContainerPrototype)`
+const ImageWrapper = styled(ContainerPrototype)<{ $mainType: string }>`
+    display: grid;
+    grid-template-columns: 3rem 1fr 3rem;
+    grid-template-rows: 2rem auto 1fr;
+    grid-template-areas:
+        ". pokenumber status"
+        ". pokename ."
+        "pokeimage pokeimage pokeimage";
+    background-image: ${(props) =>
+        `linear-gradient(${typesColors[props.$mainType as keyof TypesColorsInt]},65%, white 95%)`};
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
     max-height: 40%;
+    @media (orientation: landscape) {
+        max-height: 70vh;
+    }
 `;
 
-const PokeNumber = styled.span``;
-const PokemonName = styled.span``;
+const PokeNumber = styled.span`
+    grid-area: pokenumber;
+    margin-right: auto;
+    margin-left: auto;
+    align-self: end;
+`;
+const PokemonName = styled.span`
+    grid-area: pokename;
+    margin: auto;
+    font-size: 1.5rem;
+`;
 
-const SvgImg = styled.svg`
+const ImageContainer = styled.svg`
     width: 100%;
-    height: 50%;
+    height: 100%;
+    grid-area: pokeimage;
+    @media ${breakpoints.widthsQueries.minWidths.laptop} {
+    }
 `;
-const PokemonImg = styled.image`
+
+const PokemonImage = styled.image`
     width: 100%;
     height: 100%;
     border: solid black;
 `;
 
 const ProfileContainer = styled(ContainerPrototype)`
-    max-height: 60%;
-    overflow-y: hidden;
-    padding-bottom: 9%;
-`;
+    flex: 1 0 0;
+    @media (orientation: landscape) {
+        overflow: initial;
+        flex: 0 0 content;
+    }
+`; //review..might be unecessary
 
 const PokemonProfileInfoContainer = styled(ContainerPrototype)`
     flex-direction: column;
-    z-index: 1;
-    height: 62%;
-    top: 38%;
-    background-color: white;
-    position: absolute;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    @media (orientation: landscape) {
+        padding-bottom: 14vh;
+        //height: max-content;
+    }
 `;
 
 const InfoNavBar = styled(ContainerPrototype)`
-    height: 10%;
     padding: 0 1rem;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    position: absolute;
-    background-color: inherit;
+    flex: 0 0 15%;
+
+    @media (orientation: landscape) {
+        //flex-basis: 25%;
+        flex: 0 0 12vh;
+    }
 `;
 
 const InfoNavBody = styled(ContainerPrototype)`
-    max-height: 20rem;
-    margin-top: 10%;
+    flex-direction: column;
     overflow-y: scroll;
     padding: 0 1rem;
-    background-color: rgba(0, 0, 0, 0.03);
+    flex: 1 0 0;
+    @media (orientation: landscape) {
+        overflow: initial;
+        flex: 0 0 content;
+        //min-height: 100%;
+    }
 `;
 
 const LoadingAnimation = styled(LoadingSpinnerPrototype)`
     border-bottom-color: yellow;
+    @media (orientation: landscape) {
+        width: initial;
+        height: 70vh;
+        position: absolute;
+        top: 12.5%;
+        left: 25%;
+    }
 `;

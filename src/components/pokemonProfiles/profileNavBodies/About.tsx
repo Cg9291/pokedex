@@ -1,20 +1,21 @@
 import React from "react";
 import ContainerPrototype from "../../prototypes/ContainerPrototype";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Flavor_text_entry } from "../../../interfaces/pokemonSpeciesInterface";
 import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { typesSW } from "../../../objects/typesSW";
 import { TypesSWInterface, TypeSWInterface } from "../../../interfaces/pokemonTypesSWInterface";
-import { typesColors } from "../../../objects/typesColors";
-import { TypesColorsInt } from "../../../interfaces/miscInterfaces";
-import { TypePrototype } from "../../prototypes/TypePrototype";
+
 import { AboutComponentProps } from "../../../interfaces/miscInterfaces";
+
+import { PokemonTypesElement } from "../../homepage/pokemonPictureCards/PokemonTypesElement";
+import { whereUsedValues } from "../../../objects/whereUsedValues";
+import * as breakpoints from "../../../objects/breakpoints";
 
 export function About(props: { ownProps: AboutComponentProps }): React.ReactElement {
     const { flavor_text_entries, types, height, weight, color, abilities } = props.ownProps;
 
     const displayedValues = [
-        ["type", `${types[0].type.name}`],
         ["height", `${height / 10 + "m"}`],
         ["weight", `${weight / 10 + "kg"}`],
         ["color", `${color.name}`],
@@ -26,7 +27,7 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
         if (!englishDescription) {
             throw new Error("No english description found");
         }
-        return englishDescription.flavor_text;
+        return englishDescription.flavor_text.replace(String.fromCharCode(12), " ");
     };
 
     const displayVitals = (): React.ReactElement[] =>
@@ -36,10 +37,17 @@ export function About(props: { ownProps: AboutComponentProps }): React.ReactElem
         flavor_text_entries && (
             <Container>
                 <Description>{displayEnglishDescription(flavor_text_entries)}</Description>
+                <TypeContainer>
+                    <PokemonTypesElement
+                        typeName={types[0].type.name}
+                        dynamicBackground={true}
+                        whereUsed={whereUsedValues.aboutSection.maintype}
+                    />
+                </TypeContainer>
                 <VitalsSectionContainer>{displayVitals()}</VitalsSectionContainer>
                 <SWSectionContainer>
                     {" "}
-                    <StrengthsAndWeaknesses type={displayedValues[0][1]} />
+                    <StrengthsAndWeaknesses type={types[0].type.name} />
                 </SWSectionContainer>
             </Container>
         )
@@ -50,118 +58,174 @@ function Vitals(props: { label: string; value: string }): React.ReactElement {
     return (
         <VitalsContainer>
             <VitalsLabel>{capitalizeWords(props.label)}</VitalsLabel>
-            <VitalsValue>{capitalizeWords(props.value)}</VitalsValue>
+            <VitalsValue>
+                {props.label === "type" ? (
+                    <PokemonTypesElement typeName={props.value} dynamicBackground={true} />
+                ) : (
+                    capitalizeWords(props.value)
+                )}
+            </VitalsValue>
         </VitalsContainer>
     );
 }
 
 function StrengthsAndWeaknesses(props: { type: string }) {
-    const displayStrengths = (strengthsOrWeaknesses: string): React.ReactElement[] =>
+    console.log("SW", props.type);
+    const displayStrengthsAndWeaknesses = (strengthsOrWeaknesses: string): React.ReactElement[] =>
         typesSW[props.type as keyof TypesSWInterface][strengthsOrWeaknesses as keyof TypeSWInterface].map(
             (x: string) => {
-                const lowerCaseX = x.toLowerCase();
                 return (
-                    <StrengthsAndWeaknessesElement
-                        sValue={x}
-                        sColor={typesColors[lowerCaseX as keyof TypesColorsInt]}
+                    <PokemonTypesElement
+                        typeName={x}
+                        dynamicBackground={true}
+                        whereUsed={whereUsedValues.aboutSection.strengthsAndWeaknesses}
                         key={x}
                     />
                 );
             }
         );
 
-    return (
-        <SWContainer>
-            <h3>Strengths</h3>
-            <SWElementsContainer>{displayStrengths("strengths")}</SWElementsContainer>
-            <h3>Weaknesses</h3>
-            <SWElementsContainer>{displayStrengths("weaknesses")}</SWElementsContainer>
-        </SWContainer>
-    );
-}
+    function StrengthOrWeakness(props: { isStrength: boolean }) {
+        return (
+            <SWContainer>
+                <SWHeader>{props.isStrength ? "Strengths" : "Weaknesses"}</SWHeader>
+                <SWElementsContainer>
+                    {displayStrengthsAndWeaknesses(`${props.isStrength ? "strengths" : "weaknesses"}`)}
+                </SWElementsContainer>
+            </SWContainer>
+        );
+    }
 
-function StrengthsAndWeaknessesElement(props: { sValue: string; sColor: string }): React.ReactElement {
     return (
-        <SWElement $bgColor={props.sColor} $value={props.sValue}>
-            {props.sValue}
-        </SWElement>
+        <>
+            <StrengthOrWeakness isStrength={true} />
+            <StrengthOrWeakness isStrength={false} />
+        </>
     );
 }
 
 const Container = styled(ContainerPrototype)`
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem 1rem;
-    height: min-content;
+    padding: 1rem;
+    row-gap: 1rem;
+    flex: 1 0 content;
+
+    @media (orientation: landscape) {
+        //padding-bottom: 14vh;
+    }
 `;
 
 const Description = styled.p`
-    padding: 0 0;
-    font-size: 0.8em;
+    padding: 0;
+    font-size: 4.5vw;
     font-style: italic;
     font-weight: bold;
+    flex: 0 0 content;
+    text-align: center;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 3vw;
+    }
+
+    @media (orientation: landscape) {
+        font-size: 5vh;
+        @media ${breakpoints.widthsQueries.minWidths.laptop} {
+            font-size: 4vh;
+        }
+    }
+`;
+
+const TypeContainer = styled(ContainerPrototype)`
+    flex: 0 0 6vh;
+    overflow: hidden;
+
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        flex: 0 0 6vh;
+    }
+
+    @media (orientation: landscape) {
+        flex: 1 0 15vh;
+        @media ${breakpoints.widthsQueries.minWidths.laptop} {
+            flex: 1 0 10vh;
+        }
+    }
 `;
 
 const VitalsSectionContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    align-items: start;
-    min-height: max-content;
-    margin: 0 0 1rem 0.5rem;
-    padding: 1rem 0 0 0;
-    //align-content: space-between;
-    font-size: 0.8em;
-    justify-content: space-between;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 1em;
+    column-gap: 1rem;
+    flex: 0 0 content;
 `;
 
 const VitalsContainer = styled(ContainerPrototype)`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    min-height: 10%;
     height: max-content;
-    flex: 0 0 20%;
+    flex: 1 0 0;
+    row-gap: 0.2rem;
 `;
 
 const VitalsLabel = styled.div`
     display: flex;
-    justify-content: start;
+    justify-content: center;
     width: 100%;
-    margin-bottom: 0.5rem;
+    flex: 0 0 content;
+    font-weight: bold;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2.8vw;
+    }
 `;
 
 const VitalsValue = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    font-weight: bold;
-    justify-content: start;
+    flex: 0 0 content;
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 2.6vw;
+    }
 `;
 
 const SWSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
-    height: auto;
-    margin-top: 1rem;
-`;
-
-const SWContainer = styled.div`
-    display: flex;
-    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 1rem;
     h3 {
         margin-left: 0.2rem;
     }
 `;
 
-const SWElementsContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: stretch;
-    justify-content: space-between;
-    padding: 0.5rem 0 0 0;
-    margin: 0 0 1rem 0;
+const SWHeader = styled.h3`
+    @media ${breakpoints.widthsQueries.minWidths.tablet} {
+        font-size: 4vw;
+    }
+
+    @media (orientation: landscape) {
+        @media ${breakpoints.widthsQueries.minWidths.tablet} {
+            font-size: 5vh;
+        }
+    }
 `;
 
-const SWElement = styled(TypePrototype)``;
+const SWElementsContainer = styled(ContainerPrototype)`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 6vh;
+    gap: 0.5rem;
+    min-height: 6vh;
+    overflow-y: hidden;
+    @media (orientation: landscape) {
+        grid-auto-rows: 8vh;
+    }
+`;
+
+const SWContainer = styled(ContainerPrototype)`
+    flex-direction: column;
+    flex: 0 0 content;
+    row-gap: 0.2rem;
+`;

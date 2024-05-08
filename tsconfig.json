@@ -17,7 +17,7 @@
         "jsx": "react-jsx",
         "checkJs": true
     },
-    "include": ["src", "declaration.d.ts"]
+    "include": ["src", "declaration.d.ts", "custom.d.ts"]
 }
 // {
 //   "compilerOptions": {
