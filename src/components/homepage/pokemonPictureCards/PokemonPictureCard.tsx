@@ -24,7 +24,6 @@ export interface PokemonPictureCardsPropsInterface {
     whereUsed?: string;
     setSearchedPokemonId?: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
-
 export function PokemonPictureCard(props: PokemonPictureCardsPropsInterface): React.ReactElement {
     const [pokemonInfo, setPokemonInfo] = useState<PokemonInterface>();
     const [loadingStatus, setLoadingStatus] = useState<boolean>(false);

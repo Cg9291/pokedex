@@ -22,6 +22,7 @@ export interface ReceivedParametersInterface {
 export function FilteredSearchResults(): React.ReactElement {
     const [myState, setMyState] = useState<CustomPokemonInfo[]>();
     const params = useParams() as { "*": string };
+    console.log(params);
     const [, generationInfo]: string[] = params["*"]?.split("/").splice(0, 2) as [string: string];
     const generalFilters = params["*"]
         ?.split("/")

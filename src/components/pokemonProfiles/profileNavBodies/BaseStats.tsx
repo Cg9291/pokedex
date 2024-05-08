@@ -6,7 +6,7 @@ import { capitalizeWords } from "../../../functions/utilities/capitalizeWords";
 import { BaseStatsComponentProps } from "../../../interfaces/miscInterfaces";
 import * as breakpoints from "../../../objects/breakpoints";
 
-export interface StatsOverlayPropsInt {
+interface StatsOverlayPropsInt {
     $value: number;
     $isTotal: boolean | undefined;
 }
@@ -64,7 +64,7 @@ export function BaseStats(props: {
     return (
         <Container>
             {displayStats()}
-            {!secondPokemonStats && <Stat name="total" baseStatValue={statsTotal()} isTotal={true} />}
+            <Stat name="total" baseStatValue={statsTotal()} isTotal={true} />
         </Container>
     );
 }
@@ -92,7 +92,6 @@ function Stat(props: LocalStat): React.ReactElement {
                     <StatBarOverlay $value={props.baseStatValue} $isTotal={props.isTotal} />
                 )}
             </StatBar>
-            {props.baseStatValue2 && <StatValue>{props.baseStatValue2}</StatValue>}
         </StatContainer>
     );
 }
