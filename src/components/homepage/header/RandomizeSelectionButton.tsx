@@ -34,6 +34,16 @@ const Container = styled(ContainerPrototype)`
         top: 1.5rem;
         right: 2rem;
     }
+
+    @media (orientation: landscape) {
+        @media ${breakpoints.widthsQueries.minWidths.tablet} {
+            max-width: 7vw;
+            justify-self: end;
+        }
+        @media ${breakpoints.widthsQueries.minWidths.laptopL} {
+            max-width: 5vw;
+        }
+    }
 `;
 
 const Button = styled.button.attrs({ type: "button" })`
